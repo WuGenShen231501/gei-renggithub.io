@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en" style="font-family: SimSun;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S-ku</title>
+    <link rel="icon" href="logo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="iconfont.css">
+    <link rel="stylesheet" href="Sku.css">
+    <link rel="stylesheet" href="Sku1.css">
+    <link rel="stylesheet" href="Sku2.css">
+    <link rel="stylesheet" href="Sku3.css">
+    <link rel="stylesheet" href="Sku4.css">
+
+    <script src="Sku_ht.js"></script>
+    <script src="Sku1.js" defer></script>
+    <script src="Sku2.js" defer></script>
+    <script src="Sku3.js" defer></script>
+    <script src="Sku4.js" defer></script>
+    <script src="Sku.js" defer></script>
+
+
+    <style class="style_s1"></style>
+    <style class="style_s2"></style>
+    <style class="style_s3"></style>
+    <style class="style_s4"></style>
+    <style class="style_s5"></style>
+
+</head>
+
+<body style="display: block;">
+
+    <!-- 动态背景 -->
+    <div class="max_dtbj"></div>
+
+    <!-- 顶部导航栏 -->
+    <div class="topmax" style="display: none;">
+
+        <!-- 大盒子，里面包括一个个导航栏 -->
+        <div class="top_dhl">
+            <div>大厅</div>
+            <div>链接</div>
+            <div>记录</div>
+            <div>设置</div>
+        </div>
+
+        <!-- 搜索 -->
+        <div class="so_suo">
+            <div class="so_anniu"><i class="iconfont icon-sousuo i_cmm_tb"></i></div>
+            <input type="text" class="so_ssk" placeholder="搜索引擎 / Ctrl + ?">
+            <div class="so_yq"></div>
+        </div>
+
+        <!-- 头像 -->
+        <div class="top_tou_xian"></div>
+
+        <!-- 头像动态背景 -->
+        <div class="touxain_dtbj"></div>
+
+        <!-- logo -->
+        <div class="top_logo">
+            <i class="iconfont icon-huijiyinqing i_toplogo_tb"></i>
+        </div>
+
+        <!-- 音乐播放器 -->
+        <div class="music_max">
+            <i class="iconfont icon-yinle5 i_music_tb"></i>
+        </div>
+
+    </div>
+
+    <!-- 内容大盒子，里面包括4个页面 -->
+    <div class="nrmax" style="display: block;">
+
+        <!-- 首页 -->
+        <div class="nrmaxs nrmaxs0" style="display: block;">
+
+            <!-- 首页内容 -->
+            <div class="nrmaxs0_nr">
+
+                <!-- 轮播图 -->
+                <div class="sy_lbt"></div>
+                <div class="sy_lbt_b">Scroll Down ↓</div>
+
+                <!-- 3D开关 -->
+                <div class="sy_3d_kaiguan" style="display: none;"> <i class="iconfont icon-d i_sy_3d_kaiguan"></i></div>
+
+                <!-- 倒计时 -->
+                <div class="sy_nrs_t fundong"><span class="sy_nrs_t_span">日</span><span class="sy_nrs_t_span">程</span></div>
+                <div class="sy_djs fundong">
+                    <div class="sy_djs_l">
+                        <sy_djs_l class="sy_djs_l_t">当前时间</sy_djs_l>
+                        <sy_djs_l class="sy_djs_l_yr_time"></sy_djs_l>
+                        <sy_djs_l class="sy_djs_l_time"></sy_djs_l>
+                        <sy_djs_l class="sy_djs_l_b">倒数日★</sy_djs_l>
+                    </div>
+                    <div class="sy_djs_r">
+                        <div class="sy_djs_r_min"></div>
+                    </div>
+
+                    <!-- 左右按钮 -->
+                    <i class="iconfont icon-icon-arrow-left2 i_djs_z_tb"></i>
+                    <i class="iconfont icon-icon-arrow-right2 i_djs_y_tb"></i>
+                </div>
+
+                <!-- 作品展示 -->
+                <div class="sy_nrs_t fundong"><span class="sy_nrs_t_span">作</span><span class="sy_nrs_t_span">品</span><span class="sy_nrs_t_span">展</span><span class="sy_nrs_t_span">示</span></div>
+                <div class="sy_zpzs_max fundong">
+                    <div class="iframe2">
+                        <div class="sy_zpzs_tj">+</div>
+                    </div>
+                    <div class="sy_zpzs_kaiguan"></div>
+                    <div class="sy_zpzs_kaiguan_ts">隐藏网页预览(更加流畅)</div>
+                </div>
+
+                <!-- 首页底部空余 -->
+                <div class="sy_b"></div>
+
+            </div>
+
+            <!-- 首页全局设置按键 -->
+            <div class="sy_shezhi_gn" style="display: none;">
+                <!-- 设置按钮 -->
+                <div class="sy_shezhi_gns">
+                    <!-- 三角形 -->
+                    <div class="sy_s_jiao_xing"></div>
+                    <!-- 添加按钮 -->
+                    <div class="sy_shezhi_gn_tj">
+                        <i class="iconfont icon-tianjia1 i_tj_tb"></i>
+                    </div>
+                    <!-- 删除按钮 -->
+                    <div class="sy_shezhi_gn_sc" style="display: none;">
+                        <i class="iconfont icon-shanchu1 i_sc_tb"></i>
+                    </div>
+                    <!-- 重命名按钮 -->
+                    <div class="sy_shezhi_gn_cmm" style="display: none;">
+                        <i class="iconfont icon-edit i_cmm_tb"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 倒计时添加页面 -->
+            <div class="sy_djs_tjym" style="display: none;">
+                <input type="text" class="input_djs_tjym_sj" placeholder="输入事件" maxlength="11">
+                <div class="djs_tjym_time_s">
+                    <input type="number" class="input_djs_tjym_time_s" placeholder="  年"><span class="input_djs_tjym_time_fg"> - </span>
+                    <input type="number" class="input_djs_tjym_time_s" placeholder="月" style="text-indent: 12px;"><span class="input_djs_tjym_time_fg"> - </span>
+                    <input type="number" class="input_djs_tjym_time_s" placeholder="日" style="text-indent: 12px;">
+                    <input type="number" class="input_djs_tjym_time_s2" placeholder="秒"><span class="input_djs_tjym_time_fg2"> : </span>
+                    <input type="number" class="input_djs_tjym_time_s2" placeholder="分"><span class="input_djs_tjym_time_fg2"> : </span>
+                    <input type="number" class="input_djs_tjym_time_s2" placeholder="时">
+                </div>
+                <div class="djs_tjym_qr">添加</div>
+            </div>
+
+            <!-- 倒计时提醒栏 -->
+            <div class="sy_djs_txl_max">
+                <div class="sy_djs_txl"></div>
+            </div>
+
+            <!-- 作品上传 -->
+            <div class="sy_zp_tj_ym" style="display: none;">
+                <input type="text" class="input_sy_zp_tj sy_zp_tj_mz" placeholder=" 名称">
+                <input type="text" class="input_sy_zp_tj sy_zp_tj_lj" placeholder=" SRC">
+                <div class="sy_zp_tj_anniu">添加</div>
+            </div>
+
+            <!-- 回到顶部 -->
+            <div class="sy_hddb">↑</div>
+
+            <!-- 定位窗口 -->
+            <div class="sy_dwck">▶</div>
+            <div class="sy_dwck_ym">
+                <div class="sy_dwck_s sy_dw_top">Top</div>
+                <div class="sy_dwck_s sy_dw_richen">日程</div>
+                <div class="sy_dwck_s sy_dw_zpzs">作品展示</div>
+            </div>
+
+        </div>
+
+        <!-- 链接页面 -->
+        <div class="nrmaxs nrmaxs1" style="display: none;">
+
+            <!-- 左边 -->
+            <div class="lian_jie_l_max">
+                <div class="lian_jie_l">
+                    <!-- 左侧导航栏 -->
+                </div>
+                <!-- 滚动条 -->
+                <div class="lianjied_gundontiao_max">
+                    <div class="lianjied_gundontiao_min"></div>
+                </div>
+                <div class="lian_jie_l2">
+                    <!-- 搜索时左侧导航栏 -->
+                    <div class="lian_jie_l2_sy">所有</div>
+                    <div class="lian_jie_l2_wxts">温馨提示<br>搜索时可以编辑</div>
+                </div>
+            </div>
+
+            <!-- 右边 -->
+            <div class="lian_jie_r_max">
+                <div class="lian_jie_r">
+                    <!-- 右侧导航栏页面 -->
+                </div>
+                <!-- 滚动条 -->
+                <div class="lianjie_gundontiao_max">
+                    <div class="lianjie_gundontiao_min"></div>
+                </div>
+                <div class="lian_jie_r2" style="display: none;">
+                    <!-- 搜索链接页面 -->
+                    <div class="lian_jie_ssym"></div>
+                </div>
+            </div>
+            <!-- 搜索 -->
+            <input type="text" class="lian_jie_ssk" placeholder=" 搜索相关链接 / Ctrl + ?"></input>
+            <i class="iconfont icon-sousuo i_lian_jie_ss_tb"></i>
+
+            <!-- 全局设置按键 -->
+            <div class="dhr_shezhi_gn" style="display: none;">
+                <!-- 设置按钮 -->
+                <div class="dhr_shezhi_gns">
+                    <!-- 三角形 -->
+                    <div class="s_jiao_xing"></div>
+                    <!-- 重命名按钮 -->
+                    <div class="dhr_shezhi_gn_cmm" style="display: none;">
+                        <i class="iconfont icon-edit i_cmm_tb"></i>
+                    </div>
+                    <!-- 删除按钮 -->
+                    <div class="dhr_shezhi_gn_sc" style="display: none;">
+                        <i class="iconfont icon-shanchu1 i_sc_tb"></i>
+                    </div>
+                    <!-- 添加按钮 -->
+                    <div class="dhr_shezhi_gn_tj">
+                        <i class="iconfont icon-tianjia1 i_tj_tb"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 导航栏修改或添加页面 -->
+            <div class="dhr_xg_tj" style="display: none;">
+                <!-- 输入框 -->
+                <input type="text" class="dhr_srk" placeholder="请输入名称(1~10)" maxlength="20">
+                <!-- 确认框 -->
+                <div class="dhr_qrk">↵</div>
+            </div>
+
+            <!-- 链接修改或添加页面 -->
+            <div class="lj_xg_tj" style="display: none;">
+                <input type="text" class="lj_srk_tpid " placeholder="图片路径">
+                <input type="text" class="lj_srk_mc" placeholder="名字 (必填)">
+                <input type="text" class="lj_srk_zsm" placeholder="注释">
+                <input type="text" class="lj_srk_wzid" placeholder="网址路径 / 本地路径 (必填)">
+                <input type="text" class="lj_srk_xzid" placeholder="下载路径">
+                <div class="jl_qrk">添加<span class="jl_qrk_fh">↵</span></div>
+                <i class="iconfont icon-fuzhi lj_xg_tj_bdtj" style="display: none;">
+                    <div class="lj_xg_tj_bdtj_wz">匹配添加已有链接</div>
+                </i>
+            </div>
+
+            <!-- 创建注册表 -->
+            <i class="iconfont icon-yingyongzhongxin lj_zcb_i"><div class="lj_zcb_i_wz">创建注册表</div></i>
+            <div class="lj_zcb_ym" style="display: none;">
+                <input class="lj_zcb_name" type="text" placeholder=" 命名 ( 由 [a-z] [A-Z] “-” 组成 )">
+                <input class="lj_zcb_dizhi" type="text" placeholder=" 本地.exe/.com文件路径">
+                <div class="lj_zcb_tx">方法:下载注册表后运行注册表进行创建,打开路径为(Sku-命名:)<br>注意:命名和文件路径暂不支持中文<br>中文需手动修改reg编码为utf-16le,否则无效创建</div>
+                <div class="lj_zcb_qr">下载注册表</div>
+                <div class="ls_zcb_kjj">查看历史注册表</div>
+            </div>
+
+        </div>
+
+        <!-- 留言页面 -->
+        <div class="nrmaxs nrmaxs2" style="display: none;">
+
+            <!-- 毛背景 -->
+            <div class="liu_yan_mao_bo_li"></div>
+
+            <div class="liu_yan">
+
+                <!-- 输出框 -->
+                <div class="liu_yan_top">
+                    <div class="liu_yan_top_min">
+
+                    </div>
+                </div>
+
+                <!-- 输入框 -->
+                <div class="liu_yan_bottom">
+                    <textarea class="liu_yan_srk"></textarea>
+                </div>
+
+                <!-- 发送框 -->
+                <div class="liu_yan_button">发送(S)</div>
+
+                <!-- 筛选框 -->
+                <div class="liu_yan_sxuan"><i class="iconfont icon-ai248 i_liu_yan_sxuan_tp"></i></div>
+
+                <!-- 全局设置按键 -->
+                <div class="liu_yan_shezhi_gn" style="display: none;">
+                    <!-- 设置按钮 -->
+                    <div class="liu_yan_shezhi_gns">
+                        <!-- 三角形 -->
+                        <div class="liu_yan_s_jiao_xing"></div>
+                        <!-- 标记按钮 -->
+                        <div class="liu_yan_shezhi_gn_biaoji">
+                            <i class="iconfont icon-biaoqian i_biaoji_tb"></i>
+                        </div>
+                        <!-- 重命名按钮 -->
+                        <div class="liu_yan_shezhi_gn_cmm">
+                            <i class="iconfont icon-edit i_cmm_tb"></i>
+                        </div>
+                        <!-- 删除按钮 -->
+                        <div class="liu_yan_shezhi_gn_sc">
+                            <i class="iconfont icon-shanchu1 i_sc_tb"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 图片编辑 -->
+                <i class="iconfont icon-tupian i_liu_yan_tpbc_tp"></i>
+
+                <!-- 视频编辑 -->
+                <i class="iconfont icon-shipin2 i_liu_yan_spbc_tp"></i>
+
+                <!-- 音乐编辑 -->
+                <i class="iconfont icon-yinle2 i_liu_yan_yybc_tp"></i>
+
+                <!-- 链接编辑 -->
+                <i class="iconfont icon-lianjie i_liu_yan_ljbc_tp"></i>
+
+                <!-- 网站编辑 -->
+                <i class="iconfont icon-guanfangwangzhan i_liu_yan_wzbc_tp"></i>
+
+                <!-- 留言搜索框 -->
+                <div class="ji_ru_ssk_max">
+                    <input type="text" class="input_ji_ru_srk" placeholder=" 搜索相关记录 / Ctrl + ?">
+                    <div class="input_ji_ru_ss"><i class="iconfont icon-sousuo i_liu_yan_ss_tp"></i></div>
+                </div>
+
+                <!-- 留言全部删除框 -->
+                <div class="liu_yan_scsy" style="display: none;">
+                    <div class="liu_yan_scsy_wz">注意: 即将删除所有记录</div>
+                    <div class="liu_yan_scsy_qr">确定</div>
+                    <div class="liu_yan_scsy_qx">取消</div>
+                </div>
+
+                <!-- 滚动条 -->
+                <div class="liuyan_gundontiao_max">
+                    <div class="liuyan_gundontiao_min"></div>
+                </div>
+
+            </div>
+
+            <!-- 筛选选项 -->
+            <div class="liu_yan_sxuan_div" style="display: none;">
+                <!-- 综合 -->
+                <div class="liu_yan_sxuan_s liu_yan_sxuan_zh">综合</div>
+                <!-- 未标记 -->
+                <div class="liu_yan_sxuan_s liu_yan_sxuan_wbj">未标记<span> 0</span></div>
+                <!-- 标记 -->
+                <div class="liu_yan_sxuan_s liu_yan_sxuan_bj">标记<span> 0</span></div>
+                <!-- 删除所有 -->
+                <div class="liu_yan_sxuan_s liu_yan_sxuan_sc">删除所有</div>
+            </div>
+
+        </div>
+
+        <!-- 设置页面 -->
+        <div class="nrmaxs nrmaxs3" style="display: none;">
+            <div class="shezhi_max">
+
+                <!-- 所有设置入口 -->
+                <div class="shezhi_min" style="display: block;">
+                    <div class="shezhi_mins shezhi_bzsz">更换壁纸</div>
+                    <div class="shezhi_mins shezhi_ztfg">主题风格</div>
+                    <div class="shezhi_mins shezhi_tianqi">自定义场景</div>
+                    <div class="shezhi_mins shezhi_ztsz">字体样式</div>
+                    <div class="shezhi_mins shezhi_bjsz">背景属性</div>
+                    <div class="shezhi_mins shezhi_rgb_j">传统颜色集</div>
+                    <div class="shezhi_mins shezhi_bfsz">备份 / 恢复</div>
+                    <div class="shezhi_mins shezhi_drmm">登入管理 / 登入密码</div>
+                    <div class="shezhi_mins shezhi_daoru">导入 / 导出</div>
+                    <div class="shezhi_mins shezhi_lszcb">历史注册表</div>
+                    <div class="shezhi_mins shezhi_ssjl">历史搜索记录</div>
+                    <div class="shezhi_mins shezhi_sscl">搜索策略</div>
+                    <div class="shezhi_mins shezhi_synr">更换首页内容</div>
+                    <div class="shezhi_mins shezhi_sp_xp">休眠 / 锁定</div>
+                    <div class="shezhi_mins shezhi_cdcsh">存档初始化</div>
+                    <div class="shezhi_mins shezhi_klm">口令码</div>
+                    <div class="shezhi_mins shezhi_gywm">关于 S-ku</div>
+
+                    <!-- 滚动条 -->
+                    <div class="shezhi_max_gundontiao_max">
+                        <div class="shezhi_max_gundontiao_min"></div>
+                    </div>
+                </div>
+
+                <!-- 壁纸 -->
+                <div class="shezhi_ym shezhi_bzsz_ym" style="display: none;">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>壁纸</div>
+                    <div class="bzsz_max">
+                        <div class="bzsz_tj">+</div>
+                        <div class="bzsz_tj bzsz_sj">Random</div>
+                    </div>
+                    <!-- 添加页面 -->
+                    <div class="bzsz_tj_ym" style="display: none;">
+                        <div class="bzsz_tj_ym_TP"></div>
+                        <input type="text" class="input_bzlj" placeholder=" URL">
+                        <div class="bzsz_tj_anniu">添加</div>
+                    </div>
+                    <!-- 下上 -->
+                    <div class="bizhi_gundon bizhi_gundon1">↓</div>
+
+                    <!-- 滚动条 -->
+                    <div class="sheshi_ym_gundontiao_max bizhi_gundontiao_max">
+                        <div class="sheshi_ym_gundontiao_min bizhi_gundontiao_min"></div>
+                    </div>
+                </div>
+
+                <!-- 主题风格  -->
+                <div class="shezhi_ym shezhi_ztfg_ym">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>主题风格 ( 点击应用 / 右击删除 ) ( 🛈部分内容需要刷新生效 )</div>
+                    <div class="dqzttj">保存当前风格</div>
+                    <!-- 下上 -->
+                    <div class="bizhi_gundon bizhi_gundon6">↓</div>
+                    <div class="shezhi_ym_max">
+
+                    </div>
+
+                    <!-- 滚动条 -->
+                    <div class="sheshi_ym_gundontiao_max ztfg_gundontiao_max">
+                        <div class="sheshi_ym_gundontiao_min ztfg_gundontiao_min"></div>
+                    </div>
+
+                    <!-- 添加页面 -->
+                    <div class="ztfg_tj_ym" style="display:none;">
+                        <input type="text" placeholder="名字" maxlength="4" class="ztfg_tj_ym_name">
+                        <div class="ztfg_tj_ym_qr">➤</div>
+                    </div>
+                </div>
+
+                <!-- 天气 -->
+                <div class="shezhi_ym shezhi_tianqi_ym" style="display: none;">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>场景</div>
+                    <div class="tianqi_max">
+                        <!-- 天晴 -->
+                        <div class="tianqi_s tianqi_qt" data-tianqi-num="0"><i class="iconfont icon-lieri"></i></div>
+                        <!-- 小雨 -->
+                        <div class="tianqi_s tianqi_xy" data-tianqi-num="1"><i class="iconfont icon-shuidi"></i></div>
+                        <!-- 大雨 -->
+                        <div class="tianqi_s tianqi_dy" data-tianqi-num="2"><i class="iconfont icon-shuidi1"></i></div>
+                        <!-- 小雪 -->
+                        <div class="tianqi_s tianqi_xx" data-tianqi-num="3"><i class="iconfont icon-xiaoxue"></i></div>
+                        <!-- 大雪 -->
+                        <div class="tianqi_s tianqi_dx" data-tianqi-num="4"><i class="iconfont icon-baoxue"></i></div>
+                    </div>
+                </div>
+
+                <!-- 字体 -->
+                <div class="shezhi_ym shezhi_ztsz_ym" style="display: none;">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>字体设置 ( 🛈部分字体需要刷新生效 )</div>
+                    <div class="ztsz_ztys_max">
+                        <div class="ztsz_ztys">字体颜色:</div>
+                        <input type="color" class="input_color input_color1">
+                    </div>
+                    <div class="ztsz_ztys_max">
+                        <div class="ztsz_ztys">重字体颜色:</div>
+                        <input type="color" class="input_color input_color2" value="#FFD500">
+                        <div class="ztsz_ztys_ts">🛈部分字体需要刷新生效</div>
+                    </div>
+                    <div class="ztsz_ztys_chongzhi">
+                        <div class="ztsz_chongzhi">重置</div>
+                    </div>
+                </div>
+
+                <!-- 背景 -->
+                <div class="shezhi_ym shezhi_bjsz_ym" style="display: none;">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>背景设置 ( 🛈部分背景需要刷新生效 )</div>
+                    <div class="ztsz_ztys_max">
+                        <div class="ztsz_ztys">背景颜色:</div>
+                        <input type="color" class="input_color input_color3">
+                    </div>
+                    <div class="ztsz_ztys_max">
+                        <div class="ztsz_ztys">背景透明度:</div>
+                        <input type="range" class="input_tmd input_tmd1">
+                        <div class="input_tmd_z"></div>
+                    </div>
+                    <div class="ztsz_ztys_max">
+                        <div class="bjk_xzk"></div>
+                        <div class="ztsz_ztys">背景框颜色:</div>
+                        <input type="color" class="input_color input_color4">
+                    </div>
+                    <div class="ztsz_ztys_max">
+                        <div class="ztsz_ztys">背景框透明度:</div>
+                        <input type="range" class="input_tmd input_tmd2">
+                        <div class="input_tmd_z2"></div>
+                    </div>
+                    <div class="ztsz_ztys_max">
+                        <div class="ztsz_ztys">毛玻璃效果:</div>
+                        <div class="mblxg_px"><input type="number" class="mblxg_px_in"> PX ( 1 - 100 )</div>
+                        <div class="mblxg"></div>
+                    </div>
+                    <div class="ztsz_ztys_chongzhi">
+                        <div class="bjsz_chongzhi">重置</div>
+                    </div>
+                </div>
+
+                <!-- 传统颜色集 -->
+                <div class="shezhi_ym shezhi_rgb_j_ym" style="display: none;">
+                    <div class="bizhi_gundon bizhi_gundon5">↓</div>
+                    <div class="shezhi_rgb_qbcz">重置</div>
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>传统颜色集</div>
+                    <div class="grb_j_max">
+                        <!-- ..... -->
+                    </div>
+                    <div class="rgbj_yy rgbj_yy_zt">
+                        <div class="rgbj_yy_fxk rgbj_y_fxk_zt"></div>
+                        <div class="rgbj_yy_fxk_wz">字体</div>
+                    </div>
+                    <div class="rgbj_yy rgbj_yy_zzt">
+                        <div class="rgbj_yy_fxk rgbj_yy_fxk_zzt"></div>
+                        <div class="rgbj_yy_fxk_wz">重体</div>
+                    </div>
+                    <div class="rgbj_yy rgbj_yy_nrbj">
+                        <div class="rgbj_yy_fxk rgbj_yy_fxk_nrbj"></div>
+                        <div class="rgbj_yy_fxk_wz">背景</div>
+                    </div>
+                    <div class="rgbj_yy rgbj_yy_bk">
+                        <div class="rgbj_yy_fxk rgbj_yy_fxk_bk"></div>
+                        <div class="rgbj_yy_fxk_wz">边框</div>
+                    </div>
+                    <div class="rgbj_yy rgbj_yy_bz">
+                        <div class="rgbj_yy_fxk rgbj_yy_fxk_bz"></div>
+                        <div class="rgbj_yy_fxk_wz">壁纸</div>
+                    </div>
+
+                    <!-- 滚动条 -->
+                    <div class="sheshi_ym_gundontiao_max ctysj_gundontiao_max">
+                        <div class="sheshi_ym_gundontiao_min ctysj_gundontiao_min"></div>
+                    </div>
+                </div>
+
+                <!-- 存档初始化 -->
+                <div class="shezhi_ym shezhi_cdcsh_ym" style="display: none;">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>存档初始化</div>
+                    <div class="cdcsh_nr">将清空所有修改后的记录<br>注意备份!</div>
+                    <div class="cdcsh_click">存档初始化</div>
+                    <div class="cdcsh_click_lxdj"></div>
+                </div>
+
+                <!-- 备份 -->
+                <div class="shezhi_ym shezhi_bfsz_ym" style="display: none;">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>备份 / 恢复</div>
+                    <div class="bfsz_sccd">备份</div>
+                    <div class="bfsz_xzcd">下载备份</div>
+                    <div class="bfsz_zdbf_qrk"></div>
+                    <div class="bfsz_zdbf_wz">每次打开自动上传一次</div>
+                </div>
+
+                <!-- 设置密码 -->
+                <div class="shezhi_ym shezhi_drmm_ym" style="display: none;">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>登入管理 / 登入密码</div>
+                    <div style="display: none;" class="drmm_mm_mm_max">
+                        <div class="drmm_mm">密码: </div><input type="password" class="input_drmm_mm drmm_mm_mm">
+                    </div>
+                    <div>
+                        <div class="drmm_mm">新密码: </div><input placeholder="作为登入密码或导入密钥使用" type="password" class="input_drmm_mm drmm_mm_xmm">
+                    </div>
+                    <div>
+                        <div class="drmm_mm">再次输入: </div><input type="password" class="input_drmm_mm drmm_mm_zcsr">
+                    </div>
+                    <div class="drmm_zddr">
+                        <div class="drmm_zddr_g"></div>
+                        <div class="drmm_zddr_wb">登入后<input type="number" class="drmm_mmdr_sj">分钟内保持登录状态(免密登入)</div>
+                    </div>
+                    <div class="drmm_mm_qr">确定</div>
+                </div>
+
+                <!-- 导入/导出 -->
+                <div class="shezhi_ym shezhi_daoru_ym" style="display: none;">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>导入 / 导出</div>
+                    <div class="daoru_ym_dc">导出</div>
+                    <div class="daoru_ym_jmdc">加密导出</div>
+                    <div class="daoru_ym_dr">导入</div>
+                    <div class="daoru_ym_dr_mmym" style="display: none;">
+                        <input type="text" placeholder="导入中的密钥" class="daoru_ym_my">
+                        <div class="daoru_ym_dr_mmym_qr">➤</div>
+                    </div>
+                    <div class="daoru_ym_bendi">导入本地</div>
+                    <div class="daoru_ym_bendi_click">查看详细本地导出信息</div>
+                    <input type="text" placeholder="拖入文件 / 导入模块 / 密钥 / 网址" class="daoru_ym_sc">
+                    <div class="daoru_ym_sc_zishu">输入 0 位数</div>
+                </div>
+
+                <!-- 导出信息页面 -->
+                <div class="shezhi_ym shezhi_daoru_bendi_ym" style="display: none;">
+                    <div class="bizhi_gundon bizhi_gundon2">↓</div>
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>本地导出信息</div>
+                    <div class="daorubendi_max_hd">
+                        <div class="daorubendi_min">
+                            <!-- sssss -->
+                        </div>
+                    </div>
+
+                    <!-- 滚动条 -->
+                    <div class="sheshi_ym_gundontiao_max daoru_bendi_gundontiao_max">
+                        <div class="sheshi_ym_gundontiao_min daoru_bendi_gundontiao_min"></div>
+                    </div>
+                </div>
+
+                <!-- 历史注册表 -->
+                <div class="shezhi_ym lszcb_ym" style="display: none;">
+                    <div class="bizhi_gundon bizhi_gundon3">↓</div>
+                    <div class="zh_scanniu">⇆</div>
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>历史注册表</div>
+                    <div class="ssjl_max2">
+                        <div class="ssjl_min2">
+                            <!-- sssss -->
+                        </div>
+                    </div>
+                    <div class="lszcb_yjxz">一键合并下载</div>
+                    <div class="lszcb_yjsc">一键合并删除</div>
+                    <div class="lszcb_yjqk" style="display: none;">清空历史</div>
+
+                    <!-- 滚动条 -->
+                    <div class="sheshi_ym_gundontiao_max lszcb_gundontiao_max">
+                        <div class="sheshi_ym_gundontiao_min lszcb_gundontiao_min"></div>
+                    </div>
+                </div>
+
+                <!-- 历史搜索记录 -->
+                <div class="shezhi_ym shezhi_ssjl_ym" style="display: none;">
+                    <div class="bizhi_gundon bizhi_gundon4">↓</div>
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>历史搜索记录 ( 点击搜索 / 右击删除 )</div>
+                    <div class="ssjl_max">
+                        <div class="ssjl_min">
+                            <!-- sssssssss -->
+                        </div>
+                    </div>
+                    <!-- 删除按钮 -->
+                    <i class="iconfont icon-shanchu1 i_ssjl_sc_tb"></i>
+                    <!-- 添加按钮 -->
+                    <i class="iconfont icon-tianjia i_ssjl_tj_tb" style="display: none;"></i>
+
+                    <!-- 滚动条 -->
+                    <div class="sheshi_ym_gundontiao_max lsssjl_gundontiao_max">
+                        <div class="sheshi_ym_gundontiao_min lsssjl_gundontiao_min"></div>
+                    </div>
+                </div>
+
+                <!-- 搜索策略 -->
+                <div class="shezhi_ym shezhi_sscl_ym" style="display: none;">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>搜索策略</div>
+                    <div class="sscl_max_s">
+                        <div class="sscl_xzk" data-ssclnum="0"></div>
+                        <div class="sscl_mz">模糊匹配</div>
+                        <div class="sscl_js">ab => abcd | cb => abcd | abb !=> abcd</div>
+                    </div>
+                    <div class="sscl_max_s">
+                        <div class="sscl_xzk" data-ssclnum="1"></div>
+                        <div class="sscl_mz">精确匹配</div>
+                        <div class="sscl_js">ab => abcd | bc => abcd | cb !=> abcd</div>
+                    </div>
+                    <div class="sscl_max_s">
+                        <div class="sscl_xzk" data-ssclnum="2"></div>
+                        <div class="sscl_mz">完全匹配</div>
+                        <div class="sscl_js">abcd => abcd | abc !=> abcd</div>
+                    </div>
+                </div>
+
+                <!-- 自定义首页内容 -->
+                <div class="shezhi_ym shezhi_synr_ym" style="display: none;">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>更换首页内容</div>
+                    <div class="ztfg_s sy_nr_xz3">空白页 ( 流畅 )</div>
+                    <div class="ztfg_s sy_nr_xz1">解压雪球 ( 基础 )</div>
+                    <div class="ztfg_s sy_nr_xz2">动态内容 ( 发烧级! )</div>
+                    <div class="ztfg_s sy_nr_xz4">待发布...</div>
+                </div>
+
+                <!-- 锁屏 -->
+                <div class="shezhi_ym shezhi_sp_xp_ym" style="display: none;">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>休眠与锁定 ( 取决与您是否设置密码 )</div>
+                    <div class="shezhi_sp_xp_max">
+                        <div class="shezhi_sp_xp_min1">无操作</div>
+                        <input class="shezhi_sp_xp_min2" type="number">
+                        <div class="shezhi_sp_xp_min3">分钟后自动 休眠/锁定</div>
+                    </div>
+                </div>
+
+                <!-- 口令码 -->
+                <div class="shezhi_ym shezhi_klm_ym" style="display: none;">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>口令码</div>
+                    <input type="text" class="klm_srk">
+                    <div class="klm_qr">➤</div>
+                </div>
+
+                <!-- 关于 -->
+                <div class="shezhi_ym shezhi_gywm_ym" style="display: none;">
+                    <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>关于我们</div>
+                    <div class="gywm_max_s">
+                        <div class="gywm_l ">版本:</div>
+                        <div class="gywm_r gywm_ban_ben"></div>
+                    </div>
+                    <div class="gywm_max_s">
+                        <div class="gywm_l">存储:</div>
+                        <div class="gywm_r">所有数据存储在浏览器localStorage</div>
+                    </div>
+                    <div class="gywm_max_s">
+                        <div class="gywm_l">剩余内存:</div>
+                        <div class="gywm_r gywm_nczbl"></div>
+                    </div>
+                    <div class="gywm_max_s">
+                        <div class="gywm_l">兼容:</div>
+                        <div class="gywm_r">PC端 1920x1080 最佳</div>
+                    </div>
+                    <div class="gywm_max_s">
+                        <div class="gywm_l">使用次数:</div>
+                        <div class="gywm_r gywm_ci_shu"></div>
+                    </div>
+                    <!-- htsp -->
+                    <img class="WGS_HTSP" src="" alt="" style="display: none;">
+                    <div class="WGS_HTSP_S" style="display: none;"></div>
+                    <input type="text" class="WGS_HTSP_TJ" style="display: none;"></input>
+                    <div class="htsp_qjss_jdt" style="display: none;">
+                        <div class="htsp_qjss_jdt2"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 引擎 -->
+    <div class="so_yq_s" style="display: none;">
+        <div class="so_yq_s_sjx"></div>
+        <div class="so_yq_bing so_yqs" date_yq_num="必应"></div>
+        <div class="so_yq_baidu so_yqs" date_yq_num="百度"></div>
+        <div class="so_yq_sogou so_yqs" date_yq_num="搜狗"></div>
+        <div class="so_yq_360 so_yqs" date_yq_num="360"></div>
+        <div class="so_yq_douyin so_yqs" date_yq_num="抖音"></div>
+        <div class="so_yq_bzhan so_yqs" date_yq_num="B站"></div>
+        <div class="so_yq_weibo so_yqs" date_yq_num="微博"></div>
+        <div class="so_yq_taobao so_yqs" date_yq_num="淘宝"></div>
+        <div class="so_yq_jingdong so_yqs" date_yq_num="京东"></div>
+        <div class="so_yq_zhihu so_yqs" date_yq_num="知乎"><span style="color:rgb(37, 37, 146);">知乎</span></div>
+        <div class="so_yq_sm so_yqs" date_yq_num="神马"></div>
+        <div class="so_yq_toutiao so_yqs" date_yq_num="头条"></div>
+        <div class="so_yq_zguo so_yqs" date_yq_num="中国"></div>
+        <div class="so_yq_guge so_yqs" date_yq_num="谷歌"><span style="color:dodgerblue;">G</span><span style="color:rgb(255, 0, 0);">o</span><span style="color:rgb(255, 204, 0);">o</span><span style="color:dodgerblue;">g</span><span style="color:rgb(81, 171, 81);">l</span><span style="color:rgb(255, 0, 0);">e</span></div>
+    </div>
+
+    <!-- 登录页面 -->
+    <div class="drym_max" style="display: none;">
+        <div class="drym_min">
+            <div class="drym_tx"></div>
+            <input type="password" class="imput_drym_mm" placeholder="  输入密码">
+            <div class="drym_dr">➤</div>
+        </div>
+        <!-- 每日一言 -->
+        <div class="mryy"></div>
+    </div>
+
+    <!-- 头像上传 -->
+    <div class="top_tou_xian_sc" style="display: none;">
+        <div class="tou_xian_tp"></div>
+        <input type="text" class="input_tou_xian" placeholder=" URL">
+        <div class="tou_xian_qr">上传</div>
+    </div>
+
+    <!-- 版本显示 -->
+    <div class="max_bbxs"></div>
+    <div class="max_bbxs2"></div>
+
+    <!-- root -->
+    <div class="max_root"></div>
+
+    <!-- 内存显示 -->
+    <div class="max_ncxs"></div>
+
+    <!-- 网络状态 -->
+    <div class="sku_wlzt"></div>
+
+    <!-- 音乐页面 -->
+    <div class="music_ym">
+        <!-- 隐身播放器 -->
+        <audio class="music_bfq" src="https:"></audio>
+        <!-- 上部分 -->
+        <div class="music_hzmax">
+            <div class="music_min">
+
+            </div>
+
+            <!-- 滚动条 -->
+            <div class="music_ym_gundontiao_max">
+                <div class="music_ym_gundontiao_min"></div>
+            </div>
+        </div>
+        <!-- 下部分 -->
+        <div class="music_bottom_max">
+            <!-- 滑块 -->
+            <input class="music_bottom_hk music_bottom_hk2" type="range" class="input_tmd input_tmd1">
+            <!-- 总时间 -->
+            <div class="music_boyyom_zsj">0:00</div>
+            <!-- 到时间 -->
+            <div class="music_boyyom_sssj">0:00 /</div>
+            <!-- 歌名 -->
+            <div class="music_boyyom_gm"></div>
+            <!-- 开始/暂停 -->
+            <i class="iconfont icon-kaishi3 i_music_boyyom_ks"></i>
+            <!-- 下一首 -->
+            <i class="iconfont icon-xiayige i_music_boyyom_xys"></i>
+            <!-- 上一首 -->
+            <i class="iconfont icon-xiayige i_music_boyyom_sys"></i>
+            <!-- 播放顺序 -->
+            <i class="iconfont icon-shunxubofang i_music_boyyom_bfsx"></i>
+            <!-- 声音 -->
+            <i class="iconfont icon-shengyin i_music_boyyom_sy"></i>
+            <!-- 声音页面 -->
+            <div class="music_boyyom_yj">
+                <input class="music_bottom_hk music_bottom_hk3" type="range" class="input_tmd input_tmd1">
+            </div>
+            <!-- 添加按钮 -->
+            <i class="iconfont icon-tianjia i_music_boyyom_tj"></i>
+        </div>
+    </div>
+
+    <!-- 音乐添加页面 -->
+    <div class="music_boyyom_tj_ym">
+        <audio class="music_bfq2" src="" controls></audio>
+        <input class="music_tjym_mz" type="text" placeholder="歌名">
+        <input class="music_tjym_url" type="text" placeholder="URL">
+        <div class="music_tjym_qd">添加</div>
+    </div>
+
+    <!-- 搜索补全页面 -->
+    <div class="ssbqym" style="display: none;">
+        <div class="ssbqym_max">
+            <div class="ssbqym_min">
+                <!-- sss -->
+            </div>
+        </div>
+
+        <!-- 滚动条 -->
+        <div class="ssbqym_gundontiao_max">
+            <div class="ssbqym_gundontiao_min"></div>
+        </div>
+    </div>
+
+    <!-- 鼠标 -->
+    <div class="su_biao">◈</div>
+
+    <!-- 3D动态内容 -->
+    <div class="sd_dtnr_max" style="display: none;">
+        <div class="sd_dtnr_min"></div>
+    </div>
+
+    <!-- 提示音 -->
+    <audio class="sku_tsy" src="https://pic.ibaotu.com/00/25/22/14B888piCpnZ.mp3"></audio>
+    <audio class="sku_tsy" src="https://img.tukuppt.com/newpreview_music/09/04/07/5c8b02776d58965550.mp3"></audio>
+
+</body>
+
+</html>
