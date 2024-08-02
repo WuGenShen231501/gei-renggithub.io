@@ -1762,6 +1762,11 @@ var sy_djs_txl = document.querySelector('.sy_djs_txl');
 sy_djs_txl.addEventListener('click', function(e) {
     sy_dw_richen.click();
 });
+var sy_djs_txl2 = document.querySelector('.sy_djs_txl2');
+sy_djs_txl2.addEventListener('click', function(e) {
+    sy_dw_richen.click();
+});
+
 var sy_djs_txl_jsq;
 sy_djs_txl_jsq = setInterval(function() {
     var sy_djs_r_s_one = document.querySelectorAll('.sy_djs_r_s')[0];
@@ -1783,6 +1788,27 @@ sy_djs_txl_jsq = setInterval(function() {
         }
 
         sy_djs_txl.innerHTML = nr;
+    }
+
+    var sy_djs_r_s_one = document.querySelectorAll('.sy_djs_r_s')[1];
+    if (sy_djs_r_s_one !== undefined) {
+        var sy_djs_r_t_1 = document.querySelectorAll('.sy_djs_r_s')[1].querySelector('.sy_djs_r_t');
+        var sy_djs_r_s_1 = document.querySelectorAll('.sy_djs_r_time')[1].innerHTML;
+        var nr = '';
+
+        if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1 == '时间已到<br>超过三天自动删除') {
+            sy_djs_txl2.style.display = 'block';
+
+            nr = '“' + sy_djs_r_t_1.innerHTML + '”时间已到 ↓';
+        } else if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.indexOf('后') == -1 && sy_djs_r_s_1.indexOf('明') == -1) {
+            sy_djs_txl2.style.display = 'block';
+
+            nr = '距离 “' + sy_djs_r_t_1.innerHTML + '”只有 ' + sy_djs_r_s_1 + ' ↓';
+        } else {
+            sy_djs_txl2.style.display = 'none';
+        }
+
+        sy_djs_txl2.innerHTML = nr;
     }
 }, 200);
 
@@ -1841,6 +1867,27 @@ top_dhl_S[0].addEventListener('click', function(e) {
             }
 
             sy_djs_txl.innerHTML = nr;
+        }
+
+        var sy_djs_r_s_one = document.querySelectorAll('.sy_djs_r_s')[1];
+        if (sy_djs_r_s_one !== undefined) {
+            var sy_djs_r_t_1 = document.querySelectorAll('.sy_djs_r_s')[1].querySelector('.sy_djs_r_t');
+            var sy_djs_r_s_1 = document.querySelectorAll('.sy_djs_r_time')[1].innerHTML;
+            var nr = '';
+
+            if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1 == '时间已到<br>超过三天自动删除') {
+                sy_djs_txl2.style.display = 'block';
+
+                nr = '“' + sy_djs_r_t_1.innerHTML + '”时间已到 ↓';
+            } else if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.indexOf('后') == -1 && sy_djs_r_s_1.indexOf('明') == -1) {
+                sy_djs_txl2.style.display = 'block';
+
+                nr = '距离 “' + sy_djs_r_t_1.innerHTML + '”只有 ' + sy_djs_r_s_1 + ' ↓';
+            } else {
+                sy_djs_txl2.style.display = 'none';
+            }
+
+            sy_djs_txl2.innerHTML = nr;
         }
     }, 200);
 });

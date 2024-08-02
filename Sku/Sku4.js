@@ -1754,20 +1754,35 @@ daoru_ym_jmdc.addEventListener('click', function(e) {
 
 });
 
-// 统计字数
+// 统计字数和来源
 var daoru_ym_sc_zishu = document.querySelector('.daoru_ym_sc_zishu');
+var daoru_ym_sc_laiyuan = document.querySelector('.daoru_ym_sc_laiyuan');
 
 function daoru_ym_sc_tjzs() {
     if (daoru_ym_sc.value.length < 15000) {
-        daoru_ym_sc_zishu.innerText = '输入 ' + daoru_ym_sc.value.length + ' 位数';
+        daoru_ym_sc_zishu.innerText = '导入 ' + daoru_ym_sc.value.length + ' 位数';
+        daoru_ym_dr.innerText = '导入';
+
+        daoru_ym_sc_laiyuan.innerText = '';
     } else {
         if (daoru_ym_sc.value.length > jisuan_bendidx) {
-            daoru_ym_sc_zishu.innerText = '输入 ' + daoru_ym_sc.value.length + ' 位数 > 本地 ' + jisuan_bendidx + ' 位数';
+            daoru_ym_sc_zishu.innerText = '导入 ' + daoru_ym_sc.value.length + ' 位数 > 当前 ' + jisuan_bendidx + ' 位数';
+            daoru_ym_dr.innerText = '导入';
         } else if (daoru_ym_sc.value.length == jisuan_bendidx) {
-            daoru_ym_sc_zishu.innerText = '输入 ' + daoru_ym_sc.value.length + ' 位数 = 本地 ' + jisuan_bendidx + ' 位数';
+            daoru_ym_sc_zishu.innerText = '导入 ' + daoru_ym_sc.value.length + ' 位数 = 当前 ' + jisuan_bendidx + ' 位数';
+            daoru_ym_dr.innerText = '导入';
         } else {
-            daoru_ym_sc_zishu.innerText = '输入 ' + daoru_ym_sc.value.length + ' 位数 < 本地 ' + jisuan_bendidx + ' 位数\n(当前数据量较小' + (jisuan_bendidx - daoru_ym_sc.value.length) + '位,建议谨慎操作导入)';
+            daoru_ym_sc_zishu.innerText = '导入 ' + daoru_ym_sc.value.length + ' 位数 < 当前 ' + jisuan_bendidx + ' 位数\n(当前数据量较小' + (jisuan_bendidx - daoru_ym_sc.value.length) + '位,建议谨慎操作导入)';
+            daoru_ym_dr.innerText = '导入 !';
         }
+
+        var daoru_laiyuan_sj = daoru_ym_sc.value.substring(daoru_ym_sc.value.length - 21, daoru_ym_sc.value.length - 2);
+        if (daoru_laiyuan_sj[0] == 'ʂ') {
+            daoru_laiyuan_sj = WGS_zfc_jiami(daoru_laiyuan_sj, miyao);
+        } else if (daoru_laiyuan_sj[0] !== '2') {
+            daoru_laiyuan_sj = '未知';
+        }
+        daoru_ym_sc_laiyuan.innerText = '来源[ ' + daoru_laiyuan_sj + ' ]';
     }
 }
 daoru_ym_sc.addEventListener('input', function(e) {

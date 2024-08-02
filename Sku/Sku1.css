@@ -704,6 +704,14 @@
         left: 76px;
     }
     
+    .sy_djs_txl_max2 {
+        position: absolute;
+        width: auto;
+        height: 50px;
+        bottom: 0;
+        right: 76px;
+    }
+    
     .sy_djs_txl {
         display: none;
         width: auto;
@@ -715,7 +723,21 @@
         animation: sy_djs_txl_dh 1s linear;
     }
     
-    .sy_djs_txl:hover {
+    .sy_djs_txl2 {
+        display: none;
+        width: auto;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 50px;
+        border-radius: 10px;
+        transition: 0.2s;
+        border: var(--bei_jing_kuan_true) solid var(--bei_jing_kuan_color);
+        backdrop-filter: var(--mao_bo_li);
+        animation: sy_djs_txl_dh 1s linear;
+    }
+    
+    .sy_djs_txl:hover,
+    .sy_djs_txl2:hover {
         transform: scale(1.05);
     }
     
