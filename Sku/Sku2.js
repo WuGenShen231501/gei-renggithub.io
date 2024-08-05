@@ -1,10 +1,3 @@
-// 提示音
-var sku_tsy = document.querySelectorAll('.sku_tsy');
-
-function Sku_tsy(num) {
-    sku_tsy[num].play();
-}
-
 // 所有文本超出字体浮动效果
 // function WGS_wenbengundon(qwe) {
 //     var wb = document.querySelectorAll(qwe);

@@ -1,14 +1,3 @@
-// 提示音
-var sku_tsy = document.querySelectorAll('.sku_tsy');
-
-function Sku_tsy(num) {
-    sku_tsy[num].play();
-}
-
-
-
-
-
 nrmaxs2 = document.querySelector('.nrmaxs2');
 
 // RGB转换器
@@ -395,6 +384,8 @@ liu_yan_shezhi_gn_biaoji.addEventListener('click', function() {
         }
         //标记个数刷新
         liu_yan_biaoji_gs();
+        // 提示音
+        // Sku_tsy(4);
     } else if (liu_yan_sxuan_zh.style.color == '') {
         //修改内存
         liu_yan_dx = JSON.parse(localStorage.liu_yan_dx);
@@ -414,6 +405,8 @@ liu_yan_shezhi_gn_biaoji.addEventListener('click', function() {
         }
         //标记个数刷新
         liu_yan_biaoji_gs();
+        // 提示音
+        // Sku_tsy(4);
     }
 });
 

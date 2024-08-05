@@ -675,6 +675,20 @@
         opacity: 1;
     }
     
+    .daoru_ym_duibi_click {
+        position: absolute;
+        bottom: 50px;
+        left: 332px;
+        width: auto;
+        height: auto;
+        border-bottom: 1px solid;
+        opacity: 0.5;
+    }
+    
+    .daoru_ym_duibi_click:hover {
+        opacity: 1;
+    }
+    
     .daorubendi_max_hd {
         float: left;
         width: calc(100% + 70px);
@@ -686,6 +700,15 @@
     .daorubendi_min {
         padding-top: 30px;
         position: relative;
+    }
+    
+    .duibixx_max {
+        float: left;
+        position: relative;
+        width: calc(100% + 70px);
+        height: calc(100% - 50px);
+        overflow-x: hidden;
+        overflow-y: scroll;
     }
     
     .daorubendi_s {
@@ -1408,4 +1431,275 @@
         border-radius: 5px;
         background-color: var(--zi_ti_color);
         opacity: 0.6;
+    }
+    
+    .bijiao_1_max {
+        float: left;
+        position: relative;
+        width: 700px;
+        height: 80px;
+    }
+    
+    .bijiao_2_max {
+        float: left;
+        position: relative;
+        width: 700px;
+        height: 92px;
+        border-bottom: 1px solid var(--zi_ti_color);
+    }
+    
+    .bijiao_1_input,
+    .bijiao_2_input {
+        position: absolute;
+        color: var(--zi_ti_color);
+        background-color: rgb(255, 255, 255, 0);
+        outline: none;
+        text-indent: 0.5em;
+        width: 350px;
+        height: 30px;
+        border: 0;
+        border-bottom: 1px solid var(--zi_ti_color);
+        left: 50px;
+        top: 30px;
+    }
+    
+    .bijiao_1_miyao_input,
+    .bijiao_2_miyao_input {
+        position: absolute;
+        color: var(--zi_ti_color);
+        background-color: rgb(255, 255, 255, 0);
+        outline: none;
+        text-indent: 0.5em;
+        width: 90px;
+        height: 30px;
+        border: 0;
+        border-bottom: 1px solid var(--zi_ti_color);
+        left: 414px;
+        top: 30px;
+    }
+    
+    .bijiao_1_bendi,
+    .bijiao_2_bendi {
+        position: absolute;
+        width: 50px;
+        height: 30px;
+        margin-left: 50px;
+        border: 1px solid var(--zi_ti_color);
+        border-radius: 5px;
+        background-color: var(--zi_ti_color_20);
+        line-height: 28px;
+        text-align: center;
+        transition: 0.2s;
+        right: 60px;
+        top: 30px;
+    }
+    
+    .bijiao_1_bendi:hover,
+    .bijiao_2_bendi:hover {
+        transform: scale(1.1);
+    }
+    
+    .bijiao_1_dq,
+    .bijiao_2_dq {
+        position: absolute;
+        width: 50px;
+        height: 30px;
+        margin-left: 50px;
+        border: 1px solid var(--zi_ti_color);
+        border-radius: 5px;
+        background-color: var(--zi_ti_color_20);
+        line-height: 28px;
+        text-align: center;
+        transition: 0.2s;
+        right: 130px;
+        top: 30px;
+    }
+    
+    .bijiao_1_dq:hover,
+    .bijiao_2_dq:hover {
+        transform: scale(1.1);
+    }
+    
+    .bijiao_kais {
+        position: absolute;
+        width: 60px;
+        height: 33px;
+        text-align: center;
+        line-height: 31px;
+        border: 1px solid var(--zi_ti_color);
+        border-radius: 5px;
+        background-color: var(--zi_ti_color_20);
+        transition: 0.2s;
+        right: 100px;
+        top: 8px
+    }
+    
+    .bijiao_qk {
+        position: absolute;
+        width: 60px;
+        height: 33px;
+        text-align: center;
+        line-height: 31px;
+        border: 1px solid var(--zi_ti_color);
+        border-radius: 5px;
+        background-color: var(--zi_ti_color_20);
+        transition: 0.2s;
+        right: 180px;
+        top: 8px
+    }
+    
+    .bijiao_zdhedie {
+        position: absolute;
+        width: 60px;
+        height: 33px;
+        text-align: center;
+        line-height: 31px;
+        border: 1px solid var(--zi_ti_color);
+        border-radius: 5px;
+        background-color: var(--zi_ti_color_20);
+        transition: 0.2s;
+        right: 260px;
+        top: 8px
+    }
+    
+    .bijiao_zhankai {
+        position: absolute;
+        width: 60px;
+        height: 33px;
+        text-align: center;
+        line-height: 31px;
+        border: 1px solid var(--zi_ti_color);
+        border-radius: 5px;
+        background-color: var(--zi_ti_color_20);
+        transition: 0.2s;
+        right: 340px;
+        top: 8px
+    }
+    
+    .bijiao_zhankai:hover,
+    .bijiao_zdhedie:hover,
+    .bijiao_kais:hover,
+    .bijiao_qk:hover {
+        transform: scale(1.1);
+    }
+    
+    .duibixx_min {
+        float: left;
+        position: relative;
+        width: 700px;
+    }
+    
+    .duibixx_s {
+        float: left;
+        position: relative;
+        width: 700px;
+        height: 50px;
+        border-bottom: 1px solid var(--zi_ti_color);
+        overflow: hidden;
+        transition: 0.2s;
+    }
+    
+    .duibixx_s_bt {
+        float: left;
+        width: 700px;
+        height: 50px;
+        background-color: var(--zi_ti_color_20);
+        border-bottom: 1px solid var(--zi_ti_color);
+        margin-bottom: 10px;
+        line-height: 50px;
+        font-size: 20px;
+        text-indent: 1em;
+        white-space: nowrap;
+        transition: 0.2s;
+    }
+    
+    .duibixx_s_bt:hover {
+        text-indent: 1.5em;
+    }
+    
+    .duibixx_s_bt:hover+.duibixx_s_sx {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    
+    .duibixx_s_sx {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        pointer-events: none;
+        transition: 0.2s;
+        opacity: 0.5;
+    }
+    
+    .duibixx_s_xx {
+        float: left;
+        width: 650px;
+        height: 30px;
+        overflow: hidden;
+        background-color: var(--zi_ti_color_20);
+        border: 1px solid var(--zi_ti_color);
+        border-radius: 5px;
+        margin: 0 0 10px 25px;
+        transition: 0.2s;
+    }
+    
+    .duibixx_s_xx:hover {
+        transform: scale(1.03);
+    }
+    
+    .duibixx_s_xx_bt {
+        float: left;
+        width: 650px;
+        height: 30px;
+        line-height: 28px;
+        text-indent: 0.5em;
+        border-bottom: 1px dashed var(--zi_ti_color);
+        white-space: nowrap;
+    }
+    
+    .duibixx_s_xx_bt xmp {
+        display: inline-block;
+        white-space: nowrap;
+        font-family: SimSun !important;
+    }
+    
+    .duibixx_s_xx_nr {
+        float: left;
+        width: 650px;
+        height: 30px;
+    }
+    
+    .duibixx_s_xxx {
+        float: left;
+        width: 650px;
+        height: auto;
+        padding: 10px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+    
+    .duibixx_s_xxx img {
+        max-width: 628px;
+        border-radius: 5px;
+        border: 1px solid var(--zi_ti_color);
+    }
+    
+    .duibixx_s_xxx xmp {
+        display: inline-block;
+        white-space: nowrap;
+        font-family: SimSun !important;
+    }
+    
+    .duibi_zxian {
+        position: absolute;
+        top: 76px;
+        left: 310px;
+        font-size: 25px;
+    }
+    
+    .bijiao_laiyuan {
+        position: absolute;
+        font-size: 12px;
+        top: 60px;
+        left: 50px;
     }

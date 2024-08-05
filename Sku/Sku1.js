@@ -22,6 +22,22 @@ function RGB_zhq(hex, opacity) {
 }
 
 
+// 遍历对象到数组
+function collectArrays(obj) {
+    const arrays = [];
+
+    function traverse(value) {
+        if (Array.isArray(value)) {
+            arrays.push(value);
+        } else if (typeof value === 'object' && value !== null) {
+            Object.values(value).forEach(traverse);
+        }
+    }
+    Object.values(obj).forEach(traverse);
+    return arrays;
+}
+
+
 
 // 匹配函数/不区分大小写
 function containsAllChars(str11, str22) {
