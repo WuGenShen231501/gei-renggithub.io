@@ -1956,16 +1956,17 @@ daoru_ym_dr_mmym.addEventListener('click', function(e) {
     e.stopPropagation();
 });
 daoru_ym_dr_mmym_qr.addEventListener('click', function(e) {
-    daoru_sz = JSON.parse(WGS_zfc_jiemi(daoru_ym_sc.value, miyao));
-    if (daoru_sz[19] == S_ku_jiami(daoru_ym_my.value)) {
-        daoru_sz_hs();
-    }
     if (daoru_ym_my.value == '') {
         Sku_tctx('密钥不能为空 !');
     } else {
-        Sku_tctx('密钥错误 !');
-        daoru_ym_my.value = '';
-        daoru_ym_my.focus();
+        daoru_sz = JSON.parse(WGS_zfc_jiemi(daoru_ym_sc.value, miyao));
+        if (daoru_sz[19] == S_ku_jiami(daoru_ym_my.value)) {
+            daoru_sz_hs();
+        } else {
+            Sku_tctx('密钥错误 !');
+            daoru_ym_my.value = '';
+            daoru_ym_my.focus();
+        }
     }
 });
 
@@ -2237,11 +2238,8 @@ function bendidaoru_click() {
                 var daorubendi_click = this.previousElementSibling.innerHTML + '自动保存';
                 var drnr = window.localStorage.getItem(`${daorubendi_click}`);
 
-                // 获取所有具有 'clickable' 类的元素
                 const allClickableElements = document.querySelectorAll('.daorubendi_s_yy');
-                // 找到当前被点击元素的索引
                 const clickedElementIndex = Array.from(allClickableElements).indexOf(e.target);
-
                 if (duibi_bendi == 1) {
                     bijiao_1_input.value = drnr;
                     bijiao_laiyuan1.innerText = '本地模块' + (clickedElementIndex + 1);
@@ -2249,6 +2247,7 @@ function bendidaoru_click() {
                     bijiao_2_input.value = drnr;
                     bijiao_laiyuan2.innerText = '本地模块' + (clickedElementIndex + 1);
                 }
+                duibi_zxian.innerText = '';
 
                 shezhi_min.style.display = 'none';
                 shezhi_daoru_ym.style.display = 'none';
@@ -2322,6 +2321,7 @@ bijiao_1_input.addEventListener('input', function(e) {
     } else {
         bijiao_laiyuan1.innerText = '自定义模块';
     }
+    duibi_zxian.innerText = '';
 });
 bijiao_2_input.addEventListener('input', function(e) {
     if (bijiao_2_input.value == '') {
@@ -2329,6 +2329,7 @@ bijiao_2_input.addEventListener('input', function(e) {
     } else {
         bijiao_laiyuan2.innerText = '自定义模块';
     }
+    duibi_zxian.innerText = '';
 });
 // 清空
 bijiao_qk.addEventListener('click', function(e) {
@@ -2347,12 +2348,14 @@ bijiao_1_dq.addEventListener('click', function(e) {
     bijiao_1_input.value = daoru_ym_sc.value;
     daoru_ym_sc.value = '';
     bijiao_laiyuan1.innerText = '当前模块';
+    duibi_zxian.innerText = '';
 });
 bijiao_2_dq.addEventListener('click', function(e) {
     daoru_ym_dc.click();
     bijiao_2_input.value = daoru_ym_sc.value;
     daoru_ym_sc.value = '';
     bijiao_laiyuan2.innerText = '当前模块';
+    duibi_zxian.innerText = '';
 });
 // 拖拽读取导入信息
 bijiao_1_max.addEventListener('dragover', function(e) {
@@ -2368,6 +2371,8 @@ bijiao_1_max.addEventListener('drop', function(e) {
         var wj = e.target.result;
         // 处理信息
         bijiao_1_input.value = wj;
+        bijiao_laiyuan1.innerText = '自定义模块';
+        duibi_zxian.innerText = '';
     }
 });
 bijiao_2_max.addEventListener('dragover', function(e) {
@@ -2383,6 +2388,8 @@ bijiao_2_max.addEventListener('drop', function(e) {
         var wj = e.target.result;
         // 处理信息
         bijiao_2_input.value = wj;
+        bijiao_laiyuan2.innerText = '自定义模块';
+        duibi_zxian.innerText = '';
     }
 });
 // 本地
@@ -2444,6 +2451,15 @@ bijiao_zdhedie.addEventListener('click', function(e) {
         }
     }
 });
+// 切换时间走向比较
+duibi_zxian.addEventListener('click', function(e) {
+    if (this.innerText == '↑↑↑↑') {
+        this.innerText = '↓↓↓↓';
+    } else {
+        this.innerText = '↑↑↑↑';
+    }
+    bijiao_kais.click();
+});
 // 比较
 bijiao_kais.addEventListener('click', function(e) {
     var bijiaonr1 = bijiao_1_input.value;
@@ -2463,29 +2479,35 @@ bijiao_kais.addEventListener('click', function(e) {
             bijiaonr2 = JSON.parse(WGS_zfc_jiemi(bijiaonr2, miyao));
         }
 
-        var bijiao_mm1 = bijiaonr1[19];
-        var bijiao_mm2 = bijiaonr2[19];
+        if (bijiaonr1[19] == (bijiao_1_miyao_input.value == '' ? '' : S_ku_jiami(bijiao_1_miyao_input.value)) && bijiaonr2[19] == (bijiao_2_miyao_input.value == '' ? '' : S_ku_jiami(bijiao_2_miyao_input.value))) {
+            // 基本信息显示
+            if (bijiao_laiyuan1.innerText[bijiao_laiyuan1.innerText.length - 1] !== ']') {
+                bijiao_laiyuan1.innerText = bijiao_laiyuan1.innerText + ' (' + bijiao_1_input.value.length + ') ' + '[' + bijiaonr1[bijiaonr1.length - 1] + ']';
+            }
+            if (bijiao_laiyuan2.innerText[bijiao_laiyuan2.innerText.length - 1] !== ']') {
+                bijiao_laiyuan2.innerText = bijiao_laiyuan2.innerText + ' (' + bijiao_2_input.value.length + ') ' + '[' + bijiaonr2[bijiaonr2.length - 1] + ']';
+            }
 
-        // 基本信息显示
-        if (bijiao_laiyuan1.innerText[bijiao_laiyuan1.innerText.length - 1] !== ']') {
-            bijiao_laiyuan1.innerText = bijiao_laiyuan1.innerText + ' (' + bijiao_1_input.value.length + ') ' + '[' + bijiaonr1[bijiaonr1.length - 1] + ']';
-        }
-        if (bijiao_laiyuan2.innerText[bijiao_laiyuan2.innerText.length - 1] !== ']') {
-            bijiao_laiyuan2.innerText = bijiao_laiyuan2.innerText + ' (' + bijiao_2_input.value.length + ') ' + '[' + bijiaonr2[bijiaonr2.length - 1] + ']';
-        }
+            // 时间走向
+            if (duibi_zxian.innerText == '') {
+                if (bijiaonr1[bijiaonr1.length - 1] > bijiaonr2[bijiaonr2.length - 1]) {
+                    var bijiaonr3 = JSON.parse(JSON.stringify(bijiaonr1));
+                    bijiaonr1 = JSON.parse(JSON.stringify(bijiaonr2));
+                    bijiaonr2 = JSON.parse(JSON.stringify(bijiaonr3));
 
-        // 时间走向
-        if (bijiaonr1[bijiaonr1.length - 1] > bijiaonr2[bijiaonr2.length - 1]) {
-            var bijiaonr3 = JSON.parse(JSON.stringify(bijiaonr1));
-            bijiaonr1 = JSON.parse(JSON.stringify(bijiaonr2));
-            bijiaonr2 = JSON.parse(JSON.stringify(bijiaonr3));
+                    duibi_zxian.innerText = '↑↑↑↑';
+                } else {
+                    duibi_zxian.innerText = '↓↓↓↓';
+                }
+            } else if (duibi_zxian.innerText == '↑↑↑↑') {
+                // 指定时间走向
+                var bijiaonr3 = JSON.parse(JSON.stringify(bijiaonr1));
+                bijiaonr1 = JSON.parse(JSON.stringify(bijiaonr2));
+                bijiaonr2 = JSON.parse(JSON.stringify(bijiaonr3));
+            }
 
-            duibi_zxian.innerText = '↑↑↑↑';
-        } else {
-            duibi_zxian.innerText = '↓↓↓↓';
-        }
 
-        if (bijiao_mm1 == (bijiao_1_miyao_input.value == '' ? '' : S_ku_jiami(bijiao_1_miyao_input.value)) && bijiao_mm2 == (bijiao_2_miyao_input.value == '' ? '' : S_ku_jiami(bijiao_2_miyao_input.value))) {
+
             //清空
             duibixx_min.innerHTML = '';
 
@@ -2789,9 +2811,9 @@ bijiao_kais.addEventListener('click', function(e) {
             if (bijiaonr1[17] !== bijiaonr2[17]) { //使用次数
                 bijiao_cj('其他', '使用次数', '前 ' + bijiaonr1[17] + '次\n后 ' + bijiaonr2[17] + '次\n相差 ' + (bijiaonr2[17] - bijiaonr1[17]) + '次');
             }
-            if (bijiaonr1[bijiaonr1.length - 1] !== bijiaonr2[bijiaonr2.length - 1]) { //时间
-                bijiao_cj('其他', '保存时间', '前 ' + bijiaonr1[bijiaonr1.length - 1] + '\n后 ' + bijiaonr2[bijiaonr2.length - 1]);
-            }
+            // if (bijiaonr1[bijiaonr1.length - 1] !== bijiaonr2[bijiaonr2.length - 1]) { //时间
+            //     bijiao_cj('其他', '保存时间', '前 ' + bijiaonr1[bijiaonr1.length - 1] + '\n后 ' + bijiaonr2[bijiaonr2.length - 1]);
+            // }
 
 
 
