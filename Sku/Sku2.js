@@ -89,25 +89,6 @@ function WGS_wenbengundon_dd(qwe) {
 
 
 
-// RGB转换器
-function RGB_zhq(hex, opacity) {
-    if (!opacity) {
-        let rgb = 'rgb(' + parseInt('0x' + hex.slice(1, 3)) + ', ' +
-            parseInt('0x' + hex.slice(3, 5)) + ', ' +
-            parseInt('0x' + hex.slice(5, 7)) + ')';
-        return rgb;
-    } else {
-        let rgba = 'rgba(' + parseInt('0x' + hex.slice(1, 3)) + ', ' +
-            parseInt('0x' + hex.slice(3, 5)) + ', ' +
-            parseInt('0x' + hex.slice(5, 7)) + ', ' +
-            (opacity) + ')';
-        return rgba;
-    }
-}
-
-
-
-
 // 匹配浏览器高度
 nrmaxs1 = document.querySelector('.nrmaxs1');
 dhr_xg_tj = document.querySelector('.dhr_xg_tj');
@@ -1184,6 +1165,7 @@ i_lian_jie_ss_tb.addEventListener('click', function() {
 
                     // 来源
                     var i2 = 0;
+                    var i3;
                     for (var ii = 0; ii < lian_jie_dxs_s_gs.length; ii++) {
                         var num_ss = -1;
                         for (var tt = 0; tt <= ii; tt++) {
@@ -1191,18 +1173,20 @@ i_lian_jie_ss_tb.addEventListener('click', function() {
                         }
                         if (num_ss >= i && ii >= 1) {
                             i2 = ii;
+                            i3 = lian_jie_dxs_s_gs[tt - 1] + (i - num_ss);
                             break;
                         } else if (num_ss >= i && ii == 0) {
                             i2 = ii;
+                            i3 = lian_jie_dxs_s_gs[tt - 1] + (i - num_ss);
                             break;
                         }
                     }
                     var dhr_sz = JSON.parse(localStorage.dhr_sz);
 
                     if (lian_jie_dxs['lian_jie_dxs' + i][4]) {
-                        lian_jie_rs_div.innerHTML = '<div class="lj_laiyuan">来源：' + dhr_sz[i2] + '</div><div class="lj_tp" style="background-image: url(' + lian_jie_dxs['lian_jie_dxs' + i][0] + ');"></div><div class="lj_xx"><div class="lj_xx_t">' + lian_jie_dxs['lian_jie_dxs' + i][1] + '</div><div class="lj_xx_b_2">' + lian_jie_dxs['lian_jie_dxs' + i][2] + '</div></div><div class="lj_lj"><a class="lj_lj_t" target="_blank" href="' + lian_jie_dxs['lian_jie_dxs' + i][3] + '">进入</a><a class="lj_lj_b" target="_blank" href="' + lian_jie_dxs['lian_jie_dxs' + i][4] + '">下载</a></div>';
+                        lian_jie_rs_div.innerHTML = '<div class="lj_laiyuan">来源：' + dhr_sz[i2] + ' [' + i3 + ']' + '</div><div class="lj_tp" style="background-image: url(' + lian_jie_dxs['lian_jie_dxs' + i][0] + ');"></div><div class="lj_xx"><div class="lj_xx_t">' + lian_jie_dxs['lian_jie_dxs' + i][1] + '</div><div class="lj_xx_b_2">' + lian_jie_dxs['lian_jie_dxs' + i][2] + '</div></div><div class="lj_lj"><a class="lj_lj_t" target="_blank" href="' + lian_jie_dxs['lian_jie_dxs' + i][3] + '">进入</a><a class="lj_lj_b" target="_blank" href="' + lian_jie_dxs['lian_jie_dxs' + i][4] + '">下载</a></div>';
                     } else {
-                        lian_jie_rs_div.innerHTML = '<div class="lj_laiyuan">来源：' + dhr_sz[i2] + '</div><div class="lj_tp" style="background-image: url(' + lian_jie_dxs['lian_jie_dxs' + i][0] + ');"></div><div class="lj_xx"><div class="lj_xx_t">' + lian_jie_dxs['lian_jie_dxs' + i][1] + '</div><div class="lj_xx_b_2">' + lian_jie_dxs['lian_jie_dxs' + i][2] + '</div></div><div class="lj_lj"><a class="lj_lj_t" target="_blank" href="' + lian_jie_dxs['lian_jie_dxs' + i][3] + '">进入</a></div>';
+                        lian_jie_rs_div.innerHTML = '<div class="lj_laiyuan">来源：' + dhr_sz[i2] + ' [' + i3 + ']' + '</div><div class="lj_tp" style="background-image: url(' + lian_jie_dxs['lian_jie_dxs' + i][0] + ');"></div><div class="lj_xx"><div class="lj_xx_t">' + lian_jie_dxs['lian_jie_dxs' + i][1] + '</div><div class="lj_xx_b_2">' + lian_jie_dxs['lian_jie_dxs' + i][2] + '</div></div><div class="lj_lj"><a class="lj_lj_t" target="_blank" href="' + lian_jie_dxs['lian_jie_dxs' + i][3] + '">进入</a></div>';
                     }
 
                     // 添加右击按钮修改链接功能
@@ -1837,7 +1821,7 @@ function a_click_self() {
 
 // 下载标签打开方式替换
 function a_click_self_xz() {
-    var hzm = ['.zip', '.exe'];
+    var hzm = ['.zip', '.exe', '.apk'];
     for (var p = 0; p < hzm.length; p++) {
         var className = document.querySelectorAll('a[href$="' + hzm[p] + '"]');
         for (var i = 0; i < className.length; i++) {

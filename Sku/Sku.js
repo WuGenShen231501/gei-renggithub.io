@@ -540,21 +540,7 @@ if (localStorage.tian_qi) {
     }
 }
 
-// RGB转换器
-function RGB_zhq(hex, opacity) {
-    if (!opacity) {
-        let rgb = 'rgb(' + parseInt('0x' + hex.slice(1, 3)) + ', ' +
-            parseInt('0x' + hex.slice(3, 5)) + ', ' +
-            parseInt('0x' + hex.slice(5, 7)) + ')';
-        return rgb;
-    } else {
-        let rgba = 'rgba(' + parseInt('0x' + hex.slice(1, 3)) + ', ' +
-            parseInt('0x' + hex.slice(3, 5)) + ', ' +
-            parseInt('0x' + hex.slice(5, 7)) + ', ' +
-            (opacity) + ')';
-        return rgba;
-    }
-}
+
 
 //开机字体
 if (localStorage.zi_ti_color !== '') {
@@ -787,7 +773,7 @@ setInterval(function() {
     }
     const result2 = calculateLocalStorageValueLengthAndSum();
     var sync = 1 - (((result + result2.sum) * 1) / 5242880);
-    var zgzfc = 5242880 - (result + result2.sum);
+    var zgzfc = result + result2.sum;
 
     // 转化为百分比并输出结果
     const remainingPercent = (sync * 100).toFixed(3);

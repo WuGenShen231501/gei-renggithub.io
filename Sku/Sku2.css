@@ -190,6 +190,7 @@
     border-bottom: 12px solid transparent !important;
     transform: rotate(-45deg);
     border-radius: 3px 0px 0px 0px;
+    z-index: -1;
 }
 
 .dhr_shezhi_gn_cmm {
@@ -515,10 +516,11 @@
     display: none;
     position: absolute;
     font-size: 12px;
-    transform: scale(0.9);
     opacity: 0.5;
     bottom: 2px;
-    left: -3px;
+    left: 0px;
+    white-space: nowrap;
+    text-align: left;
 }
 
 .lj_max:hover>.lj_laiyuan {

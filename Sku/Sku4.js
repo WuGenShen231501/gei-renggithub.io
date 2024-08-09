@@ -93,23 +93,6 @@ function WGS_wenbengundon(qwe, asd) {
 
 
 
-function RGB_zhq(hex, opacity) {
-    if (!opacity) {
-        let rgb = 'rgb(' + parseInt('0x' + hex.slice(1, 3)) + ', ' +
-            parseInt('0x' + hex.slice(3, 5)) + ', ' +
-            parseInt('0x' + hex.slice(5, 7)) + ')';
-        return rgb;
-    } else {
-        let rgba = 'rgba(' + parseInt('0x' + hex.slice(1, 3)) + ', ' +
-            parseInt('0x' + hex.slice(3, 5)) + ', ' +
-            parseInt('0x' + hex.slice(5, 7)) + ', ' +
-            (opacity) + ')';
-        return rgba;
-    }
-}
-
-
-
 // 匹配浏览器高度
 nrmaxs3 = document.querySelector('.nrmaxs3');
 nrmaxs3.style.marginTop = (window.innerHeight + 56 - 523 - 80) / 2 + 'px';
@@ -5137,6 +5120,20 @@ document.addEventListener('click', function() {
     ztfg_tj_ym.style.display = 'none';
     ztfg_tj_ym_name.value = '';
 });
+
+
+
+
+// 全部input全选快捷键
+var inputs = document.querySelectorAll('input');
+for (var i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.key == 'a' && document.activeElement === this) {
+            this.select();
+        }
+    });
+}
+
 
 // var sz_name = [];
 // var name_s = document.querySelectorAll('span[class="name"]');

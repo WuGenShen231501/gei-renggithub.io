@@ -239,6 +239,7 @@
     border-bottom: 12px solid transparent !important;
     transform: rotate(-45deg);
     border-radius: 3px 0px 0px 0px;
+    z-index: -1;
 }
 
 .liu_yan_shezhi_gn_biaoji {

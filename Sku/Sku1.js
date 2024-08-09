@@ -6,19 +6,31 @@ function Sku_tsy(num) {
 }
 
 // RGB转换器
+// function RGB_zhq(hex, opacity) {
+//     if (!opacity) {
+//         let rgb = 'rgb(' + parseInt('0x' + hex.slice(1, 3)) + ', ' +
+//             parseInt('0x' + hex.slice(3, 5)) + ', ' +
+//             parseInt('0x' + hex.slice(5, 7)) + ')';
+//         return rgb;
+//     } else {
+//         let rgba = 'rgba(' + parseInt('0x' + hex.slice(1, 3)) + ', ' +
+//             parseInt('0x' + hex.slice(3, 5)) + ', ' +
+//             parseInt('0x' + hex.slice(5, 7)) + ', ' +
+//             (opacity) + ')';
+//         return rgba;
+//     }
+// }
+
 function RGB_zhq(hex, opacity) {
-    if (!opacity) {
-        let rgb = 'rgb(' + parseInt('0x' + hex.slice(1, 3)) + ', ' +
-            parseInt('0x' + hex.slice(3, 5)) + ', ' +
-            parseInt('0x' + hex.slice(5, 7)) + ')';
-        return rgb;
-    } else {
-        let rgba = 'rgba(' + parseInt('0x' + hex.slice(1, 3)) + ', ' +
-            parseInt('0x' + hex.slice(3, 5)) + ', ' +
-            parseInt('0x' + hex.slice(5, 7)) + ', ' +
-            (opacity) + ')';
-        return rgba;
-    }
+    // 提取 RGB 分量
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+
+    // 返回 RGB 或 RGBA 字符串
+    return opacity !== undefined ?
+        `rgba(${r}, ${g}, ${b}, ${opacity})` :
+        `rgb(${r}, ${g}, ${b})`;
 }
 
 
@@ -107,30 +119,32 @@ function WGS_wenbengundon(qwe, asd) {
 
 
 // 弹窗提醒
-// var Sku_tctx_ture = 1;
-
 function Sku_tctx(zdysx1) {
-    typeof Sku_tctx_ture === 'undefined' ? Sku_tctx_ture = 1 : undefined;
-    if (Sku_tctx_ture == 1) {
+    // 防止重复调用
+    if (typeof Sku_tctx_ture === 'undefined') Sku_tctx_ture = 1;
+    if (Sku_tctx_ture === 1) {
         Sku_tctx_ture = 0;
         setTimeout(() => Sku_tctx_ture = 1, 500);
 
-        var div = document.createElement('div');
+        // 创建并配置 div 元素
+        const div = document.createElement('div');
         div.className = "Sku_tcjg_Max";
         div.innerHTML = zdysx1;
+
+        // 设置边框样式
         if (localStorage.bei_jing_kuan_ture == 1) {
-            div.style.border = '1px solid ' + RGB_zhq(localStorage.bei_jing_kuan_color, localStorage.bei_jing_kuan_tmd);
+            div.style.border = `1px solid ${RGB_zhq(localStorage.bei_jing_kuan_color, localStorage.bei_jing_kuan_tmd)}`;
         }
 
+        // 添加到文档
         document.body.appendChild(div);
 
-        var Sku_tcjg_Max = document.querySelectorAll('.Sku_tcjg_Max');
-        Sku_tcjg_Max[Sku_tcjg_Max.length - 1].style.left = ((window.innerWidth / 2) - (Sku_tcjg_Max[Sku_tcjg_Max.length - 1].offsetWidth / 2)) + 'px';
+        // 居中显示
+        div.style.position = 'absolute';
+        div.style.left = `${(window.innerWidth - div.offsetWidth) / 2}px`;
 
-        setTimeout(function() {
-            var Sku_tcjg_Max = document.querySelectorAll('.Sku_tcjg_Max');
-            document.body.removeChild(Sku_tcjg_Max[0]);
-        }, 3000)
+        // 设定 3000 毫秒后移除 div
+        setTimeout(() => document.body.removeChild(div), 3000);
     }
 }
 
