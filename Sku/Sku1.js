@@ -6,21 +6,6 @@ function Sku_tsy(num) {
 }
 
 // RGB转换器
-// function RGB_zhq(hex, opacity) {
-//     if (!opacity) {
-//         let rgb = 'rgb(' + parseInt('0x' + hex.slice(1, 3)) + ', ' +
-//             parseInt('0x' + hex.slice(3, 5)) + ', ' +
-//             parseInt('0x' + hex.slice(5, 7)) + ')';
-//         return rgb;
-//     } else {
-//         let rgba = 'rgba(' + parseInt('0x' + hex.slice(1, 3)) + ', ' +
-//             parseInt('0x' + hex.slice(3, 5)) + ', ' +
-//             parseInt('0x' + hex.slice(5, 7)) + ', ' +
-//             (opacity) + ')';
-//         return rgba;
-//     }
-// }
-
 function RGB_zhq(hex, opacity) {
     // 提取 RGB 分量
     const r = parseInt(hex.slice(1, 3), 16);

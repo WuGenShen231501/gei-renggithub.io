@@ -289,7 +289,7 @@ liu_yan_srk.addEventListener('blur', function() {
 
     if (cmm_jc == 1) {
         cmm_jc = 0;
-        liu_yan_button.innerHTML = '发送(S)';
+        liu_yan_button.innerHTML = '发送(E)';
         liu_yan_srk.value = '';
     }
 });
@@ -335,7 +335,7 @@ liu_yan_button.addEventListener('click', function() {
         // 删除click
         cmm_jc = 0;
         liu_yan_srk.value = '';
-        liu_yan_button.innerHTML = '发送(S)';
+        liu_yan_button.innerHTML = '发送(E)';
         liu_yan_srk.focus();
     } else {
         liu_yan_srk.focus();
@@ -478,7 +478,7 @@ liu_yan_shezhi_gn_sc.addEventListener('click', function() {
         // 删除click
         cmm_jc = 0;
         liu_yan_srk.value = '';
-        liu_yan_button.innerHTML = '发送(S)';
+        liu_yan_button.innerHTML = '发送(E)';
         liu_yan_srk.focus();
     }
 });
@@ -716,7 +716,7 @@ document.addEventListener('keyup', function(e) {
         if (e.key == 'Escape' && nrmaxs2.style.display == 'block') {
             if (cmm_jc == 1) {
                 cmm_jc = 0;
-                liu_yan_button.innerHTML = '发送(S)';
+                liu_yan_button.innerHTML = '发送(E)';
                 liu_yan_srk.value = '';
             }
 

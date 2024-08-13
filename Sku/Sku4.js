@@ -105,18 +105,35 @@ window.addEventListener('resize', function() {
 
 
 //返回
-shezhi_min = document.querySelector('.shezhi_min');
-shezhi_ym = document.querySelectorAll('.shezhi_ym');
 i_fanhui_tp = document.querySelectorAll('.i_fanhui_tp');
 for (var i = 0; i < i_fanhui_tp.length; i++) {
     i_fanhui_tp[i].addEventListener('click', function() {
+        she_zhi_ym_fh();
+    });
+}
+
+function she_zhi_ym_fh() {
+    shezhi_min = document.querySelector('.shezhi_min');
+    shezhi_ym = document.querySelectorAll('.shezhi_ym');
+
+    if (shezhi_daoru_bendi_ym.style.display == 'block') {
+        for (var i = 0; i < shezhi_ym.length; i++) {
+            shezhi_ym[i].style.display = 'none';
+        }
+        shezhi_daoru_ym.style.display = 'block';
+    } else if (shezhi_duibixx_ym.style.display == 'block') {
+        for (var i = 0; i < shezhi_ym.length; i++) {
+            shezhi_ym[i].style.display = 'none';
+        }
+        shezhi_daoru_ym.style.display = 'block';
+    } else {
         for (var i = 0; i < shezhi_ym.length; i++) {
             shezhi_ym[i].style.display = 'none';
         }
         shezhi_min.style.display = 'block';
+    }
 
-        daoru_ym_sc.value = '';
-    });
+    daoru_ym_sc.value = '';
 }
 
 //壁纸设置
@@ -430,6 +447,7 @@ for (var i = 0; i < tianqi_s.length; i++) {
 //字体设置
 
 //页面打开
+shezhi_min = document.querySelector('.shezhi_min');
 shezhi_ztsz_ym = document.querySelector('.shezhi_ztsz_ym');
 shezhi_ztsz = document.querySelector('.shezhi_ztsz');
 shezhi_ztsz.addEventListener('click', function() {
@@ -5079,12 +5097,7 @@ document.addEventListener('keydown', function(e) {
         drmm_mm_qr.click();
     }
     if (e.key == 'Escape') {
-        shezhi_min = document.querySelector('.shezhi_min');
-        shezhi_ym = document.querySelectorAll('.shezhi_ym');
-        for (var i = 0; i < shezhi_ym.length; i++) {
-            shezhi_ym[i].style.display = 'none';
-        }
-        shezhi_min.style.display = 'block';
+        she_zhi_ym_fh();
     }
     if (e.key == 'Enter') {
         if (daoru_ym_dr_mmym.style.display == 'block') {
