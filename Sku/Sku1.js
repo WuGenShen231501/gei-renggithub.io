@@ -1067,6 +1067,9 @@ sy_zp_tj_anniu.addEventListener('click', function() {
     } else {
         var sy_zpzs_lj = JSON.parse(localStorage.sy_zpzs_lj);
         var sy_zpzs_mz = JSON.parse(localStorage.sy_zpzs_mz);
+        if (sy_zp_tj_lj.value[0] == '"' && sy_zp_tj_lj.value[sy_zp_tj_lj.value.length - 1] == '"') {
+            sy_zp_tj_lj.value = sy_zp_tj_lj.value.slice(1, sy_zp_tj_lj.value.length - 1);
+        }
         sy_zpzs_lj.unshift(sy_zp_tj_lj.value);
         sy_zpzs_mz.unshift(sy_zp_tj_mz.value);
         localStorage.sy_zpzs_lj = JSON.stringify(sy_zpzs_lj);
