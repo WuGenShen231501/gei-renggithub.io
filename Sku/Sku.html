@@ -13,14 +13,17 @@
     <link rel="stylesheet" href="Sku2.css">
     <link rel="stylesheet" href="Sku3.css">
     <link rel="stylesheet" href="Sku4.css">
+    <link rel="stylesheet" href="Sku5.css">
 
-    <script src="Sku_ht.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script script src="Sku_ht.js"></script>
     <script src="Sku1.js" defer></script>
     <script src="Sku2.js" defer></script>
     <script src="Sku3.js" defer></script>
     <script src="Sku4.js" defer></script>
+    <script src="Sku5.js" defer></script>
     <script src="Sku.js" defer></script>
-
 
     <style class="style_s1"></style>
     <style class="style_s2"></style>
@@ -44,6 +47,7 @@
             <div>链接</div>
             <div>记录</div>
             <div>设置</div>
+            <div>AI</div>
         </div>
 
         <!-- 搜索 -->
@@ -56,9 +60,6 @@
 
         <!-- 头像 -->
         <div class="top_tou_xian"></div>
-
-        <!-- 头像动态背景 -->
-        <div class="touxain_dtbj"></div>
 
         <!-- logo -->
         <div class="top_logo">
@@ -98,7 +99,7 @@
                         <sy_djs_l class="sy_djs_l_b">倒数日★</sy_djs_l>
                     </div>
                     <div class="sy_djs_r">
-                        <div class="sy_djs_r_min"></div>
+                        <div class="sy_djs_r_min" style="left: 0px;"></div>
                     </div>
 
                     <!-- 左右按钮 -->
@@ -292,7 +293,7 @@
 
                 <!-- 输入框 -->
                 <div class="liu_yan_bottom">
-                    <textarea class="liu_yan_srk"></textarea>
+                    <textarea class="liu_yan_srk" placeholder="Enter 发送 / Shift + Enter 换行"></textarea>
                 </div>
 
                 <!-- 发送框 -->
@@ -769,6 +770,159 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+
+        <!-- AI页面 -->
+        <div class="nrmaxs nrmaxs4" style="display: none;">
+            <div class="AI_max">
+
+                <!-- 头部 -->
+                <div class="AI_top">
+                    <div class="AI_neme">Chat Max</div>
+                    <div class="AI_quanpin_anniu"><i class="iconfont icon-quanping icon_AI_fdsx"></i></div>
+                </div>
+
+                <!-- 中间 -->
+                <div class="AI_zj">
+                    <div class="AI_zj_nr">
+                        <!-- ssssss -->
+                    </div>
+                </div>
+
+                <!-- 滚动条 -->
+                <div class="AI_gundontiao_max">
+                    <div class="AI_gundontiao_min"></div>
+                </div>
+
+                <!-- 底部 -->
+                <div class="AI_bottom">
+                    <!-- 发送 -->
+                    <div class="AI_bottom_srk_hz">
+                        <textarea placeholder="Enter 发送 / Shift + Enter 换行" class="AI_bottom_srk"></textarea>
+                        <div class="AI_bottom_srk_fs">发送</div>
+                    </div>
+                    <!-- 功能栏 -->
+                    <div class="AI_bottom_gn_max">
+                        <div class="AI_bottom_gn AI_dhsz"><i class="iconfont icon-shezhi1 icon_AI_bottom_gn"></i>对话设置</div>
+                        <div class="AI_bottom_gn AI_kjzl"><i class="iconfont icon-xiezi icon_AI_bottom_gn"></i>快捷指令</div>
+                        <div class="AI_bottom_gn AI_kjzl AI_kjzl_sc"><i class="iconfont icon-shanchu1 icon_AI_bottom_gn"></i>清除对话</div>
+                        <div class="AI_bottom_gn AI_mods"><i class="iconfont icon-fenxiyinqingshouye icon_AI_mods"></i>
+                            <p></p>
+                        </div>
+                        <input type="password" class="AI_key" placeholder="key">
+                    </div>
+                </div>
+
+                <!-- mods -->
+                <div class="AI_mods_max" style="display: none;">
+                    <div class="AI_mods_max_hd">
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">gpt-4o-mini</div>
+                            <div class="AI_mods_sm">GPT_API_free (免费版)<br>gpt-3.5-turbo和gpt-4o-mini共享一天200次</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">gpt-3.5-turbo</div>
+                            <div class="AI_mods_sm">GPT_API_free (免费版)<br>gpt-3.5-turbo和gpt-4o-mini共享一天200次</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">gpt-4</div>
+                            <div class="AI_mods_sm">GPT_API_free (免费版)<br>一天3次</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">glm-4-0520</div>
+                            <div class="AI_mods_sm">智谱AI开放平台 (付费版)<br>适用于所有按tokens计费的基础模型推理</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">web-search-pro</div>
+                            <div class="AI_mods_sm">智谱AI开放平台 (限时免费)<br>专业版联网搜索</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">Qwen/Qwen2-7B-Instruct</div>
+                            <div class="AI_mods_sm">SiliconCloud (免费版)<br>长度32K<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">Qwen/Qwen2-1.5B-Instruct</div>
+                            <div class="AI_mods_sm">SiliconCloud (免费版)<br>长度32K<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">Qwen/Qwen1.5-7B-Chat</div>
+                            <div class="AI_mods_sm">SiliconCloud (免费版)<br>长度32K<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">THUDM/glm-4-9b-chat</div>
+                            <div class="AI_mods_sm">SiliconCloud (免费版)<br>长度32K<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">THUDM/chatglm3-6b</div>
+                            <div class="AI_mods_sm">SiliconCloud (免费版)<br>长度32K<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">01-ai/Yi-1.5-9B-Chat-16K</div>
+                            <div class="AI_mods_sm">SiliconCloud (免费版)<br>长度16K<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">01-ai/Yi-1.5-6B-Chat</div>
+                            <div class="AI_mods_sm">SiliconCloud (免费版)<br>长度4K<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请<br>需要身份认证</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">google/gemma-2-9b-it</div>
+                            <div class="AI_mods_sm">SiliconCloud (免费版)<br>长度8K<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">internlm/internlm2_5-7b-chat</div>
+                            <div class="AI_mods_sm">SiliconCloud (免费版)<br>长度32K<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">meta-llama/Meta-Llama-3-8B-Instruct</div>
+                            <div class="AI_mods_sm">SiliconCloud (免费版)<br>长度8K<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">meta-llama/Meta-Llama-3.1-8B-Instruct</div>
+                            <div class="AI_mods_sm">SiliconCloud (免费版)<br>长度8K<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">mistralai/Mistral-7B-Instruct-v0.2</div>
+                            <div class="AI_mods_sm">SiliconCloud (免费版)<br>长度32K<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请<br>需要身份认证</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">Pro/Qwen/Qwen2-1.5B-Instruct</div>
+                            <div class="AI_mods_sm">SiliconCloud (付费版) (0.14$/1M tokens)<br>长度32K</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">black-forest-labs/FLUX.1-schnell</div>
+                            <div class="AI_mods_sm">SiliconCloud (限时免费)<br>文字生图片<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">stabilityai/stable-diffusion-2-1</div>
+                            <div class="AI_mods_sm">SiliconCloud (限时免费)<br>文字生图片<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">stabilityai/stable-diffusion-3-medium</div>
+                            <div class="AI_mods_sm">SiliconCloud (限时免费)<br>文字生图片<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">stabilityai/stable-diffusion-xl-base-1.0</div>
+                            <div class="AI_mods_sm">SiliconCloud (限时免费)<br>文字生图片<br>每分钟请求数100<br>每秒请求数3<br>更多可以进行申请</div>
+                        </div>
+                    </div>
+                    <!-- 滚动条 -->
+                    <div class="AI_mods_gundontiao_max">
+                        <div class="AI_mods_gundontiao_min"></div>
+                    </div>
+                </div>
+
+                <!-- 快捷指令 -->
+                <div class="AI_kjzl_max" style="display: none;">
+                    <div class="AI_kjzl_min">
+                        <!-- sssss -->
+                        <textarea placeholder="Enter 添加 / Shift + Enter 换行" class="AI_kjzl_s_tjl"></textarea>
+                    </div>
+                    <!-- 滚动条 -->
+                    <div class="AI_kjzl_gundontiao_max">
+                        <div class="AI_kjzl_gundontiao_min"></div>
+                    </div>
+                </div>
             </div>
         </div>
 

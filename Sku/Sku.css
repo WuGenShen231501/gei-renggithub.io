@@ -398,17 +398,6 @@ html {
     background-size: auto 100%;
 }
 
-.touxain_dtbj {
-    position: absolute;
-    background-image: url(https://wimg.588ku.com/gif620/21/12/01/14aedfa6d8b023659fc0ae9646786a7a.gif);
-    background-size: 100% 100%;
-    background-position: center;
-    width: 100px;
-    height: 100px;
-    right: -22px;
-    top: 38px;
-}
-
 
 /* -----版本显示---- */
 
@@ -864,10 +853,13 @@ html {
     }
 }
 
-@media screen and (max-width: 1140px) {
+@media screen and (max-width: 1200px) {
     .so_suo {
         right: 100px;
     }
+}
+
+@media screen and (max-width: 1140px) {
     .so_yq_s {
         right: 370px;
     }

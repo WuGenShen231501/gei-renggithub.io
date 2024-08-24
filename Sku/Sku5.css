@@ -1,0 +1,516 @@
+.AI_max {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    border-radius: 10px;
+    border: var(--bei_jing_kuan_true) solid var(--bei_jing_kuan_color);
+    background-color: var(--bei_jing_color);
+    backdrop-filter: var(--mao_bo_li);
+    overflow: hidden;
+}
+
+.AI_max2 {
+    position: fixed;
+    top: 55px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% - 55px);
+    border-radius: 0;
+    border: 0;
+}
+
+.AI_top {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 30px;
+    border-bottom: 1px solid var(--zi_ti_color_20);
+}
+
+.AI_neme {
+    display: inline-block;
+    height: 100%;
+    width: auto;
+    line-height: 30px;
+    margin-left: 10px;
+}
+
+.AI_zj {
+    position: relative;
+    float: left;
+    width: calc(100% + 70px);
+    height: calc(100% - 30px - 140px);
+    border-bottom: 1px solid var(--zi_ti_color_20);
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.AI_zj_nr {
+    width: calc(100% - 70px);
+    height: auto;
+    padding: 10px 0px;
+}
+
+.AI_huida_max {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: auto;
+    margin: 10px 0px;
+}
+
+.AI_bottom {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 140px;
+}
+
+.AI_huida_nr {
+    float: left;
+    width: auto;
+    max-width: calc(100% - 200px);
+    height: auto;
+    margin: 0px 20px 0px 100px;
+    padding: 10px 10px;
+    border: 1px solid var(--zi_ti_color);
+    background-color: var(--zi_ti_color_10);
+    border-radius: 5px;
+    overflow: hidden;
+    white-space: pre-wrap;
+}
+
+.AI_huida_tx {
+    position: absolute;
+    width: 43px;
+    height: 43px;
+    left: 30px;
+    top: 0px;
+    border-radius: 5px;
+    background-color: var(--zi_ti_color_20);
+    background-size: 100% 100%;
+    border: 1px solid var(--zi_ti_color);
+    background-image: url(https://aigc.qidianym.net/favicon.ico);
+}
+
+.AI_huida_sj {
+    position: absolute;
+    font-size: 12px;
+    top: -14px;
+    left: 105px;
+    opacity: 0.3;
+    color: var(--zi_ti_color);
+}
+
+.yh_huida_nr {
+    float: right;
+    width: auto;
+    max-width: calc(100% - 200px);
+    height: auto;
+    margin: 0px 100px 0px 20px;
+    padding: 10px 10px;
+    border: 1px solid var(--zi_ti_color);
+    background-color: var(--zi_ti_color_10);
+    border-radius: 5px;
+    overflow: hidden;
+    white-space: pre-wrap;
+}
+
+.yh_huida_tx {
+    position: absolute;
+    width: 43px;
+    height: 43px;
+    right: 30px;
+    top: 0px;
+    border-radius: 5px;
+    background-color: var(--zi_ti_color_20);
+    background-size: 100% 100%;
+    border: 1px solid var(--zi_ti_color);
+}
+
+.yh_huida_sj {
+    position: absolute;
+    font-size: 12px;
+    top: -14px;
+    right: 105px;
+    opacity: 0.3;
+    color: var(--zi_ti_color);
+}
+
+.AI_gundontiao_max {
+    position: absolute;
+    right: 0;
+    top: 30px;
+    width: 5px;
+    height: calc(100% - 30px - 140px);
+    border-radius: 5px;
+    background-color: var(--zi_ti_color_20);
+    overflow: hidden;
+    opacity: 0;
+}
+
+.AI_gundontiao_min {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    border-radius: 5px;
+    background-color: var(--zi_ti_color);
+    opacity: 0.6;
+}
+
+.AI_bottom_srk_hz {
+    position: absolute;
+    width: calc(100% - 30px);
+    height: 80px;
+    border-radius: 10px;
+    border: 1px solid var(--zi_ti_color_20);
+    bottom: 15px;
+    left: calc(15px);
+    overflow: hidden;
+}
+
+.AI_bottom_srk {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    width: calc(100% + 40px);
+    height: calc(100% - 5px);
+    border: none;
+    padding-right: 170px;
+    color: var(--zi_ti_color);
+    font-size: 16px;
+    background-color: rgb(0, 0, 0, 0);
+    outline: none;
+    margin-bottom: 5px;
+    resize: none;
+    overflow-y: scroll;
+    cursor: none;
+}
+
+.AI_bottom_srk_fs {
+    position: absolute;
+    top: 22.5px;
+    right: 25px;
+    width: 85px;
+    height: 35px;
+    line-height: 33px;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid var(--zi_ti_color);
+    background-color: var(--zi_ti_color_10);
+}
+
+.AI_bottom_gn_max {
+    position: absolute;
+    top: 7px;
+    width: calc(100% - 30px);
+    height: 30px;
+    left: calc(15px);
+    overflow: hidden;
+}
+
+.AI_bottom_gn {
+    float: left;
+    width: 40px;
+    height: 30px;
+    border-radius: 15px;
+    border: 1px solid var(--zi_ti_color_20);
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 10px;
+    transition: 0.2s;
+}
+
+.AI_bottom_gn:hover {
+    width: 120px;
+    background-color: var(--zi_ti_color_20);
+}
+
+.AI_key {
+    float: left;
+    width: 200px;
+    height: 30px;
+    color: var(--zi_ti_color);
+    border-radius: 15px;
+    background-color: rgb(0, 0, 0, 0);
+    border: 1px solid var(--zi_ti_color_20);
+    outline: none;
+    text-indent: 1em;
+    padding-right: 1em;
+    transition: 0.2s;
+}
+
+.AI_key:hover {
+    background-color: var(--zi_ti_color_20);
+}
+
+.icon_AI_bottom_gn {
+    display: inline-block;
+    width: 40px;
+    height: 30px;
+    line-height: 28px;
+    text-align: center;
+}
+
+.AI_mods {
+    position: relative;
+    width: auto !important;
+    padding-right: 14px;
+}
+
+.icon_AI_mods {
+    position: absolute;
+    width: 35px;
+    height: 30px;
+    line-height: 28px;
+    text-align: right;
+}
+
+.AI_mods p {
+    display: inline-block;
+    height: 30px;
+    line-height: 28px;
+    margin-left: 47px;
+}
+
+.AI_mods_max {
+    position: absolute;
+    bottom: 141px;
+    left: 0;
+    height: calc(100% - 30px - 141px);
+    width: 100%;
+    background-color: var(--bei_jing_color);
+    backdrop-filter: var(--mao_bo_li);
+    overflow: hidden;
+    animation: AI_mods_max_dh 0.2s;
+}
+
+@keyframes AI_mods_max_dh {
+    0% {
+        /* 动画开始的画面 */
+        height: 0;
+    }
+    100% {
+        /* 动画结束的画面 */
+        height: calc(100% - 30px - 140px - 10px);
+    }
+}
+
+.AI_kjzl_s p {
+    float: left;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 14px;
+    font-size: 14px;
+    color: var(--zi_ti_color_20)
+}
+
+.AI_mods_max_hd {
+    position: relative;
+    float: left;
+    width: calc(100% + 70px);
+    height: 100%;
+    padding-right: 70px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.AI_mods_min {
+    float: left;
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid var(--zi_ti_color_20);
+    padding: 10px;
+}
+
+.AI_mods_min2 {
+    background-color: var(--zi_ti_color_20) !important;
+}
+
+.AI_mods_min:hover {
+    background-color: var(--zi_ti_color_10);
+}
+
+.AI_mods_name {
+    width: 100%;
+    height: auto;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.AI_mods_sm {
+    width: 100%;
+    height: auto;
+    font-size: 14px;
+}
+
+.AI_mods_gundontiao_max {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    border-radius: 5px;
+    background-color: var(--zi_ti_color_20);
+    overflow: hidden;
+    opacity: 0;
+}
+
+.AI_mods_gundontiao_min {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    border-radius: 5px;
+    background-color: var(--zi_ti_color);
+    opacity: 0.6;
+}
+
+.AI_quanpin_anniu {
+    position: absolute;
+    right: 1px;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    opacity: 0.5;
+}
+
+.AI_quanpin_anniu:hover {
+    opacity: 1;
+}
+
+.icon_AI_fdsx {
+    font-size: 20px;
+}
+
+.AI_kjzl_max {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 141px;
+    height: calc(100% - 30px - 141px);
+    background-color: var(--bei_jing_color);
+    backdrop-filter: var(--mao_bo_li);
+    overflow: hidden;
+    animation: AI_kjzl_max_dh 0.2s;
+}
+
+@keyframes AI_kjzl_max_dh {
+    0% {
+        /* 动画开始的画面 */
+        height: 0;
+    }
+    100% {
+        /* 动画结束的画面 */
+        height: calc(100% - 30px - 141px);
+    }
+}
+
+.AI_kjzl_min {
+    height: 100%;
+    width: calc(100% + 70px);
+    padding-right: 70px;
+    overflow-y: scroll;
+}
+
+.AI_kjzl_s {
+    float: left;
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid var(--zi_ti_color_20);
+    padding: 10px;
+    white-space: pre-wrap;
+}
+
+.AI_kjzl_s:hover {
+    background-color: var(--zi_ti_color_10);
+}
+
+.AI_kjzl_gundontiao_max {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    border-radius: 5px;
+    background-color: var(--zi_ti_color_20);
+    overflow: hidden;
+    opacity: 0;
+}
+
+.AI_kjzl_gundontiao_min {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    border-radius: 5px;
+    background-color: var(--zi_ti_color);
+    opacity: 0.6;
+}
+
+.AI_kjzl_s_tjl {
+    float: left;
+    width: calc(100% - 40px);
+    height: 85px;
+    border: none;
+    padding-right: 170px;
+    color: var(--zi_ti_color);
+    font-size: 16px;
+    background-color: rgb(0, 0, 0, 0);
+    border: 1px solid var(--zi_ti_color_20);
+    border-radius: 10px;
+    outline: none;
+    resize: none;
+    overflow-y: scroll;
+    margin: 20px;
+    cursor: none;
+    padding: 10px;
+}
+
+.AI_huida_nr * {
+    pointer-events: none;
+}
+
+.AI_huida_nr a {
+    pointer-events: fill !important;
+    color: var(--zi_ti_color);
+    border-bottom: 1px solid var(--zi_ti_color);
+}
+
+.AI_huida_nr a:hover {
+    color: var(--zi_ti_click_color);
+    border-bottom: 1px solid var(--zi_ti_click_color);
+}
+
+.AI_huida_nr li {
+    display: inline-block;
+    margin: 3px 0;
+}
+
+.AI_huida_nr ul {
+    display: block;
+}
+
+.AI_huida_nr h3 {
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.AI_huida_nr p {
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.AI_huida_nr img {
+    pointer-events: fill !important;
+    height: 400px;
+}
+
+.AI_huida_nr pre {
+    pointer-events: fill !important;
+    background-color: var(--zi_ti_color_20);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+}

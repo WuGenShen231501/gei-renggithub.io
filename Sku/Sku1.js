@@ -628,16 +628,9 @@ function sy_djs_yd() {
     if (sy_djs_r_s.length > 0) {
         sy_djs_r_min = document.querySelector('.sy_djs_r_min');
         wgsTUODONGKUANG('.sy_djs_r_min', '.sy_djs_r_min');
-
-        sy_djs_r_min.style.transition = '1s';
-        if (sy_djs_r_s.length > 5 && parseFloat(sy_djs_r_min.style.left) + 200 < 0) {
-            sy_djs_r_min.style.left = parseFloat(sy_djs_r_min.style.left) + 200 + 'px';
-        } else {
-            sy_djs_r_min.style.left = '0px';
-        }
     }
 }
-sy_djs_yd()
+sy_djs_yd();
 
 //倒计时添加
 
@@ -709,6 +702,7 @@ djs_tjym_qr.addEventListener('click', function() {
                 sy_djs_r_time[i].style.borderBottom = '1px solid ' + RGB_zhq(localStorage.bei_jing_kuan_color, localStorage.bei_jing_kuan_tmd);
             }
         }
+
         Sku_tctx('日程添加成功');
     } else {
         input_djs_tjym_time_s[0].style.borderColor = '';
@@ -758,6 +752,7 @@ function sy_djs_sc() {
     delete sy_djs['sy_djs' + sy_nb_zhixian];
     localStorage.sy_djs = JSON.stringify(sy_djs);
     //删除HTML
+    var sy_djs_r_s = document.querySelectorAll('.sy_djs_r_s');
     clearInterval(djs_s);
     sy_djs_r_min.innerHTML = '';
     sy_djs_px();
@@ -779,7 +774,15 @@ function sy_djs_sc() {
         }
     }
 
+    sy_djs_r_min.style.transition = '0s';
+    if (sy_djs_r_s.length > 5 && parseFloat(sy_djs_r_min.style.left) + 200 < 0) {
+        sy_djs_r_min.style.left = parseFloat(sy_djs_r_min.style.left) + 200 + 'px';
+    } else {
+        sy_djs_r_min.style.left = '0px';
+    }
+
     Sku_tctx('日程删除成功');
+
 }
 
 //隐藏倒计时添加
@@ -884,6 +887,8 @@ i_djs_z_tb.addEventListener('click', function(e) {
 });
 i_djs_y_tb.addEventListener('click', function(e) {
     sy_djs_r_min.style.transition = '1s';
+    console.log(parseFloat(sy_djs_r_min.style.left));
+
     if (parseFloat(sy_djs_r_min.style.left) - 1000 < sy_djs_r_s.length * -200 + 1049) {
         if (sy_djs_r_s.length > 5) {
             sy_djs_r_min.style.left = sy_djs_r_s.length * -200 + 1049 + 'px';
@@ -1924,6 +1929,13 @@ top_dhl_S[2].addEventListener('click', function(e) {
     sy_djs_txl.style.display = 'none';
 });
 top_dhl_S[3].addEventListener('click', function(e) {
+    clearInterval(sy_djs_zxsj_sjq);
+    clearInterval(djs_s);
+    sy_djs_r_min.innerHTML = '';
+    clearInterval(sy_djs_txl_jsq);
+    sy_djs_txl.style.display = 'none';
+});
+top_dhl_S[4].addEventListener('click', function(e) {
     clearInterval(sy_djs_zxsj_sjq);
     clearInterval(djs_s);
     sy_djs_r_min.innerHTML = '';

@@ -602,12 +602,12 @@ i_liu_yan_wzbc_tp.addEventListener('click', function() {
 
 
 liu_yan_srk.addEventListener('keydown', function(e) {
-    var sf_shift2 = 0;
+    var sf_shift3 = 0;
     if (e.shiftKey) {
-        sf_shift2 = 1;
+        sf_shift3 = 1;
     }
     // 检查是否按下了Shift键和Enter键
-    if (sf_shift2 == 0 && e.key == 'Enter') {
+    if (sf_shift3 == 0 && e.key == 'Enter') {
         // 阻止默认行为
         e.preventDefault();
     }
@@ -685,9 +685,6 @@ document.addEventListener('keydown', function(e) {
         liu_yan_srk.selectionEnd = cswz + 4;
 
         sf_shift = 1;
-    }
-    if (liu_yan_srk_jc == '1' && e.ctrlKey && e.key === 'a') {
-        liu_yan_srk.select();
     }
 })
 document.addEventListener('keyup', function(e) {

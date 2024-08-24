@@ -1087,6 +1087,8 @@ cdcsh_click.addEventListener('click', function(e) {
         localStorage.removeItem('ztfg_name');
         localStorage.removeItem('ztfg');
         localStorage.removeItem('sku_zcb');
+        localStorage.removeItem('AI_jl');
+        localStorage.removeItem('AI_kjzl');
         localStorage.dr_mmdr_drsj = 0;
 
         location.reload();
@@ -1129,6 +1131,8 @@ bfsz_sccd.addEventListener('click', function() {
         localStorage.sku_zcb_bf = localStorage.sku_zcb;
         localStorage.ztfg_name_bf = localStorage.ztfg_name;
         localStorage.ztfg_bf = localStorage.ztfg;
+        localStorage.AI_jl_bf = localStorage.AI_jl;
+        localStorage.AI_kjzl_bf = localStorage.AI_jl;
     } else if (bfsz_sccd.innerHTML == '上传成功') {
         Sku_tctx('🛈 短时间内禁止重复上传');
     }
@@ -1154,6 +1158,8 @@ bfsz_xzcd.addEventListener('click', function() {
     localStorage.sku_zcb = localStorage.sku_zcb_bf;
     localStorage.ztfg_name = localStorage.ztfg_name_bf;
     localStorage.ztfg = localStorage.ztfg_bf;
+    localStorage.AI_jl = localStorage.AI_jl_bf;
+    localStorage.AI_kjzl = localStorage.AI_kjzl_bf;
 
     localStorage.dr_mmdr_drsj = 0;
     location.reload();
@@ -1524,6 +1530,10 @@ shezhi_daoru.addEventListener('click', function(e) {
     // 主题风格
     daochu_sz[30] = localStorage.ztfg;
     daochu_sz[31] = localStorage.ztfg_name;
+    // ai
+    daochu_sz[32] = localStorage.AI_jl;
+    // ai快捷指令
+    daochu_sz[33] = localStorage.AI_kjzl;
     //上传时间
     function getFormattedTime() {
         const now = new Date();
@@ -1535,7 +1545,7 @@ shezhi_daoru.addEventListener('click', function(e) {
         const second = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
         return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
     }
-    daochu_sz[32] = getFormattedTime();
+    daochu_sz[34] = getFormattedTime();
 
     jisuan_bendidx = JSON.stringify(daochu_sz).length;
 });
@@ -1603,6 +1613,10 @@ daoru_ym_dc.addEventListener('click', function(e) {
     // 主题风格
     daochu_sz[30] = localStorage.ztfg;
     daochu_sz[31] = localStorage.ztfg_name;
+    // ai
+    daochu_sz[32] = localStorage.AI_jl;
+    // ai快捷指令
+    daochu_sz[33] = localStorage.AI_kjzl;
     //上传时间
     function getFormattedTime() {
         const now = new Date();
@@ -1614,7 +1628,7 @@ daoru_ym_dc.addEventListener('click', function(e) {
         const second = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
         return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
     }
-    daochu_sz[32] = getFormattedTime();
+    daochu_sz[34] = getFormattedTime();
 
     daoru_ym_sc.value = JSON.stringify(daochu_sz);
 
@@ -1710,6 +1724,10 @@ daoru_ym_jmdc.addEventListener('click', function(e) {
     // 主题风格
     daochu_sz[30] = localStorage.ztfg;
     daochu_sz[31] = localStorage.ztfg_name;
+    // ai
+    daochu_sz[32] = localStorage.AI_jl;
+    // ai快捷指令
+    daochu_sz[33] = localStorage.AI_kjzl;
     //上传时间
     function getFormattedTime() {
         const now = new Date();
@@ -1721,7 +1739,7 @@ daoru_ym_jmdc.addEventListener('click', function(e) {
         const second = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
         return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
     }
-    daochu_sz[32] = getFormattedTime();
+    daochu_sz[34] = getFormattedTime();
 
     daoru_ym_sc.value = WGS_zfc_jiami(JSON.stringify(daochu_sz), miyao);
 
@@ -1790,7 +1808,7 @@ daoru_ym_sc.addEventListener('input', function(e) {
 var daoru_sz = [];
 
 function daoru_sz_hs() {
-    if (daoru_sz.length == 33) {
+    if (daoru_sz.length == 35) {
         // 导航栏
         localStorage.dhr_sz = daoru_sz[0];
         //导航栏页面
@@ -1851,6 +1869,10 @@ function daoru_sz_hs() {
         // 主题风格
         localStorage.ztfg = daoru_sz[30];
         localStorage.ztfg_name = daoru_sz[31];
+        // ai
+        localStorage.AI_jl = daoru_sz[32];
+        // ai快捷指令
+        localStorage.AI_kjzl = daoru_sz[33];
 
         // 时间戳0
         localStorage.dr_mmdr_drsj = 0;
@@ -2037,6 +2059,10 @@ daoru_ym_bendi.addEventListener('click', function(e) {
         // 主题风格
         zd_daochu[30] = localStorage.ztfg;
         zd_daochu[31] = localStorage.ztfg_name;
+        // ai
+        zd_daochu[32] = localStorage.AI_jl;
+        // ai快捷指令
+        zd_daochu[33] = localStorage.AI_kjzl;
         //上传时间
         function getFormattedTime() {
             const now = new Date();
@@ -2049,7 +2075,7 @@ daoru_ym_bendi.addEventListener('click', function(e) {
             return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
         }
         // 打包时间
-        zd_daochu[32] = getFormattedTime();
+        zd_daochu[34] = getFormattedTime();
 
         try {
             //保存
@@ -2227,6 +2253,10 @@ function bendidaoru_click() {
                     // 主题风格
                     localStorage.ztfg = daoru_sz[30];
                     localStorage.ztfg_name = daoru_sz[31];
+                    // ai
+                    localStorage.AI_jl = daoru_sz[32];
+                    // ai快捷指令
+                    localStorage.AI_kjzl = daoru_sz[33];
 
                     // 时间戳0
                     localStorage.dr_mmdr_drsj = 0;
@@ -2745,6 +2775,32 @@ bijiao_kais.addEventListener('click', function(e) {
             var bijiao_yysydx2 = JSON.parse(bijiaonr2[24]);
             if (bijiao_yysydx1 !== bijiao_yysydx2) {
                 bijiao_cj('音乐', '修改音乐声音 "' + (bijiao_yysydx1 * 100) + '% 改为 ' + (bijiao_yysydx2 * 100) + '%"', '修改音乐声音大小 ' + (bijiao_yysydx1 * 100) + '% 改为 ' + (bijiao_yysydx2 * 100) + '%');
+            }
+            // AI比较
+            var bijiao_jl1 = JSON.parse(bijiaonr1[32]);
+            var bijiao_jl2 = JSON.parse(bijiaonr2[32]);
+            for (var i = 0; i < bijiao_jl2.length; i++) {
+                if (JSON.stringify(bijiao_jl1).indexOf(JSON.stringify(bijiao_jl2[i])) == -1) {
+                    bijiao_cj('AI', (bijiao_jl2[i][0] == 1 ? '新增问答' : '新增回答') + '<xmp>"' + bijiao_jl2[i][1] + '</xmp>"', '时间: ' + bijiao_jl2[i][2] + '\n对象: ' + (bijiao_jl2[i][0] == 1 ? '用户' : 'AI') + '\n内容: 下方↓' + '\n\n' + bijiao_jl2[i][1]);
+                }
+            }
+            for (var i = 0; i < bijiao_jl1.length; i++) {
+                if (JSON.stringify(bijiao_jl2).indexOf(JSON.stringify(bijiao_jl1[i])) == -1) {
+                    bijiao_cj('AI', (bijiao_jl1[i][0] == 1 ? '删除问答' : '删除回答') + '<xmp>"' + bijiao_jl1[i][1] + '</xmp>"', '时间: ' + bijiao_jl1[i][2] + '\n对象: ' + (bijiao_jl1[i][0] == 1 ? '用户' : 'AI') + '\n内容: 下方↓' + '\n\n' + bijiao_jl1[i][1]);
+                }
+            }
+            // AI快捷指令比较
+            var bijiao_jl1 = JSON.parse(bijiaonr1[33]);
+            var bijiao_jl2 = JSON.parse(bijiaonr2[33]);
+            for (var i = 0; i < bijiao_jl2.length; i++) {
+                if (bijiao_jl1.indexOf(bijiao_jl2[i]) == -1) {
+                    bijiao_cj('AI', '新增快捷指令<xmp>"' + bijiao_jl2[i] + '</xmp>"', bijiao_jl2[i]);
+                }
+            }
+            for (var i = 0; i < bijiao_jl1.length; i++) {
+                if (bijiao_jl2.indexOf(bijiao_jl1[i]) == -1) {
+                    bijiao_cj('AI', '删除快捷指令<xmp>"' + bijiao_jl1[i] + '</xmp>"', bijiao_jl1[i]);
+                }
             }
             // 个性化比较
             if (bijiaonr1[3] !== bijiaonr2[3]) { //头像
@@ -3774,6 +3830,12 @@ top_dhl_S[2].addEventListener('click', function(e) {
     clearInterval(sy_lbt_sc_jsq);
 });
 top_dhl_S[3].addEventListener('click', function(e) {
+    sy_lbt.innerHTML = '';
+    clearInterval(sy_lbnr_dsq);
+    clearTimeout(sy_lbt_sc_jsq2);
+    clearInterval(sy_lbt_sc_jsq);
+});
+top_dhl_S[4].addEventListener('click', function(e) {
     sy_lbt.innerHTML = '';
     clearInterval(sy_lbnr_dsq);
     clearTimeout(sy_lbt_sc_jsq2);
@@ -5049,6 +5111,8 @@ Sku_gundontiao('.ssjl_max', '.lsssjl_gundontiao_max', '.lsssjl_gundontiao_min');
 Sku_gundontiao('.ssbqym_max', '.ssbqym_gundontiao_max', '.ssbqym_gundontiao_min');
 Sku_gundontiao('.shezhi_min', '.shezhi_max_gundontiao_max', '.shezhi_max_gundontiao_min');
 Sku_gundontiao('.duibixx_max', '.xxdb_gundontiao_max', '.xxdb_gundontiao_min');
+Sku_gundontiao('.AI_kjzl_min', '.AI_kjzl_gundontiao_max', '.AI_kjzl_gundontiao_min');
+
 
 
 
@@ -5139,6 +5203,14 @@ document.addEventListener('click', function() {
 
 // 全部input全选快捷键
 var inputs = document.querySelectorAll('input');
+for (var i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.key == 'a' && document.activeElement === this) {
+            this.select();
+        }
+    });
+}
+var inputs = document.querySelectorAll('textarea');
 for (var i = 0; i < inputs.length; i++) {
     inputs[i].addEventListener('keydown', function(e) {
         if (e.ctrlKey && e.key == 'a' && document.activeElement === this) {

@@ -284,6 +284,15 @@ if (localStorage.Sku_benghuai == undefined) {
     localStorage.Sku_benghuai = 0;
 }
 
+// AI记录
+if (localStorage.AI_jl == undefined) {
+    localStorage.AI_jl = '[]';
+}
+// AI快捷指令
+if (localStorage.AI_kjzl == undefined) {
+    localStorage.AI_kjzl = '[]';
+}
+
 
 
 

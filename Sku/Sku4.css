@@ -1690,6 +1690,23 @@
         font-family: SimSun !important;
     }
     
+    .duibixx_s_xxx li {
+        display: inline-block;
+        margin: 3px 0;
+    }
+    
+    .duibixx_s_xxx ul {
+        display: block;
+    }
+    
+    .duibixx_s_xxx h3 {
+        display: inline-block;
+    }
+    
+    .duibixx_s_xxx p {
+        display: inline-block;
+    }
+    
     .duibi_zxian {
         position: absolute;
         top: 76px;

@@ -173,10 +173,10 @@ if (localStorage.zi_ti_click_color !== '') {
     top_dhl[0].classList.add('dhr_click');
 }
 //标记数组
-for (var i = 0; i < 4; i++) {
+for (var i = 0; i < top_dhl.length; i++) {
     top_dhl[i].setAttribute('date-num', i);
 }
-for (var i = 0; i < 4; i++) {
+for (var i = 0; i < top_dhl.length; i++) {
     // 禁止选择字体
     top_dhl[i].addEventListener('selectstart', function(e) {
         e.preventDefault();
@@ -185,7 +185,7 @@ for (var i = 0; i < 4; i++) {
     top_dhl[i].addEventListener('click', function() {
         topmax.style.top = '0px';
         // 变颜色
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < top_dhl.length; i++) {
             if (localStorage.zi_ti_click_color !== '') {
                 top_dhl[i].style.color = '';
                 top_dhl[i].style.borderBottom = '';
@@ -200,7 +200,7 @@ for (var i = 0; i < 4; i++) {
             this.classList.add('dhr_click');
         }
         // 切换页面
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < top_dhl.length; i++) {
             nrmax_s[i].style.display = 'none';
             nrmax_s[i].style.opacity = '0';
         }
@@ -236,7 +236,7 @@ for (var i = 0; i < 4; i++) {
             console.log('内存留言指向: ' + liu_yan_zhi_xian);
             console.log('留言指向: ' + liu_yan_zhi_xian2);
             //显示最下方
-            liu_yan_top.scroll(0, 100000000);
+            liu_yan_top.scroll(0, liu_yan_top_min.offsetHeight);
         }
         if (this.getAttribute('date-num') == 3) {
             if (so_ssk.placeholder == '搜索引擎') {
@@ -249,6 +249,16 @@ for (var i = 0; i < 4; i++) {
             }
             shezhi_min.style.display = 'block';
             shezhi_min.scroll(0, 0);
+        }
+        if (this.getAttribute('date-num') == 4) {
+            if (so_ssk.placeholder == '搜索引擎') {
+                so_ssk.placeholder = '搜索引擎 / Ctrl + ?';
+            }
+            var AI_bottom_srk = document.querySelector('.AI_bottom_srk');
+            AI_bottom_srk.focus();
+            var AI_zj = document.querySelector('.AI_zj');
+            var AI_zj_nr = document.querySelector('.AI_zj_nr');
+            AI_zj.scroll(0, AI_zj_nr.offsetHeight);
         }
     });
 }
@@ -573,6 +583,7 @@ function html_css() {
     document.documentElement.style.setProperty('--bei_jing_color', RGB_zhq(localStorage.bei_jing_color, localStorage.bei_jing_tmd));
     document.documentElement.style.setProperty('--bei_jing_kuan_color', RGB_zhq(localStorage.bei_jing_kuan_color, localStorage.bei_jing_kuan_tmd));
     document.documentElement.style.setProperty('--zi_ti_color_20', RGB_zhq(localStorage.zi_ti_color, 0.20));
+    document.documentElement.style.setProperty('--zi_ti_color_10', RGB_zhq(localStorage.zi_ti_color, 0.10));
     document.documentElement.style.setProperty('--zi_ti_click_color_15', RGB_zhq(localStorage.zi_ti_click_color, 0.15));
     document.documentElement.style.setProperty('--bei_jing_kuan_true', localStorage.bei_jing_kuan_ture + 'px');
 }
@@ -939,7 +950,7 @@ shezhi_sp_xp_min2.addEventListener('blur', function(e) {
 // 相互关闭
 // 点击的,不需要隐藏的...
 function xhgb_dx(class1, class2, class3) {
-    var xhgb_dx = ['lj_zcb_ym', 'so_yq_s', 'ssbqym', 'music_ym', 'top_tou_xian_sc', 'lj_xg_tj', 'dhr_xg_tj'];
+    var xhgb_dx = ['AI_kjzl_max', 'AI_mods_max', 'lj_zcb_ym', 'so_yq_s', 'ssbqym', 'music_ym', 'top_tou_xian_sc', 'lj_xg_tj', 'dhr_xg_tj'];
     var dj = document.querySelector('.' + class1);
     dj.addEventListener('click', function(e) {
         for (var i = 0; i < xhgb_dx.length; i++) {
@@ -956,6 +967,8 @@ xhgb_dx('top_tou_xian', 'top_tou_xian_sc');
 xhgb_dx('dhr_shezhi_gn_tj', 'lj_xg_tj', 'dhr_xg_tj');
 xhgb_dx('dhr_shezhi_gn_cmm', 'lj_xg_tj', 'dhr_xg_tj');
 xhgb_dx('lj_zcb_i', 'lj_xg_tj', 'lj_zcb_ym');
+xhgb_dx('AI_mods', 'AI_mods_max');
+xhgb_dx('AI_kjzl', 'AI_kjzl_max');
 
 
 
