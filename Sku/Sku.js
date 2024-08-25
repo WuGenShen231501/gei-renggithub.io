@@ -1,5 +1,5 @@
 // 保护localStorage值
-var shui_you_nc = ['sy_ci_shu', 'Sku_kfzms', 'ztfg_name', 'ztfg', 'mrrd_name', 'mryy', 'mrrd_sxsj', 'mrrd', 'bi_zhi_ys', 'dr_mmdr_mmfw', 'dr_mmdr_drsj', 'dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'dhr_sz_bf', 'dhr_ym_dx_bf', 'bi_zhi_s_bf', 'liu_yan_dx_bf', 'sy_djs_bf', 'sy_zpzs_lj_bf', 'sy_zpzs_mz_bf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'dr_mm_cf', 'drym_cs', 'drym_srcs', 'sy_zpzs_lj', 'sy_zpzs_mz', 'sy_zpzs_kaiguan', 'music_cd', 'music_bfsx', 'music_cd_bf', 'lsjl', 'lsjl_bf', 'sy_lbxz', 'sku_xp_sp', 'htsp_s', 'htsp_s_bf', 'sku_zcb', 'sku_zcb_bf', 'dr_mmdr'];
+var shui_you_nc = ['Sku_benghuai', 'AI_kjzl', 'AI_jl', 'sy_ci_shu', 'Sku_kfzms', 'ztfg_name', 'ztfg', 'mrrd_name', 'mryy', 'mrrd_sxsj', 'mrrd', 'bi_zhi_ys', 'dr_mmdr_mmfw', 'dr_mmdr_drsj', 'dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'dhr_sz_bf', 'dhr_ym_dx_bf', 'bi_zhi_s_bf', 'liu_yan_dx_bf', 'sy_djs_bf', 'sy_zpzs_lj_bf', 'sy_zpzs_mz_bf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'dr_mm_cf', 'drym_cs', 'drym_srcs', 'sy_zpzs_lj', 'sy_zpzs_mz', 'sy_zpzs_kaiguan', 'music_cd', 'music_bfsx', 'music_cd_bf', 'lsjl', 'lsjl_bf', 'sy_lbxz', 'sku_xp_sp', 'htsp_s', 'htsp_s_bf', 'sku_zcb', 'sku_zcb_bf', 'dr_mmdr'];
 window.addEventListener('storage', function(event) {
     if (localStorage.Sku_kfzms == 0 && event.key == 'sy_ci_shu' && decodeURI(event.url).substring(decodeURI(event.url).length - 8, decodeURI(event.url).length) == decodeURI(location.href).substring(decodeURI(location.href).length - 8, decodeURI(location.href).length)) {
 
@@ -505,7 +505,7 @@ document.addEventListener('keydown', function(e) {
         top_dhl_z.querySelectorAll('div')[3].click();
     }
     if (e.ctrlKey && e.key == '/') {
-        if ((nrmaxs0.style.display == 'block' || nrmaxs3.style.display == 'block') && nrmax.style.display == 'block') {
+        if ((nrmaxs0.style.display == 'block' || nrmaxs3.style.display == 'block' || nrmaxs4.style.display == 'block') && nrmax.style.display == 'block') {
             sy_dw_top.click();
             so_ssk.focus();
         }
@@ -950,15 +950,17 @@ shezhi_sp_xp_min2.addEventListener('blur', function(e) {
 // 相互关闭
 // 点击的,不需要隐藏的...
 function xhgb_dx(class1, class2, class3) {
-    var xhgb_dx = ['AI_kjzl_max', 'AI_mods_max', 'lj_zcb_ym', 'so_yq_s', 'ssbqym', 'music_ym', 'top_tou_xian_sc', 'lj_xg_tj', 'dhr_xg_tj'];
-    var dj = document.querySelector('.' + class1);
-    dj.addEventListener('click', function(e) {
-        for (var i = 0; i < xhgb_dx.length; i++) {
-            if (xhgb_dx[i] !== class2 && xhgb_dx[i] !== class3) {
-                document.querySelector('.' + xhgb_dx[i]).style.display = 'none';
+    var xhgb_dx = ['AI_szym_max', 'AI_kjzl_max', 'AI_mods_max', 'lj_zcb_ym', 'so_yq_s', 'ssbqym', 'music_ym', 'top_tou_xian_sc', 'lj_xg_tj', 'dhr_xg_tj'];
+    var dj = document.querySelectorAll('.' + class1);
+    for (var i = 0; i < dj.length; i++) {
+        dj[i].addEventListener('click', function(e) {
+            for (var i = 0; i < xhgb_dx.length; i++) {
+                if (xhgb_dx[i] !== class2 && xhgb_dx[i] !== class3) {
+                    document.querySelector('.' + xhgb_dx[i]).style.display = 'none';
+                }
             }
-        }
-    });
+        });
+    }
 }
 xhgb_dx('so_ssk', 'ssbqym');
 xhgb_dx('so_yq', 'so_yq_s');
@@ -969,6 +971,7 @@ xhgb_dx('dhr_shezhi_gn_cmm', 'lj_xg_tj', 'dhr_xg_tj');
 xhgb_dx('lj_zcb_i', 'lj_xg_tj', 'lj_zcb_ym');
 xhgb_dx('AI_mods', 'AI_mods_max');
 xhgb_dx('AI_kjzl', 'AI_kjzl_max');
+xhgb_dx('AI_dhsz', 'AI_szym_max');
 
 
 

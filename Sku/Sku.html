@@ -804,13 +804,13 @@
                     </div>
                     <!-- 功能栏 -->
                     <div class="AI_bottom_gn_max">
-                        <div class="AI_bottom_gn AI_dhsz"><i class="iconfont icon-shezhi1 icon_AI_bottom_gn"></i>对话设置</div>
-                        <div class="AI_bottom_gn AI_kjzl"><i class="iconfont icon-xiezi icon_AI_bottom_gn"></i>快捷指令</div>
-                        <div class="AI_bottom_gn AI_kjzl AI_kjzl_sc"><i class="iconfont icon-shanchu1 icon_AI_bottom_gn"></i>清除对话</div>
-                        <div class="AI_bottom_gn AI_mods"><i class="iconfont icon-fenxiyinqingshouye icon_AI_mods"></i>
+                        <div class="AI_bottom_gn AI_bottom_gn_q AI_dhsz"><i class="iconfont icon-shezhi1 icon_AI_bottom_gn"></i>对话设置</div>
+                        <div class="AI_bottom_gn AI_bottom_gn_q AI_kjzl"><i class="iconfont icon-xiezi icon_AI_bottom_gn"></i>快捷指令</div>
+                        <div class="AI_bottom_gn AI_bottom_gn_q AI_kjzl AI_kjzl_sc"><i class="iconfont icon-shanchu1 icon_AI_bottom_gn"></i>清除对话</div>
+                        <!-- <div class="AI_bottom_gn AI_mods AI_mods_zhuxian"><i class="iconfont icon-fenxiyinqingshouye icon_AI_mods"></i>
                             <p></p>
                         </div>
-                        <input type="password" class="AI_key" placeholder="key">
+                        <input type="password" class="AI_key" placeholder="key"> -->
                     </div>
                 </div>
 
@@ -921,6 +921,44 @@
                     <!-- 滚动条 -->
                     <div class="AI_kjzl_gundontiao_max">
                         <div class="AI_kjzl_gundontiao_min"></div>
+                    </div>
+                </div>
+
+                <!-- mods设置 -->
+                <div class="AI_szym_max" style="display: none;">
+                    <!-- 模型多线程处理 -->
+                    <div class="AI_szym_min">
+                        <div class="AI_sz_kaiguan AI_sz_dydxc_kaiguan">
+                            <div class="AI_sz_kaiguan_d AI_sz_dydxc_kaiguan_d"></div>
+                        </div>
+                        <p>模型多线程处理</p>
+                        <input type="number" class="AI_sz_shu AI_sz_dydxc_shu">
+                        <p style="opacity: 0.5;">( 模型线程数量超过3个,可能会导致用户的账户ID被封禁 ) </p>
+                    </div>
+                    <!-- 多架构生态数 -->
+                    <div class="AI_szym_min">
+                        <div class="AI_sz_kaiguan AI_sz_dkj_kaiguan">
+                            <div class="AI_sz_kaiguan_d AI_sz_dkj_kaiguan_d"></div>
+                        </div>
+                        <p>多模型生态</p>
+                        <input type="number" class="AI_sz_shu AI_sz_dkj_shu">
+                        <p style="opacity: 0.5;">( 同KEY的 [模型生态数量 * 模型线程数量] 超过3个,可能会导致用户的账户ID被封禁 )</p>
+                    </div>
+                    <!-- 最大并发对话数 -->
+                    <div class="AI_szym_min">
+                        <div class="AI_sz_kaiguan AI_sz_zdbfs_kaiguan">
+                            <div class="AI_sz_kaiguan_d AI_sz_zdbfs_kaiguan_d"></div>
+                        </div>
+                        <p>最大并发对话</p>
+                        <input type="number" class="AI_sz_shu AI_sz_zdbfs_shu">
+                        <p style="opacity: 0.5;">( 默认为 [模型生态数量 * 模型线程数量] )</p>
+                    </div>
+                    <!-- 即时输出 -->
+                    <div class="AI_szym_min">
+                        <div class="AI_sz_kaiguan AI_sz_jssc_kaiguan">
+                            <div class="AI_sz_kaiguan_d AI_sz_jssc_kaiguan_d"></div>
+                        </div>
+                        <p>即时输出</p>
                     </div>
                 </div>
             </div>

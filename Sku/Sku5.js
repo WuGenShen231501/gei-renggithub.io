@@ -40,69 +40,159 @@ for (var i = 0; i < AI_mods_name.length; i++) {
         window.localStorage.setItem(itemName, ''); // 如果不存在，则创建它
     }
 }
-// 当前mod
-if (localStorage.AI_dq_mod == undefined) {
-    localStorage.AI_dq_mod = AI_mods_name[0].innerText;
+
+
+
+
+//多模型生态
+if (localStorage.AI_mx_sl == undefined) {
+    localStorage.AI_mx_sl = 1;
 }
-var AI_mods = document.querySelector('.AI_mods').querySelector('p');
-AI_mods.innerText = localStorage.AI_dq_mod;
-for (var i = 0; i < AI_mods_name.length; i++) {
-    if (AI_mods_name[i].innerText == localStorage.AI_dq_mod) {
-        AI_mods_name[i].parentNode.className = 'AI_mods_min AI_mods_min2'; // 修改样式
+
+function AI_mx_sl_cj() {
+    var AI_bottom_gn_max = document.querySelector('.AI_bottom_gn_max');
+    // 输出主线模型
+    var divs = document.createElement('div');
+    divs.className = 'AI_bottom_gn AI_mods AI_mods_zhuxian';
+    divs.innerHTML = '<i class="iconfont icon-fenxiyinqingshouye icon_AI_mods"></i><p></p>';
+    AI_bottom_gn_max.appendChild(divs);
+
+    var inputs = document.createElement('input');
+    inputs.className = 'AI_key';
+    inputs.type = 'password';
+    inputs.placeholder = 'key';
+    AI_bottom_gn_max.appendChild(inputs);
+    // 输出副线模型
+    for (var i = 0; i < localStorage.AI_mx_sl - 1; i++) {
+        var divs = document.createElement('div');
+        divs.className = 'AI_bottom_gn AI_mods';
+        divs.innerHTML = '<i class="iconfont icon-fenxiyinqingshouye icon_AI_mods"></i><p></p>';
+        AI_bottom_gn_max.appendChild(divs);
+
+        var inputs = document.createElement('input');
+        inputs.className = 'AI_key';
+        inputs.type = 'password';
+        inputs.placeholder = 'key';
+        AI_bottom_gn_max.appendChild(inputs);
     }
 }
-// 当前mod的key
-if (localStorage.AI_dq_key == undefined) {
-    localStorage.AI_dq_key = '';
-}
-var AI_key = document.querySelector('.AI_key');
-AI_key.value = localStorage.AI_dq_key;
-
+AI_mx_sl_cj();
 
 
 
 
 // mods切换
-var AI_mods_max = document.querySelector('.AI_mods_max');
-var AI_mods = document.querySelector('.AI_mods');
-AI_mods.addEventListener('click', function(e) {
-    e.stopPropagation();
-    AI_mods_max.style.display = 'block';
-});
-document.addEventListener('click', function(e) {
-    AI_mods_max.style.display = 'none';
-})
-AI_mods_max.addEventListener('click', function(e) {
-    e.stopPropagation();
-});
-
-var AI_mods_min = document.querySelectorAll('.AI_mods_min');
 var AI_mods = document.querySelector('.AI_mods').querySelector('p');
-var AI_key = document.querySelector('.AI_key');
-for (var i = 0; i < AI_mods_min.length; i++) {
-    AI_mods_min[i].addEventListener('click', function(e) {
-        AI_mods.innerText = this.querySelector('.AI_mods_name').innerText;
-        localStorage.AI_dq_mod = this.querySelector('.AI_mods_name').innerText;
-        AI_mods_max.style.display = 'none';
-        var itemName = this.querySelector('.AI_mods_name').innerText + ' key';
-        var itemValue = localStorage.getItem(itemName);
-        AI_key.value = itemValue;
-        localStorage.AI_dq_key = itemValue;
 
-        for (var j = 0; j < AI_mods_min.length; j++) {
-            AI_mods_min[j].className = 'AI_mods_min';
+function mods_qh() {
+    AI_mods = document.querySelector('.AI_mods').querySelector('p');
+    // 默认mod
+    if (localStorage.AI_dq_mod == undefined) {
+        localStorage.AI_dq_mod = AI_mods_name[0].innerText;
+    }
+    AI_mods.innerText = localStorage.AI_dq_mod;
+    for (var i = 0; i < AI_mods_name.length; i++) {
+        if (AI_mods_name[i].innerText == localStorage.AI_dq_mod) {
+            AI_mods_name[i].parentNode.className = 'AI_mods_min AI_mods_min2'; // 修改样式
         }
-        this.className = 'AI_mods_min AI_mods_min2'; // 修改样式
-    });
-}
+    }
+    // 默认mod的key
+    if (localStorage.AI_dq_key == undefined) {
+        localStorage.AI_dq_key = '';
+    }
+    var AI_key = document.querySelector('.AI_key');
+    AI_key.value = localStorage.AI_dq_key;
 
+    // 页面关闭
+    var AI_mods_max = document.querySelector('.AI_mods_max');
+    document.addEventListener('click', function(e) {
+        AI_mods_max.style.display = 'none';
+    })
+    AI_mods_max.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+
+    // 页面打开
+    var AI_modss = document.querySelectorAll('.AI_mods');
+    for (var i = 0; i < AI_modss.length; i++) {
+        AI_modss[i].addEventListener('click', function(e) {
+            e.stopPropagation();
+            AI_mods_max.style.display = 'block';
+            AI_mods = this.querySelector('p');
+        });
+    }
+
+    // mods点击切换
+    var AI_mods_min = document.querySelectorAll('.AI_mods_min');
+    for (var i = 0; i < AI_mods_min.length; i++) {
+        AI_mods_min[i].addEventListener('click', function(e) {
+            // 切换
+            AI_mods.innerText = this.querySelector('.AI_mods_name').innerText;
+            // 主线时替换默认mod
+            if (AI_mods.parentNode.className == 'AI_bottom_gn AI_mods AI_mods_zhuxian') {
+                localStorage.AI_dq_mod = this.querySelector('.AI_mods_name').innerText;
+            }
+
+            // key切换
+            var itemName = this.querySelector('.AI_mods_name').innerText + ' key';
+            var itemValue = localStorage.getItem(itemName);
+            AI_mods.parentNode.nextElementSibling.value = itemValue;
+            // 主线时替换默认key
+            if (AI_mods.parentNode.className == 'AI_bottom_gn AI_mods AI_mods_zhuxian') {
+                localStorage.AI_dq_key = itemValue;
+            }
+
+            AI_bottom_srk.focus();
+            AI_mods_max.style.display = 'none'; // 隐藏
+
+            for (var j = 0; j < AI_mods_min.length; j++) {
+                AI_mods_min[j].className = 'AI_mods_min';
+            }
+            this.className = 'AI_mods_min AI_mods_min2'; // 修改样式
+        });
+    }
+
+    // 长度设置
+    mods_da_xiao_shiying();
+}
+mods_qh();
+
+
+
+
+
+// mods切换大小适应
+function mods_da_xiao_shiying() {
+    var AI_mods = document.querySelectorAll('.AI_mods ');
+    var AI_key = document.querySelectorAll('.AI_key ');
+    if (AI_mods.length >= 3) {
+        for (var i = 0; i < AI_mods.length; i++) {
+            AI_mods[i].style.width = 'calc((100% - 150px - (' + (AI_mods.length * 2) + ' * 10px)) / ' + (AI_mods.length * 2) + ')';
+        }
+
+        for (var i = 0; i < AI_key.length; i++) {
+            AI_key[i].style.width = 'calc((100% - 150px - (' + (AI_mods.length * 2) + ' * 10px)) / ' + (AI_mods.length * 2) + ')';
+        }
+    } else {
+        for (var i = 0; i < AI_mods.length; i++) {
+            AI_mods[i].style.width = 'auto';
+        }
+
+        for (var i = 0; i < AI_mods.length; i++) {
+            AI_key[i].style.width = '150px';
+        }
+    }
+}
+window.addEventListener('resize', function(e) {
+    mods_da_xiao_shiying();
+});
 
 
 
 
 // 修改key
 var AI_key = document.querySelector('.AI_key');
-var AI_mods = document.querySelector('.AI_mods').querySelector('p');
+AI_mods = document.querySelector('.AI_mods').querySelector('p');
 AI_key.addEventListener('input', function(e) {
     localStorage.AI_dq_key = this.value;
     var itemName = AI_mods.innerText + ' key';
@@ -112,27 +202,70 @@ AI_key.addEventListener('input', function(e) {
 
 
 
+// 线程ID
+var AI_jl = JSON.parse(localStorage.AI_jl);
+var AI_xian_cheng = AI_jl.length;
+// 发送允许
+var AI_bottom_srk_fs_true = 1;
+// 正在执行的任务数 
+var AI_zhi_xing_s = 0;
+// 允许最多执行数
+if (localStorage.AI_zhi_xing_zuiduo_s == undefined) {
+    localStorage.AI_zhi_xing_zuiduo_s = 3;
+}
+// 单模型循环次数
+if (localStorage.AI_xunhuan_cs == undefined) {
+    localStorage.AI_xunhuan_cs = 1;
+}
 
 // 发送
 var AI_bottom_srk_fs = document.querySelector('.AI_bottom_srk_fs');
-var AI_bottom_srk_fs_true = 1;
-
 var zdxszxf = 0;
 AI_bottom_srk_fs.addEventListener('click', function(e) {
     var AI_bottom_srk = document.querySelector('.AI_bottom_srk');
     if (AI_bottom_srk_fs_true == 1 && AI_bottom_srk.value !== '') {
         var AI_bottom_srk = document.querySelector('.AI_bottom_srk');
-        var AI_mods = document.querySelector('.AI_mods').querySelector('p');
         var AI_key = document.querySelector('.AI_key');
-        AI_bcsj(AI_bottom_srk.value, 1);
-        AI_cl(AI_bottom_srk.value, 1);
-        AI_fsxx(AI_bottom_srk.value, AI_mods.innerText, AI_key.value);
-        AI_bottom_srk.value = '';
+
+        // 创建处理
+        AI_cl(AI_bottom_srk.value, 1, '', AI_xian_cheng);
+        // ID更改
+        AI_xian_cheng++;
+
+        // 多模型多线程同时发生请求
+        var AI_modss = document.querySelectorAll('.AI_mods');
+        for (var o = 0; o < AI_modss.length; o++) {
+            if (AI_modss[o].querySelector('p').innerText !== '' && AI_zhi_xing_s < localStorage.AI_zhi_xing_zuiduo_s) {
+                // 发送AI请求
+                AI_fsxx(AI_bottom_srk.value, AI_modss[o].querySelector('p').innerText, AI_modss[o].nextElementSibling.value, AI_xian_cheng);
+                // ID更改
+                AI_xian_cheng++;
+                // 正在执行数加一
+                AI_zhi_xing_s++;
+
+                // 循环发送
+                for (var i = 0; i < localStorage.AI_xunhuan_cs - 1; i++) {
+                    if (AI_zhi_xing_s < localStorage.AI_zhi_xing_zuiduo_s) {
+                        // 发送AI请求
+                        AI_fsxx(AI_bottom_srk.value, AI_modss[o].querySelector('p').innerText, AI_modss[o].nextElementSibling.value, AI_xian_cheng);
+                        // ID更改
+                        AI_xian_cheng++;
+                        // 正在执行数加一
+                        AI_zhi_xing_s++;
+                    }
+                }
+            }
+        }
 
         // 不让输出
-        AI_bottom_srk_fs_true = 0;
-        AI_bottom_srk_fs.style.opacity = '0.3';
-        AI_bottom_srk.disabled = 'disabled';
+        if (AI_zhi_xing_s >= localStorage.AI_zhi_xing_zuiduo_s) {
+            AI_bottom_srk_fs_true = 0;
+            AI_bottom_srk_fs.style.opacity = '0.3';
+            AI_bottom_srk.disabled = 'disabled';
+        }
+
+        // 清空输入框
+        AI_bottom_srk.value = '';
 
         // 显示最下方
         zdxszxf = 1;
@@ -146,19 +279,37 @@ AI_bottom_srk_fs.addEventListener('click', function(e) {
 
 
 // 数据保存
-function AI_bcsj(nr, rw, mod_s) {
+function AI_bcsj(nr, rw, mod_s, AI_ID) {
     var AI_jl = JSON.parse(localStorage.getItem('AI_jl'));
     var sj = new Date().getFullYear() + ' 年 ' + (new Date().getMonth() + 1) + ' 月 ' + new Date().getDate() + ' 日 ' + shi_jian_hs3() + ':' + shi_jian_hs2();
     var sz = [rw, nr, (mod_s ? mod_s : sj)];
-    AI_jl.push(sz);
+    AI_jl[AI_ID - 0] = sz;
     localStorage.setItem('AI_jl', JSON.stringify(AI_jl));
 }
 
 
 
 
-// 数据上传
-function AI_fsxx(nr_s, mod_s, key_s) {
+// AI处理
+function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
+
+    // AI预留
+    var divs = document.createElement('div');
+    divs.className = 'AI_huida_max AI_huida_max_xiancheng' + AI_ID;
+    divs.innerHTML = '<div class="AI_huida_nr">...</div><div class="AI_huida_tx"></div><div class="AI_huida_sj"></div>';
+    AI_zj_nr.appendChild(divs);
+
+
+    // 动态创建定时器
+    var AI_huida_shuchudh_s = 'AI_huida_shuchudh' + AI_ID;
+    var AI_huida_nr = document.querySelector('.AI_huida_max_xiancheng' + AI_ID).querySelector('.AI_huida_nr');
+    window[AI_huida_shuchudh_s] = setInterval(function() {
+        AI_huida_nr.innerText = AI_huida_nr.innerText + '.';
+        if (AI_huida_nr.innerText.length > 9) {
+            AI_huida_nr.innerText = '...';
+        }
+    }, 300);
+
     if (mod_s == 'gpt-4o-mini' || mod_s == 'gpt-3.5-turbo' || mod_s == 'gpt-4') {
 
         try { // 可能产生错误的代码
@@ -188,15 +339,15 @@ function AI_fsxx(nr_s, mod_s, key_s) {
                     var results = JSON.parse(result);
                     console.log(results);
 
-                    AI_cl(results.choices[0].message.content, 2, mod_s);
+                    AI_cl(results.choices[0].message.content, 2, mod_s, AI_ID);
                 })
-                .catch(function(error) {
-                    console.log(error);
+                .catch(function(err) {
+                    console.log(err);
 
-                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s);
+                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
                 });
         } catch (error) { // 这个块会在 try 中有错误抛出时执行
-            AI_cl('请求失败 检查 API 是否失效', 2, mod_s);
+            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
     } else if (mod_s == 'glm-4-0520') {
@@ -236,16 +387,16 @@ function AI_fsxx(nr_s, mod_s, key_s) {
                 .then(data => {
                     console.log(data); // 处理返回的数据
 
-                    AI_cl(data.choices[0].message.content, 2, mod_s);
+                    AI_cl(data.choices[0].message.content, 2, mod_s, AI_ID);
                 })
-                .catch(error => {
-                    console.log(error);
+                .catch(err => {
+                    console.log(err);
 
-                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s);
+                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
                 });
         } catch (error) {
             // 这个块会在 try 中有错误抛出时执行
-            AI_cl('请求失败 检查 API 是否失效', 2, mod_s);
+            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
     } else if (mod_s == 'web-search-pro') {
@@ -288,18 +439,18 @@ function AI_fsxx(nr_s, mod_s, key_s) {
                         var array = JSON.parse(content).choices[0].message.tool_calls[1].search_result;
                         const contentArray = array.map(item => item.content); // 提取content字段
                         const contentString = contentArray.join('\n\n'); // 将数组转换为字符串
-                        AI_cl(contentString, 2, mod_s);
+                        AI_cl(contentString, 2, mod_s, AI_ID);
                     })
-                    .catch(function(error) {
-                        console.log(error);
-                        AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s);
+                    .catch(function(err) {
+                        console.log(err);
+                        AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
                     });
             }
             // 调用函数
             runV4Sync();
         } catch (error) {
             // 这个块会在 try 中有错误抛出时执行
-            AI_cl('请求失败 检查 API 是否失效', 2, mod_s);
+            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
     } else if (mod_s == 'Pro/Qwen/Qwen2-1.5B-Instruct' || mod_s == 'Qwen/Qwen2-7B-Instruct' || mod_s == 'Qwen/Qwen2-1.5B-Instruct' || mod_s == 'THUDM/chatglm3-6b' || mod_s == '01-ai/Yi-1.5-9B-Chat-16K' || mod_s == 'internlm/internlm2_5-7b-chat' || mod_s == 'google/gemma-2-9b-it' || mod_s == 'meta-llama/Meta-Llama-3-8B-Instruct' || mod_s == 'meta-llama/Meta-Llama-3.1-8B-Instruct' || mod_s == 'mistralai/Mistral-7B-Instruct-v0.2' || mod_s == 'Qwen/Qwen1.5-7B-Chat' || mod_s == 'THUDM/glm-4-9b-chat') {
@@ -333,15 +484,15 @@ function AI_fsxx(nr_s, mod_s, key_s) {
                 .then(function(response) {
                     console.log(response); // 处理返回的数据
 
-                    AI_cl(response.choices[0].message.content, 2, mod_s);
+                    AI_cl(response.choices[0].message.content, 2, mod_s, AI_ID);
                 })
                 .catch(function(err) {
                     console.log(err);
 
-                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s);
+                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
                 });
         } catch (error) {
-            AI_cl('请求失败 检查 API 是否失效', 2, mod_s);
+            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
     } else if (mod_s == '01-ai/Yi-1.5-6B-Chat') {
@@ -375,15 +526,15 @@ function AI_fsxx(nr_s, mod_s, key_s) {
                 .then(function(response) {
                     console.log(response); // 处理返回的数据
 
-                    AI_cl(response.choices[0].message.content, 2, mod_s);
+                    AI_cl(response.choices[0].message.content, 2, mod_s, AI_ID);
                 })
                 .catch(function(err) {
                     console.log(err);
 
-                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s);
+                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
                 });
         } catch (error) {
-            AI_cl('请求失败 检查 API 是否失效', 2, mod_s);
+            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
     } else if (mod_s == 'black-forest-labs/FLUX.1-schnell' || mod_s == 'stabilityai/stable-diffusion-2-1' || mod_s == 'stabilityai/stable-diffusion-3-medium' || mod_s == 'stabilityai/stable-diffusion-xl-base-1.0') {
@@ -408,15 +559,15 @@ function AI_fsxx(nr_s, mod_s, key_s) {
                 .then(function(response) {
                     console.log(response); // 处理返回的数据
 
-                    AI_cl('<img src="' + response.images[0].url + '">', 2, mod_s);
+                    AI_cl('<img src="' + response.images[0].url + '">', 2, mod_s, AI_ID);
                 })
                 .catch(function(err) {
                     console.log(err);
 
-                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s);
+                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
                 });
         } catch (error) {
-            AI_cl('请求失败 检查 API 是否失效', 2, mod_s);
+            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
     } else if (mod_s == '') {
@@ -424,7 +575,7 @@ function AI_fsxx(nr_s, mod_s, key_s) {
         try {
 
         } catch (error) {
-            AI_cl('请求失败 检查 API 是否失效', 2, mod_s);
+            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
     }
@@ -440,72 +591,100 @@ var AI_bottom_srk = document.querySelector('.AI_bottom_srk');
 var AI_zj = document.querySelector('.AI_zj');
 var AI_zj_nr = document.querySelector('.AI_zj_nr');
 
-function AI_cl(nr, rw, mod_s) {
+function AI_cl(nr, rw, mod_s, AI_ID) {
     var sj = new Date().getFullYear() + ' 年 ' + (new Date().getMonth() + 1) + ' 月 ' + new Date().getDate() + ' 日 ' + shi_jian_hs3() + ':' + shi_jian_hs2();
     if (rw == 1) { //自己
+
+        // 保存数据
+        AI_bcsj(nr, 1, undefined, AI_ID);
+
+        // 创建对话
         var divs = document.createElement('div');
+        var AI_zj_nr = document.querySelector('.AI_zj_nr');
         divs.className = 'AI_huida_max';
         divs.innerHTML = '<div class="yh_huida_nr"></div><div class="yh_huida_tx" style="background-image: url(' + localStorage.tou_xiang + ');"></div><div class="yh_huida_sj">' + sj + '</div>';
         divs.querySelector('.yh_huida_nr').innerText = nr;
         AI_zj_nr.appendChild(divs);
 
-        // AI预留
-        var divs = document.createElement('div');
-        divs.className = 'AI_huida_max';
-        divs.innerHTML = '<div class="AI_huida_nr">...</div><div class="AI_huida_tx"></div><div class="AI_huida_sj"></div>';
-        AI_zj_nr.appendChild(divs);
-
-        var AI_huida_nr = document.querySelectorAll('.AI_huida_nr');
-        var AI_huida_nr = AI_huida_nr[AI_huida_nr.length - 1];
-        AI_huida_shuchudh = setInterval(function() {
-            AI_huida_nr.innerText = AI_huida_nr.innerText + '.';
-            if (AI_huida_nr.innerText.length > 9) {
-                AI_huida_nr.innerText = '...';
-            }
-        }, 300);
     } else if (rw == 2) { //AI
-        // 使用marked解析Markdown
-        var parsedHtml = marked.parse(nr);
-        // 将解析后的HTML设置回div元素中
-        var nr = parsedHtml;
 
-        AI_bcsj(nr, 2, mod_s);
+        try {
+            // 使用marked解析Markdown
+            var parsedHtml = marked.parse(nr);
+            // 将解析后的HTML设置回div元素中
+            var nr = parsedHtml;
+        } catch (error) {
+            Sku_tctx('marked解析错误 , 网络未连接 或 Markdown版本过低');
+        }
 
-        clearInterval(AI_huida_shuchudh); //停止定时器
-        var AI_huida_nr = document.querySelectorAll('.AI_huida_nr');
-        var AI_huida_nr = AI_huida_nr[AI_huida_nr.length - 1];
-        var AI_huida_sj = document.querySelectorAll('.AI_huida_sj');
-        var AI_huida_sj = AI_huida_sj[AI_huida_sj.length - 1];
+        // 保存数据
+        AI_bcsj(nr, 2, mod_s, AI_ID);
+
+        //停止定时器
+        var AI_huida_shuchudh_s = 'AI_huida_shuchudh' + AI_ID;
+        clearInterval(window[AI_huida_shuchudh_s]);
+
+        //获取对应盒子准备输出
+        var AI_huida_nr = document.querySelector('.AI_huida_max_xiancheng' + AI_ID).querySelector('.AI_huida_nr');
+        var AI_huida_sj = document.querySelector('.AI_huida_max_xiancheng' + AI_ID).querySelector('.AI_huida_sj');
+        document.querySelector('.AI_huida_max_xiancheng' + AI_ID).className = 'AI_huida_max';
         AI_huida_sj.innerText = mod_s;
-        var shuchu_wz = 0;
-        var shuchu_wz_zf = '';
         AI_huida_nr.innerHTML = '';
 
-        AI_huida_shuchudh = setInterval(function() {
-            // 动态输出
-            shuchu_wz_zf += nr[shuchu_wz]; //将字符串拼接
-            AI_huida_nr.innerHTML = shuchu_wz_zf;
+        if (localStorage.AI_jssc - 0 == 0) { // 动态输出
+            var shuchu_wz = 0;
+            var shuchu_wz_zf = '';
+            // 动态创建定时器
+            var AI_huida_shuchudh_s = 'AI_huida_shuchudh' + AI_ID;
+            window[AI_huida_shuchudh_s] = setInterval(function() {
+                // 动态输出
+                shuchu_wz_zf += nr[shuchu_wz]; //将字符串拼接
+                AI_huida_nr.innerHTML = shuchu_wz_zf;
 
+                // 显示最下方
+                if (zdxszxf == 1) {
+                    var AI_zj_nr = document.querySelector('.AI_zj_nr');
+                    AI_zj.scroll(0, AI_zj_nr.offsetHeight);
+                }
+
+                //结束输出
+                if (shuchu_wz == nr.length - 1) {
+                    var AI_huida_shuchudh_s = 'AI_huida_shuchudh' + AI_ID;
+                    clearInterval(window[AI_huida_shuchudh_s]); //停止定时器
+
+                    // 正在执行数减一
+                    AI_zhi_xing_s--;
+                    // 可以使用
+                    if (AI_zhi_xing_s < localStorage.AI_zhi_xing_zuiduo_s) {
+                        AI_bottom_srk_fs_true = 1;
+                        AI_bottom_srk_fs.style.opacity = '1';
+                        AI_bottom_srk.disabled = false;
+                        AI_bottom_srk.focus(); //聚焦
+                    }
+
+                }
+
+                // 动态递增
+                shuchu_wz++;
+            });
+        } else { //即使输出
+            AI_huida_nr.innerHTML = nr;
             // 显示最下方
             if (zdxszxf == 1) {
                 var AI_zj_nr = document.querySelector('.AI_zj_nr');
                 AI_zj.scroll(0, AI_zj_nr.offsetHeight);
             }
-
-            //结束输出
-            if (shuchu_wz == nr.length - 1) {
-                clearInterval(AI_huida_shuchudh); //停止定时器
-
-                // 可以使用
-                AI_bottom_srk_fs.style.opacity = '1';
+            // 正在执行数减一
+            AI_zhi_xing_s--;
+            // 可以使用
+            if (AI_zhi_xing_s < localStorage.AI_zhi_xing_zuiduo_s) {
                 AI_bottom_srk_fs_true = 1;
+                AI_bottom_srk_fs.style.opacity = '1';
                 AI_bottom_srk.disabled = false;
                 AI_bottom_srk.focus(); //聚焦
             }
+        }
 
-            // 动态递增
-            shuchu_wz++;
-        });
     }
 }
 
@@ -537,9 +716,10 @@ for (var i = 0; i < AI_jl.length; i++) {
 // 删除历史
 var AI_kjzl_sc = document.querySelector('.AI_kjzl_sc');
 AI_kjzl_sc.addEventListener('click', function(e) {
-    if (AI_bottom_srk_fs_true == 1) {
+    if (AI_zhi_xing_s == 0) {
         AI_zj_nr.innerHTML = '';
         localStorage.AI_jl = '[]';
+        AI_xian_cheng = 0;
     }
 });
 
@@ -555,6 +735,8 @@ var AI_kjzl_min = document.querySelector('.AI_kjzl_min');
 AI_kjzl.addEventListener('click', function(e) {
     e.stopPropagation();
     AI_kjzl_max.style.display = 'block';
+    AI_kjzl_s_tjl.focus(); // 聚焦
+    AI_kjzl_min.scroll(0, 0);
 });
 document.addEventListener('click', function(e) {
     AI_kjzl_max.style.display = 'none';
@@ -607,6 +789,339 @@ AI_kjzl_max.addEventListener('contextmenu', function(e) {
         localStorage.AI_kjzl = JSON.stringify(AI_kjzl);
         //页面修改
         AI_kjzl_min.removeChild(ai_kjzl_ss);
+    }
+});
+
+
+
+
+
+// 快速翻译
+function AI_ksfy() {
+    var fy_nr = AI_bottom_srk.value;
+    AI_bottom_srk.value = '';
+
+    // 不让输出
+    AI_bottom_srk_fs_true = 0;
+    AI_bottom_srk_fs.style.opacity = '0.3';
+    AI_bottom_srk.disabled = 'disabled';
+
+    try {
+        const options = {
+            method: 'POST',
+            headers: {
+                accept: 'application/json',
+                'content-type': 'application/json',
+                authorization: 'Bearer sk-pdgqcxmzvrnetrmghspjnrfpvcsyokghvceimnemcwyulzcg'
+            },
+            body: JSON.stringify({
+                model: 'THUDM/glm-4-9b-chat',
+                messages: [{
+                    role: 'user',
+                    content: 'Translate the following (note: if it is Chinese, it will be translated into English, and English will be translated into Chinese), and the pure translation result will be output! No need for the original text! What you need to translate is:' + fy_nr
+                }],
+                stream: false,
+                max_tokens: 4096,
+                temperature: 0.7,
+                top_p: 0.7,
+                top_k: 50,
+                frequency_penalty: 0.5,
+                n: 1
+            })
+        };
+
+        fetch('https://api.siliconflow.cn/v1/chat/completions', options)
+            .then(response => response.json())
+            .then(function(response) {
+                console.log(response); // 处理返回的数据
+                AI_bottom_srk.value = response.choices[0].message.content.replace(/(\n{1,})/g, '').replace(/\n+$/, '');
+
+                // 可以使用
+                AI_bottom_srk_fs.style.opacity = '1';
+                AI_bottom_srk_fs_true = 1;
+                AI_bottom_srk.disabled = false;
+                AI_bottom_srk.focus(); //聚焦
+                sf_shift2 = 0;
+            })
+            .catch(function(err) {
+                console.log(err);
+
+                // 可以使用
+                AI_bottom_srk_fs.style.opacity = '1';
+                AI_bottom_srk_fs_true = 1;
+                AI_bottom_srk.disabled = false;
+                AI_bottom_srk.focus(); //聚焦
+                sf_shift2 = 0;
+                Sku_tctx('请求失败 检查 API 是否失效');
+            });
+    } catch (error) {
+        // 可以使用
+        AI_bottom_srk_fs.style.opacity = '1';
+        AI_bottom_srk_fs_true = 1;
+        AI_bottom_srk.disabled = false;
+        AI_bottom_srk.focus(); //聚焦
+        sf_shift2 = 0;
+        Sku_tctx('请求失败 检查 API 是否失效');
+    }
+}
+
+
+
+
+
+// 设置mods
+var AI_dhsz = document.querySelector('.AI_dhsz');
+var AI_szym_max = document.querySelector('.AI_szym_max');
+var AI_kjzl_s_tjl = document.querySelector('.AI_kjzl_s_tjl');
+var AI_kjzl_min = document.querySelector('.AI_kjzl_min');
+AI_dhsz.addEventListener('click', function(e) {
+    e.stopPropagation();
+    AI_szym_max.style.display = 'block';
+});
+document.addEventListener('click', function(e) {
+    AI_szym_max.style.display = 'none';
+})
+AI_szym_max.addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+var AI_sz_dydxc_kaiguan = document.querySelector('.AI_sz_dydxc_kaiguan');
+var AI_sz_dydxc_kaiguan_d = document.querySelector('.AI_sz_dydxc_kaiguan_d');
+var AI_sz_dydxc_shu = document.querySelector('.AI_sz_dydxc_shu');
+var AI_sz_dkj_kaiguan = document.querySelector('.AI_sz_dkj_kaiguan');
+var AI_sz_dkj_kaiguan_d = document.querySelector('.AI_sz_dkj_kaiguan_d');
+var AI_sz_dkj_shu = document.querySelector('.AI_sz_dkj_shu');
+var AI_sz_zdbfs_kaiguan = document.querySelector('.AI_sz_zdbfs_kaiguan');
+var AI_sz_zdbfs_kaiguan_d = document.querySelector('.AI_sz_zdbfs_kaiguan_d');
+var AI_sz_zdbfs_shu = document.querySelector('.AI_sz_zdbfs_shu');
+var AI_sz_jssc_kaiguan = document.querySelector('.AI_sz_jssc_kaiguan');
+var AI_sz_jssc_kaiguan_d = document.querySelector('.AI_sz_jssc_kaiguan_d');
+if (localStorage.AI_jssc == undefined) { //即时输出
+    localStorage.AI_jssc = 0; //默认0
+}
+
+// 重新创建mod框架
+function AI_mods_cxcj() {
+    // 创建mod框架
+    var AI_bottom_gn_max = document.querySelector('.AI_bottom_gn_max');
+    var AI_modss = document.querySelectorAll('.AI_mods ');
+    for (var i = 0; i < AI_modss.length; i++) {
+        AI_bottom_gn_max.removeChild(AI_modss[i]);
+    }
+    var AI_key = document.querySelectorAll('.AI_key ');
+    for (var i = 0; i < AI_key.length; i++) {
+        AI_bottom_gn_max.removeChild(AI_key[i]);
+    }
+    AI_mx_sl_cj();
+    mods_qh();
+    xhgb_dx('AI_mods', 'AI_mods_max');
+}
+
+// 默认模型多线程处理数
+if (localStorage.AI_xunhuan_cs - 0 !== 1) {
+    AI_sz_dydxc_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+    AI_sz_dydxc_kaiguan_d.style.left = '29px';
+} else {
+    AI_sz_dydxc_shu.disabled = true;
+    AI_sz_dydxc_shu.style.opacity = 0.5;
+}
+AI_sz_dydxc_shu.value = localStorage.AI_xunhuan_cs;
+// 默认多架构生态数
+if (localStorage.AI_mx_sl - 0 !== 1) {
+    AI_sz_dkj_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+    AI_sz_dkj_kaiguan_d.style.left = '29px';
+} else {
+    AI_sz_dkj_shu.disabled = true;
+    AI_sz_dkj_shu.style.opacity = 0.5;
+}
+AI_sz_dkj_shu.value = localStorage.AI_mx_sl;
+// 默认最大并发对话数
+if ((localStorage.AI_zhi_xing_zuiduo_s - 0) !== 1 && (localStorage.AI_mx_sl - 0) == 1 && (localStorage.AI_xunhuan_cs - 0) == 1) {
+    AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+    AI_sz_zdbfs_kaiguan_d.style.left = '29px';
+} else {
+    AI_sz_zdbfs_shu.disabled = true;
+    AI_sz_zdbfs_shu.style.opacity = 0.5;
+}
+AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+// 默认即时输出
+if (localStorage.AI_jssc - 0 == 1) {
+    AI_sz_jssc_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+    AI_sz_jssc_kaiguan_d.style.left = '29px';
+}
+
+// 模型多线程处理
+AI_sz_dydxc_kaiguan.addEventListener('click', function(e) {
+    if (localStorage.AI_xunhuan_cs - 0 == 1) {
+        AI_sz_dydxc_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+        AI_sz_dydxc_kaiguan_d.style.left = '29px';
+
+        localStorage.AI_xunhuan_cs = 2;
+        AI_sz_dydxc_shu.value = localStorage.AI_xunhuan_cs;
+        AI_sz_dydxc_shu.disabled = false;
+        AI_sz_dydxc_shu.style.opacity = 1;
+
+        // 第三者
+        AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_zdbfs_kaiguan_d.style.left = '0px';
+
+        AI_sz_zdbfs_shu.disabled = true;
+        localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
+        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+        AI_sz_zdbfs_shu.style.opacity = 0.5;
+    } else {
+        AI_sz_dydxc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_dydxc_kaiguan_d.style.left = '0px';
+
+        localStorage.AI_xunhuan_cs = 1;
+        AI_sz_dydxc_shu.value = localStorage.AI_xunhuan_cs;
+        AI_sz_dydxc_shu.disabled = true;
+        AI_sz_dydxc_shu.style.opacity = 0.5;
+
+        // 第三者
+        localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
+        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+        if (localStorage.AI_xunhuan_cs - 0 == 1 && localStorage.AI_mx_sl - 0 == 1) {
+            AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+            AI_sz_zdbfs_kaiguan_d.style.left = '29px';
+
+            localStorage.AI_zhi_xing_zuiduo_s = 3;
+            AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+            AI_sz_zdbfs_shu.disabled = false;
+            AI_sz_zdbfs_shu.style.opacity = 1;
+        }
+    }
+});
+AI_sz_dydxc_shu.addEventListener('blur', function(e) {
+    if (this.value < 2) {
+        this.value = 2;
+        Sku_tctx('输入范围为 (2 ~ 10)');
+    } else if (this.value > 10) {
+        this.value = 10;
+        Sku_tctx('输入范围为 (2 ~ 10)');
+    }
+
+    localStorage.AI_xunhuan_cs = this.value;
+
+    // 第三者
+    localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
+    AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+});
+// 多架构生态数
+AI_sz_dkj_kaiguan.addEventListener('click', function(e) {
+    if (localStorage.AI_mx_sl - 0 == 1) {
+        AI_sz_dkj_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+        AI_sz_dkj_kaiguan_d.style.left = '29px';
+
+        localStorage.AI_mx_sl = 2;
+        AI_sz_dkj_shu.value = localStorage.AI_mx_sl;
+        AI_sz_dkj_shu.disabled = false;
+        AI_sz_dkj_shu.style.opacity = 1;
+
+        // 重新创建mods框架
+        AI_mods_cxcj();
+
+        // 第三者
+        AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_zdbfs_kaiguan_d.style.left = '0px';
+
+        AI_sz_zdbfs_shu.disabled = true;
+        localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
+        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+        AI_sz_zdbfs_shu.style.opacity = 0.5;
+    } else {
+        AI_sz_dkj_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_dkj_kaiguan_d.style.left = '0px';
+
+        localStorage.AI_mx_sl = 1;
+        AI_sz_dkj_shu.value = localStorage.AI_mx_sl;
+        AI_sz_dkj_shu.disabled = true;
+        AI_sz_dkj_shu.style.opacity = 0.5;
+
+        // 重新创建mods框架
+        AI_mods_cxcj();
+
+        // 第三者
+        localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
+        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+        if (localStorage.AI_xunhuan_cs - 0 == 1 && localStorage.AI_mx_sl - 0 == 1) {
+            AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+            AI_sz_zdbfs_kaiguan_d.style.left = '29px';
+
+            localStorage.AI_zhi_xing_zuiduo_s = 3;
+            AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+            AI_sz_zdbfs_shu.disabled = false;
+            AI_sz_zdbfs_shu.style.opacity = 1;
+        }
+    }
+});
+AI_sz_dkj_shu.addEventListener('blur', function(e) {
+    if (this.value < 2) {
+        this.value = 2;
+        Sku_tctx('输入范围为 (2 ~ 10)');
+    } else if (this.value > 10) {
+        this.value = 10;
+        Sku_tctx('输入范围为 (2 ~ 10)');
+    }
+
+    localStorage.AI_mx_sl = this.value;
+
+    // 重新创建mods框架
+    AI_mods_cxcj();
+
+    // 第三者
+    localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
+    AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+});
+// 最大并发对话数
+AI_sz_zdbfs_kaiguan.addEventListener('click', function(e) {
+    if (window.getComputedStyle(AI_sz_zdbfs_kaiguan_d).left == '0px') {
+        AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+        AI_sz_zdbfs_kaiguan_d.style.left = '29px';
+
+        AI_sz_zdbfs_shu.disabled = false;
+        AI_sz_zdbfs_shu.style.opacity = 1;
+        localStorage.AI_zhi_xing_zuiduo_s = 3;
+        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+
+        // 第三者
+        AI_sz_dydxc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_dydxc_kaiguan_d.style.left = '0px';
+        AI_sz_dkj_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_dkj_kaiguan_d.style.left = '0px';
+
+        AI_sz_dydxc_shu.disabled = true;
+        AI_sz_dkj_shu.disabled = true;
+        localStorage.AI_xunhuan_cs = 1;
+        localStorage.AI_mx_sl = 1;
+        AI_sz_dydxc_shu.style.opacity = 0.5;
+        AI_sz_dkj_shu.style.opacity = 0.5;
+        AI_sz_dkj_shu.value = localStorage.AI_mx_sl;
+        AI_sz_dydxc_shu.value = localStorage.AI_xunhuan_cs;
+
+        // 重新创建mods框架
+        AI_mods_cxcj();
+    } else {
+        AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_zdbfs_kaiguan_d.style.left = '0px';
+
+        AI_sz_zdbfs_shu.disabled = true;
+        AI_sz_zdbfs_shu.style.opacity = 0.5;
+        localStorage.AI_zhi_xing_zuiduo_s = 1;
+        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+    }
+});
+// 即时输出
+AI_sz_jssc_kaiguan.addEventListener('click', function(e) {
+    if (localStorage.AI_jssc - 0 == 0) {
+        AI_sz_jssc_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+        AI_sz_jssc_kaiguan_d.style.left = '29px';
+
+        localStorage.AI_jssc = 1;
+    } else {
+        AI_sz_jssc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_jssc_kaiguan_d.style.left = '0px';
+
+        localStorage.AI_jssc = 0;
     }
 });
 
@@ -668,7 +1183,7 @@ AI_max.addEventListener('drop', function(e) {
 // 按键
 AI_bottom_srk.addEventListener('keydown', function(e) {
     var sf_shift4 = 0;
-    if (e.shiftKey) {
+    if (e.shiftKey || e.ctrlKey) {
         sf_shift4 = 1;
     }
     // 检查是否按下了Shift键和Enter键
@@ -679,7 +1194,7 @@ AI_bottom_srk.addEventListener('keydown', function(e) {
 });
 AI_kjzl_s_tjl.addEventListener('keydown', function(e) {
     var sf_shift4 = 0;
-    if (e.shiftKey) {
+    if (e.shiftKey || e.ctrlKey) {
         sf_shift4 = 1;
     }
     // 检查是否按下了Shift键和Enter键
@@ -693,6 +1208,10 @@ AI_bottom_srk.addEventListener('keydown', function(e) {
     if (e.shiftKey && e.key === 'Enter') {
         sf_shift2 = 1;
     }
+    if (e.ctrlKey && e.key === 'Enter') {
+        sf_shift2 = 1;
+        AI_ksfy();
+    }
 })
 AI_bottom_srk.addEventListener('keyup', function(e) {
     if (e.key == 'Enter' && sf_shift2 == 0) {
@@ -702,7 +1221,7 @@ AI_bottom_srk.addEventListener('keyup', function(e) {
     }
 });
 AI_kjzl_s_tjl.addEventListener('keydown', function(e) {
-    if (e.shiftKey && e.key === 'Enter') {
+    if ((e.shiftKey && e.key === 'Enter') || (e.ctrlKey && e.key === 'Enter')) {
         sf_shift2 = 1;
     }
 })
@@ -718,6 +1237,16 @@ document.addEventListener('keyup', function(e) {
         AI_bottom_srk.focus();
     } else if (e.key == 'Enter' && AI_kjzl_max.style.display == 'block') {
         AI_kjzl_s_tjl.focus();
+    } else if (e.key == 'Alt' && AI_kjzl_max.style.display == 'none') {
+        e.preventDefault();
+        var AI_kjzl = document.querySelector('.AI_kjzl');
+        AI_kjzl.click();
+    } else if (e.key == 'Alt' && AI_kjzl_max.style.display == 'block') {
+        e.preventDefault();
+        AI_kjzl_max.style.display = 'none';
+        AI_bottom_srk.focus();
+    } else if (e.key == 'F11' && nrmaxs4.style.display == 'block') {
+        AI_quanpin_anniu.click();
     }
 });
 // 放大
@@ -732,4 +1261,7 @@ AI_quanpin_anniu.addEventListener('click', function(e) {
         AI_quanpin_anniu_true = 0;
         AI_max.className = 'AI_max';
     }
+
+    // 长度设置
+    mods_da_xiao_shiying();
 });
