@@ -169,7 +169,6 @@ function mods_da_xiao_shiying() {
         for (var i = 0; i < AI_mods.length; i++) {
             AI_mods[i].style.width = 'calc((100% - 150px - (' + (AI_mods.length * 2) + ' * 10px)) / ' + (AI_mods.length * 2) + ')';
         }
-
         for (var i = 0; i < AI_key.length; i++) {
             AI_key[i].style.width = 'calc((100% - 150px - (' + (AI_mods.length * 2) + ' * 10px)) / ' + (AI_mods.length * 2) + ')';
         }
@@ -177,7 +176,6 @@ function mods_da_xiao_shiying() {
         for (var i = 0; i < AI_mods.length; i++) {
             AI_mods[i].style.width = 'auto';
         }
-
         for (var i = 0; i < AI_mods.length; i++) {
             AI_key[i].style.width = '150px';
         }
@@ -190,10 +188,10 @@ window.addEventListener('resize', function(e) {
 
 
 
-// 修改key
+// 修改默认key
 var AI_key = document.querySelector('.AI_key');
-AI_mods = document.querySelector('.AI_mods').querySelector('p');
 AI_key.addEventListener('input', function(e) {
+    AI_mods = document.querySelector('.AI_mods').querySelector('p');
     localStorage.AI_dq_key = this.value;
     var itemName = AI_mods.innerText + ' key';
     localStorage.setItem(itemName, this.value);
@@ -217,6 +215,8 @@ if (localStorage.AI_zhi_xing_zuiduo_s == undefined) {
 if (localStorage.AI_xunhuan_cs == undefined) {
     localStorage.AI_xunhuan_cs = 1;
 }
+// 历史对话插件
+var AI_li_shi_xx = [];
 
 // 发送
 var AI_bottom_srk_fs = document.querySelector('.AI_bottom_srk_fs');
@@ -231,6 +231,23 @@ AI_bottom_srk_fs.addEventListener('click', function(e) {
         AI_cl(AI_bottom_srk.value, 1, '', AI_xian_cheng);
         // ID更改
         AI_xian_cheng++;
+
+        // 历史对话插件
+        if (localStorage.AI_lxdh - 0 !== 0) {
+            var AI_jl = JSON.parse(localStorage.AI_jl);
+            // 初始化一个空数组来存储结果对象
+            AI_li_shi_xx = [];
+            // 遍历数组，直接将对象追加到结果数组中
+            for (var i = (AI_jl.length > localStorage.AI_lxdh ? (AI_jl.length - localStorage.AI_lxdh) : 0); i < AI_jl.length; i++) {
+                const role = AI_jl[i][0] === 1 ? 'user' : 'assistant';
+                AI_li_shi_xx.push({
+                    role: role,
+                    content: AI_jl[i][1]
+                });
+            }
+        } else {
+            AI_li_shi_xx = [];
+        }
 
         // 多模型多线程同时发生请求
         var AI_modss = document.querySelectorAll('.AI_mods');
@@ -319,11 +336,11 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             myHeaders.append("Content-Type", "application/json");
 
             var raw = JSON.stringify({
-                "model": mod_s,
-                "messages": [{
-                    "role": "user",
-                    "content": nr_s
-                }]
+                model: mod_s,
+                messages: AI_li_shi_xx.length == 0 ? [{
+                    role: "user",
+                    content: nr_s
+                }] : AI_li_shi_xx
             });
 
             var requestOptions = {
@@ -360,10 +377,10 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             // 请求数据
             const requestData = {
                 model: "glm-4-0520",
-                messages: [{
+                messages: AI_li_shi_xx.length == 0 ? [{
                     role: "user",
                     content: nr_s
-                }]
+                }] : AI_li_shi_xx
             };
 
             // 将请求数据转换为JSON字符串
@@ -465,10 +482,10 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
                 },
                 body: JSON.stringify({
                     model: mod_s,
-                    messages: [{
-                        role: 'user',
+                    messages: AI_li_shi_xx.length == 0 ? [{
+                        role: "user",
                         content: nr_s
-                    }],
+                    }] : AI_li_shi_xx,
                     stream: false,
                     max_tokens: 4096,
                     temperature: 0.7,
@@ -507,10 +524,10 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
                 },
                 body: JSON.stringify({
                     model: mod_s,
-                    messages: [{
-                        role: 'user',
+                    messages: AI_li_shi_xx.length == 0 ? [{
+                        role: "user",
                         content: nr_s
-                    }],
+                    }] : AI_li_shi_xx,
                     stream: false,
                     max_tokens: 2068,
                     temperature: 0.7,
@@ -895,8 +912,14 @@ var AI_sz_zdbfs_kaiguan_d = document.querySelector('.AI_sz_zdbfs_kaiguan_d');
 var AI_sz_zdbfs_shu = document.querySelector('.AI_sz_zdbfs_shu');
 var AI_sz_jssc_kaiguan = document.querySelector('.AI_sz_jssc_kaiguan');
 var AI_sz_jssc_kaiguan_d = document.querySelector('.AI_sz_jssc_kaiguan_d');
-if (localStorage.AI_jssc == undefined) { //即时输出
-    localStorage.AI_jssc = 0; //默认0
+var AI_sz_lxdh_kaiguan = document.querySelector('.AI_sz_lxdh_kaiguan');
+var AI_sz_jssc_lxdh_d = document.querySelector('.AI_sz_jssc_lxdh_d');
+var AI_sz_lxdh_shu = document.querySelector('.AI_sz_lxdh_shu');
+if (localStorage.AI_lxdh == undefined) { //即时输出
+    localStorage.AI_lxdh = 0; //默认0
+}
+if (localStorage.AI_lxdh == undefined) { //连续对话
+    localStorage.AI_lxdh = 0; //默认0
 }
 
 // 重新创建mod框架
@@ -948,6 +971,16 @@ if (localStorage.AI_jssc - 0 == 1) {
     AI_sz_jssc_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
     AI_sz_jssc_kaiguan_d.style.left = '29px';
 }
+// 默认连续对话
+if (localStorage.AI_lxdh - 0 !== 0) {
+    AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+    AI_sz_jssc_lxdh_d.style.left = '29px';
+} else {
+    AI_sz_lxdh_shu.disabled = true;
+    AI_sz_lxdh_shu.style.opacity = 0.5;
+}
+AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
+
 
 // 模型多线程处理
 AI_sz_dydxc_kaiguan.addEventListener('click', function(e) {
@@ -963,7 +996,13 @@ AI_sz_dydxc_kaiguan.addEventListener('click', function(e) {
         // 第三者
         AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
         AI_sz_zdbfs_kaiguan_d.style.left = '0px';
+        AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_jssc_lxdh_d.style.left = '0px';
 
+        AI_sz_lxdh_shu.disabled = true;
+        localStorage.AI_lxdh = 0;
+        AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
+        AI_sz_lxdh_shu.style.opacity = 0.5;
         AI_sz_zdbfs_shu.disabled = true;
         localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
         AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
@@ -1023,7 +1062,13 @@ AI_sz_dkj_kaiguan.addEventListener('click', function(e) {
         // 第三者
         AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
         AI_sz_zdbfs_kaiguan_d.style.left = '0px';
+        AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_jssc_lxdh_d.style.left = '0px';
 
+        AI_sz_lxdh_shu.disabled = true;
+        localStorage.AI_lxdh = 0;
+        AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
+        AI_sz_lxdh_shu.style.opacity = 0.5;
         AI_sz_zdbfs_shu.disabled = true;
         localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
         AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
@@ -1088,7 +1133,13 @@ AI_sz_zdbfs_kaiguan.addEventListener('click', function(e) {
         AI_sz_dydxc_kaiguan_d.style.left = '0px';
         AI_sz_dkj_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
         AI_sz_dkj_kaiguan_d.style.left = '0px';
+        AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_jssc_lxdh_d.style.left = '0px';
 
+        AI_sz_lxdh_shu.disabled = true;
+        localStorage.AI_lxdh = 0;
+        AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
+        AI_sz_lxdh_shu.style.opacity = 0.5;
         AI_sz_dydxc_shu.disabled = true;
         AI_sz_dkj_shu.disabled = true;
         localStorage.AI_xunhuan_cs = 1;
@@ -1117,6 +1168,15 @@ AI_sz_jssc_kaiguan.addEventListener('click', function(e) {
         AI_sz_jssc_kaiguan_d.style.left = '29px';
 
         localStorage.AI_jssc = 1;
+
+        // 第三者 
+        AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_jssc_lxdh_d.style.left = '0px';
+
+        AI_sz_lxdh_shu.disabled = true;
+        localStorage.AI_lxdh = 0;
+        AI_sz_lxdh_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+        AI_sz_lxdh_shu.style.opacity = 0.5;
     } else {
         AI_sz_jssc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
         AI_sz_jssc_kaiguan_d.style.left = '0px';
@@ -1124,7 +1184,83 @@ AI_sz_jssc_kaiguan.addEventListener('click', function(e) {
         localStorage.AI_jssc = 0;
     }
 });
+// 连续对话
+AI_sz_lxdh_kaiguan.addEventListener('click', function(e) {
+    if (localStorage.AI_lxdh - 0 == 0) {
+        AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+        AI_sz_jssc_lxdh_d.style.left = '29px';
 
+        localStorage.AI_lxdh = 10;
+        AI_sz_lxdh_shu.disabled = false;
+        AI_sz_lxdh_shu.style.opacity = 1;
+        AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
+
+        // 重新对话
+        if (AI_zhi_xing_s == 0) {
+            AI_zj_nr.innerHTML = '';
+            localStorage.AI_jl = '[]';
+            AI_xian_cheng = 0;
+        }
+
+        // 第三者
+        AI_sz_dydxc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_dydxc_kaiguan_d.style.left = '0px';
+
+        localStorage.AI_xunhuan_cs = 1;
+        AI_sz_dydxc_shu.value = localStorage.AI_xunhuan_cs;
+        AI_sz_dydxc_shu.disabled = true;
+        AI_sz_dydxc_shu.style.opacity = 0.5;
+
+        AI_sz_dkj_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_dkj_kaiguan_d.style.left = '0px';
+
+        localStorage.AI_mx_sl = 1;
+        AI_sz_dkj_shu.value = localStorage.AI_mx_sl;
+        AI_sz_dkj_shu.disabled = true;
+        AI_sz_dkj_shu.style.opacity = 0.5;
+
+        AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_zdbfs_kaiguan_d.style.left = '0px';
+
+        AI_sz_zdbfs_shu.disabled = true;
+        AI_sz_zdbfs_shu.style.opacity = 0.5;
+        localStorage.AI_zhi_xing_zuiduo_s = 1;
+        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+
+        AI_sz_jssc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_jssc_kaiguan_d.style.left = '0px';
+
+        localStorage.AI_jssc = 0;
+    } else {
+        AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_jssc_lxdh_d.style.left = '0px';
+
+        localStorage.AI_lxdh = 0;
+        AI_sz_lxdh_shu.disabled = true;
+        AI_sz_lxdh_shu.style.opacity = 0.5;
+        AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
+
+        // 第三者
+        AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+        AI_sz_zdbfs_kaiguan_d.style.left = '29px';
+
+        AI_sz_zdbfs_shu.disabled = false;
+        AI_sz_zdbfs_shu.style.opacity = 1;
+        localStorage.AI_zhi_xing_zuiduo_s = 3;
+        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+    }
+});
+AI_sz_lxdh_shu.addEventListener('blur', function(e) {
+    if (this.value < 1) {
+        this.value = 1;
+        Sku_tctx('输入范围为 (1 ~ 50)');
+    } else if (this.value > 50) {
+        this.value = 50;
+        Sku_tctx('输入范围为 (1 ~ 50)');
+    }
+
+    localStorage.AI_lxdh = this.value;
+});
 
 
 
