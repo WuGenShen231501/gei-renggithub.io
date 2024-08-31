@@ -94,6 +94,8 @@ function mods_qh() {
     for (var i = 0; i < AI_mods_name.length; i++) {
         if (AI_mods_name[i].innerText == localStorage.AI_dq_mod) {
             AI_mods_name[i].parentNode.className = 'AI_mods_min AI_mods_min2'; // 修改样式
+        } else {
+            AI_mods_name[i].parentNode.className = 'AI_mods_min'; // 修改样式
         }
     }
     // 默认mod的key
@@ -119,6 +121,19 @@ function mods_qh() {
             e.stopPropagation();
             AI_mods_max.style.display = 'block';
             AI_mods = this.querySelector('p');
+
+            // 当前mods对应高亮
+            if (AI_mods.innerText !== '') {
+                var AI_mods_min = document.querySelectorAll('.AI_mods_min');
+                for (var j = 0; j < AI_mods_min.length; j++) {
+                    if (AI_mods_min[j].querySelector('.AI_mods_name').innerText == AI_mods.innerText) {
+                        AI_mods_min[j].className = 'AI_mods_min AI_mods_min2';
+                    } else {
+                        AI_mods_min[j].className = 'AI_mods_min';
+                    }
+                }
+            }
+
         });
     }
 
@@ -145,6 +160,7 @@ function mods_qh() {
             AI_bottom_srk.focus();
             AI_mods_max.style.display = 'none'; // 隐藏
 
+            var AI_mods_min = document.querySelectorAll('.AI_mods_min');
             for (var j = 0; j < AI_mods_min.length; j++) {
                 AI_mods_min[j].className = 'AI_mods_min';
             }
@@ -189,13 +205,16 @@ window.addEventListener('resize', function(e) {
 
 
 // 修改默认key
-var AI_key = document.querySelector('.AI_key');
-AI_key.addEventListener('input', function(e) {
-    AI_mods = document.querySelector('.AI_mods').querySelector('p');
-    localStorage.AI_dq_key = this.value;
-    var itemName = AI_mods.innerText + ' key';
-    localStorage.setItem(itemName, this.value);
-});
+function AI_key_mr_xg() {
+    var AI_key = document.querySelector('.AI_key');
+    AI_key.addEventListener('input', function(e) {
+        AI_mods = document.querySelector('.AI_mods').querySelector('p');
+        localStorage.AI_dq_key = this.value;
+        var itemName = AI_mods.innerText + ' key';
+        localStorage.setItem(itemName, this.value);
+    });
+}
+AI_key_mr_xg();
 
 
 
@@ -225,26 +244,39 @@ AI_bottom_srk_fs.addEventListener('click', function(e) {
     var AI_bottom_srk = document.querySelector('.AI_bottom_srk');
     if (AI_bottom_srk_fs_true == 1 && AI_bottom_srk.value !== '') {
         var AI_bottom_srk = document.querySelector('.AI_bottom_srk');
-        var AI_key = document.querySelector('.AI_key');
 
         // 创建处理
         AI_cl(AI_bottom_srk.value, 1, '', AI_xian_cheng);
         // ID更改
         AI_xian_cheng++;
 
-        // 历史对话插件
+        // 历史对话
         if (localStorage.AI_lxdh - 0 !== 0) {
-            var AI_jl = JSON.parse(localStorage.AI_jl);
+            // 获取页面历史对话
+            var AI_jl = [];
+            var AI_huida_max = document.querySelectorAll('.AI_huida_max');
+            for (var i = 0; i < AI_huida_max.length; i++) {
+                if (AI_huida_max[i].firstElementChild.className == 'yh_huida_nr') {
+                    var sz = [1, AI_huida_max[i].firstElementChild.innerText];
+                    AI_jl.push(sz);
+                } else {
+                    var sz = [2, AI_huida_max[i].firstElementChild.innerText];
+                    AI_jl.push(sz);
+                }
+            }
+
             // 初始化一个空数组来存储结果对象
             AI_li_shi_xx = [];
             // 遍历数组，直接将对象追加到结果数组中
             for (var i = (AI_jl.length > localStorage.AI_lxdh ? (AI_jl.length - localStorage.AI_lxdh) : 0); i < AI_jl.length; i++) {
+                ls_nr_s = decodeHtmlEntities(AI_jl[i][1]).replace(/(\n{2,})/g, '\n').replace(/\n+$/, ''); //实体转换后,使用正则表达式去掉所有标签和不必要的换行
                 const role = AI_jl[i][0] === 1 ? 'user' : 'assistant';
                 AI_li_shi_xx.push({
                     role: role,
-                    content: AI_jl[i][1]
+                    content: ls_nr_s
                 });
             }
+            console.log(AI_li_shi_xx); // 打印结果数组
         } else {
             AI_li_shi_xx = [];
         }
@@ -336,6 +368,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             myHeaders.append("Content-Type", "application/json");
 
             var raw = JSON.stringify({
+                max_tokens: 4096,
                 model: mod_s,
                 messages: AI_li_shi_xx.length == 0 ? [{
                     role: "user",
@@ -367,7 +400,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'glm-4-0520') {
+    } else if (mod_s == 'glm-4-plus' || mod_s == 'GLM-4-Flash') {
 
         try {
             // 替换 <你的apikey> 为您的实际 API Key
@@ -376,7 +409,8 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
 
             // 请求数据
             const requestData = {
-                model: "glm-4-0520",
+                max_tokens: 4095,
+                model: mod_s,
                 messages: AI_li_shi_xx.length == 0 ? [{
                     role: "user",
                     content: nr_s
@@ -457,6 +491,13 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
                         const contentArray = array.map(item => item.content); // 提取content字段
                         const contentString = contentArray.join('\n\n'); // 将数组转换为字符串
                         AI_cl(contentString, 2, mod_s, AI_ID);
+                        // 由模型GLM-4-flas重新总结
+                        AI_li_shi_xx = []; // 清空历史记录
+                        AI_fsxx('深度阅读以下来自个个平台搜索出来的多个文章，分析我的问题和文章,根据问题总结文章内容但不省略信息.我的问题是:\n' + nr_s + '\n搜索结果是:\n' + contentString, 'GLM-4-Flash', 'e468d888af568e3193feb8e889198fbe.OjcUgGQXJnHmQ8HW', AI_xian_cheng);
+                        // ID更改
+                        AI_xian_cheng++;
+                        // 正在执行数加一
+                        AI_zhi_xing_s++;
                     })
                     .catch(function(err) {
                         console.log(err);
@@ -529,7 +570,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
                         content: nr_s
                     }] : AI_li_shi_xx,
                     stream: false,
-                    max_tokens: 2068,
+                    max_tokens: 2069,
                     temperature: 0.7,
                     top_p: 0.7,
                     top_k: 50,
@@ -678,12 +719,11 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
                         AI_bottom_srk.disabled = false;
                         AI_bottom_srk.focus(); //聚焦
                     }
-
                 }
 
                 // 动态递增
                 shuchu_wz++;
-            });
+            }, 0);
         } else { //即使输出
             AI_huida_nr.innerHTML = nr;
             // 显示最下方
@@ -936,6 +976,7 @@ function AI_mods_cxcj() {
     }
     AI_mx_sl_cj();
     mods_qh();
+    AI_key_mr_xg();
     xhgb_dx('AI_mods', 'AI_mods_max');
 }
 
@@ -958,7 +999,7 @@ if (localStorage.AI_mx_sl - 0 !== 1) {
 }
 AI_sz_dkj_shu.value = localStorage.AI_mx_sl;
 // 默认最大并发对话数
-if ((localStorage.AI_zhi_xing_zuiduo_s - 0) !== 1 && (localStorage.AI_mx_sl - 0) == 1 && (localStorage.AI_xunhuan_cs - 0) == 1) {
+if ((localStorage.AI_zhi_xing_zuiduo_s - 0) !== 1 && (((localStorage.AI_mx_sl - 0) == 1 && (localStorage.AI_xunhuan_cs - 0) == 1) || localStorage.Sku_kfzms == 1)) {
     AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
     AI_sz_zdbfs_kaiguan_d.style.left = '29px';
 } else {
@@ -993,20 +1034,22 @@ AI_sz_dydxc_kaiguan.addEventListener('click', function(e) {
         AI_sz_dydxc_shu.disabled = false;
         AI_sz_dydxc_shu.style.opacity = 1;
 
-        // 第三者
-        AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
-        AI_sz_zdbfs_kaiguan_d.style.left = '0px';
-        AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
-        AI_sz_jssc_lxdh_d.style.left = '0px';
+        if (localStorage.Sku_kfzms == 0) {
+            // 第三者
+            AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+            AI_sz_zdbfs_kaiguan_d.style.left = '0px';
+            AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+            AI_sz_jssc_lxdh_d.style.left = '0px';
 
-        AI_sz_lxdh_shu.disabled = true;
-        localStorage.AI_lxdh = 0;
-        AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
-        AI_sz_lxdh_shu.style.opacity = 0.5;
-        AI_sz_zdbfs_shu.disabled = true;
-        localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
-        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
-        AI_sz_zdbfs_shu.style.opacity = 0.5;
+            AI_sz_lxdh_shu.disabled = true;
+            localStorage.AI_lxdh = 0;
+            AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
+            AI_sz_lxdh_shu.style.opacity = 0.5;
+            AI_sz_zdbfs_shu.disabled = true;
+            localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
+            AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+            AI_sz_zdbfs_shu.style.opacity = 0.5;
+        }
     } else {
         AI_sz_dydxc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
         AI_sz_dydxc_kaiguan_d.style.left = '0px';
@@ -1016,34 +1059,38 @@ AI_sz_dydxc_kaiguan.addEventListener('click', function(e) {
         AI_sz_dydxc_shu.disabled = true;
         AI_sz_dydxc_shu.style.opacity = 0.5;
 
-        // 第三者
-        localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
-        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
-        if (localStorage.AI_xunhuan_cs - 0 == 1 && localStorage.AI_mx_sl - 0 == 1) {
-            AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
-            AI_sz_zdbfs_kaiguan_d.style.left = '29px';
-
-            localStorage.AI_zhi_xing_zuiduo_s = 3;
+        if (localStorage.Sku_kfzms == 0) {
+            // 第三者
+            localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
             AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
-            AI_sz_zdbfs_shu.disabled = false;
-            AI_sz_zdbfs_shu.style.opacity = 1;
+            if (localStorage.AI_xunhuan_cs - 0 == 1 && localStorage.AI_mx_sl - 0 == 1) {
+                AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+                AI_sz_zdbfs_kaiguan_d.style.left = '29px';
+
+                localStorage.AI_zhi_xing_zuiduo_s = 3;
+                AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+                AI_sz_zdbfs_shu.disabled = false;
+                AI_sz_zdbfs_shu.style.opacity = 1;
+            }
         }
     }
 });
 AI_sz_dydxc_shu.addEventListener('blur', function(e) {
-    if (this.value < 2) {
+    if (this.value < 2 && localStorage.Sku_kfzms == 0) {
         this.value = 2;
         Sku_tctx('输入范围为 (2 ~ 10)');
-    } else if (this.value > 10) {
+    } else if (this.value > 10 && localStorage.Sku_kfzms == 0) {
         this.value = 10;
         Sku_tctx('输入范围为 (2 ~ 10)');
     }
 
     localStorage.AI_xunhuan_cs = this.value;
 
-    // 第三者
-    localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
-    AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+    if (localStorage.Sku_kfzms == 0) {
+        // 第三者
+        localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
+        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+    }
 });
 // 多架构生态数
 AI_sz_dkj_kaiguan.addEventListener('click', function(e) {
@@ -1059,20 +1106,22 @@ AI_sz_dkj_kaiguan.addEventListener('click', function(e) {
         // 重新创建mods框架
         AI_mods_cxcj();
 
-        // 第三者
-        AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
-        AI_sz_zdbfs_kaiguan_d.style.left = '0px';
-        AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
-        AI_sz_jssc_lxdh_d.style.left = '0px';
+        if (localStorage.Sku_kfzms == 0) {
+            // 第三者
+            AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+            AI_sz_zdbfs_kaiguan_d.style.left = '0px';
+            AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+            AI_sz_jssc_lxdh_d.style.left = '0px';
 
-        AI_sz_lxdh_shu.disabled = true;
-        localStorage.AI_lxdh = 0;
-        AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
-        AI_sz_lxdh_shu.style.opacity = 0.5;
-        AI_sz_zdbfs_shu.disabled = true;
-        localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
-        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
-        AI_sz_zdbfs_shu.style.opacity = 0.5;
+            AI_sz_lxdh_shu.disabled = true;
+            localStorage.AI_lxdh = 0;
+            AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
+            AI_sz_lxdh_shu.style.opacity = 0.5;
+            AI_sz_zdbfs_shu.disabled = true;
+            localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
+            AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+            AI_sz_zdbfs_shu.style.opacity = 0.5;
+        }
     } else {
         AI_sz_dkj_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
         AI_sz_dkj_kaiguan_d.style.left = '0px';
@@ -1085,25 +1134,27 @@ AI_sz_dkj_kaiguan.addEventListener('click', function(e) {
         // 重新创建mods框架
         AI_mods_cxcj();
 
-        // 第三者
-        localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
-        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
-        if (localStorage.AI_xunhuan_cs - 0 == 1 && localStorage.AI_mx_sl - 0 == 1) {
-            AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
-            AI_sz_zdbfs_kaiguan_d.style.left = '29px';
-
-            localStorage.AI_zhi_xing_zuiduo_s = 3;
+        if (localStorage.Sku_kfzms == 0) {
+            // 第三者
+            localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
             AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
-            AI_sz_zdbfs_shu.disabled = false;
-            AI_sz_zdbfs_shu.style.opacity = 1;
+            if (localStorage.AI_xunhuan_cs - 0 == 1 && localStorage.AI_mx_sl - 0 == 1) {
+                AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+                AI_sz_zdbfs_kaiguan_d.style.left = '29px';
+
+                localStorage.AI_zhi_xing_zuiduo_s = 3;
+                AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+                AI_sz_zdbfs_shu.disabled = false;
+                AI_sz_zdbfs_shu.style.opacity = 1;
+            }
         }
     }
 });
 AI_sz_dkj_shu.addEventListener('blur', function(e) {
-    if (this.value < 2) {
+    if (this.value < 2 && localStorage.Sku_kfzms == 0) {
         this.value = 2;
         Sku_tctx('输入范围为 (2 ~ 10)');
-    } else if (this.value > 10) {
+    } else if (this.value > 10 && localStorage.Sku_kfzms == 0) {
         this.value = 10;
         Sku_tctx('输入范围为 (2 ~ 10)');
     }
@@ -1113,9 +1164,11 @@ AI_sz_dkj_shu.addEventListener('blur', function(e) {
     // 重新创建mods框架
     AI_mods_cxcj();
 
-    // 第三者
-    localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
-    AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+    if (localStorage.Sku_kfzms == 0) {
+        // 第三者
+        localStorage.AI_zhi_xing_zuiduo_s = (localStorage.AI_xunhuan_cs - 0) * (localStorage.AI_mx_sl - 0);
+        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+    }
 });
 // 最大并发对话数
 AI_sz_zdbfs_kaiguan.addEventListener('click', function(e) {
@@ -1128,29 +1181,31 @@ AI_sz_zdbfs_kaiguan.addEventListener('click', function(e) {
         localStorage.AI_zhi_xing_zuiduo_s = 3;
         AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
 
-        // 第三者
-        AI_sz_dydxc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
-        AI_sz_dydxc_kaiguan_d.style.left = '0px';
-        AI_sz_dkj_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
-        AI_sz_dkj_kaiguan_d.style.left = '0px';
-        AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
-        AI_sz_jssc_lxdh_d.style.left = '0px';
+        if (localStorage.Sku_kfzms == 0) {
+            // 第三者
+            AI_sz_dydxc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+            AI_sz_dydxc_kaiguan_d.style.left = '0px';
+            AI_sz_dkj_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+            AI_sz_dkj_kaiguan_d.style.left = '0px';
+            AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+            AI_sz_jssc_lxdh_d.style.left = '0px';
 
-        AI_sz_lxdh_shu.disabled = true;
-        localStorage.AI_lxdh = 0;
-        AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
-        AI_sz_lxdh_shu.style.opacity = 0.5;
-        AI_sz_dydxc_shu.disabled = true;
-        AI_sz_dkj_shu.disabled = true;
-        localStorage.AI_xunhuan_cs = 1;
-        localStorage.AI_mx_sl = 1;
-        AI_sz_dydxc_shu.style.opacity = 0.5;
-        AI_sz_dkj_shu.style.opacity = 0.5;
-        AI_sz_dkj_shu.value = localStorage.AI_mx_sl;
-        AI_sz_dydxc_shu.value = localStorage.AI_xunhuan_cs;
+            AI_sz_lxdh_shu.disabled = true;
+            localStorage.AI_lxdh = 0;
+            AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
+            AI_sz_lxdh_shu.style.opacity = 0.5;
+            AI_sz_dydxc_shu.disabled = true;
+            AI_sz_dkj_shu.disabled = true;
+            localStorage.AI_xunhuan_cs = 1;
+            localStorage.AI_mx_sl = 1;
+            AI_sz_dydxc_shu.style.opacity = 0.5;
+            AI_sz_dkj_shu.style.opacity = 0.5;
+            AI_sz_dkj_shu.value = localStorage.AI_mx_sl;
+            AI_sz_dydxc_shu.value = localStorage.AI_xunhuan_cs;
 
-        // 重新创建mods框架
-        AI_mods_cxcj();
+            // 重新创建mods框架
+            AI_mods_cxcj();
+        }
     } else {
         AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
         AI_sz_zdbfs_kaiguan_d.style.left = '0px';
@@ -1161,6 +1216,17 @@ AI_sz_zdbfs_kaiguan.addEventListener('click', function(e) {
         AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
     }
 });
+AI_sz_zdbfs_shu.addEventListener('blur', function(e) {
+    if (this.value < 2 && localStorage.Sku_kfzms == 0) {
+        this.value = 2;
+        Sku_tctx('输入范围为 (2 ~ 10)');
+    } else if (this.value > 10 && localStorage.Sku_kfzms == 0) {
+        this.value = 10;
+        Sku_tctx('输入范围为 (2 ~ 10)');
+    }
+
+    localStorage.AI_zhi_xing_zuiduo_s = this.value;
+});
 // 即时输出
 AI_sz_jssc_kaiguan.addEventListener('click', function(e) {
     if (localStorage.AI_jssc - 0 == 0) {
@@ -1169,14 +1235,16 @@ AI_sz_jssc_kaiguan.addEventListener('click', function(e) {
 
         localStorage.AI_jssc = 1;
 
-        // 第三者 
-        AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
-        AI_sz_jssc_lxdh_d.style.left = '0px';
+        if (localStorage.Sku_kfzms == 0) {
+            // 第三者 
+            AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+            AI_sz_jssc_lxdh_d.style.left = '0px';
 
-        AI_sz_lxdh_shu.disabled = true;
-        localStorage.AI_lxdh = 0;
-        AI_sz_lxdh_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
-        AI_sz_lxdh_shu.style.opacity = 0.5;
+            AI_sz_lxdh_shu.disabled = true;
+            localStorage.AI_lxdh = 0;
+            AI_sz_lxdh_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+            AI_sz_lxdh_shu.style.opacity = 0.5;
+        }
     } else {
         AI_sz_jssc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
         AI_sz_jssc_kaiguan_d.style.left = '0px';
@@ -1202,35 +1270,39 @@ AI_sz_lxdh_kaiguan.addEventListener('click', function(e) {
             AI_xian_cheng = 0;
         }
 
-        // 第三者
-        AI_sz_dydxc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
-        AI_sz_dydxc_kaiguan_d.style.left = '0px';
+        if (localStorage.Sku_kfzms == 0) {
+            // 第三者
+            AI_sz_dydxc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+            AI_sz_dydxc_kaiguan_d.style.left = '0px';
 
-        localStorage.AI_xunhuan_cs = 1;
-        AI_sz_dydxc_shu.value = localStorage.AI_xunhuan_cs;
-        AI_sz_dydxc_shu.disabled = true;
-        AI_sz_dydxc_shu.style.opacity = 0.5;
+            localStorage.AI_xunhuan_cs = 1;
+            AI_sz_dydxc_shu.value = localStorage.AI_xunhuan_cs;
+            AI_sz_dydxc_shu.disabled = true;
+            AI_sz_dydxc_shu.style.opacity = 0.5;
 
-        AI_sz_dkj_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
-        AI_sz_dkj_kaiguan_d.style.left = '0px';
+            AI_sz_dkj_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+            AI_sz_dkj_kaiguan_d.style.left = '0px';
 
-        localStorage.AI_mx_sl = 1;
-        AI_sz_dkj_shu.value = localStorage.AI_mx_sl;
-        AI_sz_dkj_shu.disabled = true;
-        AI_sz_dkj_shu.style.opacity = 0.5;
+            localStorage.AI_mx_sl = 1;
+            AI_sz_dkj_shu.value = localStorage.AI_mx_sl;
+            AI_sz_dkj_shu.disabled = true;
+            AI_sz_dkj_shu.style.opacity = 0.5;
+            // 重新创建mods框架
+            AI_mods_cxcj();
 
-        AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
-        AI_sz_zdbfs_kaiguan_d.style.left = '0px';
+            AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+            AI_sz_zdbfs_kaiguan_d.style.left = '0px';
 
-        AI_sz_zdbfs_shu.disabled = true;
-        AI_sz_zdbfs_shu.style.opacity = 0.5;
-        localStorage.AI_zhi_xing_zuiduo_s = 1;
-        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+            AI_sz_zdbfs_shu.disabled = true;
+            AI_sz_zdbfs_shu.style.opacity = 0.5;
+            localStorage.AI_zhi_xing_zuiduo_s = 1;
+            AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
 
-        AI_sz_jssc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
-        AI_sz_jssc_kaiguan_d.style.left = '0px';
+            AI_sz_jssc_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+            AI_sz_jssc_kaiguan_d.style.left = '0px';
 
-        localStorage.AI_jssc = 0;
+            localStorage.AI_jssc = 0;
+        }
     } else {
         AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
         AI_sz_jssc_lxdh_d.style.left = '0px';
@@ -1240,21 +1312,23 @@ AI_sz_lxdh_kaiguan.addEventListener('click', function(e) {
         AI_sz_lxdh_shu.style.opacity = 0.5;
         AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
 
-        // 第三者
-        AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
-        AI_sz_zdbfs_kaiguan_d.style.left = '29px';
+        if (localStorage.Sku_kfzms == 0) {
+            // 第三者
+            AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+            AI_sz_zdbfs_kaiguan_d.style.left = '29px';
 
-        AI_sz_zdbfs_shu.disabled = false;
-        AI_sz_zdbfs_shu.style.opacity = 1;
-        localStorage.AI_zhi_xing_zuiduo_s = 3;
-        AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+            AI_sz_zdbfs_shu.disabled = false;
+            AI_sz_zdbfs_shu.style.opacity = 1;
+            localStorage.AI_zhi_xing_zuiduo_s = 3;
+            AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
+        }
     }
 });
 AI_sz_lxdh_shu.addEventListener('blur', function(e) {
-    if (this.value < 1) {
+    if (this.value < 1 && localStorage.Sku_kfzms == 0) {
         this.value = 1;
         Sku_tctx('输入范围为 (1 ~ 50)');
-    } else if (this.value > 50) {
+    } else if (this.value > 50 && localStorage.Sku_kfzms == 0) {
         this.value = 50;
         Sku_tctx('输入范围为 (1 ~ 50)');
     }
@@ -1265,8 +1339,7 @@ AI_sz_lxdh_shu.addEventListener('blur', function(e) {
 
 
 
-//复制、事件委托
-const parentElement = document.querySelector('.AI_zj');
+
 // 创建一个临时的textarea并执行复制
 function copyToClipboard(value, message) {
     const textArea = document.createElement('textarea');
@@ -1279,16 +1352,31 @@ function copyToClipboard(value, message) {
     Sku_tctx(message); // 提示用户
 }
 
+var parentElement = document.querySelector('.AI_zj');
 // 为父元素添加点击事件监听器
-parentElement.addEventListener('click', function(e) {
+parentElement.addEventListener('click', function(e) { //复制、事件委托
     const target = e.target;
 
     if (target.classList.contains('AI_huida_nr') || target.classList.contains('yh_huida_nr')) {
         copyToClipboard(target.innerText, '文本已复制到剪贴板');
     } else if (target.nodeName === 'PRE') {
         copyToClipboard(target.innerText, '代码已复制到剪贴板');
+    } else if (target.nodeName === 'CODE') {
+        copyToClipboard(target.innerText, '单词已复制到剪贴板');
     } else if (target.nodeName === 'IMG') {
         copyToClipboard(target.src, '图片链接已复制到剪贴板');
+    }
+});
+// 为父元素添加点击事件监听器
+parentElement.addEventListener('contextmenu', function(e) { //音频、事件委托
+    const target = e.target;
+
+    if (target.classList.contains('AI_huida_nr') || target.classList.contains('yh_huida_nr')) {
+        SKu_bo_fang_qi(target.innerText);
+    } else if (target.nodeName === 'PRE') {
+        SKu_bo_fang_qi(target.innerText);
+    } else if (target.nodeName === 'CODE') {
+        SKu_bo_fang_qi(target.innerText);
     }
 });
 

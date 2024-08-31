@@ -84,23 +84,6 @@ if (localStorage.Sku_kfzms == 0) {
 
 
 
-// 全部密钥
-var miyao = 688;
-//WGS_zfc_jiami('要加密的文本','整数值(密钥)');
-function WGS_zfc_jiami(nr, key) {
-    function xorEncode(str, key) {
-        let result = '';
-        for (let i = 0; i < str.length; i++) {
-            let charCode = str.charCodeAt(i);
-            result += String.fromCharCode(charCode ^ key);
-        }
-        return result;
-    }
-    const encrypted = xorEncode(nr, key);
-    return encrypted;
-}
-
-
 
 
 // 定位

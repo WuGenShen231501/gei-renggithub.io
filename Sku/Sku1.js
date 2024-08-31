@@ -19,6 +19,29 @@ function RGB_zhq(hex, opacity) {
 }
 
 
+
+// 全部密钥
+var miyao = 688;
+//WGS_zfc_jiami('要加密的文本','整数值(密钥)');
+function WGS_zfc_jiami(nr, key) {
+    let result = '';
+    for (let i = 0; i < nr.length; i++) {
+        let charCode = nr.charCodeAt(i);
+        result += String.fromCharCode(charCode ^ key);
+    }
+    return result;
+}
+//WGS_zfc_jiami('要解密的文本','整数值(密钥)');
+function WGS_zfc_jiemi(nr, key) {
+    let result = '';
+    for (let i = 0; i < nr.length; i++) {
+        let charCode = nr.charCodeAt(i);
+        result += String.fromCharCode(charCode ^ key);
+    }
+    return result;
+}
+
+
 // 遍历对象到数组
 function collectArrays(obj) {
     const arrays = [];
@@ -230,6 +253,46 @@ function Sku_gundontiao(gun_don_ye1, gun_don_tiao_max1, gun_don_tiao_min1) {
     }
 }
 
+
+
+
+
+
+//用于播放音频_粗糙
+function SKu_bo_fang_qi(text) {
+    // 创建一个AudioContext对象
+    let audioContext;
+    // 确保有一个可以操作的AudioContext
+    if (!audioContext) {
+        const audioContext = new(window.AudioContext || window.webkitAudioContext)();
+        audioContext.resume().then(() => {
+            // 创建一个临时的Buffer
+            const buffer = audioContext.createBuffer(1, 1, 480000); // 1通道，1帧，采样率22050Hz
+            // 设置Buffer的数据
+            const dataArray = buffer.getChannelData(0);
+            dataArray[0] = 1; // 设置声音的振幅
+            // 创建一个SourceNode并连接到AudioContext
+            const source = audioContext.createBufferSource();
+            source.buffer = buffer;
+            source.connect(audioContext.destination);
+            // 播放音频
+            source.start(0);
+            // 播放完成后，删除AudioContext
+            setTimeout(() => {
+                audioContext.close();
+            }, 100); // 确保音频播放完毕
+        });
+    }
+
+    // 创建语音合成文本
+    const utterance = new SpeechSynthesisUtterance(text);
+    // 设置语音合成参数
+    utterance.lang = 'zh-CN';
+    utterance.rate = 1.6;
+    utterance.volume = 1.0;
+    // 播放语音合成
+    window.speechSynthesis.speak(utterance);
+}
 
 
 

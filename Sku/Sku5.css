@@ -66,20 +66,6 @@
     height: 140px;
 }
 
-.AI_huida_nr {
-    float: left;
-    width: auto;
-    max-width: calc(100% - 200px);
-    height: auto;
-    margin: 0px 20px 0px 100px;
-    padding: 10px 10px;
-    border: 1px solid var(--zi_ti_color);
-    background-color: var(--zi_ti_color_10);
-    border-radius: 5px;
-    overflow: hidden;
-    white-space: pre-wrap;
-}
-
 .AI_huida_tx {
     position: absolute;
     width: 43px;
@@ -566,6 +552,19 @@
     outline: none;
 }
 
+.AI_huida_nr {
+    float: left;
+    width: auto;
+    max-width: calc(100% - 200px);
+    height: auto;
+    margin: 0px 20px 0px 100px;
+    padding: 10px 10px;
+    border: 1px solid var(--zi_ti_color);
+    background-color: var(--zi_ti_color_10);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
 .AI_huida_nr * {
     pointer-events: none;
 }
@@ -581,23 +580,82 @@
     border-bottom: 1px solid var(--zi_ti_click_color);
 }
 
-.AI_huida_nr li {
-    display: inline-block;
-    margin: 3px 0;
+.AI_huida_nr ol {
+    margin: 20px 0 20px 30px;
+}
+
+.AI_huida_nr ol ul {
+    margin: 10px 0;
+}
+
+.AI_huida_nr ol li {
+    margin: 10px 0;
+    list-style-position: outside;
+}
+
+.AI_huida_nr ul li {
+    margin: 10px 0 10px 0px;
+    list-style: disc;
+    list-style-position: outside;
+}
+
+.AI_huida_nr ul ul {
+    margin: 10px 0 10px 20px;
+    list-style: disc;
+    list-style-position: inside;
+}
+
+.AI_huida_nr li ul {
+    margin: 10px 0 10px 20px;
+    list-style: disc;
+    list-style-position: inside;
+}
+
+.AI_huida_nr li li {
+    margin: 10px 0 10px 0px;
+    list-style: disc;
+    list-style-position: outside;
 }
 
 .AI_huida_nr ul {
-    display: block;
+    margin: 10px 0 10px 30px;
+    list-style: disc;
+    list-style-position: inside;
+}
+
+.AI_huida_nr li {
+    margin: 10px 0 10px 30px;
+    list-style-position: outside;
+}
+
+.AI_huida_nr h1 {
+    font-size: 30px;
+    margin: 30px 0 25px;
+}
+
+.AI_huida_nr h2 {
+    font-size: 28px;
+    margin: 25px 0 20px;
 }
 
 .AI_huida_nr h3 {
-    display: inline-block;
-    margin: 5px 0;
+    font-size: 24px;
+    margin: 20px 0 15px;
+}
+
+.AI_huida_nr h4 {
+    font-size: 20px;
+    margin: 15px 0 10px;
+}
+
+.AI_huida_nr h5 {
+    font-size: 18px;
+    margin: 10px 0 5px;
 }
 
 .AI_huida_nr p {
-    display: inline-block;
-    margin: 5px 0;
+    display: block;
+    margin: 10px 0;
 }
 
 .AI_huida_nr img {
@@ -611,4 +669,24 @@
     padding: 10px;
     border-radius: 5px;
     font-size: 18px;
+    white-space: pre-wrap;
+    /* 保持空白符并按需换行 */
+    word-wrap: break-word;
+    /* 在单词过长时强制换行 */
+}
+
+.AI_huida_nr pre code {
+    pointer-events: none !important;
+    border-radius: 0;
+    padding: 0;
+    font-size: 18px;
+    background-color: rgb(0, 0, 0, 0);
+}
+
+.AI_huida_nr code {
+    pointer-events: fill !important;
+    font-size: 20px;
+    background-color: var(--zi_ti_color_20);
+    border-radius: 5px;
+    padding: 0 5px;
 }

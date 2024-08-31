@@ -680,10 +680,11 @@ jl_qrk.addEventListener('click', function(e) {
             //修改HTML2(搜索中的html)
             var lian_jie_ssym = document.querySelector('.lian_jie_ssym');
             var xgwz = lian_jie_ssym.children[suo_shui_zhon_num];
+            var xgwz_ly = xgwz.querySelector('.lj_laiyuan').innerText;
             if (lj_sz_s.length == 5) {
-                xgwz.innerHTML = '<div class="lj_tp" style="background-image: url(' + lj_sz_s[0] + ');"></div><div class="lj_xx"><div class="lj_xx_t">' + lj_sz_s[1] + '</div><div class="lj_xx_b" >' + lj_sz_s[2] + '</div></div><div class="lj_lj"><a class="lj_lj_t"target="_blank" href="' + lj_sz_s[3] + '">进入</a><a class="lj_lj_b"target="_blank" href="' + lj_sz_s[4] + '">下载</a></div>';
+                xgwz.innerHTML = '<div class="lj_laiyuan">' + xgwz_ly + '</div><div class="lj_tp" style="background-image: url(' + lj_sz_s[0] + ');"></div><div class="lj_xx"><div class="lj_xx_t">' + lj_sz_s[1] + '</div><div class="lj_xx_b" >' + lj_sz_s[2] + '</div></div><div class="lj_lj"><a class="lj_lj_t"target="_blank" href="' + lj_sz_s[3] + '">进入</a><a class="lj_lj_b"target="_blank" href="' + lj_sz_s[4] + '">下载</a></div>';
             } else if (lj_sz_s.length == 4) {
-                xgwz.innerHTML = '<div class="lj_tp" style="background-image: url(' + lj_sz_s[0] + ');"></div><div class="lj_xx"><div class="lj_xx_t">' + lj_sz_s[1] + '</div><div class="lj_xx_b" >' + lj_sz_s[2] + '</div></div><div class="lj_lj"><a class="lj_lj_t"target="_blank" href="' + lj_sz_s[3] + '">进入</a></div>';
+                xgwz.innerHTML = '<div class="lj_laiyuan">' + xgwz_ly + '</div><div class="lj_tp" style="background-image: url(' + lj_sz_s[0] + ');"></div><div class="lj_xx"><div class="lj_xx_t">' + lj_sz_s[1] + '</div><div class="lj_xx_b" >' + lj_sz_s[2] + '</div></div><div class="lj_lj"><a class="lj_lj_t"target="_blank" href="' + lj_sz_s[3] + '">进入</a></div>';
             }
 
             var mz = lj_sz_s[1];
