@@ -1,6 +1,10 @@
+// 可文字选中
+var liu_yan_top = document.querySelector('.liu_yan_top');
+liu_yan_top.addEventListener('selectstart', function(e) {
+    e.stopPropagation();
+});
+
 nrmaxs2 = document.querySelector('.nrmaxs2');
-
-
 
 // 匹配浏览器高度
 liu_yan_mao_bo_li = document.querySelector('.liu_yan_mao_bo_li');
@@ -649,6 +653,49 @@ Sku_gundontiao('.liu_yan_top', '.liuyan_gundontiao_max', '.liuyan_gundontiao_min
 
 
 
+
+// 创建一个临时的textarea并执行复制
+function copyToClipboard2(value, message) {
+    const textArea = document.createElement('textarea');
+    let text = value.replace(/(\n{2,})/g, '\n\n').replace(/\n+$/, ''); // 将两个以上的换行符替换为两个换行符，并去除结尾的换行符
+    textArea.value = text; // 设置textarea的值
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy'); // 执行复制操作
+    document.body.removeChild(textArea); // 移除临时textarea
+    Sku_tctx(message); // 提示用户
+}
+
+var liu_yan_top = document.querySelector('.liu_yan_top');
+// 为父元素添加点击事件监听器
+let clickPosition2 = { x: 0, y: 0 }; // 定义一个变量来存储鼠标点击时的位置
+var td_target2;
+liu_yan_top.addEventListener('mousedown', function(e) {
+    if (e.button === 0) {
+        td_target2 = e.target;
+        clickPosition2 = { x: e.clientX, y: e.clientY };
+        liu_yan_top.addEventListener('mouseup', onMouseUp2);
+    }
+});
+
+function onMouseUp2(e) {
+    // 移除mousemove和mouseup事件监听器
+    liu_yan_top.removeEventListener('mouseup', onMouseUp2);
+    // 执行检查函数
+    let releasePosition2 = { x: e.clientX, y: e.clientY };
+    let distance2 = Math.sqrt(Math.pow(releasePosition2.x - clickPosition2.x, 2) + Math.pow(releasePosition2.y - clickPosition2.y, 2));
+    // 如果距离小于5px，执行函数
+    if (distance2 < 5) {
+        if (td_target2.classList.contains('liu_yan_z')) {
+            copyToClipboard2(td_target2.innerText, '文本已复制到剪贴板');
+        }
+    }
+}
+
+
+
+
+
 //全局右击事件
 document.addEventListener('contextmenu', function() {
     liu_yan_sxuan_div.style.display = 'none';
@@ -663,15 +710,6 @@ document.addEventListener('click', function() {
 var sf_shift = 0;
 document.addEventListener('keydown', function(e) {
     if (liu_yan_srk_jc == '1' && e.shiftKey && e.key === 'Enter') {
-        // e.preventDefault();
-        // 执行shift+回车的逻辑
-        // var zfc = liu_yan_srk.value;
-        // var cswz = liu_yan_srk.selectionEnd;
-        // var zfc_x = insertStr(zfc, cswz, '<br>');
-        // liu_yan_srk.value = zfc_x;
-        // liu_yan_srk.focus();
-        // liu_yan_srk.selectionEnd = cswz + 4;
-
         sf_shift = 1;
     }
     if (liu_yan_srk_jc == '1' && e.ctrlKey && e.key === 'Enter') {

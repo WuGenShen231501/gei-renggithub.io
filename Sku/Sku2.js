@@ -213,10 +213,6 @@ function lian_jie_l_kaishi() {
     }
     //链接导航栏click事件
     for (var i = 0; i < lian_jie_l_s.length; i++) {
-        // 禁止选择字体
-        lian_jie_l_s[i].addEventListener('selectstart', function(e) {
-            e.preventDefault();
-        });
         //点击事件
         lian_jie_l_s[i].addEventListener('click', function() {
             //设置指向
@@ -791,10 +787,6 @@ dhr_qrk.addEventListener('click', function(e) {
             var lian_jie_r_s = lian_jie_r.children;
             lian_jie_l = document.querySelector('.lian_jie_l');
             var lian_jie_l_s = lian_jie_l.children;
-            // 禁止选择字体
-            lian_jie_l_s[lian_jie_l_s.length - 1].addEventListener('selectstart', function(e) {
-                e.preventDefault();
-            });
             //点击事件
             lian_jie_l_s[lian_jie_l_s.length - 1].addEventListener('click', function() {
                 //设置指向

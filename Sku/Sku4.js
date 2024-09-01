@@ -4680,8 +4680,6 @@ mrrd_dsq = null;
 
 // 抓取准备
 function mrrd_sx() {
-    console.log(drym_max.style.display);
-
     // 防止连续执行5分钟
     if ((((+new Date()) - localStorage.mrrd_sxsj) >= (1000 * 60 * 5) || localStorage.mrrd_sxsj == 0) && drym_max.style.display == 'none') {
 
@@ -4746,7 +4744,7 @@ function mrrd_sx() {
         }, 1000);
 
     } else if (((+new Date()) - localStorage.mrrd_sxsj) < (1000 * 60 * 5) && drym_max.style.display == 'none') {
-        console.log('热点抓取时间间隔小于5分钟,已放弃抓取');
+        console.log('热点抓取时间间隔小于5分钟,已放弃抓取\n下次抓取时间:' + ((1000 * 60 * 5) - ((+new Date()) - localStorage.mrrd_sxsj)) / 1000 + '秒后');
     } else if (((+new Date()) - localStorage.mrrd_sxsj) >= (1000 * 60 * 5) && drym_max.style.display == 'block') {
         console.log('热点抓取时为锁屏状态,已放弃抓取');
     }

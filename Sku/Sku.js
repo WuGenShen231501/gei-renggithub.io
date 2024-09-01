@@ -86,6 +86,17 @@ if (localStorage.Sku_kfzms == 0) {
 
 
 
+//全局文字禁止选择
+document.addEventListener('selectstart', function(e) {
+    e.preventDefault();
+});
+
+
+
+
+
+
+
 // 定位
 var music_hzmax = document.querySelector('.music_hzmax');
 music_hzmax.style.maxHeight = window.innerHeight - (60 + 60) + 'px';
@@ -113,19 +124,19 @@ document.documentElement.addEventListener('mouseout', function() {
     su_biao.style.display = 'none';
 });
 document.documentElement.addEventListener('mousemove', function(e) {
-    su_biao.style.transition = '0s'
+    if (su_biao.style.transition !== 'all 0s ease 0s') {
+        su_biao.style.transition = 'all 0s ease 0s'
+    }
     su_biao.style.top = e.pageY - 5 + 'px';
     su_biao.style.left = e.pageX - 5 + 'px';
 });
 document.documentElement.addEventListener('mousedown', function() {
-    // su_biao.style.animation = '';
     su_biao.style.transition = '0.1s'
     su_biao.style.transform = 'scale(0.5)';
 });
 document.documentElement.addEventListener('mouseup', function() {
     su_biao.style.transition = '0.1s'
     su_biao.style.transform = 'scale(1)';
-    // su_biao.style.animation = 'su_biao_shuidi 0.1s';
 });
 
 
@@ -160,10 +171,6 @@ for (var i = 0; i < top_dhl.length; i++) {
     top_dhl[i].setAttribute('date-num', i);
 }
 for (var i = 0; i < top_dhl.length; i++) {
-    // 禁止选择字体
-    top_dhl[i].addEventListener('selectstart', function(e) {
-        e.preventDefault();
-    });
     //点击效果
     top_dhl[i].addEventListener('click', function() {
         topmax.style.top = '0px';
@@ -255,10 +262,6 @@ so_yq_s = document.querySelector('.so_yq_s');
 nrmaxs3 = document.querySelector('.nrmaxs3');
 //设置引擎
 so_yq.innerHTML = localStorage.sy_sosuo_yq;
-//添加紧选
-so_yq.addEventListener('selectstart', function(e) {
-    e.preventDefault();
-});
 //显示切换引擎
 so_yq.addEventListener('click', function(e) {
     e.stopPropagation();
@@ -434,10 +437,7 @@ tou_xian_qr.addEventListener('click', function() {
 
 
 
-//全局选择事件
-document.addEventListener('selectstart', function(e) {
-    e.preventDefault();
-});
+
 //全局右击事件
 document.addEventListener('contextmenu', function() {
     so_yq_s.style.display = 'none';

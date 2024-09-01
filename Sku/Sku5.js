@@ -1,3 +1,9 @@
+// 可文字选中
+var AI_zj = document.querySelector('.AI_zj');
+AI_zj.addEventListener('selectstart', function(e) {
+    e.stopPropagation();
+});
+
 // 匹配浏览器高度
 nrmaxs4 = document.querySelector('.nrmaxs4');
 nrmaxs4.style.marginTop = (window.innerHeight + 56 - 523 - 80) / 2 + 'px';
@@ -719,6 +725,11 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
                         AI_bottom_srk.disabled = false;
                         AI_bottom_srk.focus(); //聚焦
                     }
+                    // a标签打开方式
+                    var AI_zj_a = document.querySelector('.AI_zj').querySelectorAll('a');
+                    AI_zj_a.forEach(link => {
+                        link.setAttribute('target', '_blank');
+                    });
                 }
 
                 // 动态递增
@@ -740,6 +751,11 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
                 AI_bottom_srk.disabled = false;
                 AI_bottom_srk.focus(); //聚焦
             }
+            // a标签打开方式
+            var AI_zj_a = document.querySelector('.AI_zj').querySelectorAll('a');
+            AI_zj_a.forEach(link => {
+                link.setAttribute('target', '_blank');
+            });
         }
 
     }
@@ -765,6 +781,11 @@ for (var i = 0; i < AI_jl.length; i++) {
         AI_zj_nr.appendChild(divs);
     }
 }
+// a标签打开方式
+var AI_zj_a = document.querySelector('.AI_zj').querySelectorAll('a');
+AI_zj_a.forEach(link => {
+    link.setAttribute('target', '_blank');
+});
 
 
 
@@ -1352,43 +1373,60 @@ function copyToClipboard(value, message) {
     Sku_tctx(message); // 提示用户
 }
 
-var parentElement = document.querySelector('.AI_zj');
+var AI_zj = document.querySelector('.AI_zj');
 // 为父元素添加点击事件监听器
-parentElement.addEventListener('click', function(e) { //复制、事件委托
+let clickPosition = { x: 0, y: 0 }; // 定义一个变量来存储鼠标点击时的位置
+var td_target;
+AI_zj.addEventListener('mousedown', function(e) {
+    if (e.button === 0) {
+        td_target = e.target;
+        clickPosition = { x: e.clientX, y: e.clientY };
+        AI_zj.addEventListener('mouseup', onMouseUp);
+    }
+});
+
+function onMouseUp(e) {
+    // 移除mousemove和mouseup事件监听器
+    AI_zj.removeEventListener('mouseup', onMouseUp);
+    // 执行检查函数
+    let releasePosition = { x: e.clientX, y: e.clientY };
+    let distance = Math.sqrt(Math.pow(releasePosition.x - clickPosition.x, 2) + Math.pow(releasePosition.y - clickPosition.y, 2));
+    // 如果距离小于5px，执行函数
+    if (distance < 5) {
+        if (td_target.classList.contains('AI_huida_nr') || td_target.classList.contains('yh_huida_nr')) {
+            copyToClipboard(td_target.innerText, '文本已复制到剪贴板');
+        } else if (td_target.nodeName === 'PRE') {
+            copyToClipboard(td_target.innerText, '代码已复制到剪贴板');
+        } else if (td_target.nodeName === 'CODE') {
+            copyToClipboard(td_target.innerText, '单词已复制到剪贴板');
+        } else if (td_target.nodeName === 'IMG') {
+            copyToClipboard(td_target.src, '图片链接已复制到剪贴板');
+        }
+    }
+}
+// 为父元素添加点击事件监听器
+AI_zj.addEventListener('contextmenu', function(e) { //音频、事件委托
     const target = e.target;
 
     if (target.classList.contains('AI_huida_nr') || target.classList.contains('yh_huida_nr')) {
-        copyToClipboard(target.innerText, '文本已复制到剪贴板');
+        SKu_bo_fang_qi(target.innerText);
     } else if (target.nodeName === 'PRE') {
-        copyToClipboard(target.innerText, '代码已复制到剪贴板');
+        SKu_bo_fang_qi(target.innerText);
     } else if (target.nodeName === 'CODE') {
-        copyToClipboard(target.innerText, '单词已复制到剪贴板');
-    } else if (target.nodeName === 'IMG') {
-        copyToClipboard(target.src, '图片链接已复制到剪贴板');
+        SKu_bo_fang_qi(target.innerText);
     }
 });
-// 为父元素添加点击事件监听器
-parentElement.addEventListener('contextmenu', function(e) { //音频、事件委托
-    const target = e.target;
 
-    if (target.classList.contains('AI_huida_nr') || target.classList.contains('yh_huida_nr')) {
-        SKu_bo_fang_qi(target.innerText);
-    } else if (target.nodeName === 'PRE') {
-        SKu_bo_fang_qi(target.innerText);
-    } else if (target.nodeName === 'CODE') {
-        SKu_bo_fang_qi(target.innerText);
-    }
-});
 
 
 
 
 // 拖拽读取导入信息
-var AI_max = document.querySelector('.AI_max');
-AI_max.addEventListener('dragover', function(e) {
+var AI_bottom_srk_hz = document.querySelector('.AI_bottom_srk_hz');
+AI_bottom_srk_hz.addEventListener('dragover', function(e) {
     e.preventDefault();
 });
-AI_max.addEventListener('drop', function(e) {
+AI_bottom_srk_hz.addEventListener('drop', function(e) {
     e.preventDefault();
     var dt = e.dataTransfer;
     var files = dt.files;
