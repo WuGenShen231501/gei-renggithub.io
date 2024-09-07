@@ -4481,27 +4481,24 @@ var rgb_ys = [
 ];
 
 function RGBToHex(rgb) {
-    if (!rgb) rgb = 'rgb(237,237,237)'
-    var regexp = /[0-9]{0,3}/g
-    var res = rgb.match(regexp) // 利用正则表达式去掉多余的部分，将rgb中的数字提取
-    var hexRes = '#'
-    var hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
-    var hexArr = []
+    if (!rgb) rgb = 'rgb(237,237,237)';
+    var regexp = /[0-9]{1,3}/g;
+    var res = rgb.match(regexp);
+    var hexRes = '#';
+    var hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+    var hexArr = [];
+
     for (let i = 0; i < res.length; i++) {
-        if (res[i]) {
-            if (res[i] > 16) {
-                let leftIndex = (res[i] / 16) >> 0 // 向下取整
-                let rightIndex = +res[i] % 16
-                hexArr.push(hex[leftIndex])
-                hexArr.push(hex[rightIndex])
-            } else {
-                hexArr.push(0)
-                hexArr.push(hex[res[i]])
-            }
-        }
+        var num = parseInt(res[i]);
+        var leftIndex = (num / 16) >> 0;
+        var rightIndex = num % 16;
+        hexArr.push(hex[leftIndex]);
+        hexArr.push(hex[rightIndex]);
     }
-    return hexRes += hexArr.join('') // #EDEDED
+
+    return hexRes + hexArr.join('');
 }
+
 
 for (var i = 0; i < rgb_name.length; i++) {
     var divs = document.createElement('div');
@@ -4528,6 +4525,10 @@ for (var i = 0; i < rgb_name.length; i++) {
             bj_kuan_hs();
         }
         if (rgbj_yy_fxk_bz_sf == 1) {
+            console.log(this.querySelector('.grb_j_grb').style.backgroundColor);
+
+            console.log(RGBToHex(this.querySelector('.grb_j_grb').style.backgroundColor));
+
             document.documentElement.style.backgroundColor = RGBToHex(this.querySelector('.grb_j_grb').style.backgroundColor);
             document.documentElement.style.backgroundImage = '';
             localStorage.bi_zhi = '';

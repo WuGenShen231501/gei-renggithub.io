@@ -731,6 +731,7 @@
         padding: 0 50px;
         border-radius: 10px;
         transition: 0.2s;
+        background-color: var(--bei_jing_color);
         border: var(--bei_jing_kuan_true) solid var(--bei_jing_kuan_color);
         backdrop-filter: var(--mao_bo_li);
         animation: sy_djs_txl_dh 1s linear;

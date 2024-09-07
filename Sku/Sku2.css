@@ -39,13 +39,13 @@
     height: 50px;
     text-align: center;
     line-height: 50px;
-    text-indent: -3em;
+    padding-right: 70px;
     transition: 0.2s;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .lian_jie_l div:hover {
-    text-indent: -2em;
+    text-indent: 1em;
 }
 
 .lian_jie_r div {
@@ -372,7 +372,7 @@
     height: 50px;
     text-align: center;
     line-height: 50px;
-    text-indent: -3em;
+    padding-right: 70px;
     transition: 0.1s;
 }
 

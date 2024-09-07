@@ -24,6 +24,16 @@ html {
 }
 
 
+/* CSS样式，应用于被选择的文本 */
+
+.AI_zj-selected {
+    background-color: yellow;
+    /* 背景颜色 */
+    color: red;
+    /* 文本颜色 */
+}
+
+
 /* -----------背景-----------*/
 
 html {
@@ -358,32 +368,50 @@ html {
 }
 
 .tou_xian_tp {
+    position: absolute;
+    top: 50px;
+    left: 200px;
     width: 200px;
     height: 200px;
     border-radius: 50%;
     overflow: hidden;
-    margin: 50px auto 0;
     background-size: 100% 100%;
+    background-color: var(--zi_ti_color_20);
+}
+
+.tou_xian_tp2 {
+    position: absolute;
+    top: 50px;
+    left: 200px;
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-size: 100% 100%;
+    background-color: var(--zi_ti_color_20);
+    opacity: 0.6;
 }
 
 .input_tou_xian {
-    float: left;
+    position: absolute;
+    top: 300px;
+    left: 50px;
     width: 400px;
     height: 40px;
     border: 0;
-    margin: 40px 0px 0px 50px;
     border-bottom: 1px solid white;
     background-color: rgb(0, 0, 0, 0);
     outline: none;
 }
 
 .tou_xian_qr {
-    float: right;
+    position: absolute;
+    top: 300px;
+    right: 50px;
     width: 100px;
     height: 40px;
     text-align: center;
     line-height: 40px;
-    margin: 40px 48px 0px 0px;
     border-bottom: 1px solid white;
 }
 

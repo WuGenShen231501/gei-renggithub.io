@@ -410,6 +410,7 @@ so_anniu.addEventListener('click', function() {
 top_tou_xian = document.querySelector('.top_tou_xian');
 top_tou_xian_sc = document.querySelector('.top_tou_xian_sc');
 tou_xian_tp = document.querySelector('.tou_xian_tp');
+tou_xian_tp2 = document.querySelector('.tou_xian_tp2');
 input_tou_xian = document.querySelector('.input_tou_xian');
 tou_xian_qr = document.querySelector('.tou_xian_qr');
 top_tou_xian.style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
@@ -417,11 +418,21 @@ top_tou_xian.addEventListener('click', function(e) {
     e.stopPropagation();
     top_tou_xian_sc.style.display = 'block';
     tou_xian_tp.style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
+    tou_xian_tp2.style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
     input_tou_xian.value = '';
     input_tou_xian.focus();
 });
 top_tou_xian_sc.addEventListener('click', function(e) {
     e.stopPropagation();
+});
+input_tou_xian.addEventListener('input', function(e) {
+    if (input_tou_xian.value !== '') {
+        tou_xian_tp.style.backgroundImage = 'url(' + input_tou_xian.value + ')';
+        tou_xian_tp2.style.backgroundImage = 'url(' + input_tou_xian.value + ')';
+    } else {
+        tou_xian_tp.style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
+        tou_xian_tp2.style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
+    }
 });
 tou_xian_qr.addEventListener('click', function() {
     if (input_tou_xian.value !== '') {
@@ -430,8 +441,18 @@ tou_xian_qr.addEventListener('click', function() {
         input_tou_xian.value = '';
         top_tou_xian_sc.style.display = 'none';
         Sku_tctx('头像上传成功');
+
+        // 更改html中的头像
+        var liu_yan_tx = document.querySelectorAll('.liu_yan_tx');
+        for (var i = 0; i < liu_yan_tx.length; i++) {
+            liu_yan_tx[i].style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
+        }
+        var yh_huida_tx = document.querySelectorAll('.yh_huida_tx');
+        for (var i = 0; i < yh_huida_tx.length; i++) {
+            yh_huida_tx[i].style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
+        }
     } else {
-        top_tou_xian_sc.style.display = 'none';
+        Sku_tctx('头像地址不能为空 !');
     }
 });
 
@@ -449,16 +470,6 @@ document.addEventListener('click', function() {
     top_tou_xian_sc.style.display = 'none';
 });
 //全局按键事件
-document.addEventListener('keyup', function(e) {
-    if (top_tou_xian_sc.style.display == 'block') {
-        if (input_tou_xian.value !== '') {
-            tou_xian_tp.style.backgroundImage = 'url(' + input_tou_xian.value + ')';
-        } else {
-            tou_xian_tp.style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
-        }
-    }
-})
-
 document.addEventListener('keydown', function(e) {
     if (e.key == 'Enter' && so_ssk_num == 1) {
         so_anniu.click();
@@ -543,7 +554,7 @@ if (localStorage.zi_ti_color !== '') {
         style_s1.innerHTML = 'html {color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .top_dhl div:hover,.sy_dwck_s:hover {background-color:' + RGB_zhq(localStorage.zi_ti_click_color, 0.15) + ';} .so_yq:hover {color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .so_yq {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} ::placeholder {color:' + RGB_zhq(localStorage.zi_ti_color, 0.5) + ';} .iconfont:hover {color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .so_ssk {color:' + RGB_zhq(localStorage.zi_ti_color) + '; border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .iconfont {color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .so_anniu {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .lian_jie_l div:hover {background-color:' + RGB_zhq(localStorage.zi_ti_click_color, 0.15) + ';} .lian_jie_l div {border-bottom:1px solid ' + RGB_zhq(localStorage.zi_ti_color, 0.3) + ';} .lj_xx_b,.lj_xx_b_2 {color:' + RGB_zhq(localStorage.zi_ti_color, 0.5) + ';} .lj_lj_t {color:' + RGB_zhq(localStorage.zi_ti_color) + '; border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .lj_lj_b {color:' + RGB_zhq(localStorage.zi_ti_color) + '; border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .lj_max {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .dhr_srk {border-color:' + RGB_zhq(localStorage.zi_ti_color) + '; color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .dhr_qrk{border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .dhr_qrk:hover {border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + '; color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .lj_max:hover {border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .lj_lj_t:hover,.lj_lj_b:hover {color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .lj_xg_tj input {color:' + RGB_zhq(localStorage.zi_ti_color) + ';border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .jl_qrk:hover {border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + '; color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .jl_qrk {border-color:' + RGB_zhq(localStorage.zi_ti_color) + '; color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .liu_yan_z {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .liu_yan_tx {border-color:' + RGB_zhq(localStorage.zi_ti_color, 0.75) + '; background-color:' + RGB_zhq(localStorage.zi_ti_color, 0.2) + ';} .liu_yan_sxuan_s:hover {background-color:' + RGB_zhq(localStorage.zi_ti_click_color, 0.15) + ';}';
 
         var style_s2 = document.querySelector('.style_s2');
-        style_s2.innerHTML = '.liu_yan_top {border-color:' + RGB_zhq(localStorage.zi_ti_color, 0.7) + ';} .liu_yan_time {color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .liu_yan_button {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .liu_yan_button:hover,.drym_dr:hover {border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + '; color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .input_djs_tjym_time_s,.input_djs_tjym_sj,.liu_yan_srk {color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .liu_yan_sxuan_s {border-color:' + RGB_zhq(localStorage.zi_ti_color, 0.3) + ';} .shezhi_mins {border-color:' + RGB_zhq(localStorage.zi_ti_color, 0.2) + ';} .shezhi_ym_top {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .tianqi_s {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .bzsz_tj {background-color:' + RGB_zhq(localStorage.zi_ti_color, 0.5) + ';} .ztsz_chongzhi,.bjsz_chongzhi {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .ztsz_chongzhi:hover,.bjsz_chongzhi:hover {border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + '; color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .bjk_xzk {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .input_bzlj {border-color:' + RGB_zhq(localStorage.zi_ti_color) + '; color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .bzsz_tj_anniu {border-color:' + RGB_zhq(localStorage.zi_ti_color) + '; color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .bzsz_tj_anniu:hover { color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .bzsz_tj_ym_TP {background-color:' + RGB_zhq(localStorage.zi_ti_color, 0.5) + ';} .shezhi_mins:hover {background-color:' + RGB_zhq(localStorage.zi_ti_click_color, 0.15) + ';color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .ztfg_s {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .cdcsh_click,.bfsz_sccd,.bfsz_xzcd {background-color:' + RGB_zhq(localStorage.zi_ti_color, 0.2) + '; border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .top_tou_xian {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';background-color:' + RGB_zhq(localStorage.zi_ti_color, 0.2) + ';} .top_tou_xian:hover {border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .tou_xian_tp {background-color:' + RGB_zhq(localStorage.zi_ti_color, 0.5) + ';} .input_tou_xian,.tou_xian_qr {color:' + RGB_zhq(localStorage.zi_ti_color) + '; border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .tou_xian_qr:hover {color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';}';
+        style_s2.innerHTML = '.liu_yan_top {border-color:' + RGB_zhq(localStorage.zi_ti_color, 0.7) + ';} .liu_yan_time {color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .liu_yan_button {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .liu_yan_button:hover,.drym_dr:hover {border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + '; color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .input_djs_tjym_time_s,.input_djs_tjym_sj,.liu_yan_srk {color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .liu_yan_sxuan_s {border-color:' + RGB_zhq(localStorage.zi_ti_color, 0.3) + ';} .shezhi_mins {border-color:' + RGB_zhq(localStorage.zi_ti_color, 0.2) + ';} .shezhi_ym_top {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .tianqi_s {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .bzsz_tj {background-color:' + RGB_zhq(localStorage.zi_ti_color, 0.5) + ';} .ztsz_chongzhi,.bjsz_chongzhi {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .ztsz_chongzhi:hover,.bjsz_chongzhi:hover {border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + '; color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .bjk_xzk {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .input_bzlj {border-color:' + RGB_zhq(localStorage.zi_ti_color) + '; color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .bzsz_tj_anniu {border-color:' + RGB_zhq(localStorage.zi_ti_color) + '; color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .bzsz_tj_anniu:hover { color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .bzsz_tj_ym_TP {background-color:' + RGB_zhq(localStorage.zi_ti_color, 0.5) + ';} .shezhi_mins:hover {background-color:' + RGB_zhq(localStorage.zi_ti_click_color, 0.15) + ';color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .ztfg_s {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .cdcsh_click,.bfsz_sccd,.bfsz_xzcd {background-color:' + RGB_zhq(localStorage.zi_ti_color, 0.2) + '; border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .top_tou_xian {border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';background-color:' + RGB_zhq(localStorage.zi_ti_color, 0.2) + ';} .top_tou_xian:hover {border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';} .input_tou_xian,.tou_xian_qr {color:' + RGB_zhq(localStorage.zi_ti_color) + '; border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';} .tou_xian_qr:hover {color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';}';
 
         var style_s3 = document.querySelector('.style_s3');
         style_s3.innerHTML = '.sy_dwck_ym,.sy_dwck,.sy_zp_tj_ym,.sy_zpzs_max,.sy_hddb,.kcp_kc span,.kcp_xq span,.top_tou_xian_sc,.drym_min,.wl_max,.bzsz_tj_ym,.sy_djs_tjym,.sy_djs,.liu_yan_sxuan_div,.liu_yan_mao_bo_li,.lj_xg_tj,.dhr_xg_tj,.lian_jie_l_max,.lian_jie_r_max,.topmax,.shezhi_max,.music_ym {backdrop-filter: blur(' + localStorage.mao_bo_li + 'px);} .input_djs_tjym_time_s2,.input_djs_tjym_sj,.input_djs_tjym_time_s,.djs_tjym_qr,.mblxg,.input_drmm_mm,.daoru_ym_sc,.drmm_mm_qr,.drym_tx,.imput_drym_mm,.sy_zpzs_jr,.sy_zpzs_tj,.sy_zp_tj_anniu,.input_sy_zp_tj,.sy_hddb,.input_ji_ru_srk,.input_ji_ru_ss,.bfsz_zdbf_qrk,.sy_lbt_b {border-color:' + localStorage.zi_ti_color + ';} .input_djs_tjym_time_s2,.input_drmm_mm,.daoru_ym_sc,.imput_drym_mm,.input_sy_zp_tj,.input_ji_ru_srk,.input_ji_ru_ss {color:' + localStorage.zi_ti_color + ';} .sy_zp_tj_anniu:hover,.drmm_mm_qr:hover,.djs_tjym_qr:hover,.sy_zpzs_tj:hover,.sy_zpzs_jr:hover,.sy_dwck_s:hover,.daoru_ym_bendi_click:hover {color:' + localStorage.zi_ti_click_color + ';border-color:' + localStorage.zi_ti_click_color + ';} .drym_tx {background-color:' + RGB_zhq(localStorage.zi_ti_color, 0.2) + ';} .sy_dwck {color:' + RGB_zhq(localStorage.zi_ti_color, 0.5) + ';border-color:' + RGB_zhq(localStorage.zi_ti_color, 0.5) + ';} .sy_dwck_s {border-color:' + RGB_zhq(localStorage.zi_ti_color, 0.3) + ';} .liu_yan_z a, .lian_jie_ssk {color:' + localStorage.zi_ti_color + ';} .liu_yan_z a:hover {color:' + localStorage.zi_ti_click_color + ';} .daoru_ym_dc,.daoru_ym_dr,.daoru_ym_bendi,.daorubendi_s_sj,.daorubendi_s_yy,.daorubendi_s_cs {background-color:' + RGB_zhq(localStorage.zi_ti_color, 0.2) + '; border-color:' + RGB_zhq(localStorage.zi_ti_color) + ';}.input_tmd{background: -webkit-linear-gradient(' + localStorage.zi_ti_color + ', ' + localStorage.zi_ti_color + ') no-repeat, none;border: 1px solid ' + localStorage.zi_ti_color + ';}.input_tmd::-webkit-slider-thumb {background: ' + localStorage.zi_ti_color + ';}.music_s {border-bottom:1px solid ' + RGB_zhq(localStorage.zi_ti_color, 0.3) + ';}';
