@@ -81,8 +81,8 @@
 
 .AI_huida_sj {
     position: absolute;
-    font-size: 12px;
-    top: -14px;
+    font-size: 14px;
+    top: -16px;
     left: 105px;
     opacity: 0.3;
     color: var(--zi_ti_color);

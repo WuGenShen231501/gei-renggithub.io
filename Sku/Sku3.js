@@ -699,6 +699,59 @@ function onMouseUp2(e) {
 
 
 
+
+// 全屏按钮
+if (localStorage.liuyan_quanpin_true == undefined) {
+    localStorage.liuyan_quanpin_true = 0;
+}
+
+function liu_yan_quanpin_hs() {
+    var liu_yan = document.querySelector('.liu_yan');
+    var liu_yan_mao_bo_li = document.querySelector('.liu_yan_mao_bo_li');
+    var liu_yan_z = document.querySelector('.liu_yan_z');
+    var liu_yan_srk = document.querySelector('.liu_yan_srk');
+    var liu_yan_top = document.querySelector('.liu_yan_top');
+    var liuyan_gundontiao_max = document.querySelector('.liuyan_gundontiao_max');
+    var liu_yan_sxuan_div = document.querySelector('.liu_yan_sxuan_div');
+    var ji_ru_ssk_max = document.querySelector('.ji_ru_ssk_max');
+    var input_ji_ru_srk = document.querySelector('.input_ji_ru_srk');
+    if (localStorage.liuyan_quanpin_true == 0) {
+        liu_yan.className = 'liu_yan';
+        liu_yan_mao_bo_li.className = 'liu_yan_mao_bo_li';
+        liu_yan_z.className = 'liu_yan_z';
+        liu_yan_srk.className = 'liu_yan_srk';
+        liu_yan_top.className = 'liu_yan_top';
+        liuyan_gundontiao_max.className = 'liuyan_gundontiao_max';
+        liu_yan_sxuan_div.className = 'liu_yan_sxuan_div';
+        ji_ru_ssk_max.className = 'ji_ru_ssk_max';
+        input_ji_ru_srk.className = 'input_ji_ru_srk';
+    } else {
+        liu_yan.className = 'liu_yan liu_yan2';
+        liu_yan_mao_bo_li.className = 'liu_yan_mao_bo_li liu_yan_mao_bo_li2';
+        liu_yan_z.className = 'liu_yan_z liu_yan_z2';
+        liu_yan_srk.className = 'liu_yan_srk liu_yan_srk2';
+        liu_yan_top.className = 'liu_yan_top liu_yan_top2';
+        liuyan_gundontiao_max.className = 'liuyan_gundontiao_max liuyan_gundontiao_max2';
+        liu_yan_sxuan_div.className = 'liu_yan_sxuan_div liu_yan_sxuan_div2';
+        ji_ru_ssk_max.className = 'ji_ru_ssk_max ji_ru_ssk_max2';
+        input_ji_ru_srk.className = 'input_ji_ru_srk input_ji_ru_srk2';
+    }
+}
+liu_yan_quanpin_hs();
+var liu_yan_quanpin = document.querySelector('.liu_yan_quanpin');
+liu_yan_quanpin.addEventListener('click', function() {
+    if (localStorage.liuyan_quanpin_true == 0) {
+        localStorage.liuyan_quanpin_true = 1;
+    } else {
+        localStorage.liuyan_quanpin_true = 0;
+    }
+    liu_yan_quanpin_hs();
+})
+
+
+
+
+
 //全局右击事件
 document.addEventListener('contextmenu', function() {
     liu_yan_sxuan_div.style.display = 'none';

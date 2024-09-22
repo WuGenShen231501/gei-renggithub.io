@@ -949,7 +949,7 @@ shezhi_sp_xp_min2.addEventListener('blur', function(e) {
 // 相互关闭
 // 点击的,不需要隐藏的...
 function xhgb_dx(class1, class2, class3) {
-    var xhgb_dx = ['AI_szym_max', 'AI_kjzl_max', 'AI_mods_max', 'lj_zcb_ym', 'so_yq_s', 'ssbqym', 'music_ym', 'top_tou_xian_sc', 'lj_xg_tj', 'dhr_xg_tj'];
+    var xhgb_dx = ['liu_yan_sxuan_div', 'AI_szym_max', 'AI_kjzl_max', 'AI_mods_max', 'lj_zcb_ym', 'so_yq_s', 'ssbqym', 'music_ym', 'top_tou_xian_sc', 'lj_xg_tj', 'dhr_xg_tj'];
     var dj = document.querySelectorAll('.' + class1);
     for (var i = 0; i < dj.length; i++) {
         dj[i].addEventListener('click', function(e) {
@@ -971,6 +971,7 @@ xhgb_dx('lj_zcb_i', 'lj_xg_tj', 'lj_zcb_ym');
 xhgb_dx('AI_mods', 'AI_mods_max');
 xhgb_dx('AI_kjzl', 'AI_kjzl_max');
 xhgb_dx('AI_dhsz', 'AI_szym_max');
+xhgb_dx('liu_yan_sxuan', 'liu_yan_sxuan_div');
 
 
 
