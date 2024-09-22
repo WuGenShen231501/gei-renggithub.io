@@ -784,3 +784,144 @@
         transition: 0.25s;
         transform: scale(1.2);
     }
+    /* ------课表------------ */
+    
+    .sy_ke_biao_max {
+        position: relative;
+        width: 1250px;
+        height: auto;
+        margin-bottom: 100px;
+        border-radius: 5px;
+        /* overflow: hidden; */
+        background-color: var(--bei_jing_color);
+        border: var(--bei_jing_kuan_true) solid var(--bei_jing_kuan_color);
+        backdrop-filter: var(--mao_bo_li);
+    }
+    
+    .sy_ke_biao_top {
+        float: left;
+        height: auto;
+        width: 100%;
+    }
+    
+    .sy_ke_biao_top_s {
+        position: relative;
+        float: left;
+        width: calc(100% / 8);
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+    }
+    
+    .ke_biao_zd_hao {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        opacity: 0.5;
+    }
+    
+    .sy_ke_biao_h_s {
+        border: 0;
+        border-bottom: var(--bei_jing_kuan_true) solid var(--bei_jing_kuan_color);
+    }
+    
+    .sy_ke_biao_l_s {
+        border: 0;
+        border-right: var(--bei_jing_kuan_true) solid var(--bei_jing_kuan_color);
+    }
+    
+    .sy_ke_biao_l_s2 {
+        background-color: var(--zi_ti_color_10) !important;
+    }
+    
+    .sy_ke_biao_top_s:first-child {
+        text-indent: 2em;
+        background-color: var(--zi_ti_color_10) !important;
+    }
+    
+    .sy_ke_biao_h_s:last-child {
+        border: 0;
+        border-bottom: 0;
+    }
+    
+    .sy_ke_biao_l_s:last-child {
+        border: 0;
+        border-right: 0;
+    }
+    
+    .sy_ke_biao_h {
+        height: auto;
+        width: 100%;
+    }
+    
+    .sy_ke_biao_l {
+        width: calc(100% / 8);
+        height: 50px;
+        line-height: 51px;
+        text-align: center;
+        background-color: rgb(0, 0, 0, 0);
+        color: var(--zi_ti_color);
+        outline: none;
+        resize: none;
+    }
+    
+    .sy_zpzs_kaiguan2 {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 1px solid;
+        border-radius: 5px;
+        top: -25px;
+        left: 0;
+        text-align: center;
+        line-height: 18px;
+    }
+    
+    .sy_zpzs_kaiguan_ts2 {
+        position: absolute;
+        width: 200px;
+        height: 20px;
+        top: -25px;
+        left: 25px;
+        font-size: 10px;
+        line-height: 20px;
+        opacity: 0.5;
+    }
+    
+    .ke_biao_tianjia_tb {
+        font-size: 20px;
+    }
+    
+    .ke_biao_tianjia {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        bottom: -25px;
+        line-height: 20px;
+        text-align: center;
+        right: 0;
+        font-size: 10px;
+        line-height: 20px;
+        opacity: 0.5;
+        transition: 0.2s;
+    }
+    
+    .ke_biao_tianjia:hover {
+        opacity: 1;
+    }
+    
+    .ke_biao_zhoushu {
+        position: absolute;
+        left: 21px;
+        top: 1px;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: right;
+        background-color: transparent;
+        color: var(--zi_ti_color);
+        font-size: 25px;
+        border: 0;
+        outline: none;
+        z-index: 1;
+    }

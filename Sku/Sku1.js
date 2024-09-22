@@ -1220,6 +1220,7 @@ sy_dw_top = document.querySelector('.sy_dw_top');
 sy_dw_richen = document.querySelector('.sy_dw_richen');
 sy_dw_kcb = document.querySelector('.sy_dw_kcb');
 sy_dw_zpzs = document.querySelector('.sy_dw_zpzs');
+sy_dw_kebiao = document.querySelector('.sy_dw_kebiao');
 //点击显示窗口
 sy_dwck.addEventListener('click', function(e) {
     e.stopPropagation();
@@ -1273,6 +1274,11 @@ sy_dw_richen.addEventListener('click', function() {
 });
 sy_dw_zpzs.addEventListener('click', function() {
     var sz = sy_zpzs_max.offsetTop - 80;
+    SHITIDONGHUA2('.nrmaxs0_nr', sz);
+});
+sy_dw_kebiao.addEventListener('click', function() {
+    var sy_ke_biao_max = document.querySelector('.sy_ke_biao_max');
+    var sz = sy_ke_biao_max.offsetTop - 80;
     SHITIDONGHUA2('.nrmaxs0_nr', sz);
 });
 // 滚轮滚动暂停定位
@@ -2657,6 +2663,200 @@ Sku_gundontiao('.music_hzmax', '.music_ym_gundontiao_max', '.music_ym_gundontiao
 
 
 
+// 课表
+// 锁定 
+if (localStorage.ke_biao_sd == undefined) {
+    localStorage.ke_biao_sd = false;
+}
+// 锁定函数
+function ke_biao_sdhs() {
+    var ke_biao_tianjia = document.querySelector('.ke_biao_tianjia');
+    var sy_ke_biao_l = document.querySelectorAll('.sy_ke_biao_l ');
+    var ke_biao_zhoushu = document.querySelector('.ke_biao_zhoushu');
+    if (JSON.parse(localStorage.ke_biao_sd) == false) {
+        for (var i = 0; i < sy_ke_biao_l.length; i++) {
+            sy_ke_biao_l[i].disabled = false;
+            sy_ke_biao_l[i].style.pointerEvents = '';
+        }
+        ke_biao_tianjia.style.display = 'block';
+        ke_biao_zhoushu.disabled = false;
+        ke_biao_zhoushu.style.pointerEvents = '';
+    } else {
+        for (var i = 0; i < sy_ke_biao_l.length; i++) {
+            sy_ke_biao_l[i].disabled = true;
+            sy_ke_biao_l[i].style.pointerEvents = 'none';
+        }
+        ke_biao_tianjia.style.display = 'none';
+        ke_biao_zhoushu.disabled = true;
+        ke_biao_zhoushu.style.pointerEvents = 'none';
+    }
+}
+//开机输出课表
+var ke_biao = JSON.parse(localStorage.ke_biao);
+var sy_ke_biao_max = document.querySelector('.sy_ke_biao_max');
+for (var i = 0; i < ke_biao.length; i++) {
+    var div_s = document.createElement('div');
+
+    div_s.className = 'sy_ke_biao_h sy_ke_biao_h_s';
+    div_s.innerHTML = '<input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input>';
+    var div_s_input = div_s.querySelectorAll('.sy_ke_biao_l');
+    for (var p = 0; p < div_s_input.length; p++) {
+        div_s_input[p].value = ke_biao[i][p];
+    }
+
+    sy_ke_biao_max.appendChild(div_s);
+}
+ke_biao_sdhs();
+ke_biao_gaolian();
+// 保存当前
+function ke_biao_bchs() {
+    var ke_biao_lssz = [];
+    var sy_ke_biao_h = document.querySelectorAll('.sy_ke_biao_h ');
+    for (var i = 0; i < sy_ke_biao_h.length; i++) {
+        var ke_biao_lssz2 = [];
+        var sy_ke_biao_l_s = sy_ke_biao_h[i].querySelectorAll('.sy_ke_biao_l');
+        for (var o = 0; o < sy_ke_biao_l_s.length; o++) {
+            ke_biao_lssz2.push(sy_ke_biao_l_s[o].value);
+        }
+        ke_biao_lssz.push(ke_biao_lssz2);
+    }
+
+    localStorage.ke_biao = JSON.stringify(ke_biao_lssz);
+}
+// 失去焦点确定
+sy_ke_biao_max.addEventListener('input', function(event) {
+    if (event.target.tagName === 'INPUT') {
+        ke_biao_bchs(); //保存
+    }
+}, true);
+//锁定开关
+var sy_zpzs_kaiguan2 = document.querySelector('.sy_zpzs_kaiguan2');
+if (JSON.parse(localStorage.ke_biao_sd) == true) {
+    sy_zpzs_kaiguan2.innerText = '✔';
+} else {
+    sy_zpzs_kaiguan2.innerText = '';
+}
+sy_zpzs_kaiguan2.addEventListener('click', function(e) {
+    if (JSON.parse(localStorage.ke_biao_sd) == true) {
+        localStorage.ke_biao_sd = false;
+        sy_zpzs_kaiguan2.innerText = '';
+    } else {
+        localStorage.ke_biao_sd = true;
+        sy_zpzs_kaiguan2.innerText = '✔';
+    }
+    ke_biao_sdhs();
+});
+// 右击删除
+sy_ke_biao_max.addEventListener('contextmenu', function(e) {
+    const target = e.target;
+    if (target.classList[0] == 'sy_ke_biao_l' && JSON.parse(localStorage.ke_biao_sd) == false) {
+        var sy_ke_biao_h = document.querySelectorAll('.sy_ke_biao_h');
+        if (sy_ke_biao_h.length > 1) {
+            sy_ke_biao_max.removeChild(target.parentNode);
+            ke_biao_bchs();
+        } else {
+            Sku_tctx('至少保留一行 !');
+        }
+    }
+});
+// 添加课表
+var ke_biao_tianjia = document.querySelector('.ke_biao_tianjia');
+ke_biao_tianjia.addEventListener('click', function(e) {
+    var div_s = document.createElement('div');
+
+    div_s.className = 'sy_ke_biao_h sy_ke_biao_h_s';
+    div_s.innerHTML = '<input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input>';
+
+    sy_ke_biao_max.appendChild(div_s);
+
+    ke_biao_bchs();
+    ke_biao_gaolian();
+});
+// 当天高亮
+function ke_biao_gaolian() {
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+    var sy_ke_biao_h_s = document.querySelectorAll('.sy_ke_biao_h_s');
+    for (let i = 0; i < sy_ke_biao_h_s.length; i++) {
+        var sy_ke_biao_l_s = sy_ke_biao_h_s[i].querySelectorAll('.sy_ke_biao_l_s');
+        if (dayOfWeek == 0) {
+            sy_ke_biao_l_s[7].classList.add('sy_ke_biao_l_s2');
+        } else {
+            sy_ke_biao_l_s[dayOfWeek].classList.add('sy_ke_biao_l_s2');
+        }
+    }
+}
+// 单双周
+function getWeeksSinceWithMidnight(timestamp) {
+    const inputDate2 = new Date(timestamp);
+    const inputDate = new Date(inputDate2.getFullYear(), inputDate2.getMonth(), inputDate2.getDate(), 0, 0, 1);
+    const currentDate2 = new Date();
+    const currentDate = new Date(currentDate2.getFullYear(), currentDate2.getMonth(), currentDate2.getDate());
+    const inputDay = inputDate.getDay();
+    const currentDay = currentDate.getDay();
+    const normalizedInputDay = inputDay === 0 ? 7 : inputDay;
+    const normalizedCurrentDay = currentDay === 0 ? 7 : currentDay;
+    const diffDays = Math.floor((currentDate - inputDate) / (1000 * 60 * 60 * 24));
+    let weeks = Math.floor(diffDays / 7);
+    if (normalizedCurrentDay < normalizedInputDay || (normalizedCurrentDay === normalizedInputDay && diffDays > 0)) {
+        weeks += 1;
+    }
+    return weeks;
+}
+var ke_biao_zhou = JSON.parse(localStorage.ke_biao_zhou);
+if (getWeeksSinceWithMidnight(ke_biao_zhou[1]) > 0) {
+    ke_biao_zhou[0] = ke_biao_zhou[0] - 0 + getWeeksSinceWithMidnight(ke_biao_zhou[1]);
+    ke_biao_zhou[1] = (+new Date());
+    localStorage.ke_biao_zhou = JSON.stringify(ke_biao_zhou);
+}
+var sy_ke_biao_top_s_1 = document.querySelector('.sy_ke_biao_top_s');
+sy_ke_biao_top_s_1.innerText = (ke_biao_zhou[0] % 2 == 1 ? '/单周' : '/双周');
+var ke_biao_zhoushu = document.querySelector('.ke_biao_zhoushu');
+ke_biao_zhoushu.value = ke_biao_zhou[0];
+ke_biao_zhoushu.addEventListener('blur', function(e) {
+    if (ke_biao_zhoushu.value < 1) {
+        ke_biao_zhoushu.value = 1;
+        Sku_tctx('最小开始为第 1 周');
+    }
+    var ke_biao_zhou = JSON.parse(localStorage.ke_biao_zhou);
+    ke_biao_zhou[0] = ke_biao_zhoushu.value;
+    ke_biao_zhou[1] = (+new Date());
+    console.log(ke_biao_zhou);
+    localStorage.ke_biao_zhou = JSON.stringify(ke_biao_zhou);
+    sy_ke_biao_top_s_1.innerText = (ke_biao_zhou[0] % 2 == 1 ? '/单周' : '/双周');
+});
+ke_biao_zhoushu.addEventListener('input', function(e) {
+    sy_ke_biao_top_s_1.innerText = (ke_biao_zhoushu.value % 2 == 1 ? '/单周' : '/双周');
+});
+// 号排序
+function timestampToDate(timestamp) {
+    var date = new Date(timestamp);
+    var day = date.getDate();
+    day = (day < 10 ? '0' : '') + day;
+    return day + '号';
+}
+var ke_biao_zd_hao = document.querySelectorAll('.ke_biao_zd_hao');
+var ke_biao_sjc = new Date();
+var ke_biao_xinqi = ke_biao_sjc.getDay();
+for (var i = 0; i < ke_biao_zd_hao.length; i++) {
+    if (ke_biao_xinqi == 0) {
+        ke_biao_xinqi = 7
+    }
+    if (i + ke_biao_xinqi - 1 <= 6) {
+        ke_biao_zd_hao[i + ke_biao_xinqi - 1].innerText = timestampToDate(Date.now() + (86400000 * i));
+    } else {
+        ke_biao_zd_hao[i + ke_biao_xinqi - 8].innerText = timestampToDate(Date.now() + (86400000 * i));
+    }
+}
+
+
+
+
+
+
+
+
+
 //全局按键事件
 let isShiftPressed = false;
 document.addEventListener('keyup', function(event) {
@@ -2803,6 +3003,8 @@ document.addEventListener('keydown', function(e) {
         }
     }
 });
+
+
 //全局右击事件
 document.addEventListener('contextmenu', function() {
     sy_djs_tj_yc();

@@ -121,6 +121,7 @@ function mods_qh() {
     });
 
     // 页面打开
+    var AI_mods_max_hd = document.querySelector('.AI_mods_max_hd');
     var AI_modss = document.querySelectorAll('.AI_mods');
     for (var i = 0; i < AI_modss.length; i++) {
         AI_modss[i].addEventListener('click', function(e) {
@@ -134,6 +135,7 @@ function mods_qh() {
                 for (var j = 0; j < AI_mods_min.length; j++) {
                     if (AI_mods_min[j].querySelector('.AI_mods_name').innerText == AI_mods.innerText) {
                         AI_mods_min[j].className = 'AI_mods_min AI_mods_min2';
+                        AI_mods_max_hd.scroll(0, AI_mods_min[j].offsetTop - ((AI_zj.clientHeight / 2) - (AI_mods_min[j].clientHeight / 2)));
                     } else {
                         AI_mods_min[j].className = 'AI_mods_min';
                     }
@@ -1393,6 +1395,8 @@ function onMouseUp(e) {
     let distance = Math.sqrt(Math.pow(releasePosition.x - clickPosition.x, 2) + Math.pow(releasePosition.y - clickPosition.y, 2));
     // 如果距离小于5px，执行函数
     if (distance < 5) {
+        console.log(td_target.nodeName);
+
         if (td_target.classList.contains('AI_huida_nr') || td_target.classList.contains('yh_huida_nr')) {
             copyToClipboard(td_target.innerText, '文本已复制到剪贴板');
         } else if (td_target.nodeName === 'PRE') {
@@ -1401,6 +1405,8 @@ function onMouseUp(e) {
             copyToClipboard(td_target.innerText, '单词已复制到剪贴板');
         } else if (td_target.nodeName === 'IMG') {
             copyToClipboard(td_target.src, '图片链接已复制到剪贴板');
+        } else if (td_target.nodeName === 'P') {
+            copyToClipboard(td_target.innerText, '段落已复制到剪贴板');
         }
     }
 }
@@ -1512,15 +1518,23 @@ document.addEventListener('keyup', function(e) {
     }
 });
 // 放大
+if (localStorage.AI_quanpin_true == undefined) {
+    localStorage.AI_quanpin_true = 0;
+}
 var AI_quanpin_anniu = document.querySelector('.AI_quanpin_anniu');
-var AI_quanpin_anniu_true = 0;
+var AI_max = document.querySelector('.AI_max');
+if (localStorage.AI_quanpin_true == 0) {
+    AI_max.className = 'AI_max';
+} else {
+    AI_max.className = 'AI_max AI_max2';
+}
 AI_quanpin_anniu.addEventListener('click', function(e) {
-    var AI_max = document.querySelector('.AI_max');
-    if (AI_quanpin_anniu_true == 0) {
-        AI_quanpin_anniu_true = 1;
+
+    if (localStorage.AI_quanpin_true == 0) {
+        localStorage.AI_quanpin_true = 1;
         AI_max.className = 'AI_max AI_max2';
     } else {
-        AI_quanpin_anniu_true = 0;
+        localStorage.AI_quanpin_true = 0;
         AI_max.className = 'AI_max';
     }
 

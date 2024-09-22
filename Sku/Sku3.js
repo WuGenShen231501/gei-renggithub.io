@@ -92,6 +92,8 @@ function liu_yan_anniu_click() {
         liu_yan_z[i].addEventListener('contextmenu', function(e) {
             e.stopPropagation();
             e.preventDefault();
+
+
             liu_yan_shezhi_gn.style.display = 'block';
             liu_yan_shezhi_gn.style.top = e.pageY + 'px';
             liu_yan_shezhi_gn.style.left = e.pageX + 'px';
@@ -101,6 +103,7 @@ function liu_yan_anniu_click() {
             console.clear();
             console.log('内存留言指向: ' + liu_yan_zhi_xian);
             console.log('留言指向: ' + liu_yan_zhi_xian2);
+            console.log(e.pageY, e.pageX);
         });
     }
 }

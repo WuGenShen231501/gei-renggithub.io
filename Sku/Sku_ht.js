@@ -1,5 +1,5 @@
 //检测是否第一次使用
-var ban_ben_s = 'v45.45.4';
+var ban_ben_s = 'v46.35.4';
 if (localStorage.ban_ben) {
     //检查是否最新
     if (localStorage.ban_ben !== ban_ben_s) {
@@ -291,6 +291,13 @@ if (localStorage.AI_jl == undefined) {
 // AI快捷指令
 if (localStorage.AI_kjzl == undefined) {
     localStorage.AI_kjzl = '[]';
+}
+//课表
+if (localStorage.ke_biao == undefined) {
+    localStorage.ke_biao = '[["","","","","","","",""]]';
+}
+if (localStorage.ke_biao_zhou == undefined) {
+    localStorage.ke_biao_zhou = '[1,' + (+new Date()) + ']';
 }
 
 

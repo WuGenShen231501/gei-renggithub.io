@@ -52,7 +52,7 @@
     width: 879px;
     height: 98px;
     border: none;
-    padding-right: 75px;
+    padding-right: 90px;
     color: rgb(255, 255, 255);
     font-size: 16px;
     background-color: rgb(0, 0, 0, 0);
@@ -99,10 +99,12 @@
     border-radius: 5px;
     overflow: hidden;
     white-space: pre-wrap;
+    background-color: var(--zi_ti_color_10);
 }
 
 .liu_yan_z2 {
     border: 1px dashed !important;
+    background-color: transparent !important;
 }
 
 .liu_yan_z:hover~.liu_yan_time {
@@ -356,7 +358,7 @@
     width: 50px;
     height: 30px;
     top: 0px;
-    left: 630px;
+    right: 0px;
     border: 1px solid white;
     border-left: 0px;
     border-top-right-radius: 15px;
@@ -428,4 +430,64 @@
     border-radius: 5px;
     background-color: var(--zi_ti_color);
     opacity: 0.6;
+}
+
+
+/* 全屏 */
+
+.liu_yan {
+    position: fixed;
+    margin: 0 !important;
+    border-radius: 0;
+    top: 55px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% - 55px);
+}
+
+.liu_yan_mao_bo_li {
+    position: fixed;
+    margin: 0 !important;
+    border-radius: 0;
+    top: 56px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% - 55px);
+    backdrop-filter: var(--mao_bo_li);
+}
+
+.liu_yan_z_max {
+    width: calc(100% - 70px);
+}
+
+.liu_yan_z {
+    max-width: 100%;
+}
+
+.liu_yan_srk {
+    width: 100%;
+    padding-right: 10px;
+}
+
+.liu_yan_top {
+    height: calc(100% - 188px);
+}
+
+.liuyan_gundontiao_max {
+    height: calc(100% - 188px);
+}
+
+.liu_yan_sxuan_div {
+    position: fixed;
+    top: 96px;
+    right: 0px;
+    margin-top: 0px !important;
+}
+
+.ji_ru_ssk_max {
+    width: calc(100% - 120px);
+}
+
+.input_ji_ru_srk {
+    width: 97%;
 }

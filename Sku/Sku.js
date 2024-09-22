@@ -754,6 +754,11 @@ max_bbxs.innerHTML = localStorage.ban_ben;
 //内存占用比
 
 setInterval(function() {
+    Sku_nczyb();
+}, 5000);
+Sku_nczyb();
+
+function Sku_nczyb() {
     function calculateLocalStorageLength() {
         let length = 0;
         for (const key in localStorage) {
@@ -804,7 +809,7 @@ setInterval(function() {
         //   不在线
         if (sku_wlzt) { sku_wlzt.innerHTML = 'Status:Offline'; }
     }
-}, 5000);
+}
 
 
 window.addEventListener('unhandledrejection', function(event) {

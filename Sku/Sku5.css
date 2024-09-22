@@ -659,21 +659,46 @@
     margin: 10px 0;
 }
 
+.AI_huida_nr ol li p {
+    pointer-events: fill !important;
+    display: block;
+    margin: 10px 0;
+}
+
 .AI_huida_nr img {
     pointer-events: fill !important;
     height: 400px;
 }
 
 .AI_huida_nr pre {
+    position: relative;
     pointer-events: fill !important;
     background-color: var(--zi_ti_color_20);
     padding: 10px;
     border-radius: 5px;
     font-size: 18px;
+    overflow: hidden;
     white-space: pre-wrap;
     /* 保持空白符并按需换行 */
     word-wrap: break-word;
     /* 在单词过长时强制换行 */
+}
+
+.AI_huida_nr pre::before {
+    content: '';
+    /* 伪元素的内容为空 */
+    position: absolute;
+    /* 绝对定位 */
+    left: 0;
+    /* 定位到左边 */
+    top: 0;
+    /* 从顶部开始 */
+    bottom: 0;
+    /* 从顶部到底部 */
+    width: 5px;
+    /* 线条宽度 */
+    background-color: var(--zi_ti_color_20);
+    /* 线条颜色 */
 }
 
 .AI_huida_nr pre code {
