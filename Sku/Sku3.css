@@ -91,7 +91,7 @@
 .liu_yan_z {
     float: right;
     width: auto;
-    max-width: 680px;
+    max-width: 100%;
     height: auto;
     margin: 0px 100px 0px 20px;
     padding: 10px 10px;
@@ -469,10 +469,6 @@
     width: calc(100% + 2px);
     height: calc(100% - 55px);
     backdrop-filter: var(--mao_bo_li);
-}
-
-.liu_yan_z2 {
-    max-width: 100%;
 }
 
 .liu_yan_srk2 {

@@ -519,7 +519,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'Pro/Qwen/Qwen2-1.5B-Instruct' || mod_s == 'Qwen/Qwen2-7B-Instruct' || mod_s == 'Qwen/Qwen2-1.5B-Instruct' || mod_s == 'THUDM/chatglm3-6b' || mod_s == '01-ai/Yi-1.5-9B-Chat-16K' || mod_s == 'internlm/internlm2_5-7b-chat' || mod_s == 'google/gemma-2-9b-it' || mod_s == 'meta-llama/Meta-Llama-3-8B-Instruct' || mod_s == 'meta-llama/Meta-Llama-3.1-8B-Instruct' || mod_s == 'mistralai/Mistral-7B-Instruct-v0.2' || mod_s == 'Qwen/Qwen1.5-7B-Chat' || mod_s == 'THUDM/glm-4-9b-chat') {
+    } else if (mod_s == 'Qwen/Qwen2.5-Coder-7B-Instruct' || 'Qwen/Qwen2.5-7B-Instruct' || 'Pro/Qwen/Qwen2-1.5B-Instruct' || mod_s == 'Qwen/Qwen2-7B-Instruct' || mod_s == 'Qwen/Qwen2-1.5B-Instruct' || mod_s == 'THUDM/chatglm3-6b' || mod_s == '01-ai/Yi-1.5-9B-Chat-16K' || mod_s == 'internlm/internlm2_5-7b-chat' || mod_s == 'google/gemma-2-9b-it' || mod_s == 'meta-llama/Meta-Llama-3-8B-Instruct' || mod_s == 'meta-llama/Meta-Llama-3.1-8B-Instruct' || mod_s == 'mistralai/Mistral-7B-Instruct-v0.2' || mod_s == 'Qwen/Qwen1.5-7B-Chat' || mod_s == 'THUDM/glm-4-9b-chat') {
 
         try {
             const options = {
@@ -675,8 +675,11 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
     } else if (rw == 2) { //AI
 
         try {
+            // 使用mathjax解析数学公式
+            // var nr = nr.replace(/\[/g, '\\[').replace(/\]/g, '\\]').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
             // 使用marked解析Markdown
             var parsedHtml = marked.parse(nr);
+            console.log(parsedHtml);
             // 将解析后的HTML设置回div元素中
             var nr = parsedHtml;
         } catch (error) {
@@ -762,8 +765,6 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
 
     }
 }
-
-
 
 
 // 输出历史数据

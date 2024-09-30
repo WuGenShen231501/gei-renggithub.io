@@ -708,7 +708,6 @@ if (localStorage.liuyan_quanpin_true == undefined) {
 function liu_yan_quanpin_hs() {
     var liu_yan = document.querySelector('.liu_yan');
     var liu_yan_mao_bo_li = document.querySelector('.liu_yan_mao_bo_li');
-    var liu_yan_z = document.querySelector('.liu_yan_z');
     var liu_yan_srk = document.querySelector('.liu_yan_srk');
     var liu_yan_top = document.querySelector('.liu_yan_top');
     var liuyan_gundontiao_max = document.querySelector('.liuyan_gundontiao_max');
@@ -718,7 +717,6 @@ function liu_yan_quanpin_hs() {
     if (localStorage.liuyan_quanpin_true == 0) {
         liu_yan.className = 'liu_yan';
         liu_yan_mao_bo_li.className = 'liu_yan_mao_bo_li';
-        liu_yan_z.className = 'liu_yan_z';
         liu_yan_srk.className = 'liu_yan_srk';
         liu_yan_top.className = 'liu_yan_top';
         liuyan_gundontiao_max.className = 'liuyan_gundontiao_max';
@@ -728,7 +726,6 @@ function liu_yan_quanpin_hs() {
     } else {
         liu_yan.className = 'liu_yan liu_yan2';
         liu_yan_mao_bo_li.className = 'liu_yan_mao_bo_li liu_yan_mao_bo_li2';
-        liu_yan_z.className = 'liu_yan_z liu_yan_z2';
         liu_yan_srk.className = 'liu_yan_srk liu_yan_srk2';
         liu_yan_top.className = 'liu_yan_top liu_yan_top2';
         liuyan_gundontiao_max.className = 'liuyan_gundontiao_max liuyan_gundontiao_max2';
