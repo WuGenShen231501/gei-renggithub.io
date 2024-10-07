@@ -408,7 +408,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'glm-4-plus' || mod_s == 'GLM-4-Flash') {
+    } else if (mod_s == 'glm-4-plus' || mod_s == 'GLM-4-Flash' || mod_s == 'glm-4-air') {
 
         try {
             // 替换 <你的apikey> 为您的实际 API Key
@@ -447,6 +447,56 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
                     console.log(data); // 处理返回的数据
 
                     AI_cl(data.choices[0].message.content, 2, mod_s, AI_ID);
+                })
+                .catch(err => {
+                    console.log(err);
+
+                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
+                });
+        } catch (error) {
+            // 这个块会在 try 中有错误抛出时执行
+            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
+        }
+
+    } else if (mod_s == 'cogView-3-plus') {
+
+        try {
+            // 替换 <你的apikey> 为您的实际 API Key
+            const apiKey = key_s;
+            const url = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
+
+            // 请求数据
+            const requestData = {
+                max_tokens: 4095,
+                model: mod_s,
+                messages: [{
+                    role: "user",
+                    content: nr_s
+                }]
+            };
+
+            // 将请求数据转换为JSON字符串
+            const jsonData = JSON.stringify(requestData);
+
+            // 使用 fetch 发起 POST 请求
+            fetch(url, {
+                    method: 'POST', // 或者 'GET'，根据API的要求
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonData // 对于 POST 请求，请求数据在 body 中
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // 处理返回的数据
+
+                    AI_cl('<img src="' + data.choices[0].message.content[0].url + '">', 2, mod_s, AI_ID);
                 })
                 .catch(err => {
                     console.log(err);
@@ -679,7 +729,6 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
             // var nr = nr.replace(/\[/g, '\\[').replace(/\]/g, '\\]').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
             // 使用marked解析Markdown
             var parsedHtml = marked.parse(nr);
-            console.log(parsedHtml);
             // 将解析后的HTML设置回div元素中
             var nr = parsedHtml;
         } catch (error) {

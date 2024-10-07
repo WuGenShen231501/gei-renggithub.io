@@ -3077,6 +3077,11 @@ so_ssk.addEventListener('input', function(e) {
                     so_ssk.value = this.innerText;
                     so_anniu.click();
                 });
+                div.addEventListener('contextmenu', function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    so_ssk.value = this.innerText;
+                });
                 div.style.borderBottom = '1px solid';
 
                 ssbqym_min.appendChild(div);
@@ -3122,6 +3127,11 @@ so_ssk.addEventListener('input', function(e) {
             div.addEventListener('click', function(e) {
                 so_ssk.value = this.innerText;
                 so_anniu.click();
+            });
+            div.addEventListener('contextmenu', function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                so_ssk.value = this.innerText;
             });
 
             if (i == (mrrd.length >= 50 ? 48 : mrrd.length - 1)) {
@@ -3183,6 +3193,11 @@ so_ssk.addEventListener('focus', function(e) {
                     so_ssk.value = this.innerText;
                     so_anniu.click();
                 });
+                div.addEventListener('contextmenu', function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    so_ssk.value = this.innerText;
+                });
                 div.style.borderBottom = '1px solid';
 
                 ssbqym_min.appendChild(div);
@@ -3228,6 +3243,11 @@ so_ssk.addEventListener('focus', function(e) {
             div.addEventListener('click', function(e) {
                 so_ssk.value = this.innerText;
                 so_anniu.click();
+            });
+            div.addEventListener('contextmenu', function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                so_ssk.value = this.innerText;
             });
 
             if (i == (mrrd.length >= 50 ? 48 : mrrd.length - 1)) {
@@ -4933,9 +4953,16 @@ function ss_gjcss(so_ssk_value2) {
                                             var div = document.createElement('div');
                                             div.className = 'ssbq_s ssbq_s2';
                                             div.innerText = tjc_sz[i];
+                                            // 添加点击快速搜索
                                             div.addEventListener('click', function(e) {
                                                 so_ssk.value = this.innerText;
                                                 so_anniu.click();
+                                            });
+                                            // 添加点击插入输入框
+                                            div.addEventListener('contextmenu', function(e) {
+                                                e.stopPropagation();
+                                                e.preventDefault();
+                                                so_ssk.value = this.innerText;
                                             });
                                             div.style.borderBottom = '1px solid';
 

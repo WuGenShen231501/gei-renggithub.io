@@ -42,6 +42,27 @@ function WGS_zfc_jiemi(nr, key) {
 }
 
 
+// 哈希加密
+// async function hashString(str) {
+//     // 将字符串转换为 Uint8Array
+//     const encoder = new TextEncoder();
+//     const data = encoder.encode(str);
+
+//     // 计算 SHA-256 哈希
+//     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+
+//     // 将哈希转换为十六进制字符串
+//     const hashArray = Array.from(new Uint8Array(hashBuffer));
+//     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+//     return hashHex;
+// }
+
+// hashString("Hello, World!").then(hash => {
+//     console.log(hash); // 输出哈希值
+// });
+
+
 // 遍历对象到数组
 function collectArrays(obj) {
     const arrays = [];
