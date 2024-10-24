@@ -1125,7 +1125,7 @@ bfsz_sccd.addEventListener('click', function() {
         localStorage.ztfg_name_bf = localStorage.ztfg_name;
         localStorage.ztfg_bf = localStorage.ztfg;
         localStorage.AI_jl_bf = localStorage.AI_jl;
-        localStorage.AI_kjzl_bf = localStorage.AI_jl;
+        localStorage.AI_kjzl_bf = localStorage.AI_kjzl;
         localStorage.ke_biao_bf = localStorage.ke_biao;
         localStorage.ke_biao_zhou_bf = localStorage.ke_biao_zhou;
     } else if (bfsz_sccd.innerHTML == '上传成功') {
