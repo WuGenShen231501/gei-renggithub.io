@@ -498,6 +498,10 @@ document.addEventListener('keydown', function(e) {
         top_dhl_z = document.querySelector('.top_dhl');
         top_dhl_z.querySelectorAll('div')[3].click();
     }
+    if (e.altKey && e.key == '5' && drym_max.style.display == 'none' && nrmaxs[4].style.display == 'none') {
+        top_dhl_z = document.querySelector('.top_dhl');
+        top_dhl_z.querySelectorAll('div')[4].click();
+    }
     if (e.ctrlKey && e.key == '/') {
         if ((nrmaxs0.style.display == 'block' || nrmaxs3.style.display == 'block' || nrmaxs4.style.display == 'block') && nrmax.style.display == 'block') {
             sy_dw_top.click();
