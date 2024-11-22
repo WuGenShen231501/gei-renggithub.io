@@ -284,7 +284,7 @@ AI_bottom_srk_fs.addEventListener('click', function(e) {
                     content: ls_nr_s
                 });
             }
-            console.log(AI_li_shi_xx); // 打印结果数组
+            console.log('历史数据\n', AI_li_shi_xx); // 打印结果数组
         } else {
             AI_li_shi_xx = [];
         }
@@ -569,7 +569,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'Qwen/Qwen2.5-Coder-7B-Instruct' || 'Qwen/Qwen2.5-7B-Instruct' || 'Pro/Qwen/Qwen2-1.5B-Instruct' || mod_s == 'Qwen/Qwen2-7B-Instruct' || mod_s == 'Qwen/Qwen2-1.5B-Instruct' || mod_s == 'THUDM/chatglm3-6b' || mod_s == '01-ai/Yi-1.5-9B-Chat-16K' || mod_s == 'internlm/internlm2_5-7b-chat' || mod_s == 'google/gemma-2-9b-it' || mod_s == 'meta-llama/Meta-Llama-3-8B-Instruct' || mod_s == 'meta-llama/Meta-Llama-3.1-8B-Instruct' || mod_s == 'mistralai/Mistral-7B-Instruct-v0.2' || mod_s == 'Qwen/Qwen1.5-7B-Chat' || mod_s == 'THUDM/glm-4-9b-chat') {
+    } else if (mod_s == 'Qwen/Qwen2.5-Coder-7B-Instruct' || mod_s == 'Qwen/Qwen2.5-7B-Instruct' || mod_s == 'Pro/Qwen/Qwen2-1.5B-Instruct' || mod_s == 'Qwen/Qwen2-7B-Instruct' || mod_s == 'Qwen/Qwen2-1.5B-Instruct' || mod_s == 'THUDM/chatglm3-6b' || mod_s == '01-ai/Yi-1.5-9B-Chat-16K' || mod_s == 'internlm/internlm2_5-7b-chat' || mod_s == 'google/gemma-2-9b-it' || mod_s == 'meta-llama/Meta-Llama-3-8B-Instruct' || mod_s == 'meta-llama/Meta-Llama-3.1-8B-Instruct' || mod_s == 'mistralai/Mistral-7B-Instruct-v0.2' || mod_s == 'Qwen/Qwen1.5-7B-Chat' || mod_s == 'THUDM/glm-4-9b-chat') {
 
         try {
             const options = {
@@ -653,24 +653,25 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'black-forest-labs/FLUX.1-schnell' || mod_s == 'stabilityai/stable-diffusion-2-1' || mod_s == 'stabilityai/stable-diffusion-3-medium' || mod_s == 'stabilityai/stable-diffusion-xl-base-1.0') {
+    } else if (mod_s == 'stabilityai/stable-diffusion-3-5-large' || mod_s == 'black-forest-labs/FLUX.1-schnell' || mod_s == 'stabilityai/stable-diffusion-2-1' || mod_s == 'stabilityai/stable-diffusion-3-medium' || mod_s == 'stabilityai/stable-diffusion-xl-base-1.0') {
 
         try {
             const options = {
                 method: 'POST',
-                headers: {
-                    accept: 'application/json',
-                    'content-type': 'application/json',
-                    authorization: 'Bearer ' + key_s
-                },
+                headers: { Authorization: 'Bearer ' + key_s, 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    prompt: nr_s,
-                    image_size: '1024x576',
-                    num_inference_steps: 20
+                    "model": mod_s,
+                    "prompt": nr_s,
+                    "negative_prompt": "<string>",
+                    "image_size": "1024x576",
+                    "batch_size": 1,
+                    "seed": 4999999999,
+                    "num_inference_steps": 50,
+                    "guidance_scale": 20
                 })
             };
 
-            fetch('https://api.siliconflow.cn/v1/' + mod_s + '/text-to-image', options)
+            fetch('https://api.siliconflow.cn/v1/images/generations', options)
                 .then(response => response.json())
                 .then(function(response) {
                     console.log(response); // 处理返回的数据
