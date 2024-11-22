@@ -708,6 +708,10 @@ var AI_zj = document.querySelector('.AI_zj');
 var AI_zj_nr = document.querySelector('.AI_zj_nr');
 
 function AI_cl(nr, rw, mod_s, AI_ID) {
+    if (nr == '请求失败 检查{key}是否正确 或 请求限制' && document.querySelector('.sku_wlzt').innerText == 'Status:Offline') {
+        nr = '请求失败 未连接到互联网 {请检查网线、调制解调器和路由器，或重新设置网络}'
+    }
+
     var sj = new Date().getFullYear() + ' 年 ' + (new Date().getMonth() + 1) + ' 月 ' + new Date().getDate() + ' 日 ' + shi_jian_hs3() + ':' + shi_jian_hs2();
     if (rw == 1) { //自己
 
@@ -1337,7 +1341,7 @@ AI_sz_lxdh_kaiguan.addEventListener('click', function(e) {
         AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
 
         // 重新对话
-        if (AI_zhi_xing_s == 0) {
+        if (AI_zhi_xing_s == 0 && localStorage.Sku_kfzms == 0) {
             AI_zj_nr.innerHTML = '';
             localStorage.AI_jl = '[]';
             AI_xian_cheng = 0;

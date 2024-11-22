@@ -716,3 +716,7 @@
     border-radius: 5px;
     padding: 0 5px;
 }
+
+.AI_huida_nr hr {
+    border: 1px solid var(--zi_ti_color);
+}

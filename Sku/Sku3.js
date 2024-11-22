@@ -491,10 +491,10 @@ liu_yan_shezhi_gn_sc.addEventListener('click', function() {
 });
 
 //修改留言
-liu_yan_z = document.querySelectorAll('.liu_yan_z');
 liu_yan_button = document.querySelector('.liu_yan_button');
 liu_yan_shezhi_gn_cmm = document.querySelector('.liu_yan_shezhi_gn_cmm');
 liu_yan_shezhi_gn_cmm.addEventListener('click', function() {
+    liu_yan_z = document.querySelectorAll('.liu_yan_z');
     liu_yan_zhi_xian_jieting = liu_yan_zhi_xian;
     liu_yan_zhi_xian2_jieting = liu_yan_zhi_xian2;
     liu_yan_dx = JSON.parse(localStorage.liu_yan_dx);
