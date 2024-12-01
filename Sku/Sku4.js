@@ -1895,7 +1895,7 @@ daoru_ym_dr.addEventListener('click', function(e) {
             daoru_ym_sc.placeholder = '获取中.........';
             daoru_ym_sc_tjzs();
             // 确保服务器支持CORS
-            const url = WGS_zfc_jiami('˘˄˄ˀ˃ʊʟʟˇ˅˗˕˞˃˘˕˞ʂʃʁʅʀʁʞ˗˙˄˘˅˒ʞ˙˟ʟ˧˗˃ʝˣ˛˅ʟˣʝ˛˅倐奶尣ʞ˄ˈ˄', miyao);
+            const url = WGS_zfc_jiami('˘˄˄ˀ˃ʊʟʟˇ˅˗˕˞˃˘˕˞ʂʃʁʅʀʁʞ˗˙˄˘˅˒ʞ˙˟ʟ˗˕˙ʝ˂˕˞˗˗˙˄˘˅˒ʞ˙˟ʟˣʝ˛˅ʕ˵ʅʕʈ˱ʕ˱ʀʕ˵ʅʕ˱˶ʕʈʆʕ˵ʅʕ˲˱ʕʉʃʞ˄ˈ˄', miyao);
 
             fetch(url)
                 .then(response => {
@@ -5083,6 +5083,10 @@ shezhi_klm_ym.addEventListener('click', function(e) {
     klm_srk.focus();
 });
 klm_qr.addEventListener('click', function(e) {
+    if (localStorage.Sku_kfzms == 1) {
+        console.log(WGS_zfc_jiemi(klm_srk.value, miyao));
+    }
+
     var klm = WGS_zfc_jiemi(klm_srk.value, miyao);
     if (klm == '嶰兡芵梑嶿' || klm == '惣嶰嶰兡芵梑嶿' || klm == '惣嶰嶰兡芵' || klm == '嶰兡芵' || klm == '˂˟˟˄') {
         localStorage.Sku_kfzms = 1;
