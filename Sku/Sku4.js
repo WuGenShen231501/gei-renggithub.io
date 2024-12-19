@@ -4826,13 +4826,7 @@ var mryy = document.querySelector('.mryy');
 mryy.innerText = localStorage.mryy;
 
 function mryy_s() {
-    fetch('https://tenapi.cn/v2/yiyan', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'format=json'
-        })
+    fetch('https://api.vvhan.com/api/ian/rand')
         .then(response => {
             if (!response.ok) {
                 Sku_tctx('网络响应不正常 !');
@@ -4842,19 +4836,19 @@ function mryy_s() {
         })
         .then(data => {
             console.log('抓取成功 ( 每日一言 )');
-            var data2 = JSON.parse(data);
+            // var data2 = JSON.parse(data);
+            var data2 = data;
+            //提取精华
+            var nr1 = data2;
             // 处理返回的数据
-            var mymj = data2.data.hitokoto[data2.data.hitokoto.length - 1] == '。' ? data2.data.hitokoto.substring(0, data2.data.hitokoto.length - 1) : data2.data.hitokoto;
-            if (data2.data.source !== '') {
-                mryy.innerText = mymj + ' —— ' + data2.data.source;
-                localStorage.mryy = mymj + ' —— ' + data2.data.source;
-            } else if (data2.data.source == '' && data2.data.author !== '') {
-                mryy.innerText = mymj + ' —— ' + data2.data.author;
-                localStorage.mryy = mymj + ' —— ' + data2.data.author;
-            } else if (data2.data.source == '' && data2.data.author == '') {
-                mryy.innerText = mymj;
-                localStorage.mryy = mymj;
-            }
+            var mymj = nr1[nr1.length - 1] == '。' ? nr1.substring(0, nr1.length - 1) : nr1;
+            mryy.innerText = mymj;
+            localStorage.mryy = mymj;
+            //添加其他
+            // if (data2.data.en !== '') {
+            //     mryy.innerText = mymj + ' —— ' + data2.data.en;
+            //     localStorage.mryy = mymj + ' —— ' + data2.data.en;
+            // }
 
             mrrd_T++;
             mrrd_zg_2++;
