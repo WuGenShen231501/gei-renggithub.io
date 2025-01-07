@@ -286,7 +286,7 @@ if (localStorage.Sku_benghuai == undefined) {
 
 // AI记录
 if (localStorage.AI_jl == undefined) {
-    localStorage.AI_jl = '[]';
+    localStorage.AI_jl = '[[2,"你好!看起来你似乎有些惊讶或者遇到了什么情况。请问有什么可以帮助你的吗?","GLM-4-Flash"]]';
 }
 // AI快捷指令
 if (localStorage.AI_kjzl == undefined) {
