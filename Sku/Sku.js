@@ -174,6 +174,7 @@ for (var i = 0; i < top_dhl.length; i++) {
     //点击效果
     top_dhl[i].addEventListener('click', function() {
         topmax.style.top = '0px';
+
         // 变颜色
         for (var i = 0; i < top_dhl.length; i++) {
             if (localStorage.zi_ti_click_color !== '') {
@@ -189,17 +190,24 @@ for (var i = 0; i < top_dhl.length; i++) {
         } else {
             this.classList.add('dhr_click');
         }
+
         // 切换页面
-        for (var i = 0; i < top_dhl.length; i++) {
-            nrmax_s[i].style.display = 'none';
-            nrmax_s[i].style.opacity = '0';
+        if (nrmaxs[this.getAttribute('date-num')].style.display == 'none') { //当前页面不再切换
+            for (var i = 0; i < top_dhl.length; i++) {
+                nrmax_s[i].style.display = 'none';
+                nrmax_s[i].style.opacity = '0';
+            }
+            nrmax_s[this.getAttribute('date-num')].style.display = 'block';
+            this_nrmax_s = nrmax_s[this.getAttribute('date-num')];
+            setTimeout(function() {
+                this_nrmax_s.style.opacity = '1';
+            });
         }
-        nrmax_s[this.getAttribute('date-num')].style.display = 'block';
-        this_nrmax_s = nrmax_s[this.getAttribute('date-num')];
-        setTimeout(function() {
-            this_nrmax_s.style.opacity = '1';
-        });
+
+        // 清空控制台
         console.clear();
+
+        //不同页面反应
         if (this.getAttribute('date-num') == 0) {
             if (so_ssk.placeholder == '搜索引擎') {
                 so_ssk.placeholder = '搜索引擎 / Ctrl + ?';
