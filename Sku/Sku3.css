@@ -141,6 +141,10 @@
     text-decoration: underline;
 }
 
+.liu_yan_z a:hover {
+    border-bottom: 1px solid var(--zi_ti_color);
+}
+
 .liu_yan_tx {
     position: absolute;
     width: 43px;

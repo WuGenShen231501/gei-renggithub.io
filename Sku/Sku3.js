@@ -291,14 +291,16 @@ liu_yan_srk_jc = 0;
 liu_yan_srk.addEventListener('focus', function() {
     liu_yan_srk_jc = 1;
 });
-liu_yan_srk.addEventListener('blur', function() {
+liu_yan_srk.addEventListener('blur', function(e) {
     liu_yan_srk_jc = 0;
 
+    // 失去焦点暂停更改(重命名)功能
     if (cmm_jc == 1) {
         cmm_jc = 0;
         liu_yan_button.innerHTML = '发送(E)';
         liu_yan_srk.value = '';
     }
+
 });
 
 //发送
@@ -499,7 +501,7 @@ liu_yan_shezhi_gn_cmm.addEventListener('click', function() {
     liu_yan_zhi_xian2_jieting = liu_yan_zhi_xian2;
     liu_yan_dx = JSON.parse(localStorage.liu_yan_dx);
     cmm_jc = 1;
-    liu_yan_button.innerHTML = '确定(S)';
+    liu_yan_button.innerHTML = '确定(E)';
     liu_yan_srk.value = liu_yan_dx['liu_yan_sz' + liu_yan_zhi_xian][0];
     liu_yan_srk.focus();
 

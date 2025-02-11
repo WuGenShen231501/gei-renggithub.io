@@ -176,6 +176,17 @@ function mods_qh() {
         });
     }
 
+    // 非主mods右击删除
+    var AI_modss = document.querySelectorAll('.AI_mods');
+    for (var i = 0; i < AI_modss.length; i++) {
+        AI_modss[i].addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.querySelector('p').innerText = '';
+            this.nextElementSibling.value = '';
+        });
+    }
+
     // 长度设置
     mods_da_xiao_shiying();
 }
@@ -212,15 +223,46 @@ window.addEventListener('resize', function(e) {
 
 
 
-// 修改默认key
+// 修改key  
 function AI_key_mr_xg() {
-    var AI_key = document.querySelector('.AI_key');
-    AI_key.addEventListener('input', function(e) {
-        AI_mods = document.querySelector('.AI_mods').querySelector('p');
-        localStorage.AI_dq_key = this.value;
-        var itemName = AI_mods.innerText + ' key';
-        localStorage.setItem(itemName, this.value);
-    });
+    var AI_key = document.querySelectorAll('.AI_key');
+    for (var i = 0; i < AI_key.length; i++) {
+        if (i == 0) {
+            AI_key[i].addEventListener('input', function(e) {
+                // 修改当前key和默认key
+                var AI_mods = this.previousElementSibling.querySelector('p');
+                localStorage.AI_dq_key = this.value;
+                var itemName = AI_mods.innerText + ' key';
+                localStorage.setItem(itemName, this.value);
+
+                // 显示页面上相同name同时更改
+                for (var o = 0; o < AI_key.length; o++) {
+                    if (AI_key[o].previousElementSibling.querySelector('p').innerText == AI_mods.innerText && AI_key[o] != this) {
+                        AI_key[o].value = this.value;
+                    }
+                }
+            });
+        } else {
+            AI_key[i].addEventListener('input', function(e) {
+                var AI_mods = this.previousElementSibling.querySelector('p');
+                // 如果和第一个key一样，则同时修改默认key
+                var AI_mods_0 = AI_key[0].previousElementSibling.querySelector('p');
+                if (AI_mods.innerText == AI_mods_0.innerText) {
+                    localStorage.AI_dq_key = this.value;
+                }
+                // 修改当前key
+                var itemName = AI_mods.innerText + ' key';
+                localStorage.setItem(itemName, this.value);
+
+                // 显示页面上相同name同时更改
+                for (var o = 0; o < AI_key.length; o++) {
+                    if (AI_key[o].previousElementSibling.querySelector('p').innerText == AI_mods.innerText && AI_key[o] != this) {
+                        AI_key[o].value = this.value;
+                    }
+                }
+            });
+        }
+    }
 }
 AI_key_mr_xg();
 
@@ -367,7 +409,100 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
         }
     }, 300);
 
-    if (mod_s == 'gpt-4o-mini' || mod_s == 'gpt-3.5-turbo' || mod_s == 'gpt-4') {
+    if (mod_s == 'qwen-max-latest' || mod_s == 'qwen-max') { //阿里云百练(联网)(对话)
+
+        try {
+            const apiKey = key_s;
+            const url = 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions';
+
+            // 请求数据
+            const requestData = {
+                enable_search: JSON.parse(localStorage.AI_lwss), //联网
+                model: mod_s,
+                messages: AI_li_shi_xx.length == 0 ? [{
+                    role: "user",
+                    content: nr_s
+                }] : AI_li_shi_xx
+            };
+
+            // 将请求数据转换为 JSON 字符串
+            const jsonData = JSON.stringify(requestData);
+
+            // 使用 fetch 发起 POST 请求
+            fetch(url, {
+                    method: 'POST', // 或者 'GET'，根据 API 的要求
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonData // 对于 POST 请求，请求数据在 body 中
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // 处理返回的数据
+                    AI_cl(data.choices[0].message.content, 2, mod_s, AI_ID);
+                })
+                .catch(err => {
+                    console.log(err);
+                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
+                });
+        } catch (error) {
+            // 这个块会在 try 中有错误抛出时执行
+            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
+        }
+
+    } else if (mod_s == 'deepseek-r1') { //阿里云百练(不联网)(对话)
+
+        try {
+            const apiKey = key_s;
+            const url = 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions';
+
+            // 请求数据
+            const requestData = {
+                model: mod_s,
+                messages: AI_li_shi_xx.length == 0 ? [{
+                    role: "user",
+                    content: nr_s
+                }] : AI_li_shi_xx
+            };
+
+            // 将请求数据转换为 JSON 字符串
+            const jsonData = JSON.stringify(requestData);
+
+            // 使用 fetch 发起 POST 请求
+            fetch(url, {
+                    method: 'POST', // 或者 'GET'，根据 API 的要求
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonData // 对于 POST 请求，请求数据在 body 中
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // 处理返回的数据
+                    AI_cl(data.choices[0].message.content, 2, mod_s, AI_ID);
+                })
+                .catch(err => {
+                    console.log(err);
+                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
+                });
+        } catch (error) {
+            // 这个块会在 try 中有错误抛出时执行
+            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
+        }
+
+    } else if (mod_s == 'gpt-4o-mini' || mod_s == 'gpt-3.5-turbo' || mod_s == 'gpt-4') { //GPT_API_free(GitHub)(对话)
 
         try { // 可能产生错误的代码
             var myHeaders = new Headers();
@@ -408,7 +543,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'glm-4-plus' || mod_s == 'GLM-4-Flash' || mod_s == 'glm-4-air') {
+    } else if (mod_s == 'GLM-Zero-Preview' || mod_s == 'GLM-4-FlashX' || mod_s == 'glm-4-plus' || mod_s == 'GLM-4-Flash' || mod_s == 'glm-4-air') { //智谱AI开放平台(对话)
 
         try {
             // 替换 <你的apikey> 为您的实际 API Key
@@ -458,12 +593,12 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'cogView-3-plus') {
+    } else if (mod_s == 'cogView-3-plus') { //智谱AI开放平台(文生图)
 
         try {
             // 替换 <你的apikey> 为您的实际 API Key
             const apiKey = key_s;
-            const url = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
+            const url = 'https://open.bigmodel.cn/api/paas/v4/images/generations';
 
             // 请求数据
             const requestData = {
@@ -508,7 +643,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'web-search-pro') {
+    } else if (mod_s == 'web-search-pro') { //智谱AI开放平台(联网搜索)
 
         try {
             // 定义API密钥和API URL
@@ -548,6 +683,8 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
                         var array = JSON.parse(content).choices[0].message.tool_calls[1].search_result;
                         const contentArray = array.map(item => item.content); // 提取content字段
                         const contentString = contentArray.join('\n\n'); // 将数组转换为字符串
+                        console.log(contentString);
+
                         AI_cl(contentString, 2, mod_s, AI_ID);
                         // 由模型GLM-4-flas重新总结
                         AI_li_shi_xx = []; // 清空历史记录
@@ -569,7 +706,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'Qwen/Qwen2.5-Coder-7B-Instruct' || mod_s == 'Qwen/Qwen2.5-7B-Instruct' || mod_s == 'Pro/Qwen/Qwen2-1.5B-Instruct' || mod_s == 'Qwen/Qwen2-7B-Instruct' || mod_s == 'Qwen/Qwen2-1.5B-Instruct' || mod_s == 'THUDM/chatglm3-6b' || mod_s == '01-ai/Yi-1.5-9B-Chat-16K' || mod_s == 'internlm/internlm2_5-7b-chat' || mod_s == 'google/gemma-2-9b-it' || mod_s == 'meta-llama/Meta-Llama-3-8B-Instruct' || mod_s == 'meta-llama/Meta-Llama-3.1-8B-Instruct' || mod_s == 'mistralai/Mistral-7B-Instruct-v0.2' || mod_s == 'Qwen/Qwen1.5-7B-Chat' || mod_s == 'THUDM/glm-4-9b-chat') {
+    } else if (mod_s == 'deepseek-ai/DeepSeek-R1' || mod_s == 'deepseek-ai/DeepSeek-R1-Distill-Llama-8B' || mod_s == 'Qwen/Qwen2.5-Coder-7B-Instruct' || mod_s == 'Qwen/Qwen2.5-7B-Instruct' || mod_s == 'Pro/Qwen/Qwen2-1.5B-Instruct' || mod_s == 'Qwen/Qwen2-7B-Instruct' || mod_s == 'Qwen/Qwen2-1.5B-Instruct' || mod_s == 'THUDM/chatglm3-6b' || mod_s == '01-ai/Yi-1.5-9B-Chat-16K' || mod_s == 'internlm/internlm2_5-7b-chat' || mod_s == 'google/gemma-2-9b-it' || mod_s == 'meta-llama/Meta-Llama-3-8B-Instruct' || mod_s == 'meta-llama/Meta-Llama-3.1-8B-Instruct' || mod_s == 'mistralai/Mistral-7B-Instruct-v0.2' || mod_s == 'Qwen/Qwen1.5-7B-Chat' || mod_s == 'THUDM/glm-4-9b-chat') { //SiliconCloud(max_tokens:4096)(对话)
 
         try {
             const options = {
@@ -611,7 +748,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == '01-ai/Yi-1.5-6B-Chat') {
+    } else if (mod_s == '01-ai/Yi-1.5-6B-Chat') { //SiliconCloud(max_tokens:2069)(对话)
 
         try {
             const options = {
@@ -653,7 +790,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'stabilityai/stable-diffusion-3-5-large' || mod_s == 'black-forest-labs/FLUX.1-schnell' || mod_s == 'stabilityai/stable-diffusion-2-1' || mod_s == 'stabilityai/stable-diffusion-3-medium' || mod_s == 'stabilityai/stable-diffusion-xl-base-1.0') {
+    } else if (mod_s == 'deepseek-ai/Janus-Pro-7B' || mod_s == 'stabilityai/stable-diffusion-3-5-large' || mod_s == 'black-forest-labs/FLUX.1-schnell' || mod_s == 'stabilityai/stable-diffusion-2-1' || mod_s == 'stabilityai/stable-diffusion-3-medium' || mod_s == 'stabilityai/stable-diffusion-xl-base-1.0') { //SiliconCloud(文生图)
 
         try {
             const options = {
@@ -1033,6 +1170,8 @@ var AI_sz_jssc_kaiguan_d = document.querySelector('.AI_sz_jssc_kaiguan_d');
 var AI_sz_lxdh_kaiguan = document.querySelector('.AI_sz_lxdh_kaiguan');
 var AI_sz_jssc_lxdh_d = document.querySelector('.AI_sz_jssc_lxdh_d');
 var AI_sz_lxdh_shu = document.querySelector('.AI_sz_lxdh_shu');
+var AI_sz_lwss_kaiguan = document.querySelector('.AI_sz_lwss_kaiguan');
+var AI_sz_lwss_lxdh_d = document.querySelector('.AI_sz_lwss_lxdh_d');
 if (localStorage.AI_lxdh == undefined) { //即时输出
     localStorage.AI_lxdh = 0; //默认0
 }
@@ -1099,6 +1238,14 @@ if (localStorage.AI_lxdh - 0 !== 0) {
     AI_sz_lxdh_shu.style.opacity = 0.5;
 }
 AI_sz_lxdh_shu.value = localStorage.AI_lxdh;
+//默认联网搜索
+if (localStorage.AI_lwss == undefined) {
+    localStorage.AI_lwss = false; //默认0
+}
+if (localStorage.AI_lwss == 'true') {
+    AI_sz_lwss_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+    AI_sz_lwss_lxdh_d.style.left = '29px';
+}
 
 
 // 模型多线程处理
@@ -1413,6 +1560,20 @@ AI_sz_lxdh_shu.addEventListener('blur', function(e) {
 
     localStorage.AI_lxdh = this.value;
 });
+// 联网搜索
+AI_sz_lwss_kaiguan.addEventListener('click', function(e) {
+    if (localStorage.AI_lwss == 'true') {
+        localStorage.AI_lwss = false;
+        AI_sz_lwss_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
+        AI_sz_lwss_lxdh_d.style.left = '0px';
+        console.log('关闭联网搜索');
+    } else if (localStorage.AI_lwss == 'false') {
+        localStorage.AI_lwss = true;
+        AI_sz_lwss_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
+        AI_sz_lwss_lxdh_d.style.left = '29px';
+        console.log('打开联网搜索');
+    }
+});
 
 
 
@@ -1463,6 +1624,8 @@ function onMouseUp(e) {
         } else if (td_target.nodeName === 'P') {
             copyToClipboard(td_target.innerText, '段落已复制到剪贴板');
         }
+
+        AI_bottom_srk.focus();
     }
 }
 // 为父元素添加点击事件监听器

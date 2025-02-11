@@ -1165,8 +1165,6 @@ bfsz_xzcd.addEventListener('click', function() {
 bfsz_zdbf_qrk = document.querySelector('.bfsz_zdbf_qrk');
 if (localStorage.zdbf == '1') {
     bfsz_zdbf_qrk.innerHTML = '✔';
-    var bfsz_sccd = document.querySelector('.bfsz_sccd');
-    bfsz_sccd.click();
 } else if (localStorage.zdbf == '0') {
     bfsz_zdbf_qrk.innerHTML = '';
 }
@@ -1177,6 +1175,12 @@ bfsz_zdbf_qrk.addEventListener('click', function(e) {
     } else if (localStorage.zdbf == '0') {
         localStorage.zdbf = '1';
         bfsz_zdbf_qrk.innerHTML = '✔';
+    }
+});
+window.addEventListener('beforeunload', function() {
+    if (localStorage.zdbf == '1') {
+        var bfsz_sccd = document.querySelector('.bfsz_sccd');
+        bfsz_sccd.click();
     }
 });
 
@@ -1521,6 +1525,8 @@ shezhi_daoru.addEventListener('click', function(e) {
     // 课表
     daochu_sz[34] = localStorage.ke_biao;
     daochu_sz[35] = localStorage.ke_biao_zhou;
+    // 总时长
+    daochu_sz[36] = localStorage.syzsc;
     //上传时间
     function getFormattedTime() {
         const now = new Date();
@@ -1532,7 +1538,7 @@ shezhi_daoru.addEventListener('click', function(e) {
         const second = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
         return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
     }
-    daochu_sz[36] = getFormattedTime();
+    daochu_sz[37] = getFormattedTime();
 
     jisuan_bendidx = JSON.stringify(daochu_sz).length;
 });
@@ -1607,6 +1613,8 @@ daoru_ym_dc.addEventListener('click', function(e) {
     // 课表
     daochu_sz[34] = localStorage.ke_biao;
     daochu_sz[35] = localStorage.ke_biao_zhou;
+    // 总时长
+    daochu_sz[36] = localStorage.syzsc;
     //上传时间
     function getFormattedTime() {
         const now = new Date();
@@ -1618,7 +1626,7 @@ daoru_ym_dc.addEventListener('click', function(e) {
         const second = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
         return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
     }
-    daochu_sz[36] = getFormattedTime();
+    daochu_sz[37] = getFormattedTime();
 
     daoru_ym_sc.value = JSON.stringify(daochu_sz);
 
@@ -1721,6 +1729,8 @@ daoru_ym_jmdc.addEventListener('click', function(e) {
     // 课表
     daochu_sz[34] = localStorage.ke_biao;
     daochu_sz[35] = localStorage.ke_biao_zhou;
+    // 总时长
+    daochu_sz[36] = localStorage.syzsc;
     //上传时间
     function getFormattedTime() {
         const now = new Date();
@@ -1732,7 +1742,7 @@ daoru_ym_jmdc.addEventListener('click', function(e) {
         const second = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
         return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
     }
-    daochu_sz[36] = getFormattedTime();
+    daochu_sz[37] = getFormattedTime();
 
     daoru_ym_sc.value = WGS_zfc_jiami(JSON.stringify(daochu_sz), miyao);
 
@@ -1801,7 +1811,7 @@ daoru_ym_sc.addEventListener('input', function(e) {
 var daoru_sz = [];
 
 function daoru_sz_hs() {
-    if (daoru_sz.length == 37) {
+    if (daoru_sz.length == 38) {
         // 导航栏
         localStorage.dhr_sz = daoru_sz[0];
         //导航栏页面
@@ -1869,6 +1879,8 @@ function daoru_sz_hs() {
         // 课表
         localStorage.ke_biao = daoru_sz[34];
         localStorage.ke_biao_zhou = daoru_sz[35];
+        // 总时长
+        localStorage.syzsc = daoru_sz[36];
 
         // 时间戳0
         localStorage.dr_mmdr_drsj = 0;
@@ -2061,6 +2073,8 @@ daoru_ym_bendi.addEventListener('click', function(e) {
         // 课表
         zd_daochu[34] = localStorage.ke_biao;
         zd_daochu[35] = localStorage.ke_biao_zhou;
+        // 总时长
+        zd_daochu[36] = localStorage.syzsc;
         //上传时间
         function getFormattedTime() {
             const now = new Date();
@@ -2073,7 +2087,7 @@ daoru_ym_bendi.addEventListener('click', function(e) {
             return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
         }
         // 打包时间
-        zd_daochu[36] = getFormattedTime();
+        zd_daochu[37] = getFormattedTime();
 
         try {
             //保存
@@ -2181,6 +2195,8 @@ function cxjiaz_daorubendi_xx() {
 
 // 本地导入应用click
 bendidaoru_click();
+// 使用本地禁止自动添加
+var bdzdtj_true = 1;
 
 function bendidaoru_click() {
     var daorubendi_s_yy = document.querySelectorAll('.daorubendi_s_yy');
@@ -2258,9 +2274,12 @@ function bendidaoru_click() {
                     // 课表
                     localStorage.ke_biao = daoru_sz[34];
                     localStorage.ke_biao_zhou = daoru_sz[35];
+                    // 总时长
+                    localStorage.syzsc = daoru_sz[36];
 
                     // 时间戳0
                     localStorage.dr_mmdr_drsj = 0;
+                    bdzdtj_true = 0;
                     location.reload();
                 } catch (error) {
                     // 这个块会在 try 中有错误抛出时执行
@@ -5156,6 +5175,135 @@ Sku_gundontiao('.AI_kjzl_min', '.AI_kjzl_gundontiao_max', '.AI_kjzl_gundontiao_m
 
 
 
+
+// 检查更新
+var sz_jcbbgx = document.querySelector('.sz_jcbbgx');
+sz_jcbbgx.addEventListener('click', function(e) {
+
+    if (this.innerText == '检查版本更新') { //检查更新
+        // 高亮
+        this.style.opacity = '1';
+        this.style.textDecoration = 'none';
+        this.innerText = '正在检查更新...';
+
+        // 确保服务器支持CORS
+        const url = WGS_zfc_jiami('˘˄˄ˀ˃ʊʟʟˇ˅˗˕˞˃˘˕˞ʂʃʁʅʀʁʞ˗˙˄˘˅˒ʞ˙˟ʟ˗˕˙ʝ˂˕˞˗˗˙˄˘˅˒ʞ˙˟ʟˣ˛˅ʟˣ˛˅˯˘˄ʞ˚˃', miyao);
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    sz_jcbbgx.innerText = '网络响应不正常!';
+
+                    setTimeout(function() {
+                        sz_jcbbgx.innerText = '检查版本更新';
+                        sz_jcbbgx.style.opacity = '';
+                        sz_jcbbgx.style.textDecoration = 'underline';
+                    }, 4000);
+
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.text();
+            })
+            .then(data => {
+                var jc_banben = data.substring(0, 100).replace(/[\r\n]/g, "").match(/^.*?'(.*?)'/)[1].substring(1).split('.').map(Number);
+                var dq_banben = document.querySelector('.gywm_ban_ben').innerText.substring(1).split('.').map(Number);
+                console.log("检查版本:V" + jc_banben, "当前版本:V" + dq_banben);
+
+                // 比大小
+                if (jc_banben[0] - 0 < dq_banben[0] - 0) {
+                    sz_jcbbgx.innerText = '已是最新版本';
+                } else if (jc_banben[1] - 0 < dq_banben[1] - 0) {
+                    sz_jcbbgx.innerText = '已是最新版本';
+                } else if (jc_banben[2] - 0 <= dq_banben[2] - 0) {
+                    sz_jcbbgx.innerText = '已是最新版本';
+                } else {
+                    sz_jcbbgx.innerText = '有新版本-点击安装';
+                    sz_jcbbgx.style.textDecoration = 'underline';
+                }
+            })
+            .catch(error => {
+                sz_jcbbgx.innerText = '获取失败!';
+
+                setTimeout(function() {
+                    sz_jcbbgx.innerText = '检查版本更新';
+                    sz_jcbbgx.style.opacity = '';
+                    sz_jcbbgx.style.textDecoration = 'underline';
+                }, 4000);
+
+            });
+
+    } else if (this.innerText == '有新版本-点击安装') {
+
+        window.open(WGS_zfc_jiami('˘˄˄ˀ˃ʊʟʟ˗˙˄˘˅˒ʞ˓˟˝ʟ˧˅˷˕˞ˣ˘˕˞ʂʃʁʅʀʁʟ˗˕˙ʝ˂˕˞˗˗˙˄˘˅˒ʞ˙˟ʟˑ˂˓˘˙ˆ˕ʟ˂˕˖˃ʟ˘˕ˑ˔˃ʟ˝ˑ˙˞ʞˊ˙ˀ', miyao));
+
+    }
+});
+
+
+
+// 使用总时长
+var sz_sysj = document.querySelector('.sz_sysj');
+sz_sysj.innerText = '( 总时长 ' + formatTime(localStorage.syzsc) + ' )';
+
+function formatTime(seconds) {
+    // 确保秒数是整数
+    const totalSeconds = Math.round(seconds);
+
+    // 计算小时、分钟、秒
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const secs = totalSeconds % 60;
+
+    // 格式化为两位数，不足两位补零
+    const formattedHours = String(hours).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSecs = String(secs).padStart(2, '0');
+
+    return `${formattedHours}时${formattedMinutes}分${formattedSecs}秒`;
+}
+// 在页面卸载时计算使用时长
+const startTime = Date.now();
+window.addEventListener('beforeunload', function() {
+    const endTime = Date.now();
+    const duration = endTime - startTime;
+    const durationSeconds = Math.floor(duration / 1000);
+
+    // 只有有效时长才存储（至少1秒）
+    if (durationSeconds > 0) {
+        // 读取现有值并累加
+        const currentTotal = parseInt(localStorage.getItem('syzsc')) || 0;
+        localStorage.setItem('syzsc', currentTotal + durationSeconds);
+    }
+});
+
+
+
+
+//自动导入本地
+daoru_zd_kaiguan = document.querySelector('.daoru_zd_kaiguan');
+if (localStorage.zddrbd == '1') {
+    daoru_zd_kaiguan.innerHTML = '✔';
+} else if (localStorage.zddrbd == '0') {
+    daoru_zd_kaiguan.innerHTML = '';
+}
+daoru_zd_kaiguan.addEventListener('click', function(e) {
+    if (localStorage.zddrbd == '1') {
+        localStorage.zddrbd = '0';
+        daoru_zd_kaiguan.innerHTML = '';
+    } else if (localStorage.zddrbd == '0') {
+        localStorage.zddrbd = '1';
+        daoru_zd_kaiguan.innerHTML = '✔';
+    }
+});
+window.addEventListener('beforeunload', function() {
+    if (localStorage.zddrbd == '1' && bdzdtj_true == 1) {
+        var daoru_ym_bendi = document.querySelector('.daoru_ym_bendi');
+        daoru_ym_bendi.click();
+    }
+});
+
+
+
+
 //全局按键事件
 document.addEventListener('keyup', function(e) {
     if (bzsz_tj_ym_tp_jk == 1) {
@@ -5271,5 +5419,6 @@ for (var i = 0; i < inputs.length; i++) {
 // for (var i = 0; i < rgb_s.length; i++) {
 //     sz_rgb.push(rgb_s[i].innerText);
 // }
+// console.log(JSON.stringify(sz_rgb));
 // console.log(JSON.stringify(sz_rgb));
 // console.log(JSON.stringify(sz_rgb));

@@ -1,5 +1,5 @@
 //检测是否第一次使用
-var ban_ben_s = 'v46.8.4';
+var ban_ben_s = 'v50.1.5';
 if (localStorage.ban_ben) {
     //检查是否最新
     if (localStorage.ban_ben !== ban_ben_s) {
@@ -299,8 +299,14 @@ if (localStorage.ke_biao == undefined) {
 if (localStorage.ke_biao_zhou == undefined) {
     localStorage.ke_biao_zhou = '[1,' + (+new Date()) + ']';
 }
-
-
+// 使用总时长
+if (localStorage.syzsc == undefined) {
+    localStorage.syzsc = 0;
+}
+//自动导入本地
+if (localStorage.zddrbd == undefined) {
+    localStorage.zddrbd = 0;
+}
 
 
 

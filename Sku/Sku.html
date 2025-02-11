@@ -42,7 +42,7 @@
     <!-- 顶部导航栏 -->
     <div class="topmax" style="display: none;">
 
-        <!-- 大盒子，里面包括一个个导航栏 -->
+        <!-- 大盒子,里面包括一个个导航栏 -->
         <div class="top_dhl">
             <div>大厅</div>
             <div>链接</div>
@@ -74,7 +74,7 @@
 
     </div>
 
-    <!-- 内容大盒子，里面包括4个页面 -->
+    <!-- 内容大盒子,里面包括4个页面 -->
     <div class="nrmax" style="display: block;">
 
         <!-- 首页 -->
@@ -599,7 +599,7 @@
                     <div class="bfsz_sccd">备份</div>
                     <div class="bfsz_xzcd">下载备份</div>
                     <div class="bfsz_zdbf_qrk"></div>
-                    <div class="bfsz_zdbf_wz">每次打开自动上传一次</div>
+                    <div class="bfsz_zdbf_wz">每次关闭前自动备份</div>
                 </div>
 
                 <!-- 设置密码 -->
@@ -637,6 +637,8 @@
                     <input type="text" placeholder="拖入文件 / 导入模块 / 密钥 / 网址" class="daoru_ym_sc">
                     <div class="daoru_ym_sc_zishu">导入 0 位数</div>
                     <div class="daoru_ym_sc_laiyuan"></div>
+                    <div class="daoru_zd_kaiguan"></div>
+                    <div class="daoru_zd_tishi">每次关闭前自动导入本地</div>
                 </div>
 
                 <!-- 导出信息页面 -->
@@ -735,7 +737,7 @@
                     <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>搜索策略</div>
                     <div class="sscl_max_s">
                         <div class="sscl_xzk" data-ssclnum="0"></div>
-                        <div class="sscl_mz">模糊匹配</div>
+                        <div class="sscl_mz">模糊搜索</div>
                         <div class="sscl_js">ab => abcd | cb => abcd | abb !=> abcd</div>
                     </div>
                     <div class="sscl_max_s">
@@ -745,7 +747,7 @@
                     </div>
                     <div class="sscl_max_s">
                         <div class="sscl_xzk" data-ssclnum="2"></div>
-                        <div class="sscl_mz">完全匹配</div>
+                        <div class="sscl_mz">完全相同</div>
                         <div class="sscl_js">abcd => abcd | abc !=> abcd</div>
                     </div>
                 </div>
@@ -782,6 +784,7 @@
                     <div class="gywm_max_s">
                         <div class="gywm_l ">版本:</div>
                         <div class="gywm_r gywm_ban_ben"></div>
+                        <div class="gywm_r2 sz_jcbbgx">检查版本更新</div>
                     </div>
                     <div class="gywm_max_s">
                         <div class="gywm_l">存储:</div>
@@ -796,8 +799,17 @@
                         <div class="gywm_r">PC端 1920x1080 最佳</div>
                     </div>
                     <div class="gywm_max_s">
-                        <div class="gywm_l">使用次数:</div>
+                        <div class="gywm_l">使用情况:</div>
                         <div class="gywm_r gywm_ci_shu"></div>
+                        <div class="gywm_r2 sz_sysj"></div>
+                    </div>
+                    <div class="gywm_max_s">
+                        <div class="gywm_l">作者:</div>
+                        <div class="gywm_r gywm_ci_shu">吴根棽</div>
+                    </div>
+                    <div class="gywm_max_s">
+                        <div class="gywm_l">邮箱:</div>
+                        <div class="gywm_r gywm_ci_shu">15979747497@163.com</div>
                     </div>
                     <!-- htsp -->
                     <img class="WGS_HTSP" src="" alt="" style="display: none;">
@@ -856,6 +868,18 @@
                 <div class="AI_mods_max" style="display: none;">
                     <div class="AI_mods_max_hd">
                         <div class="AI_mods_min">
+                            <div class="AI_mods_name">qwen-max-latest</div>
+                            <div class="AI_mods_sm">阿里云百练 (付费版)(支持联网)<br>通义千问系列效果最好的模型,本模型是动态更新版本,模型更新不会提前通知,适合复杂、多步骤的任务,模型中英文综合能力显著提升,模型人类偏好显著提升,模型推理能力和复杂指令理解能力显著增强,困难任务上的表现更优,数学、代码能力显著提升,提升对Table、JSON等结构化数据的理解和生成能力</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">qwen-max</div>
+                            <div class="AI_mods_sm">阿里云百练 (付费版)(支持联网)<br>通义千问2.5系列千亿级别超大规模语言模型,支持中文、英文等不同语言输入。随着模型的升级,qwen-max将滚动更新升级。如果希望使用固定版本,请使用历史快照版本</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">deepseek-r1</div>
+                            <div class="AI_mods_sm">阿里云百练 (付费版)<br>DeepSeek-R1 在后训练阶段大规模使用了强化学习技术,在仅有极少标注数据的情况下,极大提升了模型推理能力。在数学、代码、自然语言推理等任务上,性能较高,能力较强</div>
+                        </div>
+                        <div class="AI_mods_min">
                             <div class="AI_mods_name">gpt-4o-mini</div>
                             <div class="AI_mods_sm">GPT_API_free (免费版)<br>gpt-3.5-turbo和gpt-4o-mini共享一天200次</div>
                         </div>
@@ -869,11 +893,19 @@
                         </div>
                         <div class="AI_mods_min">
                             <div class="AI_mods_name">GLM-4-Flash</div>
-                            <div class="AI_mods_sm">智谱AI开放平台 (免费版)<br>128K上下文<br>并发数限制5<br>最高支持1500并发<br>在语义、数学、推理、代码和知识等多方面的数据集测评中，均表现出超卓越性能</div>
+                            <div class="AI_mods_sm">智谱AI开放平台 (免费版)<br>128K上下文<br>并发数限制5<br>最高支持1500并发<br>在语义、数学、推理、代码和知识等多方面的数据集测评中,均表现出超卓越性能</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">GLM-4-FlashX</div>
+                            <div class="AI_mods_sm">智谱AI开放平台 (付费版)(0.0001 元 / 千tokens)<br>128K上下文<br>高速低价,Flash增强版本,超快推理速度。</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">GLM-Zero-Preview</div>
+                            <div class="AI_mods_sm">智谱AI开放平台 (付费版)(0.01 元 / 千tokens)<br>16K上下文<br>GLM-Zero-Preview是智谱开放平台在2025.1月新出的模型,该模型具备强大的复杂推理能力,在逻辑推理、数学、编程等领域表现优异</div>
                         </div>
                         <div class="AI_mods_min">
                             <div class="AI_mods_name">glm-4-plus</div>
-                            <div class="AI_mods_sm">智谱AI开放平台 (付费版)<br>并发数限制5<br>高智能旗舰: 性能全面提升，长文本和复杂任务能力显著增强</div>
+                            <div class="AI_mods_sm">智谱AI开放平台 (付费版)<br>并发数限制5<br>高智能旗舰: 性能全面提升,长文本和复杂任务能力显著增强</div>
                         </div>
                         <div class="AI_mods_min">
                             <div class="AI_mods_name">glm-4-air</div>
@@ -886,6 +918,14 @@
                         <div class="AI_mods_min">
                             <div class="AI_mods_name">web-search-pro</div>
                             <div class="AI_mods_sm">智谱AI开放平台 (限时免费)<br>专业版联网搜索</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">deepseek-ai/DeepSeek-R1</div>
+                            <div class="AI_mods_sm">SiliconCloud (付费版)(输入:￥4/ M Tokens 输出:￥16/ M Tokens)<br>长度64K<br>DeepSeek-R1 是一款强化学习（RL）驱动的推理模型,解决了模型中的重复性和可读性问题。在 RL 之前,DeepSeek-R1 引入了冷启动数据,进一步优化了推理性能。它在数学、代码和推理任务中与 OpenAI-o1 表现相当,并且通过精心设计的训练方法,提升了整体效果.</div>
+                        </div>
+                        <div class="AI_mods_min">
+                            <div class="AI_mods_name">deepseek-ai/DeepSeek-R1-Distill-Llama-8B</div>
+                            <div class="AI_mods_sm">SiliconCloud (免费版)<br>长度32K<br>DeepSeek-R1-Distill-Llama-8B 是基于 Llama-3.1-8B 开发的蒸馏模型。该模型使用 DeepSeek-R1 生成的样本进行微调,展现出优秀的推理能力。在多个基准测试中表现不俗,其中在 MATH-500 上达到了 89.1% 的准确率,在 AIME 2024 上达到了 50.4% 的通过率,在 CodeForces 上获得了 1205 的评分,作为8B规模的模型展示了较强的数学和编程能力</div>
                         </div>
                         <div class="AI_mods_min">
                             <div class="AI_mods_name">Qwen/Qwen2.5-Coder-7B-Instruct</div>
@@ -948,12 +988,16 @@
                             <div class="AI_mods_sm">SiliconCloud (付费版) (0.14$/1M tokens)<br>长度32K</div>
                         </div>
                         <div class="AI_mods_min">
+                            <div class="AI_mods_name">deepseek-ai/Janus-Pro-7B</div>
+                            <div class="AI_mods_sm">SiliconCloud (限时免费)<br>文字生图片<br>Janus-Pro 是一款统一理解与生成的多模态大语言模型 (MLLM),在多模态理解和生成任务中实现了视觉编码的解耦。其架构基于 DeepSeek-LLM-7b-base。在图像生成方面,模型采用来自特定来源的 tokenizer,并支持 16 倍下采样率处理,提升了生成效率和质量。 生图 7B</div>
+                        </div>
+                        <div class="AI_mods_min">
                             <div class="AI_mods_name">black-forest-labs/FLUX.1-schnell</div>
                             <div class="AI_mods_sm">SiliconCloud (限时免费)<br>文字生图片<br>每分钟请求数1000<br>每分钟输入输出10000tokens<br>更多可以进行申请</div>
                         </div>
                         <div class="AI_mods_min">
                             <div class="AI_mods_name">stabilityai/stable-diffusion-3-5-large</div>
-                            <div class="AI_mods_sm">SiliconCloud (限时免费)<br>文字生图片<br> IPM 为 2; IPD 为 400;<br>Stable Diffusion 3.5 Large 是 Stable Diffusion 系列中最强大的基础模型，拥有 80 亿参数。该模型具有卓越的图像质量和更好的提示遵循能力，特别适合在 1 兆像素分辨率下进行专业用途</div>
+                            <div class="AI_mods_sm">SiliconCloud (限时免费)<br>文字生图片<br> IPM 为 2; IPD 为 400;<br>Stable Diffusion 3.5 Large 是 Stable Diffusion 系列中最强大的基础模型,拥有 80 亿参数。该模型具有卓越的图像质量和更好的提示遵循能力,特别适合在 1 兆像素分辨率下进行专业用途</div>
                         </div>
                         <div class="AI_mods_min">
                             <div class="AI_mods_name">stabilityai/stable-diffusion-2-1</div>
@@ -1030,6 +1074,14 @@
                         <p>连续对话(Continuous Conversation)</p>
                         <input type="number" class="AI_sz_shu AI_sz_lxdh_shu">
                         <p style="opacity: 0.5;">( 单位条,开启后开始新的话题 )</p>
+                    </div>
+                    <!-- 联网搜索 -->
+                    <div class="AI_szym_min">
+                        <div class="AI_sz_kaiguan AI_sz_lwss_kaiguan">
+                            <div class="AI_sz_kaiguan_d AI_sz_lwss_lxdh_d"></div>
+                        </div>
+                        <p>联网搜索(Web Search)</p>
+                        <p style="opacity: 0.5;">( 支持部分模型 )</p>
                     </div>
                 </div>
             </div>

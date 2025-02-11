@@ -576,10 +576,10 @@
     }
     
     .gywm_r {
-        float: right;
-        width: 544px;
+        float: left;
+        width: auto;
         height: auto;
-        margin-right: 35px;
+        margin-left: 16px;
         margin-top: 16px;
         white-space: pre-wrap;
     }
@@ -604,6 +604,24 @@
     
     .gywm_ban_ben {
         white-space: nowrap;
+    }
+    
+    .sz_jcbbgx {
+        text-decoration: underline;
+        opacity: 0.5;
+    }
+    
+    .sz_jcbbgx:hover {
+        opacity: 1;
+    }
+    
+    .gywm_r2 {
+        float: left;
+        width: auto;
+        height: auto;
+        margin-left: 16px;
+        margin-top: 16px;
+        white-space: pre-wrap;
     }
     /* ---------导入/导出--------- */
     
@@ -1719,4 +1737,40 @@
         font-size: 12px;
         top: 60px;
         left: 50px;
+    }
+    
+    .daoru_zd_kaiguan {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--zi_ti_color);
+        left: 442px;
+        bottom: 50px;
+        border-radius: 5px;
+        line-height: 18px;
+        text-align: center;
+        opacity: 0.5;
+    }
+    
+    .daoru_zd_tishi {
+        position: absolute;
+        left: 465px;
+        bottom: 50px;
+        opacity: 0.5;
+    }
+    
+    .daoru_zd_kaiguan:hover {
+        opacity: 1;
+    }
+    
+    .daoru_zd_kaiguan:hover~.daoru_zd_tishi {
+        opacity: 1;
+    }
+    
+    .daoru_zd_tishi:hover {
+        opacity: 1;
+    }
+    
+    .daoru_zd_tishi:hover~.daoru_zd_kaiguan {
+        opacity: 1;
     }
