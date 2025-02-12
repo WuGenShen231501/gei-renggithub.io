@@ -1450,6 +1450,38 @@ var shezhi_daoru = document.querySelector('.shezhi_daoru');
 var shezhi_daoru_ym = document.querySelector('.shezhi_daoru_ym');
 var jisuan_bendidx = 0;
 
+// 集成应用与导入导出加密导入导出本地导入应用等
+var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'sy_lbxz', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_jl', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd'];
+// 导航栏,导航栏页面,万能搜索引擎,头像,留言,所有壁纸,当前壁纸,天气,字体颜色,重字体颜色,背景颜色,背景透明度,背景确认框,背景框颜色,背景框透明度,毛玻璃,自动备份,使用次数,倒计时,密码,作品展示,音乐,搜索记录,轮播选择,HTSP,注册表,背景颜色,主题风格,ai,ai快捷指令,课表,总时长,自动导入本地
+
+// 检查是否为时间
+function isValidDateTime(str) {
+    // 正则表达式验证格式
+    const datetimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
+    if (!datetimeRegex.test(str)) {
+        return false; // 格式不匹配，直接返回 false
+    }
+
+    // 提取日期时间部分
+    const [datePart, timePart] = str.split(' ');
+
+    // 构造 Date 对象
+    const [year, month, day] = datePart.split('-').map(Number);
+    const [hour, minute, second] = timePart.split(':').map(Number);
+
+    const date = new Date(year, month - 1, day, hour, minute, second);
+
+    // 验证日期有效性
+    return (
+        date.getFullYear() === year &&
+        date.getMonth() + 1 === month && // 注意：getMonth() 返回值从 0 开始
+        date.getDate() === day &&
+        date.getHours() === hour &&
+        date.getMinutes() === minute &&
+        date.getSeconds() === second
+    );
+}
+
 shezhi_daoru.addEventListener('click', function(e) {
     shezhi_min.style.display = 'none';
     shezhi_daoru_ym.style.display = 'block';
@@ -1458,75 +1490,9 @@ shezhi_daoru.addEventListener('click', function(e) {
     daoru_ym_sc_tjzs();
 
     var daochu_sz = [];
-    // 导航栏
-    daochu_sz[0] = localStorage.dhr_sz;
-    //导航栏页面
-    daochu_sz[1] = localStorage.dhr_ym_dx;
-    //万能搜索引擎
-    daochu_sz[2] = localStorage.sy_sosuo_yq;
-    //头像
-    daochu_sz[3] = localStorage.tou_xiang;
-    //留言
-    daochu_sz[4] = localStorage.liu_yan_dx;
-    // 所有壁纸
-    daochu_sz[5] = localStorage.bi_zhi_s;
-    // 当前壁纸
-    daochu_sz[6] = localStorage.bi_zhi;
-    //天气
-    daochu_sz[7] = localStorage.tian_qi;
-    //字体颜色
-    daochu_sz[8] = localStorage.zi_ti_color;
-    //重字体颜色
-    daochu_sz[9] = localStorage.zi_ti_click_color;
-    //背景颜色
-    daochu_sz[10] = localStorage.bei_jing_color;
-    //背景透明度
-    daochu_sz[11] = localStorage.bei_jing_tmd;
-    //背景确认框
-    daochu_sz[12] = localStorage.bei_jing_kuan_ture;
-    //背景框颜色
-    daochu_sz[13] = localStorage.bei_jing_kuan_color;
-    //背景框透明度
-    daochu_sz[14] = localStorage.bei_jing_kuan_tmd;
-    //毛玻璃
-    daochu_sz[15] = localStorage.mao_bo_li;
-    //自动备份
-    daochu_sz[16] = localStorage.zdbf;
-    //使用次数
-    daochu_sz[17] = localStorage.sy_ci_shu;
-    //倒计时
-    daochu_sz[18] = localStorage.sy_djs;
-    //密码
-    daochu_sz[19] = localStorage.dr_mm;
-    //作品展示
-    daochu_sz[20] = localStorage.sy_zpzs_lj;
-    daochu_sz[21] = localStorage.sy_zpzs_mz;
-    // 音乐
-    daochu_sz[22] = localStorage.music_cd;
-    daochu_sz[23] = localStorage.music_bfsx;
-    daochu_sz[24] = localStorage.music_sydx;
-    // 搜索记录
-    daochu_sz[25] = localStorage.lsjl;
-    // 轮播选择
-    daochu_sz[26] = localStorage.sy_lbxz;
-    // HTSP
-    daochu_sz[27] = localStorage.htsp_s;
-    // 注册表
-    daochu_sz[28] = localStorage.sku_zcb;
-    // 背景颜色
-    daochu_sz[29] = localStorage.bi_zhi_ys;
-    // 主题风格
-    daochu_sz[30] = localStorage.ztfg;
-    daochu_sz[31] = localStorage.ztfg_name;
-    // ai
-    daochu_sz[32] = localStorage.AI_jl;
-    // ai快捷指令
-    daochu_sz[33] = localStorage.AI_kjzl;
-    // 课表
-    daochu_sz[34] = localStorage.ke_biao;
-    daochu_sz[35] = localStorage.ke_biao_zhou;
-    // 总时长
-    daochu_sz[36] = localStorage.syzsc;
+    for (var i = 0; i < daochu_daoru_max.length; i++) {
+        daochu_sz[i] = localStorage.getItem(daochu_daoru_max[i]);
+    }
     //上传时间
     function getFormattedTime() {
         const now = new Date();
@@ -1538,83 +1504,18 @@ shezhi_daoru.addEventListener('click', function(e) {
         const second = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
         return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
     }
-    daochu_sz[37] = getFormattedTime();
+    daochu_sz[daochu_daoru_max.length] = getFormattedTime();
 
     jisuan_bendidx = JSON.stringify(daochu_sz).length;
 });
 
 //导出
 daoru_ym_dc.addEventListener('click', function(e) {
+
     var daochu_sz = [];
-    // 导航栏
-    daochu_sz[0] = localStorage.dhr_sz;
-    //导航栏页面
-    daochu_sz[1] = localStorage.dhr_ym_dx;
-    //万能搜索引擎
-    daochu_sz[2] = localStorage.sy_sosuo_yq;
-    //头像
-    daochu_sz[3] = localStorage.tou_xiang;
-    //留言
-    daochu_sz[4] = localStorage.liu_yan_dx;
-    // 所有壁纸
-    daochu_sz[5] = localStorage.bi_zhi_s;
-    // 当前壁纸
-    daochu_sz[6] = localStorage.bi_zhi;
-    //天气
-    daochu_sz[7] = localStorage.tian_qi;
-    //字体颜色
-    daochu_sz[8] = localStorage.zi_ti_color;
-    //重字体颜色
-    daochu_sz[9] = localStorage.zi_ti_click_color;
-    //背景颜色
-    daochu_sz[10] = localStorage.bei_jing_color;
-    //背景透明度
-    daochu_sz[11] = localStorage.bei_jing_tmd;
-    //背景确认框
-    daochu_sz[12] = localStorage.bei_jing_kuan_ture;
-    //背景框颜色
-    daochu_sz[13] = localStorage.bei_jing_kuan_color;
-    //背景框透明度
-    daochu_sz[14] = localStorage.bei_jing_kuan_tmd;
-    //毛玻璃
-    daochu_sz[15] = localStorage.mao_bo_li;
-    //自动备份
-    daochu_sz[16] = localStorage.zdbf;
-    //使用次数
-    daochu_sz[17] = localStorage.sy_ci_shu;
-    //倒计时
-    daochu_sz[18] = localStorage.sy_djs;
-    //密码
-    daochu_sz[19] = localStorage.dr_mm;
-    //作品展示
-    daochu_sz[20] = localStorage.sy_zpzs_lj;
-    daochu_sz[21] = localStorage.sy_zpzs_mz;
-    // 音乐
-    daochu_sz[22] = localStorage.music_cd;
-    daochu_sz[23] = localStorage.music_bfsx;
-    daochu_sz[24] = localStorage.music_sydx;
-    // 搜索记录
-    daochu_sz[25] = localStorage.lsjl;
-    // 轮播选择
-    daochu_sz[26] = localStorage.sy_lbxz;
-    // HTSP
-    daochu_sz[27] = localStorage.htsp_s;
-    // 注册表
-    daochu_sz[28] = localStorage.sku_zcb;
-    // 背景颜色
-    daochu_sz[29] = localStorage.bi_zhi_ys;
-    // 主题风格
-    daochu_sz[30] = localStorage.ztfg;
-    daochu_sz[31] = localStorage.ztfg_name;
-    // ai
-    daochu_sz[32] = localStorage.AI_jl;
-    // ai快捷指令
-    daochu_sz[33] = localStorage.AI_kjzl;
-    // 课表
-    daochu_sz[34] = localStorage.ke_biao;
-    daochu_sz[35] = localStorage.ke_biao_zhou;
-    // 总时长
-    daochu_sz[36] = localStorage.syzsc;
+    for (var i = 0; i < daochu_daoru_max.length; i++) {
+        daochu_sz[i] = localStorage.getItem(daochu_daoru_max[i]);
+    }
     //上传时间
     function getFormattedTime() {
         const now = new Date();
@@ -1626,7 +1527,7 @@ daoru_ym_dc.addEventListener('click', function(e) {
         const second = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
         return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
     }
-    daochu_sz[37] = getFormattedTime();
+    daochu_sz[daochu_daoru_max.length] = getFormattedTime();
 
     daoru_ym_sc.value = JSON.stringify(daochu_sz);
 
@@ -1662,75 +1563,9 @@ daoru_ym_dc.addEventListener('click', function(e) {
 
 daoru_ym_jmdc.addEventListener('click', function(e) {
     var daochu_sz = [];
-    // 导航栏
-    daochu_sz[0] = localStorage.dhr_sz;
-    //导航栏页面
-    daochu_sz[1] = localStorage.dhr_ym_dx;
-    //万能搜索引擎
-    daochu_sz[2] = localStorage.sy_sosuo_yq;
-    //头像
-    daochu_sz[3] = localStorage.tou_xiang;
-    //留言
-    daochu_sz[4] = localStorage.liu_yan_dx;
-    // 所有壁纸
-    daochu_sz[5] = localStorage.bi_zhi_s;
-    // 当前壁纸
-    daochu_sz[6] = localStorage.bi_zhi;
-    //天气
-    daochu_sz[7] = localStorage.tian_qi;
-    //字体颜色
-    daochu_sz[8] = localStorage.zi_ti_color;
-    //重字体颜色
-    daochu_sz[9] = localStorage.zi_ti_click_color;
-    //背景颜色
-    daochu_sz[10] = localStorage.bei_jing_color;
-    //背景透明度
-    daochu_sz[11] = localStorage.bei_jing_tmd;
-    //背景确认框
-    daochu_sz[12] = localStorage.bei_jing_kuan_ture;
-    //背景框颜色
-    daochu_sz[13] = localStorage.bei_jing_kuan_color;
-    //背景框透明度
-    daochu_sz[14] = localStorage.bei_jing_kuan_tmd;
-    //毛玻璃
-    daochu_sz[15] = localStorage.mao_bo_li;
-    //自动备份
-    daochu_sz[16] = localStorage.zdbf;
-    //使用次数
-    daochu_sz[17] = localStorage.sy_ci_shu;
-    //倒计时
-    daochu_sz[18] = localStorage.sy_djs;
-    //密码
-    daochu_sz[19] = localStorage.dr_mm;
-    //作品展示
-    daochu_sz[20] = localStorage.sy_zpzs_lj;
-    daochu_sz[21] = localStorage.sy_zpzs_mz;
-    // 音乐
-    daochu_sz[22] = localStorage.music_cd;
-    daochu_sz[23] = localStorage.music_bfsx;
-    daochu_sz[24] = localStorage.music_sydx;
-    // 搜索记录
-    daochu_sz[25] = localStorage.lsjl;
-    // 轮播选择
-    daochu_sz[26] = localStorage.sy_lbxz;
-    // HTSP
-    daochu_sz[27] = localStorage.htsp_s;
-    // 注册表
-    daochu_sz[28] = localStorage.sku_zcb;
-    // 背景颜色
-    daochu_sz[29] = localStorage.bi_zhi_ys;
-    // 主题风格
-    daochu_sz[30] = localStorage.ztfg;
-    daochu_sz[31] = localStorage.ztfg_name;
-    // ai
-    daochu_sz[32] = localStorage.AI_jl;
-    // ai快捷指令
-    daochu_sz[33] = localStorage.AI_kjzl;
-    // 课表
-    daochu_sz[34] = localStorage.ke_biao;
-    daochu_sz[35] = localStorage.ke_biao_zhou;
-    // 总时长
-    daochu_sz[36] = localStorage.syzsc;
+    for (var i = 0; i < daochu_daoru_max.length; i++) {
+        daochu_sz[i] = localStorage.getItem(daochu_daoru_max[i]);
+    }
     //上传时间
     function getFormattedTime() {
         const now = new Date();
@@ -1742,7 +1577,7 @@ daoru_ym_jmdc.addEventListener('click', function(e) {
         const second = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
         return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
     }
-    daochu_sz[37] = getFormattedTime();
+    daochu_sz[daochu_daoru_max.length] = getFormattedTime();
 
     daoru_ym_sc.value = WGS_zfc_jiami(JSON.stringify(daochu_sz), miyao);
 
@@ -1811,77 +1646,19 @@ daoru_ym_sc.addEventListener('input', function(e) {
 var daoru_sz = [];
 
 function daoru_sz_hs() {
-    if (daoru_sz.length == 38) {
-        // 导航栏
-        localStorage.dhr_sz = daoru_sz[0];
-        //导航栏页面
-        localStorage.dhr_ym_dx = daoru_sz[1];
-        //万能搜索引擎
-        localStorage.sy_sosuo_yq = daoru_sz[2];
-        //头像
-        localStorage.tou_xiang = daoru_sz[3];
-        //留言
-        localStorage.liu_yan_dx = daoru_sz[4];
-        // 所有壁纸
-        localStorage.bi_zhi_s = daoru_sz[5];
-        // 当前壁纸
-        localStorage.bi_zhi = daoru_sz[6];
-        //天气
-        localStorage.tian_qi = daoru_sz[7];
-        //字体颜色
-        localStorage.zi_ti_color = daoru_sz[8];
-        //重字体颜色
-        localStorage.zi_ti_click_color = daoru_sz[9];
-        //背景颜色
-        localStorage.bei_jing_color = daoru_sz[10];
-        //背景透明度
-        localStorage.bei_jing_tmd = daoru_sz[11];
-        //背景确认框
-        localStorage.bei_jing_kuan_ture = daoru_sz[12];
-        //背景框颜色
-        localStorage.bei_jing_kuan_color = daoru_sz[13];
-        //背景框透明度
-        localStorage.bei_jing_kuan_tmd = daoru_sz[14];
-        //毛玻璃
-        localStorage.mao_bo_li = daoru_sz[15];
-        //自动备份
-        localStorage.zdbf = daoru_sz[16];
-        //使用次数
-        localStorage.sy_ci_shu = daoru_sz[17];
-        //倒计时
-        localStorage.sy_djs = daoru_sz[18];
-        //密码
-        localStorage.dr_mm = daoru_sz[19];
-        //作品展示
-        localStorage.sy_zpzs_lj = daoru_sz[20];
-        localStorage.sy_zpzs_mz = daoru_sz[21];
-        // 音乐 
-        localStorage.music_cd = daoru_sz[22];
-        localStorage.music_bfsx = daoru_sz[23];
-        localStorage.music_sydx = daoru_sz[24];
-        // 搜索记录
-        localStorage.lsjl = daoru_sz[25];
-        // 轮播选择
-        localStorage.sy_lbxz = daoru_sz[26];
-        // HTSP
-        localStorage.htsp_s = daoru_sz[27];
-        // 注册表
-        localStorage.sku_zcb = daoru_sz[28];
-        // 背景颜色
-        localStorage.bi_zhi_ys = daoru_sz[29];
-        // 主题风格
-        localStorage.ztfg = daoru_sz[30];
-        localStorage.ztfg_name = daoru_sz[31];
-        // ai
-        localStorage.AI_jl = daoru_sz[32];
-        // ai快捷指令
-        localStorage.AI_kjzl = daoru_sz[33];
-        // 课表
-        localStorage.ke_biao = daoru_sz[34];
-        localStorage.ke_biao_zhou = daoru_sz[35];
-        // 总时长
-        localStorage.syzsc = daoru_sz[36];
+    if (daoru_sz.length >= daochu_daoru_max.length - 5) {
 
+        for (var i = 0; i < daoru_sz.length; i++) {
+
+            if (i == daoru_sz.length - 1) {
+                if (isValidDateTime(daoru_sz[i])) {
+                    break;
+                }
+            }
+
+            localStorage.setItem(daochu_daoru_max[i], daoru_sz[i]);
+
+        }
         // 时间戳0
         localStorage.dr_mmdr_drsj = 0;
         location.reload();
@@ -2006,75 +1783,9 @@ var daoru_ym_bendi = document.querySelector('.daoru_ym_bendi');
 daoru_ym_bendi.addEventListener('click', function(e) {
     if (daoru_ym_bendi.innerHTML == '导入本地') {
         var zd_daochu = [];
-        // 导航栏
-        zd_daochu[0] = localStorage.dhr_sz;
-        //导航栏页面
-        zd_daochu[1] = localStorage.dhr_ym_dx;
-        //万能搜索引擎
-        zd_daochu[2] = localStorage.sy_sosuo_yq;
-        //头像
-        zd_daochu[3] = localStorage.tou_xiang;
-        //留言
-        zd_daochu[4] = localStorage.liu_yan_dx;
-        // 所有壁纸
-        zd_daochu[5] = localStorage.bi_zhi_s;
-        // 当前壁纸
-        zd_daochu[6] = localStorage.bi_zhi;
-        //天气
-        zd_daochu[7] = localStorage.tian_qi;
-        //字体颜色
-        zd_daochu[8] = localStorage.zi_ti_color;
-        //重字体颜色
-        zd_daochu[9] = localStorage.zi_ti_click_color;
-        //背景颜色
-        zd_daochu[10] = localStorage.bei_jing_color;
-        //背景透明度
-        zd_daochu[11] = localStorage.bei_jing_tmd;
-        //背景确认框
-        zd_daochu[12] = localStorage.bei_jing_kuan_ture;
-        //背景框颜色
-        zd_daochu[13] = localStorage.bei_jing_kuan_color;
-        //背景框透明度
-        zd_daochu[14] = localStorage.bei_jing_kuan_tmd;
-        //毛玻璃
-        zd_daochu[15] = localStorage.mao_bo_li;
-        //自动备份
-        zd_daochu[16] = localStorage.zdbf;
-        //使用次数
-        zd_daochu[17] = localStorage.sy_ci_shu;
-        //倒计时
-        zd_daochu[18] = localStorage.sy_djs;
-        //密码
-        zd_daochu[19] = localStorage.dr_mm;
-        //作品展示
-        zd_daochu[20] = localStorage.sy_zpzs_lj;
-        zd_daochu[21] = localStorage.sy_zpzs_mz;
-        // 音乐
-        zd_daochu[22] = localStorage.music_cd;
-        zd_daochu[23] = localStorage.music_bfsx;
-        zd_daochu[24] = localStorage.music_sydx;
-        // 搜索记录
-        zd_daochu[25] = localStorage.lsjl;
-        // 轮播选择
-        zd_daochu[26] = localStorage.sy_lbxz;
-        // HTSP
-        zd_daochu[27] = localStorage.htsp_s;
-        // 注册表
-        zd_daochu[28] = localStorage.sku_zcb;
-        // 背景颜色
-        zd_daochu[29] = localStorage.bi_zhi_ys;
-        // 主题风格
-        zd_daochu[30] = localStorage.ztfg;
-        zd_daochu[31] = localStorage.ztfg_name;
-        // ai
-        zd_daochu[32] = localStorage.AI_jl;
-        // ai快捷指令
-        zd_daochu[33] = localStorage.AI_kjzl;
-        // 课表
-        zd_daochu[34] = localStorage.ke_biao;
-        zd_daochu[35] = localStorage.ke_biao_zhou;
-        // 总时长
-        zd_daochu[36] = localStorage.syzsc;
+        for (var i = 0; i < daochu_daoru_max.length; i++) {
+            zd_daochu[i] = localStorage.getItem(daochu_daoru_max[i]);
+        }
         //上传时间
         function getFormattedTime() {
             const now = new Date();
@@ -2087,7 +1798,7 @@ daoru_ym_bendi.addEventListener('click', function(e) {
             return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
         }
         // 打包时间
-        zd_daochu[37] = getFormattedTime();
+        zd_daochu[daochu_daoru_max.length] = getFormattedTime();
 
         try {
             //保存
@@ -2207,79 +1918,20 @@ function bendidaoru_click() {
                     var daorubendi_click = this.previousElementSibling.innerHTML + '自动保存';
                     var drnr = window.localStorage.getItem(`${daorubendi_click}`);
                     var daoru_sz = JSON.parse(drnr);
-                    // 导航栏 
-                    localStorage.dhr_sz = daoru_sz[0];
-                    //导航栏页面
-                    localStorage.dhr_ym_dx = daoru_sz[1];
-                    //万能搜索引擎
-                    localStorage.sy_sosuo_yq = daoru_sz[2];
-                    //头像
-                    localStorage.tou_xiang = daoru_sz[3];
-                    //留言
-                    localStorage.liu_yan_dx = daoru_sz[4];
-                    // 所有壁纸
-                    localStorage.bi_zhi_s = daoru_sz[5];
-                    // 当前壁纸
-                    localStorage.bi_zhi = daoru_sz[6];
-                    //天气
-                    localStorage.tian_qi = daoru_sz[7];
-                    //字体颜色
-                    localStorage.zi_ti_color = daoru_sz[8];
-                    //重字体颜色
-                    localStorage.zi_ti_click_color = daoru_sz[9];
-                    //背景颜色
-                    localStorage.bei_jing_color = daoru_sz[10];
-                    //背景透明度
-                    localStorage.bei_jing_tmd = daoru_sz[11];
-                    //背景确认框
-                    localStorage.bei_jing_kuan_ture = daoru_sz[12];
-                    //背景框颜色
-                    localStorage.bei_jing_kuan_color = daoru_sz[13];
-                    //背景框透明度
-                    localStorage.bei_jing_kuan_tmd = daoru_sz[14];
-                    //毛玻璃
-                    localStorage.mao_bo_li = daoru_sz[15];
-                    //自动备份
-                    localStorage.zdbf = daoru_sz[16];
-                    //使用次数
-                    localStorage.sy_ci_shu = daoru_sz[17];
-                    //倒计时
-                    localStorage.sy_djs = daoru_sz[18];
-                    //密码
-                    localStorage.dr_mm = daoru_sz[19];
-                    //作品展示
-                    localStorage.sy_zpzs_lj = daoru_sz[20];
-                    localStorage.sy_zpzs_mz = daoru_sz[21];
-                    // 音乐
-                    localStorage.music_cd = daoru_sz[22];
-                    localStorage.music_bfsx = daoru_sz[23];
-                    localStorage.music_sydx = daoru_sz[24];
-                    // 搜索记录
-                    localStorage.lsjl = daoru_sz[25];
-                    // 轮播选择
-                    localStorage.sy_lbxz = daoru_sz[26];
-                    // HTSP
-                    localStorage.htsp_s = daoru_sz[27];
-                    // 注册表
-                    localStorage.sku_zcb = daoru_sz[28];
-                    // 背景颜色
-                    localStorage.bi_zhi_ys = daoru_sz[29];
-                    // 主题风格
-                    localStorage.ztfg = daoru_sz[30];
-                    localStorage.ztfg_name = daoru_sz[31];
-                    // ai
-                    localStorage.AI_jl = daoru_sz[32];
-                    // ai快捷指令
-                    localStorage.AI_kjzl = daoru_sz[33];
-                    // 课表
-                    localStorage.ke_biao = daoru_sz[34];
-                    localStorage.ke_biao_zhou = daoru_sz[35];
-                    // 总时长
-                    localStorage.syzsc = daoru_sz[36];
+                    for (var i = 0; i < daoru_sz.length; i++) {
 
+                        if (i == daoru_sz.length - 1) {
+                            if (isValidDateTime(daoru_sz[i])) {
+                                break;
+                            }
+                        }
+
+                        localStorage.setItem(daochu_daoru_max[i], daoru_sz[i]);
+
+                    }
                     // 时间戳0
                     localStorage.dr_mmdr_drsj = 0;
-                    bdzdtj_true = 0;
+                    bdzdtj_true = 0; // 禁止刷新时自动导入
                     location.reload();
                 } catch (error) {
                     // 这个块会在 try 中有错误抛出时执行
