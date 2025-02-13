@@ -4825,7 +4825,7 @@ Sku_gundontiao('.AI_kjzl_min', '.AI_kjzl_gundontiao_max', '.AI_kjzl_gundontiao_m
 
 // 检查更新
 var sz_jcbbgx = document.querySelector('.sz_jcbbgx');
-var sz_jcbbgx_xjc = 1;
+var sz_jcbbgx_xjc = 10;
 var sz_jcbbgx_jccs = 0;
 sz_jcbbgx.addEventListener('click', function(e) {
 
