@@ -1800,35 +1800,30 @@ daoru_ym_bendi.addEventListener('click', function(e) {
         // 打包时间
         zd_daochu[daochu_daoru_max.length] = getFormattedTime();
 
-        try {
-            //保存
-            window.localStorage.setItem(
-                `${'DATE:' + getFormattedTime() + ' Byte:' + JSON.stringify(zd_daochu).length}自动保存`,
-                JSON.stringify(zd_daochu)
-            )
+        //保存
+        window.localStorage.setItem(
+            `${'DATE:' + getFormattedTime() + ' Byte:' + JSON.stringify(zd_daochu).length}自动保存`,
+            JSON.stringify(zd_daochu)
+        )
 
-            // 更新html
-            var daorubendi_max_hd = document.querySelector('.daorubendi_max_hd');
-            var daorubendi_min = document.querySelector('.daorubendi_min');
-            daorubendi_max_hd.removeChild(daorubendi_min);
-            var div = document.createElement('div');
-            div.className = 'daorubendi_min';
-            daorubendi_max_hd.appendChild(div);
-            cxjiaz_daorubendi_xx();
-            bendidaoru_click();
-            bendidaoru_sc();
+        // 更新html
+        var daorubendi_max_hd = document.querySelector('.daorubendi_max_hd');
+        var daorubendi_min = document.querySelector('.daorubendi_min');
+        daorubendi_max_hd.removeChild(daorubendi_min);
+        var div = document.createElement('div');
+        div.className = 'daorubendi_min';
+        daorubendi_max_hd.appendChild(div);
+        cxjiaz_daorubendi_xx();
+        bendidaoru_click();
+        bendidaoru_sc();
 
-            // 导入提醒
-            daoru_ym_bendi.innerHTML = '导入成功';
-            setTimeout(function() {
-                daoru_ym_bendi.innerHTML = '导入本地';
-            }, 2000);
+        // 导入提醒
+        daoru_ym_bendi.innerHTML = '导入成功';
+        setTimeout(function() {
+            daoru_ym_bendi.innerHTML = '导入本地';
+        }, 2000);
 
-            Sku_tctx('导入成功 DATE:' + getFormattedTime() + ' Byte:' + JSON.stringify(zd_daochu).length);
-        } catch (error) {
-            // 如果上面代码有异常时
-            Sku_tctx('导入错误 ! 请检查内存是否充足 或 其他问题');
-        }
+        Sku_tctx('导入成功 DATE:' + getFormattedTime() + ' Byte:' + JSON.stringify(zd_daochu).length);
     }
 });
 
@@ -4830,58 +4825,73 @@ Sku_gundontiao('.AI_kjzl_min', '.AI_kjzl_gundontiao_max', '.AI_kjzl_gundontiao_m
 
 // 检查更新
 var sz_jcbbgx = document.querySelector('.sz_jcbbgx');
+var sz_jcbbgx_xjc = 1;
+var sz_jcbbgx_jccs = 0;
 sz_jcbbgx.addEventListener('click', function(e) {
 
     if (this.innerText == '检查版本更新') { //检查更新
+
         // 高亮
         this.style.opacity = '1';
         this.style.textDecoration = 'none';
         this.innerText = '正在检查更新...';
 
         // 确保服务器支持CORS
-        const url = WGS_zfc_jiami('˘˄˄ˀ˃ʊʟʟˇ˅˗˕˞˃˘˕˞ʂʃʁʅʀʁʞ˗˙˄˘˅˒ʞ˙˟ʟ˗˕˙ʝ˂˕˞˗˗˙˄˘˅˒ʞ˙˟ʟˣ˛˅ʟˣ˛˅˯˘˄ʞ˚˃', miyao);
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    sz_jcbbgx.innerText = '网络响应不正常!';
+        for (var i = 0; i < sz_jcbbgx_xjc; i++) {
+            const url = WGS_zfc_jiami('˘˄˄ˀ˃ʊʟʟˇ˅˗˕˞˃˘˕˞ʂʃʁʅʀʁʞ˗˙˄˘˅˒ʞ˙˟ʟ˗˕˙ʝ˂˕˞˗˗˙˄˘˅˒ʞ˙˟ʟˣ˛˅ʟˣ˛˅˯˘˄ʞ˚˃', miyao);
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        sz_jcbbgx_jccs++;
+                        console.log('检查第' + i + '次: 网络响应不正常!');
 
-                    setTimeout(function() {
-                        sz_jcbbgx.innerText = '检查版本更新';
-                        sz_jcbbgx.style.opacity = '';
+                        sz_jcbbgx.innerText = '网络响应不正常!';
+
+                        setTimeout(function() {
+                            sz_jcbbgx.innerText = '检查版本更新';
+                            sz_jcbbgx.style.opacity = '';
+                            sz_jcbbgx.style.textDecoration = 'underline';
+                        }, 4000);
+
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    sz_jcbbgx_jccs++;
+                    var jc_banben = data.substring(0, 100).replace(/[\r\n]/g, "").match(/^.*?'(.*?)'/)[1].substring(1).split('.').map(Number);
+                    var dq_banben = document.querySelector('.gywm_ban_ben').innerText.substring(1).split('.').map(Number);
+                    console.log('检查第' + i + '次:' + '\n检查版本:V' + jc_banben + '\n当前版本:V' + dq_banben);
+
+                    // 比大小
+                    if (jc_banben[0] - 0 < dq_banben[0] - 0) {
+                        sz_jcbbgx.innerText = '已是最新版本!';
+                    } else if (jc_banben[1] - 0 < dq_banben[1] - 0) {
+                        sz_jcbbgx.innerText = '已是最新版本!';
+                    } else if (jc_banben[2] - 0 < dq_banben[2] - 0) {
+                        sz_jcbbgx.innerText = '已是最新版本!';
+                    } else if (jc_banben[2] - 0 == dq_banben[2] - 0) {
+                        sz_jcbbgx.innerText = '已是最新版本';
+                    } else {
+                        sz_jcbbgx.innerText = '有新版本-点击安装';
                         sz_jcbbgx.style.textDecoration = 'underline';
-                    }, 4000);
-
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.text();
-            })
-            .then(data => {
-                var jc_banben = data.substring(0, 100).replace(/[\r\n]/g, "").match(/^.*?'(.*?)'/)[1].substring(1).split('.').map(Number);
-                var dq_banben = document.querySelector('.gywm_ban_ben').innerText.substring(1).split('.').map(Number);
-                console.log("检查版本:V" + jc_banben, "当前版本:V" + dq_banben);
-
-                // 比大小
-                if (jc_banben[0] - 0 < dq_banben[0] - 0) {
-                    sz_jcbbgx.innerText = '已是最新版本';
-                } else if (jc_banben[1] - 0 < dq_banben[1] - 0) {
-                    sz_jcbbgx.innerText = '已是最新版本';
-                } else if (jc_banben[2] - 0 <= dq_banben[2] - 0) {
-                    sz_jcbbgx.innerText = '已是最新版本';
-                } else {
-                    sz_jcbbgx.innerText = '有新版本-点击安装';
-                    sz_jcbbgx.style.textDecoration = 'underline';
-                }
-            })
-            .catch(error => {
-                sz_jcbbgx.innerText = '获取失败!';
-
-                setTimeout(function() {
-                    sz_jcbbgx.innerText = '检查版本更新';
-                    sz_jcbbgx.style.opacity = '';
-                    sz_jcbbgx.style.textDecoration = 'underline';
-                }, 4000);
-
-            });
+                    }
+                })
+                .catch(error => {
+                    sz_jcbbgx_jccs++;
+                    console.log('检查第' + i + '次: 获取失败!');
+                    if (sz_jcbbgx.innerText == '正在检查更新...' && sz_jcbbgx_jccs == sz_jcbbgx_xjc) {
+                        sz_jcbbgx.innerText = '获取失败!';
+                        sz_jcbbgx_xjc = 10;
+                        sz_jcbbgx_jccs = 0;
+                        setTimeout(function() {
+                            sz_jcbbgx.innerText = '检查版本更新';
+                            sz_jcbbgx.style.opacity = '';
+                            sz_jcbbgx.style.textDecoration = 'underline';
+                        }, 4000);
+                    }
+                });
+        }
 
     } else if (this.innerText == '有新版本-点击安装') {
 

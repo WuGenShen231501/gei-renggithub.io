@@ -1031,6 +1031,22 @@ function insertCommasEveryFourDigits(numberStr) {
 
 
 
+// 全局报错
+window.onerror = function(message, source, lineno, colno, error) {
+    console.log("捕获到错误：");
+    console.log("错误信息:", message);
+    if (message == 'Script error.') {
+        Sku_tctx('脚本错误 ! 请检查内存是否充足 或 其他问题');
+    }
+    console.log("文件路径:", source);
+    console.log("行号:", lineno);
+    console.log("列号:", colno);
+    console.log("错误对象:", error);
+    return false; // 返回 true 表示阻止默认的错误处理行为
+};
+
+
+
 // var dhr_ym_r_s = document.querySelector('.dhr_ym_r_s');
 // dhr_ym_r_s.addEventListener('click', (e) => {
 //     if (e.target.classList.contains('lj_max')) {
