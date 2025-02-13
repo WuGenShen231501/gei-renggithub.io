@@ -1,5 +1,5 @@
 //检测是否第一次使用
-var ban_ben_s = 'v88.21.87';
+var ban_ben_s = 'v88.40.79';
 if (localStorage.ban_ben) {
     //检查是否最新
     if (localStorage.ban_ben !== ban_ben_s) {
@@ -306,6 +306,10 @@ if (localStorage.syzsc == undefined) {
 //自动导入本地
 if (localStorage.zddrbd == undefined) {
     localStorage.zddrbd = 0;
+}
+//自动加密导出
+if (localStorage.zdjmdc == undefined) {
+    localStorage.zdjmdc = 0;
 }
 
 

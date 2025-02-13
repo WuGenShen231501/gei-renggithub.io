@@ -1774,3 +1774,39 @@
     .daoru_zd_tishi:hover~.daoru_zd_kaiguan {
         opacity: 1;
     }
+    
+    .jm_daoru_zd_kaiguan {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--zi_ti_color);
+        left: 442px;
+        bottom: 20px;
+        border-radius: 5px;
+        line-height: 18px;
+        text-align: center;
+        opacity: 0.5;
+    }
+    
+    .jm_daoru_zd_tishi {
+        position: absolute;
+        left: 465px;
+        bottom: 20px;
+        opacity: 0.5;
+    }
+    
+    .jm_daoru_zd_kaiguan:hover {
+        opacity: 1;
+    }
+    
+    .jm_daoru_zd_kaiguan:hover~.jm_daoru_zd_tishi {
+        opacity: 1;
+    }
+    
+    .jm_daoru_zd_tishi:hover {
+        opacity: 1;
+    }
+    
+    .jm_daoru_zd_tishi:hover~.daoru_zd_kaiguan {
+        opacity: 1;
+    }

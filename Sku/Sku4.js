@@ -1451,8 +1451,8 @@ var shezhi_daoru_ym = document.querySelector('.shezhi_daoru_ym');
 var jisuan_bendidx = 0;
 
 // 集成应用与导入导出加密导入导出本地导入应用等
-var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'sy_lbxz', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_jl', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd'];
-// 导航栏,导航栏页面,万能搜索引擎,头像,留言,所有壁纸,当前壁纸,天气,字体颜色,重字体颜色,背景颜色,背景透明度,背景确认框,背景框颜色,背景框透明度,毛玻璃,自动备份,使用次数,倒计时,密码,作品展示,音乐,搜索记录,轮播选择,HTSP,注册表,背景颜色,主题风格,ai,ai快捷指令,课表,总时长,自动导入本地
+var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'sy_lbxz', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_jl', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd', 'zdjmdc'];
+// 导航栏,导航栏页面,万能搜索引擎,头像,留言,所有壁纸,当前壁纸,天气,字体颜色,重字体颜色,背景颜色,背景透明度,背景确认框,背景框颜色,背景框透明度,毛玻璃,自动备份,使用次数,倒计时,密码,作品展示,音乐,搜索记录,轮播选择,HTSP,注册表,背景颜色,主题风格,ai,ai快捷指令,课表,总时长,自动导入本地,自动加密导出
 
 // 检查是否为时间
 function isValidDateTime(str) {
@@ -4843,7 +4843,7 @@ sz_jcbbgx.addEventListener('click', function(e) {
                 .then(response => {
                     if (!response.ok) {
                         sz_jcbbgx_jccs++;
-                        console.log('检查第' + i + '次: 网络响应不正常!');
+                        console.log('检查第' + sz_jcbbgx_jccs + '次: 网络响应不正常!');
 
                         sz_jcbbgx.innerText = '网络响应不正常!';
 
@@ -4861,7 +4861,7 @@ sz_jcbbgx.addEventListener('click', function(e) {
                     sz_jcbbgx_jccs++;
                     var jc_banben = data.substring(0, 100).replace(/[\r\n]/g, "").match(/^.*?'(.*?)'/)[1].substring(1).split('.').map(Number);
                     var dq_banben = document.querySelector('.gywm_ban_ben').innerText.substring(1).split('.').map(Number);
-                    console.log('检查第' + i + '次:' + '\n检查版本:V' + jc_banben + '\n当前版本:V' + dq_banben);
+                    console.log('检查第' + sz_jcbbgx_jccs + '次:' + '\n检查版本:V' + jc_banben + '\n当前版本:V' + dq_banben);
 
                     // 比大小
                     if (jc_banben[0] - 0 < dq_banben[0] - 0) {
@@ -4879,10 +4879,10 @@ sz_jcbbgx.addEventListener('click', function(e) {
                 })
                 .catch(error => {
                     sz_jcbbgx_jccs++;
-                    console.log('检查第' + i + '次: 获取失败!');
+                    console.log('检查第' + sz_jcbbgx_jccs + '次: 获取失败!');
                     if (sz_jcbbgx.innerText == '正在检查更新...' && sz_jcbbgx_jccs == sz_jcbbgx_xjc) {
                         sz_jcbbgx.innerText = '获取失败!';
-                        sz_jcbbgx_xjc = 10;
+                        sz_jcbbgx_xjc += 10;
                         sz_jcbbgx_jccs = 0;
                         setTimeout(function() {
                             sz_jcbbgx.innerText = '检查版本更新';
@@ -4960,6 +4960,32 @@ window.addEventListener('beforeunload', function() {
     if (localStorage.zddrbd == '1' && bdzdtj_true == 1) {
         var daoru_ym_bendi = document.querySelector('.daoru_ym_bendi');
         daoru_ym_bendi.click();
+    }
+});
+
+
+
+
+//自动加密导出
+jm_daoru_zd_kaiguan = document.querySelector('.jm_daoru_zd_kaiguan');
+if (localStorage.zdjmdc == '1') {
+    jm_daoru_zd_kaiguan.innerHTML = '✔';
+} else if (localStorage.zdjmdc == '0') {
+    jm_daoru_zd_kaiguan.innerHTML = '';
+}
+jm_daoru_zd_kaiguan.addEventListener('click', function(e) {
+    if (localStorage.zdjmdc == '1') {
+        localStorage.zdjmdc = '0';
+        jm_daoru_zd_kaiguan.innerHTML = '';
+    } else if (localStorage.zdjmdc == '0') {
+        localStorage.zdjmdc = '1';
+        jm_daoru_zd_kaiguan.innerHTML = '✔';
+    }
+});
+window.addEventListener('beforeunload', function() {
+    if (localStorage.zdjmdc == '1' && bdzdtj_true == 1) {
+        var daoru_ym_jmdc = document.querySelector('.daoru_ym_jmdc');
+        daoru_ym_jmdc.click();
     }
 });
 
