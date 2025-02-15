@@ -1934,7 +1934,7 @@ document.addEventListener('keydown', function(e) {
             }
         }
         // 搜索快速打开快捷键
-        if (lian_jie_r2.style.display == 'block' && sspp_gs == 0) {
+        if (lian_jie_r2.style.display == 'block' && sspp_gs == 0 && nrmaxs1.style.display == 'block') {
             document.querySelector('.lian_jie_r2').querySelector('.lj_lj_t').click();
         }
     }
