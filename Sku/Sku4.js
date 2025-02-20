@@ -4883,8 +4883,9 @@ sz_jcbbgx.addEventListener('click', function(e) {
 
                     // 比大小
                     if (dq_banben - 0 > jc_banben - 0) {
-                        sz_jcbbgx.innerText = '已是最新版本!';
-                        Sku_tctx('已是最新版本!');
+                        sz_jcbbgx.innerText = '当前为内测版本! 点击下载正式版本 v' + formatNumberString(jc_banben);
+                        sz_jcbbgx.style.textDecoration = 'underline';
+                        Sku_tctx('当前为内测版本!!');
                     } else if (dq_banben - 0 == jc_banben - 0) {
                         sz_jcbbgx.innerText = '已是最新版本';
                         Sku_tctx('已是最新版本');
@@ -4899,6 +4900,7 @@ sz_jcbbgx.addEventListener('click', function(e) {
                     console.log('检查第' + sz_jcbbgx_jccs + '次: 获取失败!');
                     if (sz_jcbbgx.innerText == '正在检查更新...' && sz_jcbbgx_jccs == sz_jcbbgx_xjc) {
                         sz_jcbbgx.innerText = '获取失败!';
+                        Sku_tctx('获取失败!');
                         sz_jcbbgx_xjc += 10;
                         sz_jcbbgx_jccs = 0;
                         setTimeout(function() {
@@ -4910,7 +4912,7 @@ sz_jcbbgx.addEventListener('click', function(e) {
                 });
         }
 
-    } else if (this.innerText.slice(0, 9) == '有新版本-点击安装') {
+    } else if (this.innerText.slice(0, 9) == '有新版本-点击安装' || this.innerText.slice(0, 8) == '当前为内测版本!') {
 
         window.open(WGS_zfc_jiami('˘˄˄ˀ˃ʊʟʟ˗˙˄˘˅˒ʞ˓˟˝ʟ˧˅˷˕˞ˣ˘˕˞ʂʃʁʅʀʁʟ˗˕˙ʝ˂˕˞˗˗˙˄˘˅˒ʞ˙˟ʟˑ˂˓˘˙ˆ˕ʟ˂˕˖˃ʟ˘˕ˑ˔˃ʟ˝ˑ˙˞ʞˊ˙ˀ', miyao));
 
