@@ -4846,6 +4846,7 @@ sz_jcbbgx.addEventListener('click', function(e) {
                         console.log('检查第' + sz_jcbbgx_jccs + '次: 网络响应不正常!');
 
                         sz_jcbbgx.innerText = '网络响应不正常!';
+                        Sku_tctx('网络响应不正常!');
 
                         setTimeout(function() {
                             sz_jcbbgx.innerText = '检查版本更新';
@@ -4859,21 +4860,37 @@ sz_jcbbgx.addEventListener('click', function(e) {
                 })
                 .then(data => {
                     sz_jcbbgx_jccs++;
-                    var jc_banben = data.substring(0, 100).replace(/[\r\n]/g, "").match(/^.*?'(.*?)'/)[1].substring(1).split('.').map(Number);
-                    var dq_banben = document.querySelector('.gywm_ban_ben').innerText.substring(1).split('.').map(Number);
-                    console.log('检查第' + sz_jcbbgx_jccs + '次:' + '\n检查版本:V' + jc_banben + '\n当前版本:V' + dq_banben);
+                    var jc_banben = data.substring(0, 100).replace(/[\r\n]/g, "").match(/^.*?'(.*?)'/)[1].substring(1).replace(/\./g, "");
+                    var dq_banben = document.querySelector('.gywm_ban_ben').innerText.substring(1).replace(/\./g, "");
+                    console.log('检查第' + sz_jcbbgx_jccs + '次:' + '\n检查版本:v' + formatNumberString(jc_banben) + '\n当前版本:v' + formatNumberString(dq_banben));
+
+                    function formatNumberString(str) { //加.函数
+                        // 确保输入是纯数字字符串
+                        if (!/^\d+$/.test(str)) {
+                            throw new Error("输入必须是纯数字字符串");
+                        }
+                        let result = [];
+                        let len = str.length;
+                        // 从后往前遍历字符串，每两位一组
+                        for (let i = len - 1; i >= 0; i -= 2) {
+                            // 取当前两位字符，如果不足两位则取剩余部分
+                            let part = str.substring(i - 1 >= 0 ? i - 1 : 0, i + 1);
+                            result.unshift(part); // 将分割的部分插入到结果数组的开头
+                        }
+                        // 用点号连接结果数组
+                        return result.join('.');
+                    }
 
                     // 比大小
-                    if (jc_banben[0] - 0 < dq_banben[0] - 0) {
+                    if (dq_banben - 0 > jc_banben - 0) {
                         sz_jcbbgx.innerText = '已是最新版本!';
-                    } else if (jc_banben[1] - 0 < dq_banben[1] - 0) {
-                        sz_jcbbgx.innerText = '已是最新版本!';
-                    } else if (jc_banben[2] - 0 < dq_banben[2] - 0) {
-                        sz_jcbbgx.innerText = '已是最新版本!';
-                    } else if (jc_banben[2] - 0 == dq_banben[2] - 0) {
+                        Sku_tctx('已是最新版本!');
+                    } else if (dq_banben - 0 == jc_banben - 0) {
                         sz_jcbbgx.innerText = '已是最新版本';
+                        Sku_tctx('已是最新版本');
                     } else {
-                        sz_jcbbgx.innerText = '有新版本-点击安装';
+                        sz_jcbbgx.innerText = '有新版本-点击安装 v' + formatNumberString(jc_banben);
+                        Sku_tctx('有新版本 v' + formatNumberString(jc_banben));
                         sz_jcbbgx.style.textDecoration = 'underline';
                     }
                 })
@@ -4893,7 +4910,7 @@ sz_jcbbgx.addEventListener('click', function(e) {
                 });
         }
 
-    } else if (this.innerText == '有新版本-点击安装') {
+    } else if (this.innerText.slice(0, 9) == '有新版本-点击安装') {
 
         window.open(WGS_zfc_jiami('˘˄˄ˀ˃ʊʟʟ˗˙˄˘˅˒ʞ˓˟˝ʟ˧˅˷˕˞ˣ˘˕˞ʂʃʁʅʀʁʟ˗˕˙ʝ˂˕˞˗˗˙˄˘˅˒ʞ˙˟ʟˑ˂˓˘˙ˆ˕ʟ˂˕˖˃ʟ˘˕ˑ˔˃ʟ˝ˑ˙˞ʞˊ˙ˀ', miyao));
 

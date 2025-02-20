@@ -832,6 +832,8 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
+    } else {
+        AI_cl('抱歉,此模型已被遗弃,请更换模型!', 2, mod_s, AI_ID);
     }
 
 }
