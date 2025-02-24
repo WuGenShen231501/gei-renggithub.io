@@ -395,6 +395,10 @@
         text-align: center;
     }
     
+    .sy_djs_r_s:hover {
+        background-color: var(--zi_ti_color_10) !important;
+    }
+    
     .sy_djs_r_t {
         float: left;
         width: 100%;
@@ -536,6 +540,10 @@
         line-height: 38px;
         bottom: 0;
         left: calc((100% - 400px) / 2);
+    }
+    
+    .sy_zpzs_jr:hover {
+        background-color: var(--zi_ti_color_10) !important;
     }
     
     .sy_zpzs_sc {
@@ -863,6 +871,16 @@
         color: var(--zi_ti_color);
         outline: none;
         resize: none;
+        padding: 0 10px;
+        text-indent: 0px;
+    }
+    
+    .sy_ke_biao_l_gl {
+        background-color: var(--zi_ti_color_10) !important;
+    }
+    
+    .sy_ke_biao_l:hover {
+        background-color: var(--zi_ti_color_10) !important;
     }
     
     .sy_zpzs_kaiguan2 {

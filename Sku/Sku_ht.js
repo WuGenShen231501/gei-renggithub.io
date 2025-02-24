@@ -1,5 +1,5 @@
 //检测是否第一次使用
-var ban_ben_s = 'v88.55.30';
+var ban_ben_s = 'v89.09.34';
 if (localStorage.ban_ben) {
     //检查是否最新
     if (localStorage.ban_ben !== ban_ben_s) {
@@ -12,8 +12,6 @@ if (localStorage.ban_ben) {
     //制定版本
     localStorage.ban_ben = ban_ben_s;
 }
-
-
 
 // 导航栏
 if (localStorage.dhr_sz == undefined) {

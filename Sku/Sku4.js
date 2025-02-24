@@ -27,8 +27,8 @@ function S_ku_jiemi(myao2) {
     return jm_lsbl2;
 }
 
-// WGS_wenbengundon(class, 首行缩进)
-// function WGS_wenbengundon(qwe, asd) {
+// WGS_wenbengundon11(class, 首行缩进)
+// function WGS_wenbengundon11(qwe, asd) {
 //     if (asd == undefined) { asd = 0; }
 //     var wb = document.querySelectorAll(qwe);
 //     for (var i = 0; i < wb.length; i++) {
@@ -49,7 +49,7 @@ function S_ku_jiemi(myao2) {
 //     }
 // }
 
-function WGS_wenbengundon(qwe, asd) {
+function WGS_wenbengundon11(qwe, asd) {
     var wb = document.querySelectorAll(qwe);
     for (var i = 0; i < wb.length; i++) {
         // 克隆元素
@@ -1084,6 +1084,7 @@ cdcsh_click.addEventListener('click', function(e) {
         localStorage.removeItem('ke_biao_zhou');
         localStorage.dr_mmdr_drsj = 0;
 
+        bdzdtj_true = 0; // 禁止刷新时自动导入
         location.reload();
     }
     WGS_HTSP_TJ.focus();
@@ -1159,6 +1160,7 @@ bfsz_xzcd.addEventListener('click', function() {
     localStorage.ke_biao_zhou = localStorage.ke_biao_zhou_bf;
 
     localStorage.dr_mmdr_drsj = 0;
+    bdzdtj_true = 0; // 禁止刷新时自动导入
     location.reload();
 });
 //自动上传
@@ -1661,6 +1663,8 @@ function daoru_sz_hs() {
         }
         // 时间戳0
         localStorage.dr_mmdr_drsj = 0;
+        // 禁止自动导入导出
+        bdzdtj_true = 0;
         location.reload();
     } else {
         Sku_tctx('格式错误 ! 缺少导入模块');
@@ -1801,10 +1805,17 @@ daoru_ym_bendi.addEventListener('click', function(e) {
         zd_daochu[daochu_daoru_max.length] = getFormattedTime();
 
         //保存
-        window.localStorage.setItem(
-            `${'DATE:' + getFormattedTime() + ' Byte:' + JSON.stringify(zd_daochu).length}自动保存`,
-            JSON.stringify(zd_daochu)
-        )
+        if (beforeunload_jmdc == 0) {
+            window.localStorage.setItem(
+                `${'DATE:' + getFormattedTime() + ' Byte:' + JSON.stringify(zd_daochu).length} 本地导入`,
+                JSON.stringify(zd_daochu)
+            )
+        } else {
+            window.localStorage.setItem(
+                `${'DATE:' + getFormattedTime() + ' Byte:' + JSON.stringify(zd_daochu).length} 自动本地导入`,
+                JSON.stringify(zd_daochu)
+            )
+        }
 
         // 更新html
         var daorubendi_max_hd = document.querySelector('.daorubendi_max_hd');
@@ -1856,13 +1867,15 @@ cxjiaz_daorubendi_xx();
 
 function cxjiaz_daorubendi_xx() {
     function getAutoSaveKeys() {
-        const keys = Object.keys(localStorage);
-        const autoSaveKeys = keys.filter(key => key.includes('自动保存'));
-        return autoSaveKeys;
+        const keys = Object.keys(localStorage); // 获取所有 localStorage 键名
+        const filteredKeys = keys.filter(key =>
+            key.includes('本地导入') || key.includes('自动本地导入')
+        );
+        return filteredKeys; // 返回筛选结果
     }
     var daoru_bendi_s = getAutoSaveKeys();
 
-    // 去除全部自动保存4个字
+    // 去除全部本地导入4个字
     function removeLastFourChars(arr) {
         return arr.map(str => str.slice(0, -4));
     }
@@ -1910,7 +1923,7 @@ function bendidaoru_click() {
         daorubendi_s_yy[i].addEventListener('click', function(e) {
             if (this.innerText == '应用') {
                 try {
-                    var daorubendi_click = this.previousElementSibling.innerHTML + '自动保存';
+                    var daorubendi_click = this.previousElementSibling.innerHTML + '本地导入';
                     var drnr = window.localStorage.getItem(`${daorubendi_click}`);
                     var daoru_sz = JSON.parse(drnr);
                     for (var i = 0; i < daoru_sz.length; i++) {
@@ -1932,8 +1945,8 @@ function bendidaoru_click() {
                     // 这个块会在 try 中有错误抛出时执行
                     Sku_tctx('模块错误 ! key值以改变 或 其他原因');
                 }
-            } else {
-                var daorubendi_click = this.previousElementSibling.innerHTML + '自动保存';
+            } else if (this.innerText == '选择') {
+                var daorubendi_click = this.previousElementSibling.innerHTML + '本地导入';
                 var drnr = window.localStorage.getItem(`${daorubendi_click}`);
 
                 const allClickableElements = document.querySelectorAll('.daorubendi_s_yy');
@@ -1967,7 +1980,7 @@ function bendidaoru_sc() {
     for (var i = 0; i < daorubendi_s_cs.length; i++) {
         daorubendi_s_cs[i].addEventListener('click', function(e) {
             // 删除内存
-            var daorubendi_s_cs = this.previousElementSibling.previousElementSibling.innerHTML + '自动保存';
+            var daorubendi_s_cs = this.previousElementSibling.previousElementSibling.innerHTML + '本地导入';
             localStorage.removeItem(`${daorubendi_s_cs}`);
             // 删除html
             this.parentNode.parentNode.removeChild(this.parentNode);
@@ -2763,7 +2776,7 @@ so_ssk.addEventListener('input', function(e) {
             // 显示最上面
             ssbqym_max.scroll(0, 0);
 
-            WGS_wenbengundon('.ssbq_s', 9);
+            WGS_wenbengundon11('.ssbq_s', 9);
         }
 
         // 关键词搜索
@@ -2818,7 +2831,7 @@ so_ssk.addEventListener('input', function(e) {
             // 显示最上面
             ssbqym_max.scroll(0, 0);
 
-            WGS_wenbengundon('.ssbq_s', 9);
+            WGS_wenbengundon11('.ssbq_s', 9);
         }
     }
 });
@@ -2879,7 +2892,7 @@ so_ssk.addEventListener('focus', function(e) {
             // 显示最上面
             ssbqym_max.scroll(0, 0);
 
-            WGS_wenbengundon('.ssbq_s', 9);
+            WGS_wenbengundon11('.ssbq_s', 9);
         }
 
         // 关键词搜索
@@ -2935,7 +2948,7 @@ so_ssk.addEventListener('focus', function(e) {
             // 显示最上面
             ssbqym_max.scroll(0, 0);
 
-            WGS_wenbengundon('.ssbq_s', 9);
+            WGS_wenbengundon11('.ssbq_s', 9);
         }
     }
 });
@@ -3875,8 +3888,8 @@ function zcb_s_jz() {
         ssjl_min2.appendChild(div);
     }
     // 滚动字体
-    WGS_wenbengundon('.lszcb_s_name', '5');
-    WGS_wenbengundon('.lszcb_s_dizhi', '5');
+    WGS_wenbengundon11('.lszcb_s_name', '5');
+    WGS_wenbengundon11('.lszcb_s_dizhi', '5');
     // 添加创建reg
     var lszcb_s_cj = document.querySelectorAll('.lszcb_s_cj');
     for (var i = 0; i < lszcb_s_cj.length; i++) {
@@ -4637,7 +4650,7 @@ function ss_gjcss(so_ssk_value2) {
                                         so_yq_s.style.display = 'none';
                                         ssbqym.style.display = 'block';
 
-                                        WGS_wenbengundon('.ssbq_s2', 9);
+                                        WGS_wenbengundon11('.ssbq_s2', 9);
                                     }
 
                                     // 所有补全
@@ -4883,7 +4896,7 @@ sz_jcbbgx.addEventListener('click', function(e) {
 
                     // 比大小
                     if (dq_banben - 0 > jc_banben - 0) {
-                        sz_jcbbgx.innerText = '当前为内测版本! 点击下载正式版本 v' + formatNumberString(jc_banben);
+                        sz_jcbbgx.innerText = '当前为内测版本! 点击下载正式版 v' + formatNumberString(jc_banben);
                         sz_jcbbgx.style.textDecoration = 'underline';
                         Sku_tctx('当前为内测版本!!');
                     } else if (dq_banben - 0 == jc_banben - 0) {
@@ -4975,8 +4988,44 @@ daoru_zd_kaiguan.addEventListener('click', function(e) {
         daoru_zd_kaiguan.innerHTML = '✔';
     }
 });
+var beforeunload_jmdc = 0;
 window.addEventListener('beforeunload', function() {
     if (localStorage.zddrbd == '1' && bdzdtj_true == 1) {
+        beforeunload_jmdc = 1;
+
+        // 最多保存10个
+        function getAutoSaveKeys() {
+            const keys = Object.keys(localStorage);
+            const autoSaveKeys = keys.filter(key => key.includes('自动本地导入'));
+            return autoSaveKeys;
+        }
+        var daoru_bendi_s = getAutoSaveKeys();
+
+        // 去除全部自动本地导入6个字
+        function removeLastFourChars(arr) {
+            return arr.map(str => str.slice(0, -6));
+        }
+        var daoru_bendi_s_sj = removeLastFourChars(daoru_bendi_s);
+        // 从大到小排序
+        function bubbleSort2(arr) {
+            var len = arr.length;
+            for (var i = 0; i < len - 1; i++) {
+                for (var j = 0; j < len - i - 1; j++) {
+                    if (arr[j] < arr[j + 1]) {
+                        var temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
+        var daoru_bendi_s_pailie_sj = bubbleSort2(daoru_bendi_s_sj);
+        if (daoru_bendi_s_pailie_sj.length >= 10) {
+            var daorubendi_s_cs = daoru_bendi_s_pailie_sj[daoru_bendi_s_pailie_sj.length - 1] + '自动本地导入';
+            localStorage.removeItem(`${daorubendi_s_cs}`);
+        }
+
         var daoru_ym_bendi = document.querySelector('.daoru_ym_bendi');
         daoru_ym_bendi.click();
     }

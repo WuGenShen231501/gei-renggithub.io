@@ -113,37 +113,74 @@ function containsAllChars(str11, str22) {
 
 
 // 所有文本超出字体浮动效果
-function WGS_wenbengundon(qwe, asd) {
+function WGS_wenbengundon(qwe, asd, hzxg) {
+    // 设置默认值
+    asd = asd || 0;
+    hzxg = hzxg || 0;
+
+    // 获取目标元素
     var wb = document.querySelectorAll(qwe);
+
+    // 遍历每个元素
     for (var i = 0; i < wb.length; i++) {
-        // 克隆元素
-        var clone = wb[i].cloneNode(true);
+        var element = wb[i];
+        var element_w = wb[i].offsetWidth;
+        // 克隆元素并测量宽度
+        var clone = element.cloneNode(true);
         clone.style.visibility = 'hidden';
         clone.style.position = 'absolute';
+        if (element_w !== 0) { clone.style.width = element_w + 'px'; }
         clone.style.left = '-9999px'; // 将其移出视图
         document.body.appendChild(clone);
-        // 进行测量
-        var scrollWidth = clone.scrollWidth;
-        var offsetWidth = clone.offsetWidth;
-        // 移除克隆元素
+        var scrollWidth2 = clone.scrollWidth;
+        var offsetWidth2 = clone.offsetWidth + hzxg;
         document.body.removeChild(clone);
 
-        if (scrollWidth > offsetWidth) {
-            wb[i].addEventListener('mouseover', function(e) {
+        // 如果已经绑定了事件处理函数，则先移除
+        if (element._onMouseOver && element._onMouseOut) {
+            element.removeEventListener('mouseover', element._onMouseOver);
+            element.removeEventListener('mouseout', element._onMouseOut);
+        }
+
+        if (scrollWidth2 > offsetWidth2) {
+            // 定义鼠标悬停事件处理函数
+            element._onMouseOver = function() {
+                // 克隆元素并测量宽度(测试用)
+                // var element = this;
+                // var element_w = this.offsetWidth;
+                // var clone = element.cloneNode(true);
+                // clone.style.visibility = 'hidden';
+                // clone.style.position = 'absolute';
+                // if (element_w !== 0) { clone.style.width = element_w + 'px'; }
+                // clone.style.left = '-9999px'; // 将其移出视图
+                // document.body.appendChild(clone);
+                // var scrollWidth2 = clone.scrollWidth;
+                // var offsetWidth2 = clone.offsetWidth + hzxg;
+                // console.log('复制内容' + scrollWidth2, '复制盒子' + offsetWidth2);
+                // document.body.removeChild(clone);
+
                 var nrcd = this.scrollWidth;
-                var hzcd = this.offsetWidth;
+                var hzcd = this.offsetWidth + hzxg;
+                // console.log('内容' + nrcd, '盒子' + hzcd);
                 var duochu = nrcd - hzcd;
                 var sj = duochu / 50;
                 this.style.transition = sj + 's linear';
-                this.style.textIndent = (nrcd * -1) + hzcd + (asd * 1) + 'px';
-            });
-            wb[i].addEventListener('mouseout', function(e) {
+                this.style.textIndent = (nrcd * -1) + hzcd + (asd * 1) - 2 + 'px';
+            };
+
+            // 定义鼠标移出事件处理函数
+            element._onMouseOut = function() {
                 this.style.transition = '';
                 this.style.textIndent = asd + 'px';
-            });
+            };
+
+            // 添加新的事件监听器
+            element.addEventListener('mouseover', element._onMouseOver);
+            element.addEventListener('mouseout', element._onMouseOut);
         }
     }
 }
+
 
 
 
@@ -2697,19 +2734,15 @@ function ke_biao_sdhs() {
     if (JSON.parse(localStorage.ke_biao_sd) == false) {
         for (var i = 0; i < sy_ke_biao_l.length; i++) {
             sy_ke_biao_l[i].disabled = false;
-            sy_ke_biao_l[i].style.pointerEvents = '';
         }
         ke_biao_tianjia.style.display = 'block';
         ke_biao_zhoushu.disabled = false;
-        ke_biao_zhoushu.style.pointerEvents = '';
     } else {
         for (var i = 0; i < sy_ke_biao_l.length; i++) {
             sy_ke_biao_l[i].disabled = true;
-            sy_ke_biao_l[i].style.pointerEvents = 'none';
         }
         ke_biao_tianjia.style.display = 'none';
         ke_biao_zhoushu.disabled = true;
-        ke_biao_zhoushu.style.pointerEvents = 'none';
     }
 }
 //开机输出课表
@@ -2729,6 +2762,7 @@ for (var i = 0; i < ke_biao.length; i++) {
 }
 ke_biao_sdhs();
 ke_biao_gaolian();
+WGS_wenbengundon('.sy_ke_biao_l');
 // 保存当前
 function ke_biao_bchs() {
     var ke_biao_lssz = [];
@@ -2743,6 +2777,7 @@ function ke_biao_bchs() {
     }
 
     localStorage.ke_biao = JSON.stringify(ke_biao_lssz);
+    WGS_wenbengundon('.sy_ke_biao_l');
 }
 // 失去焦点确定
 sy_ke_biao_max.addEventListener('input', function(event) {
@@ -2869,7 +2904,39 @@ for (var i = 0; i < ke_biao_zd_hao.length; i++) {
         ke_biao_zd_hao[i + ke_biao_xinqi - 8].innerText = timestampToDate(Date.now() + (86400000 * i));
     }
 }
+// 同一事件高亮
+sy_ke_biao_max.addEventListener('mouseover', function(e) {
+    const target = e.target;
+    if (target.classList.contains('sy_ke_biao_l')) {
+        // 删除所有高亮
+        var sy_ke_biao_l = document.querySelectorAll('.sy_ke_biao_l');
+        for (var i = 0; i < sy_ke_biao_l.length; i++) {
+            sy_ke_biao_l[i].classList.remove('sy_ke_biao_l_gl');
+        }
+        // 使用正则表达式提取主体部分
+        var target_nr = target.value;
+        const result = target_nr.replace(/\s*\[.*$/, '').trim();
+        if (result !== '') {
+            for (var i = 0; i < sy_ke_biao_l.length; i++) {
+                // 找相同项除了自己
+                if (containsAllChars(result, sy_ke_biao_l[i].value) && sy_ke_biao_l[i] !== target) {
+                    sy_ke_biao_l[i].classList.add('sy_ke_biao_l_gl');
+                }
+            }
+        }
+    } else {
+        var sy_ke_biao_l = document.querySelectorAll('.sy_ke_biao_l');
+        for (var i = 0; i < sy_ke_biao_l.length; i++) {
+            sy_ke_biao_l[i].classList.remove('sy_ke_biao_l_gl');
+        }
+    }
+});
+sy_ke_biao_max.addEventListener('mouseout', function(e) {
+    const target = e.target;
+    if (target.classList.contains('sy_ke_biao_l')) {
 
+    }
+});
 
 
 
