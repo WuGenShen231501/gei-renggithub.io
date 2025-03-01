@@ -1932,7 +1932,7 @@ sy_djs_txl_jsq = setInterval(function() {
         } else if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.indexOf('后') == -1 && sy_djs_r_s_1.indexOf('明') == -1) {
             sy_djs_txl.style.display = 'block';
 
-            nr = '距离 “' + sy_djs_r_t_1.innerHTML + '”只有 ' + sy_djs_r_s_1 + ' ↓';
+            nr = '『' + sy_djs_r_t_1.innerHTML + '』只有 ' + sy_djs_r_s_1 + ' ↓';
         } else {
             sy_djs_txl.style.display = 'none';
         }
@@ -1953,7 +1953,7 @@ sy_djs_txl_jsq = setInterval(function() {
         } else if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.indexOf('后') == -1 && sy_djs_r_s_1.indexOf('明') == -1) {
             sy_djs_txl2.style.display = 'block';
 
-            nr = '距离 “' + sy_djs_r_t_1.innerHTML + '”只有 ' + sy_djs_r_s_1 + ' ↓';
+            nr = '『' + sy_djs_r_t_1.innerHTML + '』只有 ' + sy_djs_r_s_1 + ' ↓';
         } else {
             sy_djs_txl2.style.display = 'none';
         }
@@ -2011,7 +2011,7 @@ top_dhl_S[0].addEventListener('click', function(e) {
             } else if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.indexOf('后') == -1 && sy_djs_r_s_1.indexOf('明') == -1) {
                 sy_djs_txl.style.display = 'block';
 
-                nr = '距离 “' + sy_djs_r_t_1.innerHTML + '”只有 ' + sy_djs_r_s_1 + ' ↓';
+                nr = '『' + sy_djs_r_t_1.innerHTML + '』只有 ' + sy_djs_r_s_1 + ' ↓';
             } else {
                 sy_djs_txl.style.display = 'none';
             }
@@ -2032,7 +2032,7 @@ top_dhl_S[0].addEventListener('click', function(e) {
             } else if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.indexOf('后') == -1 && sy_djs_r_s_1.indexOf('明') == -1) {
                 sy_djs_txl2.style.display = 'block';
 
-                nr = '距离 “' + sy_djs_r_t_1.innerHTML + '”只有 ' + sy_djs_r_s_1 + ' ↓';
+                nr = '『' + sy_djs_r_t_1.innerHTML + '』只有 ' + sy_djs_r_s_1 + ' ↓';
             } else {
                 sy_djs_txl2.style.display = 'none';
             }
