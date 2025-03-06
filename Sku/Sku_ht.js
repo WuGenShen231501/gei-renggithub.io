@@ -1,5 +1,5 @@
 //检测是否第一次使用
-var ban_ben_s = 'v89.09.20';
+var ban_ben_s = 'v89.21.76';
 if (localStorage.ban_ben) {
     //检查是否最新
     if (localStorage.ban_ben !== ban_ben_s) {

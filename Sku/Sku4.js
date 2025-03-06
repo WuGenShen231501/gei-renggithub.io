@@ -1860,6 +1860,14 @@ daoru_ym_bendi_click.addEventListener('click', function(e) {
     }
 
     duibi_bendi = 0;
+
+    // 提醒自动导入仅保留最近10条
+    var shezhi_ym_top = document.querySelector('.shezhi_daoru_bendi_ym').querySelector('.shezhi_ym_top');
+    if (localStorage.zddrbd == 0) {
+        shezhi_ym_top.lastChild.nodeValue = '本地导入信息';
+    } else {
+        shezhi_ym_top.lastChild.nodeValue = '本地导入信息 ( 🛈自动导入仅保留最近10条 )';
+    }
 });
 
 // 导出所有保存的密钥  
