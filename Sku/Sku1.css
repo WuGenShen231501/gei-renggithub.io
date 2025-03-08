@@ -501,6 +501,30 @@
         line-height: 38px;
         text-align: center;
     }
+    /* 倒计时搜索 */
+    
+    .djs_ssk {
+        position: absolute;
+        top: -25px;
+        left: 0px;
+        color: var(--zi_ti_color);
+        border: 0;
+        border-bottom: 1px solid var(--zi_ti_color);
+        outline: none;
+        background-color: rgb(255, 255, 255, 0);
+        text-indent: 10px;
+        width: 100px;
+        height: 20px;
+        opacity: 0.5;
+    }
+    
+    .djs_ssk:hover {
+        opacity: 1;
+    }
+    
+    .djs_ssk:focus {
+        opacity: 1;
+    }
     /* ----作品展示----- */
     
     .sy_zpzs_max {
