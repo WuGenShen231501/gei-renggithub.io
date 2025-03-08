@@ -141,7 +141,7 @@ function WGS_wenbengundon(qwe, asd, hzxg) {
             element.removeEventListener('mouseover', element._onMouseOver);
             element.removeEventListener('mouseout', element._onMouseOut);
         }
-
+        // console.log('内容' + scrollWidth2, '盒子' + offsetWidth2);
         if (scrollWidth2 > offsetWidth2) {
             // 定义鼠标悬停事件处理函数
             element._onMouseOver = function() {
@@ -629,6 +629,9 @@ function SC_djs() {
             sy_djs_r_time[i].style.borderBottom = '1px solid ' + RGB_zhq(localStorage.bei_jing_kuan_color, localStorage.bei_jing_kuan_tmd);
         }
     }
+
+    //溢出滚动
+    WGS_wenbengundon('.sy_djs_r_t');
 
     //倒计时
     function countDown(time) {
@@ -1945,7 +1948,7 @@ function sy_djs_txl_jsq_hs() {
             if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1 == '时间已到<br>超过三天自动删除') {
                 sy_djs_txl.style.display = 'block';
 
-                nr = '“' + sy_djs_r_t_1.innerHTML + '”时间已到 ↓';
+                nr = '『' + sy_djs_r_t_1.innerHTML + '』时间已到 ↓';
             } else if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.indexOf('后') == -1 && sy_djs_r_s_1.indexOf('明') == -1) {
                 sy_djs_txl.style.display = 'block';
 
@@ -1966,7 +1969,7 @@ function sy_djs_txl_jsq_hs() {
             if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1 == '时间已到<br>超过三天自动删除') {
                 sy_djs_txl2.style.display = 'block';
 
-                nr = '“' + sy_djs_r_t_1.innerHTML + '”时间已到 ↓';
+                nr = '『' + sy_djs_r_t_1.innerHTML + '』时间已到 ↓';
             } else if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.indexOf('后') == -1 && sy_djs_r_s_1.indexOf('明') == -1) {
                 sy_djs_txl2.style.display = 'block';
 

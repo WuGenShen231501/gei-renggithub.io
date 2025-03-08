@@ -401,9 +401,11 @@
     
     .sy_djs_r_t {
         float: left;
-        width: 100%;
+        width: 200px;
         height: 40px;
         line-height: 39px;
+        overflow: hidden;
+        white-space: nowrap;
     }
     
     .sy_djs_r_time {
@@ -512,10 +514,10 @@
         border-bottom: 1px solid var(--zi_ti_color);
         outline: none;
         background-color: rgb(255, 255, 255, 0);
-        text-indent: 10px;
         width: 100px;
         height: 20px;
         opacity: 0.5;
+        text-align: center;
     }
     
     .djs_ssk:hover {
