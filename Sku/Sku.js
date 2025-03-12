@@ -588,6 +588,7 @@ function html_css() {
     document.documentElement.style.setProperty('--mao_bo_li', 'blur(' + localStorage.mao_bo_li + 'px)');
     document.documentElement.style.setProperty('--bei_jing_color', RGB_zhq(localStorage.bei_jing_color, localStorage.bei_jing_tmd));
     document.documentElement.style.setProperty('--bei_jing_kuan_color', RGB_zhq(localStorage.bei_jing_kuan_color, localStorage.bei_jing_kuan_tmd));
+    document.documentElement.style.setProperty('--zi_ti_color_50', RGB_zhq(localStorage.zi_ti_color, 0.50));
     document.documentElement.style.setProperty('--zi_ti_color_20', RGB_zhq(localStorage.zi_ti_color, 0.20));
     document.documentElement.style.setProperty('--zi_ti_color_10', RGB_zhq(localStorage.zi_ti_color, 0.10));
     document.documentElement.style.setProperty('--zi_ti_click_color_15', RGB_zhq(localStorage.zi_ti_click_color, 0.15));

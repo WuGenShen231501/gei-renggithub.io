@@ -503,6 +503,45 @@
         line-height: 38px;
         text-align: center;
     }
+    
+    .djs_tjym_qr:hover {
+        background-color: var(--zi_ti_color_20);
+    }
+    
+    .djs_tjym_dttj {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--zi_ti_color);
+        border-radius: 5px;
+        line-height: 20px;
+        text-align: center;
+        bottom: 16px;
+    }
+    
+    .djs_tjym_dttj:hover {
+        background-color: var(--zi_ti_color_20);
+    }
+    
+    .djs_tjym_dttj_r {
+        left: calc(((100% - 20px) / 2) - 60px);
+    }
+    
+    .djs_tjym_dttj_z {
+        left: calc(((100% - 20px) / 2) - 30px);
+    }
+    
+    .djs_tjym_dttj_y {
+        left: calc((100% - 20px) / 2);
+    }
+    
+    .djs_tjym_dttj_n {
+        left: calc(((100% - 20px) / 2) + 30px);
+    }
+    
+    .djs_tjym_dttj_n2 {
+        left: calc(((100% - 20px) / 2) + 60px);
+    }
     /* 倒计时搜索 */
     
     .djs_ssk {
