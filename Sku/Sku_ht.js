@@ -1,5 +1,38 @@
 //检测是否第一次使用
-var ban_ben_s = 'v89.51.98';
+var ban_ben_s = '896,335';
+
+function formatNumberString(input) {
+    if (isAlreadyFormatted(input)) { return input; }
+    const [prefix, numberPart] = splitPrefixAndNumbers(input);
+    const formattedNumbers = formatNumbers(numberPart);
+    var asd = prefix + formattedNumbers;
+    asd[0] == 'v' ? (asd = asd) : (asd = 'v' + asd);
+    return asd;
+}
+
+function splitPrefixAndNumbers(input) {
+    const match = input.match(/^([\s\S]*?)(\d[\d.,]*)$/);
+    return match ? [match[1], match[2].replace(/,/g, '')] : [input, ''];
+}
+
+function formatNumbers(numberStr) {
+    const digits = numberStr.split('').reverse();
+    const groups = [];
+    for (let i = 0; i < digits.length; i += 2) { groups.push(digits.slice(i, i + 2).reverse().join('')); }
+    return groups.reverse().join('.');
+}
+
+function isAlreadyFormatted(input) {
+    const [, numberPart] = splitPrefixAndNumbers(input);
+    if (!numberPart) return false;
+    const groups = numberPart.split('.');
+    return groups.every((group, i) =>
+        (i === 0 && /^\d{1,2}$/.test(group)) ||
+        (i > 0 && /^\d{2}$/.test(group))
+    );
+}
+ban_ben_s = formatNumberString(ban_ben_s);
+
 if (localStorage.ban_ben) {
     //检查是否最新
     if (localStorage.ban_ben !== ban_ben_s) {
