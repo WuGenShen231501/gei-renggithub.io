@@ -4881,7 +4881,7 @@ sz_jcbbgx.addEventListener('click', function(e) {
                 })
                 .then(data => {
                     sz_jcbbgx_jccs++;
-                    var jc_banben = data.substring(0, 100).replace(/[\r\n]/g, "").match(/^.*?'(.*?)'/)[1].substring(1).replace(/\./g, "");
+                    var jc_banben = data.substring(0, 50).replace(/[\r\n]/g, "").match(/^.*?'(.*?)'/)[1][0] == ('v' || 'V') ? data.substring(0, 50).replace(/[\r\n]/g, "").match(/^.*?'(.*?)'/)[1].substring(1).replace(/\./g, "").replace(/\,/g, "") : data.substring(0, 50).replace(/[\r\n]/g, "").match(/^.*?'(.*?)'/)[1].replace(/\./g, "").replace(/\,/g, "");
                     var dq_banben = document.querySelector('.gywm_ban_ben').innerText.substring(1).replace(/\./g, "");
                     console.log('检查第' + sz_jcbbgx_jccs + '次:' + '\n检查版本:v' + formatNumberString(jc_banben) + '\n当前版本:v' + formatNumberString(dq_banben));
 

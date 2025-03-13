@@ -1,5 +1,5 @@
 //检测是否第一次使用
-var ban_ben_s = '896,335';
+var ban_ben_s = '896,552';
 
 function formatNumberString(input) {
     if (isAlreadyFormatted(input)) { return input; }
