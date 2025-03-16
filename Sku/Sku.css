@@ -1,0 +1,1003 @@
+/* --------所有----------- */
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    cursor: none;
+}
+
+ul {
+    list-style: none;
+}
+
+input {
+    cursor: none;
+}
+
+html {
+    cursor: none;
+}
+
+
+/* CSS样式，应用于被选择的文本 */
+
+.AI_zj-selected {
+    background-color: yellow;
+    /* 背景颜色 */
+    color: red;
+    /* 文本颜色 */
+}
+
+
+/* -----------背景-----------*/
+
+html {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    overflow: hidden;
+    background-size: cover;
+}
+
+
+/* -----------头部导航栏----------- */
+
+.topmax {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 56px;
+    background-color: rgb(0, 0, 0, 0.75);
+    z-index: 1;
+    transition: 0.5s;
+}
+
+.top_dhl {
+    position: absolute;
+    width: auto;
+    height: 100%;
+    top: 0;
+    left: 150px;
+}
+
+.top_dhl div {
+    float: left;
+    width: 70px;
+    height: 100%;
+    text-align: center;
+    line-height: 56px;
+    font-size: 14px;
+    letter-spacing: 3px;
+    transition: 0.1s;
+}
+
+.dhr_click {
+    color: rgb(255, 213, 0);
+    border-bottom: 2px solid rgb(255, 213, 0);
+}
+
+
+/* -----------头部搜索----------- */
+
+::placeholder {
+    color: rgb(255, 255, 255, 0.5);
+}
+
+.so_suo {
+    position: absolute;
+    width: auto;
+    height: 100%;
+    top: 0;
+    right: 300px;
+    transition: 0.4s;
+}
+
+.so_anniu {
+    float: right;
+    width: 45px;
+    height: 40px;
+    margin: 8px 0px;
+    border: 1px solid white;
+    border-left: 0;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    text-align: center;
+    line-height: 38px;
+    font-weight: bold;
+}
+
+.iconfont {
+    color: rgb(255, 213, 0);
+}
+
+.so_ssk {
+    float: right;
+    width: 300px;
+    height: 40px;
+    margin: 8px 0px;
+    border: 1px solid white;
+    border-right: 0;
+    border-left: 0;
+    background-color: rgb(0, 0, 0, 0);
+    color: white;
+    outline: none;
+}
+
+.so_yq {
+    float: right;
+    width: 50px;
+    height: 40px;
+    margin: 8px 0px;
+    line-height: 39px;
+    text-align: center;
+    border: 1px solid white;
+    border-right: 0;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    font-size: 14px;
+}
+
+.so_yq:hover {
+    color: rgb(255, 213, 0);
+}
+
+.so_yq_s {
+    position: absolute;
+    width: 150px;
+    height: auto;
+    top: 62px;
+    right: 570px;
+    background-color: var(--bei_jing_color);
+    z-index: 1;
+    border-radius: 5px;
+    backdrop-filter: var(--mao_bo_li);
+    transition: 0.4s;
+}
+
+.so_yq_s_sjx {
+    position: absolute;
+    border: 10px solid var(--bei_jing_kuan_color);
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    top: -9px;
+    left: 40px;
+    transform: rotate(45deg);
+}
+
+.so_yqs {
+    width: 150px;
+    height: 40px;
+    border-bottom: 1px solid;
+    background-size: auto 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.so_yqs:last-child {
+    /* 最后一个 */
+    border: 0;
+}
+
+.so_yqs:last-child:hover {
+    /* 最后一个 */
+    border: 0;
+}
+
+.so_yqs:hover {
+    background-color: var(--zi_ti_click_color_15);
+}
+
+.so_yq_baidu {
+    background-image: url(https://www.baidu.com/img/flexible/logo/pc/result@2.png);
+}
+
+.so_yq_sogou {
+    background-image: url(https://www.sogou.com//web/img/logo115_50x2.png?v=5%202x);
+    background-size: auto 40px;
+}
+
+.so_yq_360 {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjY4IiBoZWlnaHQ9IjYwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE3NC4xLDcuMykiIGZpbGw9IiMzMzMiPjxwYXRoIGQ9Ik02MC45LDI3LjdIODEuMWMxLjQsMCwxLjgtLjYsMS44LTEuNVYyNC43YzAtLjcuMi0xLC44LTFsMy4yLjFjLjcsMCwxLC40LDEsMXYzLjNjMCwyLjMtMy4yLDQuNy02LjEsNC43YzAsMC0yLjYsMC03LjksMHY1LjNjMCwzLjItMSw1LjYtNCw1LjdINjQuOGMtLjQsMC0uOS0uNi0uOS0xLjFWNDEuN0M2My45LDQwLjgsNjUuMSw0MCw2Ni42LDM5LjloLjljMS0uMSwxLjUtLjksMS41LTEuOFYzMi43Yy04LjIsMC0xMi40LDAtMTIuNiwwYy0xLjgsMC0yLjQtMS42LTEuOC0yLjdsMi43LTUuM2MtMS40LDAtMi4xLDAtMi4xLDBjLTEuOCwwLTEuNC0yLjItLjctMy40TDU3LDE3LjhjLjEtLjIuOS0xLjEsMS44LTEuMWMuOSwwLDMuNy4yLDMsMi4ybC0uOS44YzEyLjEsMCwxOC4yLDAsMTguMiwwYzEuMywwLDEuOS4zLDEuOSwxLjFjMCwxLjEtLjUsMy45LTMuNywzLjlzLTE0LjEsMC0xNC45LDBsLTEuNSwzek02Ny45LDEwLjdMNjcuOSw3LjdINTUuOWMtLjYsMC0xLS4zLTEtLjlWMy43YzAtLjUuNC0uOSwxLS45SDY3LjlMNjcuOSwxLjZjMC0uNS40LS45LjktLjlMNzIsLjdjLjUsMCwuOS40LC45LjlWMi44aDEyLjZjLjQsMCwuNC40LC41LDFWNS4zYzAsMS4yLTEsMi40LTQuMSwyLjRINzIuOUw3Mi45LDEwLjdoMTIuNmMyLjksMCw0LjUsMS42LDQuNSw0LjV2Mi42YzAsLjUtLjQuOS0uOS45TDg1LjksMTguOGMtLjUsMC0uOS0uNC0uOS0uOVYxNi42YzAtMS4yLS45LS45LTEuOC0uOUg1Ni44Yy0uNiwwLS45LjItLjkuOXYxLjJjMCwuNS0uNC45LS45LjlINTEuOGMtLjUsMC0uOS0uNC0uOS0uOWwwLTIuNWMwLTIuNywxLjYtNC41LDQuNS00LjVINjcuOXptMjIsMzBjMCwxLDAsMS45LDAsMS45YzAsLjUtLjQuOS0uOS45Yy0uMSwwLS4yLDAtLjMtLjFMNzguMiwzOSw3OC4yLDM5Qzc3LjUsMzguNyw3Ni45LDM4LDc2LjksMzcuMWMwLDAsMC0xLjgsMC0xLjhjMC0uNS40LS45LjktLjljLjEsMCwuMiwwLC4zLjFsMTAuNCw0LjQuMSwuMWMuNy4zLDEuMiwxLDEuMiwxLjh6TTY0LjksMzQuNGMwLDAsMCwyLjQsMCwyLjVjMCwuOC0uMiwxLjItLjksMS42Yy0uMSwwLS4xLjEtLjIuMWMtMS42LDEtNiwzLjMtMTEuNyw1Yy0uMSwwLS4yLDAtLjMsMGMtLjQuMS0uOS0uNC0uOS0uOWMwLTEuNSwwLTIuMywwLTIuM2MwLS45LjYtMS40LDEuMy0xLjdjMCwwLDAsMCwwLDBjMi4yLS45LDYuOS0yLjQsMTEuMy01LjJjLjEtLjEuMy0uMS40LS4xYy41LDAsLjkuNCwuOS45eiIvPjxwYXRoIGQ9Ik0zMi45LDIzLjdjMCwwLDAsLjcsMCwyYy42LDAsOS40LDAsOS40LDBjLjksMCwxLjYuNywxLjYsMS42YzAsLjQsMCwzLjQsMCwzLjVjLS43LDEuNi01LjcsNS4xLTgsNi42YzQuOSwxLjUsNy42LDIuNCw4LjIsMi42Yy45LjMsLjgsMS42LjgsMS45YzAsLjMsMCwuNS0uMy44Yy0uMy40LTEuNCwxLjctNSwuN0wzMCw0MC45Yy00LjgsMi04LjMsMi40LTEwLjQsMi44Yy0yLjcuMy00LS45LTQuMi0xLjVDMTUsNDEuNywxNS4xLDQxLjYsMTUsNDEuMmMtLjEtLjQuMy0xLjEuOS0xLjFjLjYtLjEsNy4zLTEsOS4xLTEuOEwxOSwzNS43QzE4LjcsMzUuNSwxNy45LDM0LjMsMTcuOSwzNFYzMy4xYzAtMS4xLDEuNi0yLjUsNi4yLS41bDUuNywzLjJjMi43LTEuNCw0LjQtMy4yLDctNS4xSDE5LjVjLTEuNywwLTIuNy0yLjctMi43LTQuMWMwLS42LjUtLjksMS0uOUgyNy45VjIzLjdIMjEuNGMtMi43LDAtNC40LTEuOC00LjQtNC41YzAtLjMsMC00LDAtMTFjMC0yLjksMS45LTUuNCw0LjQtNS40TDI0LjksMi43Yy40LDAsMSwuNiwxLDFWNS4yYzAsLjktLjIsMi41LTMuMiwyLjVjLS45LDAtLjguOS0uOCwxLjhMMjEuOSwxMC43YzEuNywwLDIuOCwwLDMuMSwwYy41LDAsLjkuNCwuOS45czAsMi43LDAsMy4yYzAsLjUtLjQuOS0uOS45Yy0uMywwLTEuNCwwLTMuMSwwYzAsMS4yLDAsMS45LDAsMi4xYzAsLjMuMywuOS45LC45Yy40LDAsMi4xLDAsNS4xLDBMMjcuOSwxLjhjMC0uNS41LTEuMSwxLTEuMWgzYy40LDAsMSwuNiwxLDEuMUwzMi45LDE4LjdjMy4xLDAsNC44LDAsNS4yLDBjLjIsMCwuOSwwLC45LS45YzAtLjYsMC0xLjMsMC0yLjFjLTEuNiwwLTIuNiwwLTIuOSwwYy0uNSwwLTEtLjQtMS0uOXMwLTIuNSwwLTNjMC0uNS41LTEuMSwxLTEuMWMuMywwLDEuMywwLDIuOSwwYzAtLjUsMC0xLDAtMS43QzM4LjksOC4xLDM4LjgsNy43LDM3LjgsNy43Yy0zLjEsMC0yLjktMS40LTIuOS0yLjVWMy44YzAtLjQuNi0xLDEtMWwzLjcsMGMyLjUsMCw0LjMsMi41LDQuMyw1LjRjMCwyLjksMCw4LjIsMCwxMXMtMS42LDQuNS00LjMsNC41Yy00LjQsMC02LjcsMC02LjcsMHpNMTEuOSw2LjdoMi4xYy41LDAsLjkuNSwuOSwxVjEwLjdjMCwuNS0uNCwxLS45LDFsLTIuMSwwLDAsMTBjLjctLjQsMS4zLS43LDEuNi0uOWMuNS0uMywxLjQtLjEsMS40LjZ2Mi43YzAsLjUsMCwxLjEtLjYsMS41bC0yLjQsMS40VjM3LjJjMCwzLjYtMi40LDYuNS02LDYuNUMzLjgsNDMuNywyLjYsNDMuNywyLjMsNDMuN2MtLjQsMC0xLjQtLjQtMS40LS45YzAtLjMsMC0xLjEsMC0yLjJjMC0uNSwxLjctMS44LDQuMi0xLjhjLjksMCwxLjgtMS40LDEuOC0yLjdWMjkuMUwzLjEsMzAuN0MyLjYsMzAuOSwxLjksMzAuNSwxLjksMzBWMjcuMWMwLS42LjUtMS4xLjktMS4zYy4zLS4xLDEuNy0uOCw0LjEtMlYxMS43YzAsMC0zLjIsMC0zLjIsMEMyLjgsMTEuNywxLjksMTAuOSwxLjksMTBWNy43YzAtLjYuNS0xLC45LTFMNi45LDYuN1YxLjhjMC0uNC40LTEuMSwxLTEuMUwxMC45LjdjLjUsMCwxLC42LDEsMS4xVjYuN3oiLz48L2c+PHBhdGggZD0iTTE2NCw0MC41YzAsMy45LTEuMSw1LjQtNi4zLDUuNHMuMywwLTQuNCwwYy00LjcsMC02LjMtMS42LTYuMy01LjRjMC0zLjgsMC0xMi43LDAtMTcuMmMwLTQuNS45LTYuMyw2LjMtNi4zYzMuNiwwLDUuMSwwLDQuNCwwYzUuNCwwLDYuMywxLjUsNi4zLDYuM2MwLDQuOSwwLDEzLjQsMCwxNy4yek0xNTEuOSwxMmMtNi45LDAtOS45LDIuNy05LjksMTAuOXMwLDEyLjcsMCwxOUMxNDIsNDguMywxNDUuNiw1MSwxNTEuOSw1MXMuOSwwLDcuMiwwUzE2OSw0OC4zLDE2OSw0MS45YzAtNi4zLDAtMTAuOSwwLTE5UzE2Ni4yLDEyLDE1OS4xLDEycy0uMywwLTcuMiwweiIgZmlsbD0iIzMzMyIvPjxwYXRoIGQ9Ik0xMzEsNDIuMWMwLDMuNi0uOSwzLjktNSwzLjloLTVjLTMuNiwwLTYsMC02LTMuNmwtLjEtNy40YzAtLjUuMy0uOS45LS45aDEwLjZjMy40LDAsNC41LDEuMyw0LjUsNHY0ek0xMTUsMjlDMTE1LDI3LjMsMTE1LDI1LDExNSwyMkMxMTUsMTcuNCwxMTUuNCwxNywxMTksMTdjMy42LDAsNy41LDAsMTAuNywwUzEzNCwxNS42LDEzNCwxNC4zczAtLjksMC0xLjRDMTM0LDEyLjQsMTMzLjQsMTIsMTMzLjEsMTJjLS4zLDAtNy44LDAtMTQuMSwwQzExMi43LDEyLDExMCwxNC43LDExMCwyMmMwLDcuMywwLDE2LjMsMCwyMC45UzExMS44LDUxLDExOSw1MWM3LjIsMCwxLjgsMCw4LDBTMTM2LDQ4LjcsMTM2LDQzLjdjMC01LDAtMS44LDAtNi40cy0xLjgtOC40LTktOC40Yy00LjgsMC04LjgsMC0xMiwweiIgZmlsbD0iIzMzMyIvPjxwYXRoIGQ9Ik03OSwxMkM3OC41LDEyLDc4LDEyLjUsNzgsMTNzMC0uMiwwLDFzLjgsMyw0LDNzNi44LDAsMTEsMHM2LC40LDYsNGMwLDIuNCwwLDUuMSwwLDhDODcuMywyOSw4MS4zLDI5LDgxLDI5Yy0uNSwwLTEsLjUtMSwxczAsMi40LDAsM3MuNCwxLDEsMWMuNiwwLDE3LjMsMCwxNy42LDBzLjQuMSwuNC40czAsMywwLDYuNnMtMS40LDUtNSw1Yy0zLjYsMC05LDAtMTIsMHMtNCwxLjctNCwzczAsLjUsMCwxUzc4LjQsNTEsNzguOSw1MXMxMS42LDAsMTcsMEMxMDEuMyw1MSwxMDQsNDYuOSwxMDQsNDFzMC0xNC4yLDAtMjBDMTA0LDE1LjMsMTAwLDEyLDk1LjksMTJTNzkuNSwxMiw3OSwxMnoiIGZpbGw9IiMzMzMiLz48cGF0aCBkPSJNNTYsNTRjMC0zLjMsMi43LTYsNi02YzMuMywwLDYsMi43LDYsNmMwLDMuMy0yLjcsNi02LDZjLTMuMywwLTYtMi43LTYtNnoiIGZpbGw9IiNmZjk5MzIiLz48cGF0aCBkPSJNNTYuMSw0MS43bC04LjctMy41QzQ2LjcsMzcuOSw0Ni43LDM3LjQsNDcsMzYuN2MuOC0yLjEsMS4yLTQuNCwxLjItNi43QzQ4LjIsMjAuMiwzOS45LDExLjgsMzAsMTEuOFMxMS44LDIwLjIsMTEuOCwzMGMwLDIuMy42LDQuNywxLjQsNi44Yy4yLjQsLjIuOSwwLDEuM2MtLjIuMy0uNCwwLS43LjFMMy42LDQxLjFDMy41LDQxLjIsMy4zLDQxLjIsMy4yLDQxLjJjLS42LDAtMS0uMy0xLjItLjlDLjcsMzYuOSwwLDMzLjUsMCwzMGMwLTE2LjUsMTMuNS0zMCwzMC0zMGMxNi41LDAsMzAsMTMuNCwzMCwyOS45YzAsMy45LS43LDcuNi0yLjEsMTEuMWMtLjEuMy0uNC42LS44LjdjLS4yLjEtLjMuMS0uNS4xYy0uMiwwLS4zLDAtLjUtLjF6IiBmaWxsPSIjMGZiMjY0Ii8+PHBhdGggZD0iTTMuMyw0My44QzIuOCw0Mi44LDIuNCw0MS43LDIsNDAuN0MxLjgsNDAuMiwxLjgsMzkuOCwxLjgsMzkuNmMwLTMuMywyLjctNS45LDYuMS01LjljMi41LDAsNC42LDEuNSw1LjYsMy43Yy4xLjIsLjQuOCwuNiwxLjFDMTcuMiw0NC40LDIzLjMsNDguMiwzMCw0OC4yYzYuNiwwLDEyLjYtMy43LDE1LjgtOS40Yy4zLS42LDEuMS0yLDEuMi0yLjFDNDgsMzQuNyw0OS45LDMzLjcsNTIuMSwzMy43YzMuNCwwLDYuMSwyLjcsNi4xLDUuOWMwLC40LDAsLjktLjMsMS41Yy0uMi41LS40LDEtLjYsMS41bDAsLjFjLS4xLjMtLjIuNS0uNC44QzUxLjgsNTMuNyw0MS41LDYwLDMwLDYwQzE4LjcsNjAsOC41LDUzLjgsMy4zLDQzLjh6IiBmaWxsPSIjZmY5OTMyIi8+PC9nPjwvc3ZnPg==);
+    background-size: auto 20px;
+}
+
+.so_yq_bing {
+    background-image: url(https://rescdn.ilive.cn/eimg/bing.png);
+}
+
+.so_yq_sm {
+    background-image: url(https://open.sm.cn/images/logo.png);
+    background-size: auto 30px;
+}
+
+.so_yq_toutiao {
+    background-size: auto 20px;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTAiIGhlaWdodD0iMjYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzE0MjU1Xzc1MzEwKSI+PHBhdGggZD0iTTQ0LjA0OCAwSDB2MjZoNDQuMDQ4VjB6IiBmaWxsPSIjRjA0MTQyIi8+PHBhdGggZD0iTTEyLjAwMiA3LjkyN1Y1LjI3MWwtNi4wMjUtLjg1OXYyLjY1Nmw2LjAyNS44NnpNNS45NzcgOC45MDZ2Mi42NTZsNi4wMjUuODZWOS43NjVsLTYuMDI1LS44NnpNMjEuNDE2IDE0LjI2SDQuNDA0djIuMzhoMTcuMDEydi0yLjM4ek0zOS42MjUgMTQuMjY0SDIyLjYxM3YyLjM4aDE3LjAxMnYtMi4zOHpNMzguNjc3IDQuNDE0SDI2LjMwMXYyLjM4aDEyLjM3NnYtMi4zOHoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTYuNzA1IDMuODIyaC0yLjcwOWMtLjA3IDUuMzY2LS4xNDcgOC4zODYtMS4xMTggMTAuNS0uOTg4IDIuMTQ1LTMuMDg3IDMuODUyLTcuMjggNy4yNTVsLS41MzcuNDRoNC4yNjJjNi45NTktNS43NTYgNy4yMzUtNy4wNyA3LjM4Mi0xOC4xOTV6TTE4Ljc4NiAxNy44MzRoLTMuMjY4bDIuNjI3IDQuMThoMy4yNjlsLTIuNjI4LTQuMTh6TTM3LjAxOCAxNy44MzRoLTMuMjdsMi42MjggNC4xOGgzLjI2OGwtMi42MjYtNC4xOHpNMjguNTIgMTcuODMyaC0zLjI3bC0yLjYyNyA0LjE3OCAzLjI2OS4wMDEgMi42MjgtNC4xNzl6TTMyLjQ4MyAxMi45MUgyOS43MXY5LjEwM2gyLjc3MlYxMi45MXpNMzYuMTg1IDQuNDE2djEuNjdjLTEuNTc4IDEuMjY2LTQuNzYzIDMuMzg4LTEzLjU3NCA0Ljg2djIuNTM4YzEwLjcwMS0xLjczNCAxNC4zNS00Ljc3IDE2LjA2Ny02LjNWNC40MTdoLTIuNDkzeiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0yNS43MjkgNS45MTJsLS4zMzctLjI0OC0yLjMwNCAxLjM4czEuMDI5Ljc5NiAxLjE0Ljg4YzEuODg0IDEuMzkyIDUuMzI0IDMuOTI5IDE1LjM5NyA1LjU2OHYtMi41NDRjLTkuMTUyLTEuNTQtMTIuMjEtMy43OTQtMTMuODk2LTUuMDM2eiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0yMy4wODYgNy4wNGwyLjMzIDEuNTIzIDIuODA1LTQuMTQ5LTIuNTYzLTEuMTktMi41NzIgMy44MTd6IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTU0Ljk0NCA0Ljc3M2gtNi40ODd2Mi43OTFoNi40ODd2LTIuNzl6TTY4LjI5OCAzLjM3OWgtMy45MTV2Mi40OTdoMy45MTVWMy4zOHpNNjguMjk4IDcuMjAxaC0zLjkxNXYyLjA1N2gzLjkxNVY3LjJ6TTU5LjYwNyA3LjIwMUg1NS42OXYyLjA1N2gzLjkxNlY3LjJ6TTU5LjYwNSA1LjE3OWwtMy45MTQuNjk4VjMuMzc5bDMuOTE0LS42OTd2Mi40OTd6IiBmaWxsPSIjMjIyIi8+PHBhdGggZD0iTTUzLjg0MiAxLjk4MmgtMy4wODZ2MjIuMDM0aDMuMDg2VjEuOTgyeiIgZmlsbD0iIzIyMiIvPjxwYXRoIGQ9Ik00OC40NSAxNi4yOTZ2My4zOTdzMy44NTQtMi4yMzMgNi40ODYtMy45ODJ2LTMuNTU1Yy0yLjMxNiAxLjYyNi02LjQ4NyA0LjE0LTYuNDg3IDQuMTR6TTU4LjQ3MiAzLjM3OUg1NS42OHY4Ljg4N2gyLjc5MlYzLjM3OXpNNjMuNDUzIDEuOTgyaC0yLjk0djEyLjg2MmgyLjk0VjEuOTgyek02OC4zMDQgMy4zNzloLTIuNzkydjguODg3aDIuNzkyVjMuMzc5eiIgZmlsbD0iIzIyMiIvPjxwYXRoIGQ9Ik02Ni44NjYgMTYuMzE1aC05Ljk0NGwtLjkzOC0uNzUzdi0xLjU5N2gxMS44NzN2MS4zMmwtLjk5MSAxLjAzek02OC4yOTkgMTAuNDRoLTEyLjYydjIuMzVINjguM3YtMi4zNXoiIGZpbGw9IiMyMjIiLz48cGF0aCBkPSJNNjcuODQ5IDE1LjY1di0xLjY4NWgtMi4xMjhjLS44MTcgMS44ODctMi40MDkgMy43Ni00LjgwMyA1Ljk0My0uMDY1LjA1OS0uNTcyLjEyLS42MzguMTc4YTU1LjQ3OCA1NS40NzggMCAwMS00Ljk4NSAzLjkzaDQuOTE1YzMuNjQzLTIuOTU2IDYuMzQ0LTUuNyA3LjYzOS04LjM2NnpNNTQuOTA0IDEzLjUwN2MuMDEyLjA0NC4wMjcuMDkuMDQuMTM0di0uMTQ3bC0uMDQuMDEzeiIgZmlsbD0iIzIyMiIvPjxwYXRoIGQ9Ik01OC4xNDIgMTMuOTY1aC0yLjE1OHYxLjYxNmMxLjI5NSAyLjY4NSA0LjAwNCA1LjQ1IDcuNjcgOC40M2g0LjkxNGE1NS40NjIgNTUuNDYyIDAgMDEtNC45OC0zLjkyNWMtLjA2Ni0uMDU5LS41NzEtLjEyLS42MzYtLjE3OC0yLjQtMi4xODEtMy45OTEtNC4wNTYtNC44MS01Ljk0M3pNNzIuOTk5IDcuMDU3aC0zLjIzM3Y0LjY0MWgzLjIzM1Y3LjA1N3pNODEuMzA0IDEuOTgySDc4LjA3djUuNzA0aDMuMjM0VjEuOTgyek04OS42MDYgNy4wNTdoLTMuMjMzdjQuNjQxaDMuMjMzVjcuMDU3eiIgZmlsbD0iIzIyMiIvPjxwYXRoIGQ9Ik04OS42MDYgNy4wNTdoLTE5Ljg0djIuMzVoMTkuODR2LTIuMzV6TTg4Ljg3MyAzLjM3OUg3MC41MDJ2Mi42NDRoMTguMzcxVjMuMzc5ek04MC42MSAxMi40Njd2Mi4yMDNoLTguOTJ2LTEuMjE4bDEuMzk5LS45ODVoNy41MjJ6TTg3LjYyNyAxNS45MThsLjk1MSAxLjA5N3YxLjI1M0g3MC43OTV2LTIuMzVoMTYuODMyeiIgZmlsbD0iIzIyMiIvPjxwYXRoIGQ9Ik03OC42MDcgMTAuMTRoLTMuNjE1Yy0uOC45ODItMS44MzEgMi4wMzItMy4zMDMgMy4yOTdsLjk1NCAxLjEwOSAxLjU5OC0uMDhhNDIuMjM1IDQyLjIzNSAwIDAwNC4zNjYtNC4zMjV6TTg4LjU3OCAxNy4wMWwtMS4xMTUtMy41MDhIODQuNTRsMS4xMTQgMy41MDhoMi45MjN6TTgxLjMwNCAxNy41MzVINzguMDd2Ni40ODJoMy4yMzR2LTYuNDgyek03NC41MDQgMTYuNzYxbC44MTkgMS4wNzhoMi4wNTdzNC4zMTgtMy4wMjEgNy40MjQtNi45NjRIODAuOTljLTEuNzU1IDEuOTcxLTMuOTI5IDMuOTQzLTYuNDg2IDUuODg2ek03NS44MzcgMTkuODFoLTMuNzA4bC0yLjM2MyA0LjIwNmgzLjcwOGwyLjM2My00LjIwNXpNODcuMjQ1IDE5LjgxaC0zLjcxbDIuMzYzIDQuMjA2aDMuNzA4bC0yLjM2MS00LjIwNXoiIGZpbGw9IiMyMjIiLz48L2c+PGRlZnM+PGNsaXBQYXRoIGlkPSJjbGlwMF8xNDI1NV83NTMxMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGg5MHYyNkgweiIvPjwvY2xpcFBhdGg+PC9kZWZzPjwvc3ZnPg==);
+}
+
+.so_yq_zguo {
+    background-size: auto 20px;
+    background-image: url(https://www.chinaso.com/newssearch/img/logo_search_news.daf02a28.png);
+}
+
+.so_yq_guge {
+    text-align: center;
+    line-height: 40px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+}
+
+.so_yq_douyin {
+    background-image: url(https://pr1-greenteacdn.lenovo.com.cn/config/1668491372069_%E6%8A%96%E9%9F%B3.png);
+    background-size: auto 20px;
+}
+
+.so_yq_zhihu {
+    text-align: center;
+    line-height: 40px;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.so_yq_bzhan {
+    background-size: auto 20px;
+    background-image: url(https://static.hdslb.com/images/favicon.ico);
+}
+
+.so_yq_taobao {
+    background-size: auto 23px;
+    background-image: url(https://img.alicdn.com/imgextra/i1/O1CN01BqHq2Z28Ns0s0KLHa_!!6000000007921-2-tps-126-54.png);
+}
+
+.so_yq_jingdong {
+    background-size: auto 23px;
+    background-image: url(https://pr1-greenteacdn.lenovo.com.cn/config/1668583920007_%E4%BA%AC%E4%B8%9C.png);
+}
+
+.so_yq_weibo {
+    background-size: auto 23px;
+    background-image: url(https://pr1-greenteacdn.lenovo.com.cn/config/1671782560819_%E5%BE%AE%E5%8D%9A.png)
+}
+
+
+/* -----------导航栏页面----------- */
+
+.nrmax {
+    position: absolute;
+    width: 1250px;
+    height: auto;
+    left: calc((100% - 1250px) / 2);
+}
+
+.nrmaxs {
+    position: relative;
+}
+
+
+/* -----------鼠标----------- */
+
+.su_biao {
+    display: none;
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    z-index: 99;
+    pointer-events: none;
+    opacity: 0.8;
+    text-align: center;
+    text-indent: -1px;
+    line-height: 10px;
+}
+
+
+/* -----------网络系统-----------*/
+
+.wl_max {
+    position: absolute;
+    width: 100%;
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0, 0.75);
+    text-align: center;
+    line-height: 500px;
+}
+
+.wl_min {
+    position: absolute;
+    width: 50%;
+    height: 40px;
+    top: 480px;
+    left: calc((100% - 50%) / 2);
+    text-align: center;
+}
+
+.wl_sx {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    top: -250px;
+    left: 0;
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+.wl_lxms {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    top: -250px;
+    right: 0;
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+.wl_sx:hover,
+.wl_lxms:hover {
+    color: rgb(255, 213, 0);
+}
+
+
+/* ------------头像------------ */
+
+.top_tou_xian {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid white;
+    right: 5px;
+    top: 5px;
+    overflow: hidden;
+    background-size: 100% 100%;
+}
+
+.top_tou_xian_sc {
+    position: fixed;
+    width: 600px;
+    height: 400px;
+    left: calc((100% - 600px) / 2);
+    top: 150px;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.tou_xian_tp {
+    position: absolute;
+    top: 50px;
+    left: 200px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-size: 100% 100%;
+    background-color: var(--zi_ti_color_20);
+}
+
+.tou_xian_tp2 {
+    position: absolute;
+    top: 50px;
+    left: 200px;
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-size: 100% 100%;
+    background-color: var(--zi_ti_color_20);
+    opacity: 0.6;
+}
+
+.input_tou_xian {
+    position: absolute;
+    top: 300px;
+    left: 50px;
+    width: 400px;
+    height: 40px;
+    border: 0;
+    border-bottom: 1px solid white;
+    background-color: rgb(0, 0, 0, 0);
+    outline: none;
+}
+
+.tou_xian_qr {
+    position: absolute;
+    top: 300px;
+    right: 50px;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-bottom: 1px solid white;
+}
+
+
+/* ---------动态背景----------- */
+
+.max_dtbj {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-position: center;
+    background-size: auto 100%;
+}
+
+
+/* -----版本显示---- */
+
+.max_bbxs {
+    position: fixed;
+    right: 0;
+    bottom: 0px;
+    font-size: 10px;
+    opacity: 0.4;
+}
+
+
+/* -------内存显示-------- */
+
+.max_ncxs {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    font-size: 10px;
+    opacity: 0.4;
+}
+
+
+/* --logo--- */
+
+.top_logo {
+    position: absolute;
+    width: 150px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    line-height: 55px;
+}
+
+.i_toplogo_tb {
+    font-size: 34px;
+    transition: 0.1s;
+}
+
+
+/* 音乐 */
+
+.music_max {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    right: 55px;
+    top: 5px;
+    text-align: center;
+    line-height: 45px;
+}
+
+.i_music_tb {
+    font-size: 35px;
+    transition: 0.1s;
+}
+
+.i_music_tb:hover {
+    font-size: 40px;
+}
+
+.music_ym {
+    display: none;
+    position: absolute;
+    width: 350px;
+    height: auto;
+    right: 55px;
+    top: 56px;
+    border-radius: 5px;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.music_hzmax {
+    float: left;
+    width: calc(100% + 70px);
+    height: auto;
+    min-height: 302px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.music_min {
+    float: left;
+    width: 350px;
+    height: auto;
+}
+
+.music_s {
+    width: 100%;
+    height: 50px;
+    transition: 0.1s;
+}
+
+.music_s_mz {
+    float: left;
+    white-space: nowrap;
+    text-indent: 16px;
+    height: 50px;
+    line-height: 50px;
+    width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.music_ym_gundontiao_max {
+    position: absolute;
+    right: 0;
+    top: 0px;
+    width: 5px;
+    background-color: var(--zi_ti_color_20);
+    overflow: hidden;
+    opacity: 0;
+}
+
+.music_ym_gundontiao_min {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    border-radius: 5px;
+    background-color: var(--zi_ti_color);
+    opacity: 0.6;
+}
+
+.i_music_s_ks_tb,
+.i_music_s_zd_tb,
+.i_music_s_cs_tp {
+    float: right;
+    font-size: 20px;
+    line-height: 50px;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    opacity: 0.2;
+    transition: 0.2s;
+}
+
+.i_music_s_ks_tb:hover,
+.i_music_s_zd_tb:hover,
+.i_music_s_cs_tp:hover {
+    font-size: 23px;
+}
+
+.music_s:hover .i_music_s_ks_tb,
+.music_s:hover .i_music_s_zd_tb,
+.music_s:hover .i_music_s_cs_tp {
+    opacity: 1;
+}
+
+.music_bfq {
+    display: none;
+}
+
+.music_bottom_max {
+    position: relative;
+    float: left;
+    width: 350px;
+    height: 60px;
+}
+
+.music_bottom_hk2 {
+    width: 100%;
+    /*横条的高度*/
+    top: -2px;
+}
+
+.music_bottom_hk {
+    appearance: none;
+    -webkit-appearance: none;
+    /*清除系统默认样式*/
+    height: 2.5px;
+    position: absolute;
+    /*设置左边颜色为#61bd12，右边颜色为#ddd*/
+    /* background-size: 50% 100% !important; */
+    /*设置左右宽度比例*/
+}
+
+.music_bottom_hk::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /*清除系统默认样式*/
+    height: 10px;
+    /*拖动块高度*/
+    width: 10px;
+    /*拖动块宽度*/
+    border-radius: 50%;
+    /*外观设置为圆形*/
+    border: 0;
+    /*设置边框*/
+}
+
+.music_boyyom_zsj {
+    width: auto;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    float: right;
+    font-size: 10px;
+    margin-right: 10px;
+}
+
+.music_boyyom_sssj {
+    width: auto;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    float: right;
+    font-size: 10px;
+    margin-right: 6px;
+}
+
+.music_boyyom_gm {
+    width: 240px;
+    height: 19px;
+    line-height: 19px;
+    text-align: left;
+    float: left;
+    font-size: 10px;
+    margin-left: 6px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.i_music_boyyom_ks {
+    position: absolute;
+    width: 40px;
+    height: 30px;
+    bottom: 14px;
+    font-size: 30px;
+    text-align: center;
+    left: calc((100% /2) - 20px);
+}
+
+.i_music_boyyom_xys {
+    position: absolute;
+    width: 40px;
+    bottom: 14px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 30px;
+    text-align: center;
+    left: calc(((100% /2) - 20px) + 40px);
+}
+
+.i_music_boyyom_sys {
+    position: absolute;
+    width: 40px;
+    bottom: 14px;
+    height: 30px;
+    font-size: 30px;
+    line-height: 30px;
+    text-align: center;
+    left: calc(((100% /2) - 20px) - 41px);
+    transform: rotate(180deg);
+}
+
+.i_music_boyyom_bfsx {
+    position: absolute;
+    width: 40px;
+    bottom: 14px;
+    height: 30px;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    left: calc(((100% /2) - 20px) - 77px);
+}
+
+.i_music_boyyom_sy {
+    position: absolute;
+    width: 40px;
+    bottom: 14px;
+    height: 30px;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    left: calc(((100% /2) - 20px) + 78px);
+}
+
+.music_boyyom_yj {
+    display: none;
+    position: absolute;
+    width: 40px;
+    height: 120px;
+    left: calc(((100% /2) - 20px) + 78px);
+    bottom: 50px;
+    border-radius: 10px;
+}
+
+.i_music_boyyom_tj {
+    position: absolute;
+    width: 40px;
+    bottom: 0px;
+    height: 30px;
+    font-size: 17px;
+    line-height: 30px;
+    text-align: center;
+    left: calc(((100% /2) - 20px) + 160px);
+    opacity: 0.2;
+}
+
+.i_music_boyyom_tj:hover {
+    opacity: 1;
+}
+
+.music_boyyom_tj_ym {
+    display: none;
+    position: absolute;
+    width: 500px;
+    height: 300px;
+    left: calc((100% / 2) - 250px);
+    top: 200px;
+    border-radius: 10px;
+}
+
+.music_bfq2 {
+    position: absolute;
+    left: calc((100% / 2) - 150px);
+    top: 40px;
+    width: 300px;
+}
+
+.music_tjym_mz,
+.music_tjym_url {
+    position: absolute;
+    width: 400px;
+    background-color: rgb(255, 0, 0, 0);
+    border: 0;
+    height: 30px;
+    left: calc((100% / 2) - 200px);
+    border-bottom: 1px solid;
+    outline: none;
+}
+
+.music_tjym_mz {
+    top: 120px;
+}
+
+.music_tjym_url {
+    top: 170px;
+}
+
+.music_tjym_qd {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    border: 1px solid;
+    border-radius: 10px;
+    left: calc((100% / 2) - 50px);
+    bottom: 22px;
+    text-align: center;
+    line-height: 50px;
+}
+
+.music_bottom_hk3 {
+    top: 59px;
+    left: -32px;
+    transform: rotate(-90deg);
+    width: 103px;
+}
+
+
+/* ----------弹窗提醒--------------- */
+
+.Sku_tcjg_Max {
+    position: fixed;
+    padding: 0 50px 0 50px;
+    width: auto;
+    height: 30px;
+    top: 0px;
+    text-align: center;
+    border-radius: 5px;
+    line-height: 30px;
+    transition: 0.5s;
+    z-index: 1;
+    opacity: 0;
+    animation: Sku_tcjg_dh 2.5s linear;
+}
+
+
+/* ------网络状态-------- */
+
+.sku_wlzt {
+    position: fixed;
+    left: 0;
+    bottom: 12px;
+    font-size: 10px;
+    opacity: 0.4;
+}
+
+@keyframes Sku_tcjg_dh {
+    0% {
+        /* 动画开始的画面; */
+        top: 100px;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    85% {
+        top: 100px;
+        opacity: 1;
+    }
+    100% {
+        /* 动画结束的画面; */
+        top: 0px;
+        opacity: 0;
+    }
+}
+
+
+/* ---每日一言--- */
+
+.mryy {
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.mryy:hover {
+    opacity: 1;
+}
+
+
+/* root */
+
+.max_root {
+    position: fixed;
+    right: 0;
+    bottom: 12px;
+    font-size: 10px;
+    opacity: 0.4;
+}
+
+
+/* ---------兼容电脑端----------- */
+
+@media screen and (max-width: 1260px) {
+    .lian_jie_ssk {
+        right: 62px !important;
+    }
+    .lian_jie_r_max {
+        right: 58px;
+    }
+    .lian_jie_l_max {
+        margin-left: 58px;
+    }
+    .lj_zcb_i {
+        right: 36px !important;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .so_suo {
+        right: 100px;
+    }
+}
+
+@media screen and (max-width: 1140px) {
+    .so_yq_s {
+        right: 370px;
+    }
+    .ssbqym {
+        right: 135px !important;
+    }
+    .top_dhl {
+        left: 50px;
+    }
+    .top_logo {
+        display: none;
+    }
+    .sy_dwck {
+        display: none;
+    }
+    .nrmaxs1 {
+        transform: scale(0.8);
+    }
+}
+
+@media screen and (max-width: 890px) {
+    .so_suo {
+        display: none;
+    }
+    .so_yq_s {
+        display: none !important;
+    }
+    .ssbqym {
+        display: none !important;
+    }
+    .nrmaxs1 {
+        transform: scale(0.5);
+    }
+    .nrmaxs2 {
+        transform: scale(0.8);
+    }
+}
+
+
+/* ---------兼容手机端----------- */
+
+@media screen and (max-width: 700px) {
+    .sku_wlzt,
+    .max_ncxs {
+        display: none !important;
+    }
+    .max_bbxs {
+        display: none;
+    }
+    .top_logo {
+        display: none;
+    }
+    .touxain_dtbj {
+        display: none;
+    }
+    .topmax {
+        height: 112px;
+    }
+    .so_suo {
+        display: block;
+        right: calc((100% - 295px) / 2);
+        top: 56px;
+        height: 56px;
+    }
+    .music_max {
+        display: none;
+    }
+    .so_ssk {
+        width: 200px;
+    }
+    .top_dhl {
+        left: calc((100% - 280px) / 2);
+        height: 56px;
+    }
+    .nrmax {
+        width: 1200px;
+        transform: scale(0.3);
+        top: 0px;
+        left: calc((100% - 1200px) / 2);
+    }
+    .sy_lbt {
+        margin-top: 500px !important;
+    }
+    .nrmaxs0 {
+        height: 2400px !important;
+    }
+    .sy_djs,
+    .sy_nrs_t {
+        transform: translateY(0px) !important;
+        opacity: 1 !important;
+    }
+    .nrmaxs1 {
+        transform: translateY(-200px);
+    }
+    .nrmaxs2 {
+        transform: translateY(600px);
+    }
+    .lian_jie_r_max {
+        float: left;
+    }
+    .shezhi_max {
+        transform: scale(1.6);
+    }
+    .top_tou_xian_sc {
+        transform: scale(0.5);
+    }
+    .liu_yan {
+        transform: scale(1.6);
+    }
+    .lian_jie_l_max {
+        margin-left: 0px;
+    }
+}

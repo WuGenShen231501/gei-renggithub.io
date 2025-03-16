@@ -1,0 +1,1010 @@
+    .nrmaxs0 {
+        position: absolute;
+        width: 1250px;
+        z-index: 0;
+        overflow: hidden;
+    }
+    
+    .nrmaxs0_nr {
+        width: calc(100% + 70px);
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        transition: 1s;
+        opacity: 0;
+        transform: translateY(600px);
+    }
+    /* ------全局设置----- */
+    
+    .sy_shezhi_gn {
+        position: fixed;
+        width: 1px;
+        height: 1px;
+        text-align: center;
+        line-height: 15px;
+        z-index: 1;
+    }
+    
+    .sy_s_jiao_xing {
+        position: absolute;
+        top: 5px;
+        left: -12px;
+        width: 0px;
+        height: 0px;
+        border-top: 12px solid rgb(0, 0, 0, 0.75);
+        border-left: 12px solid rgb(0, 0, 0, 0.75);
+        border-right: 12px solid transparent !important;
+        border-bottom: 12px solid transparent !important;
+        transform: rotate(-45deg);
+        border-radius: 3px 0px 0px 0px;
+    }
+    
+    .sy_shezhi_gns {
+        position: absolute;
+        width: 102px;
+        height: 34px;
+        background-color: rgb(0, 0, 0, 0.75);
+        right: -120px;
+        top: -17px;
+        border-radius: 0px 5px 5px 0px;
+    }
+    
+    .sy_shezhi_gn_cmm {
+        float: right;
+        width: 34px;
+        height: 34px;
+        overflow: hidden;
+        text-align: center;
+        line-height: 33px;
+    }
+    
+    .sy_shezhi_gn_sc {
+        float: right;
+        width: 34px;
+        height: 34px;
+        overflow: hidden;
+        text-align: center;
+        line-height: 34px;
+    }
+    
+    .sy_shezhi_gn_tj {
+        float: right;
+        width: 34px;
+        height: 34px;
+        overflow: hidden;
+        text-align: center;
+        line-height: 34px;
+    }
+    /* ----------轮播图球球---------- */
+    
+    .sy_lbt {
+        position: relative;
+        width: 1100px;
+        height: 523px;
+        margin-left: calc((1250px - 1100px) / 2);
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    
+    .sy_lbt_b {
+        margin-top: 35px;
+        width: 1250px;
+        height: 50px;
+        border-top: 2px dashed white;
+        text-align: center;
+        line-height: 50px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    .sy_lbt_qp {
+        position: absolute;
+        border-radius: 50%;
+        animation: sy_lbt_qp_dh 5s linear;
+        transition: 0.5s;
+    }
+    
+    @keyframes sy_lbt_qp_dh {
+        0% {
+            /* 动画开始的画面; */
+            top: -30px;
+        }
+        100% {
+            /* 动画结束的画面; */
+            top: 523px;
+        }
+    }
+    /* ----------轮播图随机内容---------- */
+    
+    .lbnr_max {
+        position: relative;
+        width: auto;
+        height: calc((100% - ((100% - 450px) / 6)) / 5);
+        white-space: nowrap;
+    }
+    
+    .lbnr_min {
+        position: absolute;
+        display: inline-block;
+        width: auto;
+        height: 90px;
+        overflow: hidden;
+        margin-top: calc(101.89px - 90px);
+        margin-left: calc(101.89px - 90px);
+        border: 1px solid;
+        border-radius: 10px;
+    }
+    
+    .lbnr_djs {
+        margin: 11px 10px 0;
+        font-weight: bold;
+    }
+    
+    .lbnr_djs2 {
+        margin: 11px 10px 0;
+    }
+    
+    .lbnr_zp {
+        margin: 11px 10px 0;
+        font-weight: bold;
+    }
+    
+    .lbnr_zp2 {
+        margin: 11px 10px 0;
+    }
+    
+    .lbnr_ljtp {
+        float: left;
+        width: 60px;
+        height: 60px;
+        margin: 15px 0 0 10px;
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+        overflow: hidden;
+        border-radius: 5px;
+        background-position: center;
+        border: 1px solid;
+    }
+    
+    .lbnr_lj_xx {
+        float: left;
+        width: 120px !important;
+        height: 60px !important;
+        margin: 15px 0 0 10px;
+    }
+    
+    .lbnr_ljmz {
+        float: left;
+        width: 120px;
+        height: 30px;
+        overflow: hidden;
+        font-size: 14px;
+        line-height: 30px;
+        white-space: nowrap;
+    }
+    
+    .lbnr_ljbz {
+        float: left;
+        width: 120px;
+        height: 30px;
+        overflow: hidden;
+        font-size: 12px;
+        line-height: 30px;
+        white-space: nowrap;
+    }
+    
+    .lbnr_lj_dz {
+        float: left;
+        margin: 15px 10px 0 10px;
+        width: 80px;
+        height: 60px;
+    }
+    
+    .lbnr_ljdz {
+        float: left;
+        width: 80px;
+        height: 25px;
+        margin-top: 2.5px;
+        border: 1px solid rgb(0, 0, 0);
+        border-radius: 10px;
+        top: 0;
+        text-align: center;
+        font-size: 10px;
+        line-height: 23px;
+    }
+    
+    .lbnr_ljxz {
+        float: left;
+        width: 80px;
+        height: 25px;
+        margin-top: 5px;
+        border: 1px solid rgb(0, 0, 0);
+        border-radius: 10px;
+        bottom: 0;
+        text-align: center;
+        font-size: 12px;
+        line-height: 24px;
+    }
+    
+    .lbnr_jl {
+        margin: 11px 10px 0;
+        font-weight: bold;
+    }
+    
+    .lbnr_jl2 {
+        margin: 11px 10px 0;
+    }
+    
+    .lbnr_sz {
+        margin: 11px 10px 0;
+        font-weight: bold;
+    }
+    
+    .lbnr_sz2 {
+        margin: 11px 10px 0;
+    }
+    
+    .i_sy_sjnr_yybfq {
+        font-size: 30px;
+    }
+    
+    .lbnr_yy {
+        position: relative;
+        height: 30px;
+        margin: 11px 10px 0;
+    }
+    
+    .lbnr_yy2 {
+        min-width: 102px;
+        height: 30px;
+        margin: 11px 10px 0;
+    }
+    
+    .lbnr_yy div {
+        font-weight: bold;
+        position: absolute;
+        top: 6px;
+        left: 38px;
+    }
+    /* ----------3d------------ */
+    
+    .sy_3d_kaiguan {
+        position: absolute;
+        top: 580px;
+        right: 90px;
+        width: 25px;
+        height: 25px;
+        border: 1px solid;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 24px;
+        transform: rotateZ(90deg);
+    }
+    
+    .i_sy_3d_kaiguan {
+        font-size: 20px;
+    }
+    
+    .sd_dtnr_max {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        perspective: 800px;
+    }
+    
+    .sd_dtnr_min {
+        position: absolute;
+        width: 100%;
+        height: auto;
+        left: 0;
+        transform: rotateY(28deg);
+    }
+    
+    .sd_dtnr_s {
+        position: relative;
+        white-space: nowrap;
+        width: auto;
+        height: 101.89px;
+    }
+    /* --------倒计时-------- */
+    
+    .sy_nrs_t {
+        width: 1250px;
+        height: 40px;
+        margin-top: 50px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .sy_nrs_t_span {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        line-height: 38px;
+        text-align: center;
+        margin: 0px 10px;
+    }
+    
+    .sy_djs {
+        position: relative;
+        width: 1250px;
+        height: 200px;
+        margin-bottom: 100px;
+        border-radius: 5px;
+    }
+    
+    .sy_djs_l {
+        position: relative;
+        float: left;
+        width: 200px;
+        height: 100%;
+        text-align: center;
+    }
+    
+    .sy_djs_l_t {
+        float: left;
+        width: 100%;
+        height: 40px;
+        line-height: 39px;
+    }
+    
+    .sy_djs_l_yr_time {
+        position: absolute;
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        line-height: 40px;
+        top: 40px;
+        left: 0;
+    }
+    
+    .sy_djs_l_time {
+        float: left;
+        width: 100%;
+        height: 120px;
+        line-height: 119px;
+        font-size: 30px;
+    }
+    
+    .sy_djs_l_b {
+        float: left;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+    }
+    
+    .sy_djs_r {
+        float: left;
+        width: calc(100% - 200px);
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    .sy_djs_r_min {
+        height: 100%;
+        position: relative;
+        transition: 0.05s linear;
+    }
+    
+    .sy_djs_r_s {
+        float: left;
+        width: 200px;
+        height: 100%;
+        text-align: center;
+    }
+    
+    .sy_djs_r_s:hover {
+        background-color: var(--zi_ti_color_10) !important;
+    }
+    
+    .sy_djs_r_t {
+        float: left;
+        width: 200px;
+        height: 40px;
+        line-height: 39px;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    
+    .sy_djs_r_time {
+        float: left;
+        width: 100%;
+        height: 120px;
+        line-height: 119px;
+        font-size: 30px;
+    }
+    
+    .sy_djs_r_b {
+        float: left;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+    }
+    /* ----倒计时添加页面---- */
+    
+    .sy_djs_tjym {
+        position: fixed;
+        width: 500px;
+        height: 300px;
+        border-radius: 5px;
+        top: 150px;
+        left: calc((100% - 500px) / 2);
+        background-color: rgb(0, 0, 0, 0.5);
+    }
+    
+    .input_djs_tjym_sj {
+        position: relative;
+        width: 350px;
+        height: 40px;
+        top: 50px;
+        left: calc((100% - 350px) / 2);
+        border: 0;
+        border-bottom: 1px solid white;
+        color: rgb(255, 255, 255);
+        background-color: rgb(0, 0, 0, 0);
+        outline: none;
+        text-indent: 1em;
+    }
+    
+    .djs_tjym_time_s {
+        position: relative;
+        width: 350px;
+        height: 40px;
+        top: 80px;
+        left: calc((100% - 350px) / 2);
+        line-height: 40px;
+    }
+    
+    .input_djs_tjym_time_s {
+        float: left;
+        width: 40px;
+        height: 40px;
+        border: 0;
+        border-bottom: 1px solid white;
+        background-color: rgb(0, 0, 0, 0);
+        outline: none;
+        text-indent: 5px;
+    }
+    
+    .input_djs_tjym_time_s2 {
+        float: right;
+        width: 40px;
+        height: 40px;
+        border: 0;
+        border-bottom: 1px solid white;
+        background-color: rgb(0, 0, 0, 0);
+        outline: none;
+        text-indent: 12px;
+    }
+    
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    
+    .input_djs_tjym_time_fg {
+        float: left;
+    }
+    
+    .input_djs_tjym_time_fg2 {
+        float: right;
+    }
+    
+    .djs_tjym_qr {
+        position: absolute;
+        width: 100px;
+        height: 40px;
+        bottom: 50px;
+        left: calc((100% - 100px) / 2);
+        border: 1px solid white;
+        border-radius: 5px;
+        line-height: 38px;
+        text-align: center;
+    }
+    
+    .djs_tjym_qr:hover {
+        background-color: var(--zi_ti_color_20);
+    }
+    
+    .djs_tjym_dttj {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--zi_ti_color);
+        border-radius: 5px;
+        line-height: 20px;
+        text-align: center;
+        bottom: 16px;
+    }
+    
+    .djs_tjym_dttj:hover {
+        background-color: var(--zi_ti_color_20);
+    }
+    
+    .djs_tjym_dttj_r {
+        left: calc(((100% - 20px) / 2) - 60px);
+    }
+    
+    .djs_tjym_dttj_z {
+        left: calc(((100% - 20px) / 2) - 30px);
+    }
+    
+    .djs_tjym_dttj_y {
+        left: calc((100% - 20px) / 2);
+    }
+    
+    .djs_tjym_dttj_n {
+        left: calc(((100% - 20px) / 2) + 30px);
+    }
+    
+    .djs_tjym_dttj_n2 {
+        left: calc(((100% - 20px) / 2) + 60px);
+    }
+    /* 倒计时搜索 */
+    
+    .djs_ssk {
+        position: absolute;
+        top: -25px;
+        left: 0px;
+        color: var(--zi_ti_color);
+        border: 0;
+        border-bottom: 1px solid var(--zi_ti_color);
+        outline: none;
+        background-color: rgb(255, 255, 255, 0);
+        width: 100px;
+        height: 20px;
+        opacity: 0.5;
+        text-align: center;
+    }
+    
+    .djs_ssk:hover {
+        opacity: 1;
+    }
+    
+    .djs_ssk:focus {
+        opacity: 1;
+    }
+    /* ----作品展示----- */
+    
+    .sy_zpzs_max {
+        width: 1250px;
+        height: auto;
+        padding: 0px 10px 20px;
+        border-radius: 5px;
+    }
+    
+    .iframe1 {
+        position: relative;
+        display: inline-block;
+        width: calc(1536px / 2.61);
+        height: calc((730px / 2.61) + 50px);
+        margin: 20px 10px 0px;
+        overflow: hidden;
+    }
+    
+    iframe {
+        position: absolute;
+        width: 1536px;
+        height: 730px;
+        top: 0;
+        left: 0;
+        border: 0;
+        transform-origin: top left;
+        transform: scale(calc(1 / 2.61));
+    }
+    
+    .sy_zpzs_jr {
+        position: absolute;
+        width: 400px;
+        height: 40px;
+        border: 1px solid white;
+        border-radius: 10px;
+        text-align: center;
+        line-height: 38px;
+        bottom: 0;
+        left: calc((100% - 400px) / 2);
+    }
+    
+    .sy_zpzs_jr:hover {
+        background-color: var(--zi_ti_color_10) !important;
+    }
+    
+    .sy_zpzs_sc {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 40px;
+        bottom: 0;
+        right: 0px;
+    }
+    
+    .sy_zpzs_sc i {
+        opacity: 0.5;
+    }
+    
+    .sy_zpzs_sc i:hover {
+        opacity: 1;
+    }
+    
+    .iframe2 {
+        position: relative;
+        display: inline-block;
+        width: calc(1536px / 2.61);
+        height: calc((730px / 2.61) + 50px);
+        margin: 20px 10px 0px;
+        overflow: hidden;
+    }
+    
+    .sy_zpzs_tj {
+        position: absolute;
+        width: calc(1536px / 2.61);
+        top: 0;
+        left: 0;
+        font-size: 50px;
+        text-align: center;
+        line-height: calc(730px / 2.61);
+        transition: 0.2s;
+        border: 1px solid white;
+    }
+    
+    .sy_zpzs_kaiguan {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 1px solid;
+        border-radius: 5px;
+        top: -25px;
+        left: 0;
+        text-align: center;
+        line-height: 18px;
+    }
+    
+    .sy_zpzs_kaiguan_ts {
+        position: absolute;
+        width: 200px;
+        height: 20px;
+        top: -25px;
+        left: 25px;
+        font-size: 10px;
+        line-height: 20px;
+    }
+    /* -----作品添加页面----- */
+    
+    .sy_zp_tj_ym {
+        position: fixed;
+        width: 500px;
+        height: 300px;
+        border-radius: 5px;
+        left: calc((100% - 500px) / 2);
+    }
+    
+    .input_sy_zp_tj {
+        width: 400px;
+        height: 40px;
+        border: 0;
+        border-bottom: 1px solid white;
+        background-color: rgb(0, 0, 0, 0);
+        margin-left: calc((100% - 400px) / 2);
+        margin-top: 32px;
+        outline: none;
+        text-indent: 1em;
+    }
+    
+    .sy_zp_tj_anniu {
+        position: absolute;
+        width: 100px;
+        height: 50px;
+        text-align: center;
+        line-height: 48px;
+        bottom: 50px;
+        left: calc((100% - 100px) / 2);
+        border: 1px solid white;
+        border-radius: 5px;
+    }
+    /* ----首页底部空余----- */
+    
+    .sy_b {
+        width: 100%;
+        height: 500px;
+        margin-top: 150px;
+    }
+    /* -----回到顶部------ */
+    
+    .sy_hddb {
+        position: fixed;
+        bottom: 100px;
+        right: 50px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 48px;
+        font-size: 24px;
+        transition: all 1s ease 100ms;
+        transform: translateY(200px);
+        opacity: 0;
+    }
+    /* ---定位窗口---- */
+    
+    .sy_dwck {
+        position: fixed;
+        width: 50px;
+        height: 100px;
+        top: 100px;
+        left: -40px;
+        border-radius: 20px;
+        border: 1px solid white;
+        text-align: right;
+        line-height: 98px;
+        transition: 0.3s;
+        opacity: 1;
+    }
+    
+    .sy_dwck_ym {
+        position: fixed;
+        width: 150px;
+        height: 300px;
+        top: 100px;
+        left: -200px;
+        border-radius: 5px;
+        text-align: center;
+        transition: 0.3s;
+        opacity: 0;
+    }
+    
+    .sy_dwck_s {
+        width: 100%;
+        height: 40px;
+        line-height: 39px;
+        border-bottom: 1px solid white;
+        transition: 0.2s;
+    }
+    
+    .sy_dwck_s:hover {
+        text-indent: 0.5em;
+    }
+    /* -----倒计时提醒栏------- */
+    
+    .sy_djs_txl_max {
+        position: absolute;
+        width: auto;
+        height: 50px;
+        bottom: 0;
+        left: 76px;
+    }
+    
+    .sy_djs_txl_max2 {
+        position: absolute;
+        width: auto;
+        height: 50px;
+        bottom: 0;
+        right: 76px;
+    }
+    
+    .sy_djs_txl {
+        display: none;
+        width: auto;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 50px;
+        border-radius: 10px;
+        transition: 0.2s;
+        animation: sy_djs_txl_dh 1s linear;
+    }
+    
+    .sy_djs_txl2 {
+        display: none;
+        width: auto;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 50px;
+        border-radius: 10px;
+        transition: 0.2s;
+        background-color: var(--bei_jing_color);
+        border: var(--bei_jing_kuan_true) solid var(--bei_jing_kuan_color);
+        backdrop-filter: var(--mao_bo_li);
+        animation: sy_djs_txl_dh 1s linear;
+    }
+    
+    .sy_djs_txl:hover,
+    .sy_djs_txl2:hover {
+        transform: scale(1.05);
+    }
+    
+    @keyframes sy_djs_txl_dh {
+        0% {
+            /* 动画开始的画面; */
+            opacity: 0;
+        }
+        100% {
+            /* 动画结束的画面; */
+            opacity: 1;
+        }
+    }
+    
+    @keyframes sy_djs_txl_dh2 {
+        0% {
+            /* 动画开始的画面; */
+            opacity: 0;
+        }
+        100% {
+            /* 动画结束的画面; */
+            opacity: 1;
+        }
+    }
+    
+    .i_djs_z_tb {
+        position: absolute;
+        top: -25px;
+        right: 65px;
+        opacity: 0.5;
+    }
+    
+    .i_djs_y_tb {
+        position: absolute;
+        top: -25px;
+        right: 16px;
+        opacity: 0.5;
+    }
+    
+    .i_djs_y_tb:hover,
+    .i_djs_z_tb:hover {
+        opacity: 1;
+        transition: 0.25s;
+        transform: scale(1.2);
+    }
+    /* ------课表------------ */
+    
+    .sy_ke_biao_max {
+        position: relative;
+        width: 1250px;
+        height: auto;
+        margin-bottom: 100px;
+        border-radius: 5px;
+        /* overflow: hidden; */
+        background-color: var(--bei_jing_color);
+        border: var(--bei_jing_kuan_true) solid var(--bei_jing_kuan_color);
+        backdrop-filter: var(--mao_bo_li);
+    }
+    
+    .sy_ke_biao_top {
+        float: left;
+        height: auto;
+        width: 100%;
+    }
+    
+    .sy_ke_biao_top_s {
+        position: relative;
+        float: left;
+        width: calc(100% / 8);
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+    }
+    
+    .ke_biao_zd_hao {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        opacity: 0.5;
+    }
+    
+    .sy_ke_biao_h_s {
+        border: 0;
+        border-bottom: var(--bei_jing_kuan_true) solid var(--bei_jing_kuan_color);
+    }
+    
+    .sy_ke_biao_l_s {
+        border: 0;
+        border-right: var(--bei_jing_kuan_true) solid var(--bei_jing_kuan_color);
+    }
+    
+    .sy_ke_biao_l_s2 {
+        background-color: var(--zi_ti_color_10) !important;
+    }
+    
+    .sy_ke_biao_top_s:first-child {
+        text-indent: 2em;
+        background-color: var(--zi_ti_color_10) !important;
+    }
+    
+    .sy_ke_biao_h_s:last-child {
+        border: 0;
+        border-bottom: 0;
+    }
+    
+    .sy_ke_biao_l_s:last-child {
+        border: 0;
+        border-right: 0;
+    }
+    
+    .sy_ke_biao_h {
+        height: auto;
+        width: 100%;
+    }
+    
+    .sy_ke_biao_l {
+        width: calc(100% / 8);
+        height: 50px;
+        line-height: 51px;
+        text-align: center;
+        background-color: rgb(0, 0, 0, 0);
+        color: var(--zi_ti_color);
+        outline: none;
+        resize: none;
+        padding: 0 10px;
+        text-indent: 0px;
+    }
+    
+    .sy_ke_biao_l_gl {
+        background-color: var(--zi_ti_color_10) !important;
+    }
+    
+    .sy_ke_biao_l:hover {
+        background-color: var(--zi_ti_color_10) !important;
+    }
+    
+    .sy_zpzs_kaiguan2 {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 1px solid;
+        border-radius: 5px;
+        top: -25px;
+        left: 0;
+        text-align: center;
+        line-height: 18px;
+    }
+    
+    .sy_zpzs_kaiguan_ts2 {
+        position: absolute;
+        width: 200px;
+        height: 20px;
+        top: -25px;
+        left: 25px;
+        font-size: 10px;
+        line-height: 20px;
+        opacity: 0.5;
+    }
+    
+    .ke_biao_tianjia_tb {
+        font-size: 20px;
+    }
+    
+    .ke_biao_tianjia {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        bottom: -25px;
+        line-height: 20px;
+        text-align: center;
+        right: 0;
+        font-size: 10px;
+        line-height: 20px;
+        opacity: 0.5;
+        transition: 0.2s;
+    }
+    
+    .ke_biao_tianjia:hover {
+        opacity: 1;
+    }
+    
+    .ke_biao_zhoushu {
+        position: absolute;
+        left: 21px;
+        top: 1px;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: right;
+        background-color: transparent;
+        color: var(--zi_ti_color);
+        font-size: 25px;
+        border: 0;
+        outline: none;
+        z-index: 1;
+    }
