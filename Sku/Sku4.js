@@ -4881,39 +4881,56 @@ sz_jcbbgx.addEventListener('click', function(e) {
                 })
                 .then(data => {
                     sz_jcbbgx_jccs++;
-                    var jc_banben = data.substring(0, 50).replace(/[\r\n]/g, "").match(/^.*?'(.*?)'/)[1][0] == ('v' || 'V') ? data.substring(0, 50).replace(/[\r\n]/g, "").match(/^.*?'(.*?)'/)[1].substring(1).replace(/\./g, "").replace(/\,/g, "") : data.substring(0, 50).replace(/[\r\n]/g, "").match(/^.*?'(.*?)'/)[1].replace(/\./g, "").replace(/\,/g, "");
-                    var dq_banben = document.querySelector('.gywm_ban_ben').innerText.substring(1).replace(/\./g, "");
-                    console.log('检查第' + sz_jcbbgx_jccs + '次:' + '\n检查版本:v' + formatNumberString(jc_banben) + '\n当前版本:v' + formatNumberString(dq_banben));
+                    try {
+                        // 可能产生错误的代码
+                        var jc_banben = data.substring(0, 50).replace(/[\r\n]/g, "").match(/^.*?"(.*?)"/)[1][0] == ('v' || 'V') ? data.substring(0, 50).replace(/[\r\n]/g, "").match(/^.*?"(.*?)"/)[1].substring(1).replace(/\./g, "").replace(/\,/g, "") : data.substring(0, 50).replace(/[\r\n]/g, "").match(/^.*?"(.*?)"/)[1].replace(/\./g, "").replace(/\,/g, "");
+                        var dq_banben = document.querySelector('.gywm_ban_ben').innerText.substring(1).replace(/\./g, "");
+                        console.log('检查第' + sz_jcbbgx_jccs + '次:' + '\n检查版本:v' + formatNumberString(jc_banben) + '\n当前版本:v' + formatNumberString(dq_banben));
 
-                    function formatNumberString(str) { //加.函数
-                        // 确保输入是纯数字字符串
-                        if (!/^\d+$/.test(str)) {
-                            throw new Error("输入必须是纯数字字符串");
+                        function formatNumberString(str) { //加.函数
+                            // 确保输入是纯数字字符串
+                            if (!/^\d+$/.test(str)) {
+                                throw new Error("输入必须是纯数字字符串");
+                            }
+                            let result = [];
+                            let len = str.length;
+                            // 从后往前遍历字符串，每两位一组
+                            for (let i = len - 1; i >= 0; i -= 2) {
+                                // 取当前两位字符，如果不足两位则取剩余部分
+                                let part = str.substring(i - 1 >= 0 ? i - 1 : 0, i + 1);
+                                result.unshift(part); // 将分割的部分插入到结果数组的开头
+                            }
+                            // 用点号连接结果数组
+                            return result.join('.');
                         }
-                        let result = [];
-                        let len = str.length;
-                        // 从后往前遍历字符串，每两位一组
-                        for (let i = len - 1; i >= 0; i -= 2) {
-                            // 取当前两位字符，如果不足两位则取剩余部分
-                            let part = str.substring(i - 1 >= 0 ? i - 1 : 0, i + 1);
-                            result.unshift(part); // 将分割的部分插入到结果数组的开头
-                        }
-                        // 用点号连接结果数组
-                        return result.join('.');
-                    }
 
-                    // 比大小
-                    if (dq_banben - 0 > jc_banben - 0) {
-                        sz_jcbbgx.innerText = '当前为内测版本! 点击下载正式版 v' + formatNumberString(jc_banben);
-                        sz_jcbbgx.style.textDecoration = 'underline';
-                        Sku_tctx('当前为内测版本!!');
-                    } else if (dq_banben - 0 == jc_banben - 0) {
-                        sz_jcbbgx.innerText = '已是最新版本';
-                        Sku_tctx('已是最新版本');
-                    } else {
-                        sz_jcbbgx.innerText = '有新版本-点击安装 v' + formatNumberString(jc_banben);
-                        Sku_tctx('有新版本 v' + formatNumberString(jc_banben));
-                        sz_jcbbgx.style.textDecoration = 'underline';
+                        // 比大小
+                        if (dq_banben - 0 > jc_banben - 0) {
+                            sz_jcbbgx.innerText = '当前为内测版本! 点击下载正式版 v' + formatNumberString(jc_banben);
+                            sz_jcbbgx.style.textDecoration = 'underline';
+                            Sku_tctx('当前为内测版本!!');
+                        } else if (dq_banben - 0 == jc_banben - 0) {
+                            sz_jcbbgx.innerText = '已是最新版本';
+                            Sku_tctx('已是最新版本');
+                        } else {
+                            sz_jcbbgx.innerText = '有新版本-点击安装 v' + formatNumberString(jc_banben);
+                            Sku_tctx('有新版本 v' + formatNumberString(jc_banben));
+                            sz_jcbbgx.style.textDecoration = 'underline';
+                        }
+                    } catch (error) {
+                        // 这个块会在 try 中有错误抛出时执行
+                        console.log('检查第' + sz_jcbbgx_jccs + '次: 处理数据出错!');
+                        if (sz_jcbbgx.innerText == '正在检查更新...' && sz_jcbbgx_jccs == sz_jcbbgx_xjc) {
+                            sz_jcbbgx.innerText = '处理数据出错!';
+                            Sku_tctx('处理数据出错!');
+                            sz_jcbbgx_xjc += 10;
+                            sz_jcbbgx_jccs = 0;
+                            setTimeout(function() {
+                                sz_jcbbgx.innerText = '检查版本更新';
+                                sz_jcbbgx.style.opacity = '';
+                                sz_jcbbgx.style.textDecoration = 'underline';
+                            }, 4000);
+                        }
                     }
                 })
                 .catch(error => {
