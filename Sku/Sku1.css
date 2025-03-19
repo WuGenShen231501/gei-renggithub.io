@@ -651,6 +651,10 @@
         border: 1px solid white;
     }
     
+    .sy_zpzs_tj:hover {
+        background-color: var(--zi_ti_color_10) !important;
+    }
+    
     .sy_zpzs_kaiguan {
         position: absolute;
         width: 20px;

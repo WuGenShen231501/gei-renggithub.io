@@ -33,12 +33,15 @@ async function modifyFileHeader(filePath, newFirstLine) {
     try {
         const fileContent = await fs.promises.readFile(filePath, 'utf-8');
         const lines = fileContent.split('\n');
-        if (lines.length > 0) { lines[0] = newFirstLine; }
+        if (lines.length > 0) {
+            console.log(`将第一行 "${lines[0]}"\n  修改为 "${newFirstLine}"`);
+            lines[0] = newFirstLine;
+        }
         const modifiedContent = lines.join('\n');
         await fs.promises.writeFile(filePath, modifiedContent, 'utf-8');
-        console.log('文件修改成功！');
+        console.log('文件修改成功\n');
     } catch (err) {
-        console.error('文件操作失败:', err);
+        console.error('文件操作失败:', err + '\n');
     }
 }
 

@@ -720,3 +720,32 @@
 .AI_huida_nr hr {
     border: 1px solid var(--zi_ti_color);
 }
+
+.AI_zhidi {
+    position: absolute;
+    bottom: 160px;
+    right: calc(50% - 20px);
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--zi_ti_color);
+    background-color: var(--zi_ti_color_20);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 38px;
+    font-size: 20px;
+    animation: AI_zhidi_dh 0.5s;
+    display: none;
+}
+
+@keyframes AI_zhidi_dh {
+    0% {
+        /* 动画开始的画面 */
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        /* 动画结束的画面 */
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}

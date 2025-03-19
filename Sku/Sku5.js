@@ -907,6 +907,8 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
                 if (zdxszxf == 1) {
                     var AI_zj_nr = document.querySelector('.AI_zj_nr');
                     AI_zj.scroll(0, AI_zj_nr.offsetHeight);
+                } else {
+                    AI_zj_nrwz();
                 }
 
                 //结束输出
@@ -939,6 +941,8 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
             if (zdxszxf == 1) {
                 var AI_zj_nr = document.querySelector('.AI_zj_nr');
                 AI_zj.scroll(0, AI_zj_nr.offsetHeight);
+            } else {
+                AI_zj_nrwz();
             }
             // 正在执行数减一
             AI_zhi_xing_s--;
@@ -1761,3 +1765,33 @@ AI_quanpin_anniu.addEventListener('click', function(e) {
     // 长度设置
     mods_da_xiao_shiying();
 });
+
+
+
+
+
+
+// 置底
+var AI_zhidi = document.querySelector('.AI_zhidi');
+AI_zhidi.addEventListener('click', function(e) {
+    zdxszxf = 1;
+    // var AI_zj_nr = document.querySelector('.AI_zj_nr');
+    AI_zj.scroll(0, AI_zj.scrollHeight);
+});
+AI_zj.addEventListener('scroll', function(e) {
+    AI_zj_nrwz();
+});
+
+function AI_zj_nrwz() {
+    // 获取聊天框的滚动信息
+    const scrollTop = AI_zj.scrollTop; // 当前滚动位置
+    const scrollHeight = AI_zj.scrollHeight; // 内容总高度
+    const clientHeight = AI_zj.clientHeight; // 可见区域高度
+
+    // 判断底部是否有超过 100px 被遮住
+    if (scrollHeight - scrollTop - clientHeight > 100) {
+        AI_zhidi.style.display = 'block';
+    } else {
+        AI_zhidi.style.display = 'none';
+    }
+}
