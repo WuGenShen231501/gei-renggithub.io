@@ -393,6 +393,7 @@
         width: 200px;
         height: 100%;
         text-align: center;
+        overflow: hidden;
     }
     
     .sy_djs_r_s:hover {
@@ -404,7 +405,6 @@
         width: 200px;
         height: 40px;
         line-height: 39px;
-        overflow: hidden;
         white-space: nowrap;
     }
     

@@ -92,6 +92,7 @@
     width: 120px !important;
     height: 60px !important;
     margin: 19.5px 0 19.5px 5px;
+    overflow: hidden;
 }
 
 .lj_xx_t {
@@ -106,7 +107,6 @@
 .lj_xx_b {
     width: 120px !important;
     height: 50% !important;
-    overflow: hidden;
     font-size: 12px;
     line-height: 30px;
     white-space: nowrap;

@@ -34,7 +34,7 @@ async function modifyFileHeader(filePath, newFirstLine) {
         const fileContent = await fs.promises.readFile(filePath, 'utf-8');
         const lines = fileContent.split('\n');
         if (lines.length > 0) {
-            console.log(`将第一行 "${lines[0]}"\n  修改为 "${newFirstLine}"`);
+            console.log(`将第一行 ${lines[0]}\n修改为   ${newFirstLine}`);
             lines[0] = newFirstLine;
         }
         const modifiedContent = lines.join('\n');
