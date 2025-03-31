@@ -860,14 +860,8 @@ mblxg = document.querySelector('.mblxg');
 
 if (localStorage.mao_bo_li == 0) {
     mblxg.innerHTML = '';
-    for (var i = 0; i < nrmaxs.length; i++) {
-        nrmaxs[i].style.transition = '0.4s';
-    }
 } else {
     mblxg.innerHTML = '✔';
-    for (var i = 0; i < nrmaxs.length; i++) {
-        nrmaxs[i].style.transition = '0s';
-    }
 }
 
 mblxg.addEventListener('click', function() {
@@ -877,18 +871,12 @@ mblxg.addEventListener('click', function() {
         yuan_mblxg_px_in = mblxg_px_in.value;
         mblxg.innerHTML = '✔';
         zi_ti_color_s();
-        for (var i = 0; i < nrmaxs.length; i++) {
-            nrmaxs[i].style.transition = '0s';
-        }
     } else {
         localStorage.mao_bo_li = 0;
         mblxg_px_in.value = localStorage.mao_bo_li;
         yuan_mblxg_px_in = mblxg_px_in.value;
         mblxg.innerHTML = '';
         zi_ti_color_s();
-        for (var i = 0; i < nrmaxs.length; i++) {
-            nrmaxs[i].style.transition = '0.4s';
-        }
     }
 });
 
@@ -908,16 +896,10 @@ mblxg_px_in.addEventListener('blur', function(e) {
             localStorage.mao_bo_li = 0;
             mblxg.innerHTML = '';
             zi_ti_color_s();
-            for (var i = 0; i < nrmaxs.length; i++) {
-                nrmaxs[i].style.transition = '0.4s';
-            }
         } else {
             localStorage.mao_bo_li = mblxg_px_in.value;
             mblxg.innerHTML = '✔';
             zi_ti_color_s();
-            for (var i = 0; i < nrmaxs.length; i++) {
-                nrmaxs[i].style.transition = '0s';
-            }
         }
     }
 });
@@ -960,18 +942,12 @@ bjsz_chongzhi.addEventListener('click', function() {
         yuan_mblxg_px_in = mblxg_px_in.value;
         mblxg.innerHTML = '';
         zi_ti_color_s();
-        for (var i = 0; i < nrmaxs.length; i++) {
-            nrmaxs[i].style.transition = '0.4s';
-        }
     } else {
         localStorage.mao_bo_li = yuan_mao_bo_li;
         mblxg_px_in.value = localStorage.mao_bo_li;
         yuan_mblxg_px_in = mblxg_px_in.value;
         mblxg.innerHTML = '✔';
         zi_ti_color_s();
-        for (var i = 0; i < nrmaxs.length; i++) {
-            nrmaxs[i].style.transition = '0s';
-        }
     }
 });
 
@@ -1134,18 +1110,12 @@ function ztfg_hs(sz) {
         yuan_mblxg_px_in = mblxg_px_in.value;
         mblxg.innerHTML = '';
         zi_ti_color_s();
-        for (var i = 0; i < nrmaxs.length; i++) {
-            nrmaxs[i].style.transition = '0.4s';
-        }
     } else {
         localStorage.mao_bo_li = sz[9];
         mblxg_px_in.value = localStorage.mao_bo_li;
         yuan_mblxg_px_in = mblxg_px_in.value;
         mblxg.innerHTML = '✔';
         zi_ti_color_s();
-        for (var i = 0; i < nrmaxs.length; i++) {
-            nrmaxs[i].style.transition = '0s';
-        }
     }
 
     var tianqi_s = document.querySelectorAll('.tianqi_s');

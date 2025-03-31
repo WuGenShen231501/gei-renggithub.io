@@ -6,6 +6,7 @@
         background-color: rgb(0, 0, 0, 0.75);
         border-radius: 5px;
         overflow: hidden;
+        animation: nrmaxs_dh 0.4s;
     }
     
     .shezhi_min {
