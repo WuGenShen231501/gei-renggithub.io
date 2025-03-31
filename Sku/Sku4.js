@@ -408,30 +408,150 @@ for (var i = 0; i < tianqi_s.length; i++) {
         this.style.borderColor = RGB_zhq(localStorage.zi_ti_click_color);
         //修改内存
         localStorage.tian_qi = this.getAttribute('data-tianqi-num');
-        //修改HTML
-        max_dtbj = document.querySelector('.max_dtbj');
-        if (localStorage.tian_qi == '4') {
-            max_dtbj.style.backgroundImage = 'url(https://wimg.588ku.com/gif620/21/10/20/164e42912197136db3f4dac7b652110a.gif)';
-            max_dtbj.style.opacity = '1';
-        }
-        if (localStorage.tian_qi == '3') {
-            max_dtbj.style.backgroundImage = 'url(https://wimg.588ku.com/gif620/21/10/20/164e42912197136db3f4dac7b652110a.gif)';
-            max_dtbj.style.opacity = '0.5';
-        }
-        if (localStorage.tian_qi == '2') {
-            max_dtbj.style.backgroundImage = 'url(https://wimg.588ku.com/gif620/20/12/17/7c69a1aad398a7f367d905425346e7f4.gif)';
-            max_dtbj.style.opacity = '1';
-        }
-        if (localStorage.tian_qi == '1') {
-            max_dtbj.style.backgroundImage = 'url(https://wimg.588ku.com/gif620/20/12/17/7c69a1aad398a7f367d905425346e7f4.gif)';
-            max_dtbj.style.opacity = '0.5';
-        }
-        if (localStorage.tian_qi == '0') {
-            max_dtbj.style.backgroundImage = 'url()';
-            max_dtbj.style.opacity = '1';
-        }
+        //修改天气
+        max_dtbj_gg();
     });
 }
+
+//修改天气
+max_dtbj_gg();
+
+function max_dtbj_gg() {
+    max_dtbj = document.querySelector('.max_dtbj');
+
+    if (localStorage.tian_qi == '5') {
+        if (typeof stopRain === 'undefined') {
+            stopRain = null;
+        }
+        if (stopRain) {
+            stopRain(); // 执行清理操作
+            stopRain = null;
+        }
+        max_dtbj.style.backgroundImage = 'url()';
+        max_dtbj.style.opacity = '1';
+        // 使用
+        stopRain = createCodeRain(max_dtbj, 'black');
+    } else {
+        if (typeof stopRain === 'undefined') {
+            stopRain = null;
+        }
+        if (stopRain) {
+            stopRain(); // 执行清理操作
+            stopRain = null;
+        }
+    }
+    if (localStorage.tian_qi == '4') {
+        max_dtbj.style.backgroundImage = 'url(https://wimg.588ku.com/gif620/21/10/20/164e42912197136db3f4dac7b652110a.gif)';
+        max_dtbj.style.opacity = '1';
+    }
+    if (localStorage.tian_qi == '3') {
+        max_dtbj.style.backgroundImage = 'url(https://wimg.588ku.com/gif620/21/10/20/164e42912197136db3f4dac7b652110a.gif)';
+        max_dtbj.style.opacity = '0.5';
+    }
+    if (localStorage.tian_qi == '2') {
+        max_dtbj.style.backgroundImage = 'url(https://wimg.588ku.com/gif620/20/12/17/7c69a1aad398a7f367d905425346e7f4.gif)';
+        max_dtbj.style.opacity = '1';
+    }
+    if (localStorage.tian_qi == '1') {
+        max_dtbj.style.backgroundImage = 'url(https://wimg.588ku.com/gif620/20/12/17/7c69a1aad398a7f367d905425346e7f4.gif)';
+        max_dtbj.style.opacity = '0.5';
+    }
+    if (localStorage.tian_qi == '0') {
+        max_dtbj.style.backgroundImage = 'url()';
+        max_dtbj.style.opacity = '1';
+    }
+}
+
+//天气设置 代码雨
+function createCodeRain(containerElement, color = '#0f0') { // 参数改为直接接收元素
+    const div = containerElement;
+    if (!div || div.querySelector('canvas.code-rain')) return;
+
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+
+    // 设置Canvas样式
+    Object.assign(canvas.style, {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none', // 使Canvas不影响鼠标事件
+        opacity: 0.5, // 初始透明度
+    });
+
+    div.appendChild(canvas);
+
+    // 字符配置
+    const chars = '吴根棽010101010101010101ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
+    const fontSize = 16;
+    let columns = [];
+
+    // 初始化方法
+    const init = () => {
+        resize();
+        createColumns();
+        animate();
+    };
+
+    // 创建字符列
+    const createColumns = () => {
+        columns = Array(Math.floor(canvas.width / fontSize)).fill(1).map((_, i) => ({
+            x: i * fontSize,
+            y: Math.random() * canvas.height
+        }));
+    };
+
+    // 动画循环
+    const animate = () => {
+        // 透明背景淡出效果 ▼▼▼
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+        ctx.globalCompositeOperation = 'destination-out'; // 使用目标输出模式
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // 恢复字符绘制模式
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = localStorage.zi_ti_color; // 修改颜色为 localStorage.zi_ti_color;
+        // 修改结束 ▲▲▲
+
+        ctx.font = `${fontSize}px monospace`;
+
+        columns.forEach(column => {
+            const char = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(char, column.x, column.y);
+            column.y += fontSize;
+            if (column.y > canvas.height + fontSize) column.y = 0;
+        });
+
+        animationFrameId = requestAnimationFrame(animate);
+    };
+
+    // 窗口大小变化处理
+    const resize = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        createColumns();
+    };
+
+    // 事件监听
+    window.addEventListener('resize', resize);
+
+    // 清理函数
+    const cleanup = () => {
+        cancelAnimationFrame(animationFrameId);
+        window.removeEventListener('resize', resize);
+        div.removeChild(canvas);
+    };
+
+    // 初始化
+    init();
+
+    // 返回清理方法（必须）
+    return cleanup;
+}
+
 
 
 
@@ -1027,17 +1147,9 @@ function ztfg_hs(sz) {
             nrmaxs[i].style.transition = '0s';
         }
     }
-    if (sz[10] == 0) {
-        tianqi_qt.click();
-    } else if (sz[10] == 1) {
-        tianqi_xy.click();
-    } else if (sz[10] == 2) {
-        tianqi_dy.click();
-    } else if (sz[10] == 3) {
-        tianqi_xx.click();
-    } else if (sz[10] == 4) {
-        tianqi_dx.click();
-    }
+
+    var tianqi_s = document.querySelectorAll('.tianqi_s');
+    tianqi_s[sz[10]].click();
 }
 
 
@@ -3465,7 +3577,7 @@ function sy_lbnr_hs() {
                             }
                         }
 
-                        div.innerHTML = '<div class="lbnr_sz">' + JSON.parse(localStorage.mrrd_name)[i2] + '热点🔥TOP ' + mrrd_numtop + '</div><div class="lbnr_sz2">' + mrrd[sknr_sjs2] + '</div>';
+                        div.innerHTML = '<div class="lbnr_sz">' + JSON.parse(localStorage.mrrd_name)[i2] + ' 🔥TOP ' + mrrd_numtop + '</div><div class="lbnr_sz2">' + mrrd[sknr_sjs2] + '</div>';
 
                         div.addEventListener('click', function(e) {
                             so_ssk.value = this.querySelector('.lbnr_sz2').innerText;

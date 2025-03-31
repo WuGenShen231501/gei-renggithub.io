@@ -313,6 +313,40 @@ so_anniu.addEventListener('click', function() {
             Sku_tctx('已添 ' + rsjl2.length + ' 条无重复搜索记录');
         } else if (so_ssk.value == 'wugenshen') {
             mrrd_sx();
+        } else if (so_ssk.value == 'wugenshen_mrrd') {
+            $(document).ready(function() {
+                // 使用 $.get() 发起 GET 请求
+                $.get("http://localhost/mrrd", function(data, status) {
+                    // data 是从服务器返回的数据
+                    var datas;
+                    if (data[0] == '[' || data[0] == '{') {
+                        datas = JSON.parse(data);
+                    } else {
+                        datas = data;
+                    }
+                    const mrrd_top = JSON.parse(localStorage.getItem('mrrd_top'));
+                    const xsz = mrrd_top.concat(datas[2]);
+                    const mrrd_name = JSON.parse(localStorage.getItem('mrrd_name'));
+                    const xsz2 = mrrd_name.concat(datas[0]);
+                    const mrrd = JSON.parse(localStorage.getItem('mrrd'));
+                    const xsz3 = mrrd.concat(datas[1]);
+                    for (var i = 0; i < xsz.length; i++) { //删除0的
+                        if (xsz[i] == 0) {
+                            xsz.splice(i, 1);
+                            xsz2.splice(i, 1);
+                        }
+                    }
+                    console.log(xsz, xsz2, xsz3);
+                    localStorage.setItem('mrrd_top', JSON.stringify(xsz));
+                    localStorage.setItem('mrrd_name', JSON.stringify(xsz2));
+                    localStorage.setItem('mrrd', JSON.stringify(xsz3));
+                    Sku_tctx('获取成功');
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    // 如果请求失败，打印错误信息
+                    console.log("请求失败: ", textStatus, errorThrown);
+                    Sku_tctx('获取失败');
+                });
+            });
         } else {
             // 不是直接网址时搜索
             if (so_yq.innerHTML == '百度') {
@@ -353,7 +387,7 @@ so_anniu.addEventListener('click', function() {
     var trimmedValue = inputValue.trim();
     // 检测输入的值是否全是空格
     if (trimmedValue.length !== 0) {
-        if (so_ssk.value[0] !== '[' && so_ssk.value[so_ssk.value.length - 1] !== ']' && so_ssk.value !== 'wugenshen') {
+        if (so_ssk.value[0] !== '[' && so_ssk.value[so_ssk.value.length - 1] !== ']') {
             var lsjl = JSON.parse(localStorage.lsjl);
             var qrgs = lsjl.indexOf(so_ssk.value);
             var mrrd = JSON.parse(localStorage.mrrd);
@@ -528,33 +562,6 @@ max_dtbj_hs();
 window.addEventListener('resize', function() {
     max_dtbj_hs();
 });
-
-
-
-//开机天气
-max_dtbj = document.querySelector('.max_dtbj');
-if (localStorage.tian_qi) {
-    if (localStorage.tian_qi == '4') {
-        max_dtbj.style.backgroundImage = 'url(https://wimg.588ku.com/gif620/21/10/20/164e42912197136db3f4dac7b652110a.gif)';
-        max_dtbj.style.opacity = '1';
-    }
-    if (localStorage.tian_qi == '3') {
-        max_dtbj.style.backgroundImage = 'url(https://wimg.588ku.com/gif620/21/10/20/164e42912197136db3f4dac7b652110a.gif)';
-        max_dtbj.style.opacity = '0.5';
-    }
-    if (localStorage.tian_qi == '2') {
-        max_dtbj.style.backgroundImage = 'url(https://wimg.588ku.com/gif620/20/12/17/7c69a1aad398a7f367d905425346e7f4.gif)';
-        max_dtbj.style.opacity = '1';
-    }
-    if (localStorage.tian_qi == '1') {
-        max_dtbj.style.backgroundImage = 'url(https://wimg.588ku.com/gif620/20/12/17/7c69a1aad398a7f367d905425346e7f4.gif)';
-        max_dtbj.style.opacity = '0.5';
-    }
-    if (localStorage.tian_qi == '0') {
-        max_dtbj.style.backgroundImage = 'url()';
-        max_dtbj.style.opacity = '1';
-    }
-}
 
 
 

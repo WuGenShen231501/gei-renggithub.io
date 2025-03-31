@@ -2546,7 +2546,7 @@ function sy_lbnr_hs2(max_gs) {
                         }
                     }
 
-                    div.innerHTML = '<div class="lbnr_sz">' + JSON.parse(localStorage.mrrd_name)[i2] + '热点🔥TOP ' + mrrd_numtop + '</div><div class="lbnr_sz2">' + mrrd[sknr_sjs2] + '</div>';
+                    div.innerHTML = '<div class="lbnr_sz">' + JSON.parse(localStorage.mrrd_name)[i2] + ' 🔥TOP ' + mrrd_numtop + '</div><div class="lbnr_sz2">' + mrrd[sknr_sjs2] + '</div>';
 
                     div.addEventListener('click', function(e) {
                         so_ssk.value = this.querySelector('.lbnr_sz2').innerText;

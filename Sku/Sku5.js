@@ -1787,7 +1787,6 @@ function AI_zj_nrwz() {
     const scrollTop = AI_zj.scrollTop; // 当前滚动位置
     const scrollHeight = AI_zj.scrollHeight; // 内容总高度
     const clientHeight = AI_zj.clientHeight; // 可见区域高度
-
     // 判断底部是否有超过 100px 被遮住
     if (scrollHeight - scrollTop - clientHeight > 100) {
         AI_zhidi.style.display = 'block';

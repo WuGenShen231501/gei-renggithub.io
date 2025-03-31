@@ -528,7 +528,7 @@ html {
     height: 50px;
     line-height: 50px;
     width: 200px;
-    overflow: hidden;
+    clip-path: inset(0 0 0 0);
     white-space: nowrap;
     transition: 0.3s;
 }
