@@ -1,5 +1,5 @@
 // 保护localStorage值
-var shui_you_nc = ['syzsc', 'Sku_benghuai', 'AI_kjzl', 'AI_jl', 'sy_ci_shu', 'Sku_kfzms', 'ztfg_name', 'ztfg', 'mrrd_name', 'mryy', 'mrrd_sxsj', 'mrrd', 'bi_zhi_ys', 'dr_mmdr_mmfw', 'dr_mmdr_drsj', 'dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'dhr_sz_bf', 'dhr_ym_dx_bf', 'bi_zhi_s_bf', 'liu_yan_dx_bf', 'sy_djs_bf', 'sy_zpzs_lj_bf', 'sy_zpzs_mz_bf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'dr_mm_cf', 'drym_cs', 'drym_srcs', 'sy_zpzs_lj', 'sy_zpzs_mz', 'sy_zpzs_kaiguan', 'music_cd', 'music_bfsx', 'music_cd_bf', 'lsjl', 'lsjl_bf', 'sy_lbxz', 'sku_xp_sp', 'htsp_s', 'htsp_s_bf', 'sku_zcb', 'sku_zcb_bf', 'dr_mmdr'];
+var shui_you_nc = ['da_ka', 'Sku_node', 'syzsc', 'Sku_benghuai', 'AI_kjzl', 'AI_jl', 'sy_ci_shu', 'Sku_kfzms', 'ztfg_name', 'ztfg', 'mrrd_name', 'mryy', 'mrrd_sxsj', 'mrrd', 'bi_zhi_ys', 'dr_mmdr_mmfw', 'dr_mmdr_drsj', 'dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'dhr_sz_bf', 'dhr_ym_dx_bf', 'bi_zhi_s_bf', 'liu_yan_dx_bf', 'sy_djs_bf', 'sy_zpzs_lj_bf', 'sy_zpzs_mz_bf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'dr_mm_cf', 'drym_cs', 'drym_srcs', 'sy_zpzs_lj', 'sy_zpzs_mz', 'sy_zpzs_kaiguan', 'music_cd', 'music_bfsx', 'music_cd_bf', 'lsjl', 'lsjl_bf', 'sy_lbxz', 'sku_xp_sp', 'htsp_s', 'htsp_s_bf', 'sku_zcb', 'sku_zcb_bf', 'dr_mmdr'];
 window.addEventListener('storage', function(event) {
     if (localStorage.Sku_kfzms == 0 && event.key == 'sy_ci_shu' && decodeURI(event.url).substring(decodeURI(event.url).length - 8, decodeURI(event.url).length) == decodeURI(location.href).substring(decodeURI(location.href).length - 8, decodeURI(location.href).length)) {
 
@@ -257,6 +257,13 @@ for (var i = 0; i < top_dhl.length; i++) {
             var AI_zj = document.querySelector('.AI_zj');
             var AI_zj_nr = document.querySelector('.AI_zj_nr');
             AI_zj.scroll(0, AI_zj_nr.offsetHeight);
+        }
+        if (this.getAttribute('date-num') == 5) {
+            if (so_ssk.placeholder == '搜索引擎') {
+                so_ssk.placeholder = '搜索引擎 / Ctrl + ?';
+            }
+            var daka_l_bot = document.querySelector('.daka_l_bot');
+            daka_l_bot.scroll(0, 0);
         }
     });
 }
@@ -829,6 +836,24 @@ function Sku_nczyb() {
         //   不在线
         if (sku_wlzt) { sku_wlzt.innerHTML = 'Status:Offline'; }
     }
+
+    // 放一个外来的：node服务器
+    if (localStorage.Sku_node == 1) {
+        var max_node = document.querySelector('.max_node');
+        $(document).ready(function() {
+            // 使用 $.get() 发起 GET 请求
+            $.get("http://localhost", function(data, status) {
+                // data 是从服务器返回的数据
+                if (data == '欢迎使用!') {
+                    max_node.innerText = 'node!';
+                }
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                // 如果请求失败，打印错误信息
+                max_node.innerText = '';
+            });
+        });
+    }
+
 }
 
 
@@ -969,7 +994,7 @@ shezhi_sp_xp_min2.addEventListener('blur', function(e) {
 // 相互关闭
 // 点击的,不需要隐藏的...
 function xhgb_dx(class1, class2, class3) {
-    var xhgb_dx = ['liu_yan_sxuan_div', 'AI_szym_max', 'AI_kjzl_max', 'AI_mods_max', 'lj_zcb_ym', 'so_yq_s', 'ssbqym', 'music_ym', 'top_tou_xian_sc', 'lj_xg_tj', 'dhr_xg_tj'];
+    var xhgb_dx = ['daka_tianjia_ym', 'liu_yan_sxuan_div', 'AI_szym_max', 'AI_kjzl_max', 'AI_mods_max', 'lj_zcb_ym', 'so_yq_s', 'ssbqym', 'music_ym', 'top_tou_xian_sc', 'lj_xg_tj', 'dhr_xg_tj'];
     var dj = document.querySelectorAll('.' + class1);
     for (var i = 0; i < dj.length; i++) {
         dj[i].addEventListener('click', function(e) {
@@ -992,6 +1017,7 @@ xhgb_dx('AI_mods', 'AI_mods_max');
 xhgb_dx('AI_kjzl', 'AI_kjzl_max');
 xhgb_dx('AI_dhsz', 'AI_szym_max');
 xhgb_dx('liu_yan_sxuan', 'liu_yan_sxuan_div');
+xhgb_dx('daka_tianjia_anniu', 'daka_tianjia_ym');
 
 
 

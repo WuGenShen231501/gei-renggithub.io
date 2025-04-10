@@ -1,0 +1,543 @@
+.daka_max {
+    position: relative;
+    top: 90px;
+    width: 100%;
+    height: 600px;
+    border-radius: 10px;
+    border: var(--bei_jing_kuan_true) solid var(--bei_jing_kuan_color);
+    background-color: var(--bei_jing_color);
+    backdrop-filter: var(--mao_bo_li);
+    overflow: hidden;
+    animation: nrmaxs_dh 0.4s;
+}
+
+.daka_max2 {
+    position: fixed;
+    top: 55px;
+    left: 0px;
+    width: 100%;
+    height: calc(100% - 55px);
+    border-radius: 0;
+    border: 0;
+}
+
+.daka_l {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.daka_r {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0%;
+    height: 100%;
+    border-left: 1px solid var(--bei_jing_kuan_color);
+}
+
+.daka_l_top {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    border-bottom: 1px solid var(--bei_jing_kuan_color);
+}
+
+.daka_l_bot {
+    float: left;
+    width: calc(100% + 70px);
+    height: calc(100% - 30px);
+    border-bottom: 1px solid var(--zi_ti_color_20);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-right: 55px !important;
+    padding: 10px 0;
+}
+
+.daka_s_max {
+    width: 100%;
+    height: 80px;
+    overflow: hidden;
+    animation: daka_s_max_dh 0.5s;
+    transform: translateX(-100%);
+    opacity: 0;
+    animation-fill-mode: forwards;
+    animation-delay: calc(var(--delay-index) * 0.1s);
+}
+
+@keyframes daka_s_max_dh {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.daka_s_min {
+    position: relative;
+    width: calc(100% - 50px);
+    height: 60px;
+    margin: 10px 0 0 25px;
+    border: 1px solid var(--zi_ti_color);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: var(--zi_ti_color_10);
+}
+
+.daka_quanpin_anniu {
+    position: absolute;
+    right: 1px;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    opacity: 0.5;
+}
+
+.daka_quanpin_anniu:hover {
+    opacity: 1;
+}
+
+.daka_qp_tp {
+    font-size: 20px;
+}
+
+.daka_l_top_wz {
+    position: absolute;
+    width: auto;
+    height: 30px;
+    line-height: 30px;
+    top: 0;
+    left: 10px;
+}
+
+.daka_s_tx {
+    float: left;
+    width: 42px;
+    height: 42px;
+    margin: 8px 0 0 8px;
+    border-radius: 5px;
+    background-color: var(--zi_ti_color_20);
+    background-size: 100% 100%;
+    border: 1px solid var(--zi_ti_color);
+    text-align: center;
+    line-height: 42px;
+    overflow: hidden;
+    font-size: 35px;
+}
+
+.daka_s_wzts_max {
+    position: relative;
+    float: left;
+    width: calc(100% - 200px);
+    height: 42px;
+    margin: 8px 0 0 8px;
+    overflow: hidden;
+}
+
+.daka_s_wz {
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.daka_s_ts {
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    bottom: 0;
+    left: 0;
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0.6;
+}
+
+.daka_s_qd_dk {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--zi_ti_color);
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    top: 9px;
+    right: 8px;
+    font-size: 20px;
+}
+
+.daka_s_qd_dk:hover {
+    background-color: var(--zi_ti_color_20);
+}
+
+.daka_s_qd_dkcg {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--zi_ti_color);
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    top: 9px;
+    right: 8px;
+    font-size: 20px;
+    background-color: var(--zi_ti_color_20);
+}
+
+.daka_s_qd_wxdk {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    top: 9px;
+    right: 8px;
+    opacity: 0.5;
+}
+
+.daka_qh_tp {
+    font-size: 17px;
+}
+
+.daka_qiehuan_anniu {
+    position: absolute;
+    right: 32px;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    opacity: 0.5;
+}
+
+.daka_qiehuan_anniu:hover {
+    opacity: 1;
+}
+
+.daka_tianjia_anniu {
+    position: absolute;
+    right: 64px;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    opacity: 0.5;
+}
+
+.daka_tianjia_anniu:hover {
+    opacity: 1;
+}
+
+.daka_tj_tp {
+    font-size: 20px;
+}
+
+.daka_tianjia_ym {
+    display: none;
+    position: fixed;
+    top: calc(50% - 220px);
+    left: calc(50% - 220px);
+    width: 440px;
+    height: 440px;
+    border-radius: 10px;
+    border: var(--bei_jing_kuan_true) solid var(--bei_jing_kuan_color);
+    background-color: var(--bei_jing_color);
+    backdrop-filter: var(--mao_bo_li);
+    overflow: hidden;
+    animation: nrmaxs_dh 0.4s;
+}
+
+.daka_tianjia_wenzi {
+    position: absolute;
+    font-weight: bold;
+    top: 20px;
+    left: 20px;
+}
+
+.daka_tianjia_tx {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    border-radius: 5px;
+    top: 59px;
+    left: 20px;
+    background-color: var(--zi_ti_color_20);
+    background-size: 100% 100%;
+    border: 1px solid var(--zi_ti_color);
+}
+
+.daka_tianjia_tx_srk {
+    position: absolute;
+    width: 315px;
+    height: 30px;
+    top: 65px;
+    right: 20px;
+    border-radius: 5px;
+    border: 1px solid var(--zi_ti_color_50);
+    color: var(--zi_ti_color);
+    background-color: rgb(0, 0, 0, 0);
+    outline: none;
+    text-indent: 1em;
+    padding-right: 1em;
+}
+
+.daka_tianjia_tx_srk:focus {
+    border: 1px solid var(--zi_ti_color);
+}
+
+.daka_tianjia_pl {
+    position: absolute;
+    top: 169px;
+    left: 20px;
+}
+
+.daka_tianjia_pl_srk {
+    position: absolute;
+    width: 315px;
+    height: 30px;
+    top: 163px;
+    right: 20px;
+    border-radius: 5px;
+    border: 1px solid var(--zi_ti_color_50);
+    padding-left: 1em;
+    line-height: 30px;
+    color: var(--zi_ti_color_50);
+}
+
+.daka_tianjia_pl_ym {
+    display: none;
+    position: absolute;
+    top: 195px;
+    right: 20px;
+    width: 315px;
+    height: 150px;
+    border-radius: 10px;
+    border: 1px solid var(--zi_ti_color);
+    background-color: var(--bei_jing_color);
+    backdrop-filter: var(--mao_bo_li);
+    overflow: hidden;
+    animation: nrmaxs_dh 0.4s;
+    z-index: 1;
+}
+
+.daka_tianjia_pl_ym_top {
+    position: relative;
+    width: 100%;
+    height: 30px;
+}
+
+.daka_tianjia_pl_ym_top div {
+    float: left;
+    width: auto;
+    height: 22px;
+    padding: 0 10px;
+    line-height: 20px;
+    margin: 9px 0 0 10px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid var(--zi_ti_color);
+    font-size: 15px;
+}
+
+.daka_tianjia_pl_ym_qd {
+    position: absolute;
+    width: 50px;
+    height: 30px;
+    background-color: var(--zi_ti_color_20);
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid var(--zi_ti_color);
+    bottom: 10px;
+    left: 10px;
+    border-radius: 5px;
+}
+
+.daka_tianjia_mc {
+    position: absolute;
+    top: 120px;
+    left: 20px;
+}
+
+.daka_tianjia_mc_srk {
+    position: absolute;
+    width: 315px;
+    height: 30px;
+    top: 114px;
+    right: 20px;
+    border-radius: 5px;
+    border: 1px solid var(--zi_ti_color_50);
+    color: var(--zi_ti_color);
+    background-color: rgb(0, 0, 0, 0);
+    outline: none;
+    text-indent: 1em;
+    padding-right: 1em;
+}
+
+.daka_tianjia_mc_srk:focus {
+    border: 1px solid var(--zi_ti_color);
+}
+
+.daka_tianjia_pl_ym_top_antian_ym,
+.daka_tianjia_pl_ym_top_anzhou_ym,
+.daka_tianjia_pl_ym_top_jiange_ym {
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    top: 58px;
+    left: 0;
+}
+
+.daka_tianjia_pl_ym_top_antian_ss {
+    float: left;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    margin: 10px 0 0 10px;
+    border-radius: 50%;
+    border: 1px solid var(--zi_ti_color);
+}
+
+.daka_tianjia_pl_ym_top_antian_ym_zzxt {
+    position: absolute;
+    top: -17px;
+    left: 10px;
+}
+
+.daka_tianjia_pl_ym_top_anz_ss {
+    float: left;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    margin: 10px 0 0 10px;
+    border-radius: 50%;
+    border: 1px solid var(--zi_ti_color);
+}
+
+.daka_tianjia_pl_ym_top_ansjjg_ym_m {
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    font-size: 24px
+}
+
+.daka_tianjia_pl_ym_top_ansjjg_ym_t {
+    position: absolute;
+    width: 50px;
+    height: 20px;
+    top: 5px;
+    left: 62px;
+    border: 0;
+    border-bottom: 1px solid var(--zi_ti_color);
+    color: var(--zi_ti_color);
+    background-color: rgb(0, 0, 0, 0);
+    outline: none;
+    text-align: center;
+    font-size: 24px;
+}
+
+.daka_tianjia_ksrq {
+    position: absolute;
+    top: 218px;
+    left: 20px;
+}
+
+.daka_tianjia_jcts {
+    position: absolute;
+    top: 267px;
+    left: 20px;
+}
+
+.daka_tianjia_ksrq_max {
+    position: absolute;
+    width: 315px;
+    height: 30px;
+    top: 212px;
+    right: 20px;
+    border-radius: 5px;
+    border: 1px solid var(--zi_ti_color_50);
+    line-height: 30px;
+    overflow: hidden;
+    padding-left: 1em;
+}
+
+.daka_tianjia_ksrq_max input {
+    float: left;
+    width: 40px;
+    height: 21px;
+    border: 0;
+    color: var(--zi_ti_color);
+    background-color: rgb(0, 0, 0, 0);
+    outline: none;
+    text-align: center;
+    margin: 5px 0 0 0px;
+}
+
+.daka_tianjia_ksrq_max div {
+    float: left;
+    height: 20px;
+}
+
+.daka_tianjia_jcts_max {
+    position: absolute;
+    width: 315px;
+    height: 30px;
+    top: 261px;
+    right: 20px;
+    border-radius: 5px;
+    border: 1px solid var(--zi_ti_color_50);
+    line-height: 30px;
+    overflow: hidden;
+    padding-left: 1em;
+}
+
+.daka_tianjia_jcts_max input {
+    float: left;
+    width: 40px;
+    height: 21px;
+    border: 0;
+    color: var(--zi_ti_color);
+    background-color: rgb(0, 0, 0, 0);
+    outline: none;
+    text-align: center;
+    margin: 5px 0 0 0px;
+}
+
+.daka_tianjia_jcts_max div {
+    float: left;
+    height: 20px;
+}
+
+.daka_tianjia_qd {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    border: 1px solid var(--zi_ti_color);
+    line-height: 40px;
+    text-align: center;
+    border-radius: 10px;
+    bottom: 20px;
+    left: 20px;
+    background-color: var(--zi_ti_color_20);
+}
+
+.daka_cj_tp {
+    font-size: 17px;
+}

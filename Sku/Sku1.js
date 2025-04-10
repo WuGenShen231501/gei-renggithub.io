@@ -2086,54 +2086,35 @@ sy_djs_txl_jsq_hs();
 
 // 优化内存
 top_dhl_S = document.querySelector('.top_dhl').querySelectorAll('div');
-top_dhl_S[0].addEventListener('click', function(e) {
-    // 倒计时优化
-    clearInterval(sy_djs_zxsj_sjq);
-    sy_djs_r_min.innerHTML = '';
-    clearInterval(djs_s);
-    sy_djs_zxsj_sjq = setInterval(function() {
-        sy_djs_l_yr_time.innerHTML = time_day_yr();
-        sy_djs_l_time.innerHTML = time_day_sfm();
-    }, 1000);
-    sy_djs_px();
-    SC_djs();
-    sy_djs_yd();
+for (var i = 0; i < top_dhl_S.length; i++) {
+    if (i == 0) {
+        top_dhl_S[i].addEventListener('click', function(e) {
+            // 倒计时优化
+            clearInterval(sy_djs_zxsj_sjq);
+            sy_djs_r_min.innerHTML = '';
+            clearInterval(djs_s);
+            sy_djs_zxsj_sjq = setInterval(function() {
+                sy_djs_l_yr_time.innerHTML = time_day_yr();
+                sy_djs_l_time.innerHTML = time_day_sfm();
+            }, 1000);
+            sy_djs_px();
+            SC_djs();
+            sy_djs_yd();
 
-    // 倒计时提示优化
-    sy_djs_txl_jsq_hs();
-});
-top_dhl_S[1].addEventListener('click', function(e) {
-    clearInterval(sy_djs_zxsj_sjq);
-    clearInterval(djs_s);
-    sy_djs_r_min.innerHTML = '';
-    clearInterval(sy_djs_txl_jsq);
-    sy_djs_txl.style.display = 'none';
-    sy_djs_txl2.style.display = 'none';
-});
-top_dhl_S[2].addEventListener('click', function(e) {
-    clearInterval(sy_djs_zxsj_sjq);
-    clearInterval(djs_s);
-    sy_djs_r_min.innerHTML = '';
-    clearInterval(sy_djs_txl_jsq);
-    sy_djs_txl.style.display = 'none';
-    sy_djs_txl2.style.display = 'none';
-});
-top_dhl_S[3].addEventListener('click', function(e) {
-    clearInterval(sy_djs_zxsj_sjq);
-    clearInterval(djs_s);
-    sy_djs_r_min.innerHTML = '';
-    clearInterval(sy_djs_txl_jsq);
-    sy_djs_txl.style.display = 'none';
-    sy_djs_txl2.style.display = 'none';
-});
-top_dhl_S[4].addEventListener('click', function(e) {
-    clearInterval(sy_djs_zxsj_sjq);
-    clearInterval(djs_s);
-    sy_djs_r_min.innerHTML = '';
-    clearInterval(sy_djs_txl_jsq);
-    sy_djs_txl.style.display = 'none';
-    sy_djs_txl2.style.display = 'none';
-});
+            // 倒计时提示优化
+            sy_djs_txl_jsq_hs();
+        });
+    } else {
+        top_dhl_S[i].addEventListener('click', function(e) {
+            clearInterval(sy_djs_zxsj_sjq);
+            clearInterval(djs_s);
+            sy_djs_r_min.innerHTML = '';
+            clearInterval(sy_djs_txl_jsq);
+            sy_djs_txl.style.display = 'none';
+            sy_djs_txl2.style.display = 'none';
+        });
+    }
+}
 
 
 
@@ -2994,12 +2975,6 @@ sy_ke_biao_max.addEventListener('mouseover', function(e) {
         for (var i = 0; i < sy_ke_biao_l.length; i++) {
             sy_ke_biao_l[i].classList.remove('sy_ke_biao_l_gl');
         }
-    }
-});
-sy_ke_biao_max.addEventListener('mouseout', function(e) {
-    const target = e.target;
-    if (target.classList.contains('sy_ke_biao_l')) {
-
     }
 });
 

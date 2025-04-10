@@ -862,7 +862,8 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
         var divs = document.createElement('div');
         var AI_zj_nr = document.querySelector('.AI_zj_nr');
         divs.className = 'AI_huida_max';
-        divs.innerHTML = '<div class="yh_huida_nr"></div><div class="yh_huida_tx" style="background-image: url(' + localStorage.tou_xiang + ');"></div><div class="yh_huida_sj">' + sj + '</div>';
+        divs.innerHTML = '<div class="yh_huida_nr"></div><div class="yh_huida_tx"></div><div class="yh_huida_sj">' + sj + '</div>';
+        divs.querySelector('.yh_huida_tx').style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
         divs.querySelector('.yh_huida_nr').innerText = nr;
         AI_zj_nr.appendChild(divs);
 
@@ -970,7 +971,8 @@ for (var i = 0; i < AI_jl.length; i++) {
     if (AI_jl[i][0] == 1) {
         var divs = document.createElement('div');
         divs.className = 'AI_huida_max';
-        divs.innerHTML = '<div class="yh_huida_nr"></div><div class="yh_huida_tx" style="background-image: url(' + localStorage.tou_xiang + ');"></div><div class="yh_huida_sj">' + AI_jl[i][2] + '</div>';
+        divs.innerHTML = '<div class="yh_huida_nr"></div><div class="yh_huida_tx"></div><div class="yh_huida_sj">' + AI_jl[i][2] + '</div>';
+        divs.querySelector('.yh_huida_tx').style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
         divs.querySelector('.yh_huida_nr').innerText = AI_jl[i][1];
         AI_zj_nr.appendChild(divs);
     } else {

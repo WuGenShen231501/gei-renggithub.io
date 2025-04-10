@@ -875,6 +875,17 @@ html {
 }
 
 
+/* node */
+
+.max_node {
+    position: fixed;
+    left: 0;
+    bottom: 24px;
+    font-size: 10px;
+    opacity: 0.4;
+}
+
+
 /* ---------兼容电脑端----------- */
 
 @media screen and (max-width: 1260px) {

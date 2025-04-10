@@ -1211,6 +1211,7 @@ bfsz_sccd.addEventListener('click', function() {
         localStorage.AI_kjzl_bf = localStorage.AI_kjzl;
         localStorage.ke_biao_bf = localStorage.ke_biao;
         localStorage.ke_biao_zhou_bf = localStorage.ke_biao_zhou;
+        localStorage.da_ka_bf = localStorage.da_ka;
     } else if (bfsz_sccd.innerHTML == '上传成功') {
         Sku_tctx('🛈 短时间内禁止重复上传');
     }
@@ -1240,6 +1241,7 @@ bfsz_xzcd.addEventListener('click', function() {
     localStorage.AI_kjzl = localStorage.AI_kjzl_bf;
     localStorage.ke_biao = localStorage.ke_biao_bf;
     localStorage.ke_biao_zhou = localStorage.ke_biao_zhou_bf;
+    localStorage.da_ka = localStorage.da_ka_bf;
 
     localStorage.dr_mmdr_drsj = 0;
     bdzdtj_true = 0; // 禁止刷新时自动导入
@@ -1535,8 +1537,8 @@ var shezhi_daoru_ym = document.querySelector('.shezhi_daoru_ym');
 var jisuan_bendidx = 0;
 
 // 集成应用与导入导出加密导入导出本地导入应用等
-var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'sy_lbxz', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_jl', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd', 'zdjmdc'];
-// 导航栏,导航栏页面,万能搜索引擎,头像,留言,所有壁纸,当前壁纸,天气,字体颜色,重字体颜色,背景颜色,背景透明度,背景确认框,背景框颜色,背景框透明度,毛玻璃,自动备份,使用次数,倒计时,密码,作品展示,音乐,搜索记录,轮播选择,HTSP,注册表,背景颜色,主题风格,ai,ai快捷指令,课表,总时长,自动导入本地,自动加密导出
+var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'sy_lbxz', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_jl', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd', 'zdjmdc', 'da_ka'];
+// 导航栏,导航栏页面,万能搜索引擎,头像,留言,所有壁纸,当前壁纸,天气,字体颜色,重字体颜色,背景颜色,背景透明度,背景确认框,背景框颜色,背景框透明度,毛玻璃,自动备份,使用次数,倒计时,密码,作品展示,音乐,搜索记录,轮播选择,HTSP,注册表,背景颜色,主题风格,ai,ai快捷指令,课表,总时长,自动导入本地,自动加密导出,打卡
 
 // 检查是否为时间
 function isValidDateTime(str) {
@@ -3206,7 +3208,7 @@ function sy_lbnr_hs() {
         sjnr_wz_shu = [0, 0, 0, 0, 0];
 
         function sjnr_shuchu(gs) {
-            // 1日程2作品3链接4未标记5设置6音乐
+            // 1日程2作品3链接4未标记5设置6音乐7热点
             var sj_nr_bl = [1, 2, 3, 3, 3, 4, 5, 6, 7, 7];
 
             // sz_zdsc(数组, 要删除的字符(不是索引号), 如果要替换成)
@@ -3604,38 +3606,28 @@ if (localStorage.dr_mm == '' || (localStorage.dr_mm !== '' && mmdr_sf == 1)) {
 
 // 优化内存
 top_dhl_S = document.querySelector('.top_dhl').querySelectorAll('div');
-top_dhl_S[0].addEventListener('click', function(e) {
-    sy_lbt.innerHTML = '';
-    clearInterval(sy_lbnr_dsq);
-    setTimeout(function() {
-        sy_lbnr_hs();
-    });
-
-});
-top_dhl_S[1].addEventListener('click', function(e) {
-    sy_lbt.innerHTML = '';
-    clearInterval(sy_lbnr_dsq);
-    clearTimeout(sy_lbt_sc_jsq2);
-    clearInterval(sy_lbt_sc_jsq);
-});
-top_dhl_S[2].addEventListener('click', function(e) {
-    sy_lbt.innerHTML = '';
-    clearInterval(sy_lbnr_dsq);
-    clearTimeout(sy_lbt_sc_jsq2);
-    clearInterval(sy_lbt_sc_jsq);
-});
-top_dhl_S[3].addEventListener('click', function(e) {
-    sy_lbt.innerHTML = '';
-    clearInterval(sy_lbnr_dsq);
-    clearTimeout(sy_lbt_sc_jsq2);
-    clearInterval(sy_lbt_sc_jsq);
-});
-top_dhl_S[4].addEventListener('click', function(e) {
-    sy_lbt.innerHTML = '';
-    clearInterval(sy_lbnr_dsq);
-    clearTimeout(sy_lbt_sc_jsq2);
-    clearInterval(sy_lbt_sc_jsq);
-});
+for (var i = 0; i < top_dhl_S.length; i++) {
+    if (i == 0) {
+        top_dhl_S[i].addEventListener('click', function(e) {
+            sy_lbt.innerHTML = '';
+            clearInterval(sy_lbnr_dsq);
+            if (nrmaxs0.style.display == 'block') {
+                sy_lbnr_hs();
+            } else {
+                setTimeout(function() {
+                    sy_lbnr_hs();
+                });
+            }
+        });
+    } else {
+        top_dhl_S[i].addEventListener('click', function(e) {
+            sy_lbt.innerHTML = '';
+            clearInterval(sy_lbnr_dsq);
+            clearTimeout(sy_lbt_sc_jsq2);
+            clearInterval(sy_lbt_sc_jsq);
+        });
+    }
+}
 var sy_3d_kaiguan = document.querySelector('.sy_3d_kaiguan');
 sy_3d_kaiguan.addEventListener('click', function(e) {
     sy_lbt.innerHTML = '';
@@ -4557,6 +4549,43 @@ function mrrd_sx() {
                 ssrd('https://api.vvhan.com/api/hotlist/huXiu', '虎嗅', 'data', 'title'); //韩小韩Web API
             } else if (mrrd_asd == 16) {
                 ssrd('https://api.vvhan.com/api/hotlist/woShiPm', 'woShiPm', 'data', 'title'); //韩小韩Web API
+            } else if (mrrd_asd == 17) {
+                var max_node = document.querySelector('.max_node');
+                if (max_node.innerText == 'node!') {
+                    $(document).ready(function() {
+                        // 使用 $.get() 发起 GET 请求
+                        $.get("http://localhost/mrrd", function(data, status) {
+                            // data 是从服务器返回的数据
+                            var datas;
+                            if (data[0] == '[' || data[0] == '{') {
+                                datas = JSON.parse(data);
+                            } else {
+                                datas = data;
+                            }
+                            const mrrd_top = JSON.parse(localStorage.getItem('mrrd_top'));
+                            const xsz = mrrd_top.concat(datas[2]);
+                            const mrrd_name = JSON.parse(localStorage.getItem('mrrd_name'));
+                            const xsz2 = mrrd_name.concat(datas[0]);
+                            const mrrd = JSON.parse(localStorage.getItem('mrrd'));
+                            const xsz3 = mrrd.concat(datas[1]);
+                            for (var i = 0; i < xsz.length; i++) { //删除0的
+                                if (xsz[i] == 0) {
+                                    xsz.splice(i, 1);
+                                    xsz2.splice(i, 1);
+                                }
+                            }
+                            console.log(xsz, xsz2, xsz3);
+                            localStorage.setItem('mrrd_top', JSON.stringify(xsz));
+                            localStorage.setItem('mrrd_name', JSON.stringify(xsz2));
+                            localStorage.setItem('mrrd', JSON.stringify(xsz3));
+                            console.log('node抓取热点成功!');
+                        }).fail(function(jqXHR, textStatus, errorThrown) {
+                            // 如果请求失败，打印错误信息
+                            console.log("请求失败: ", textStatus, errorThrown);
+                            console.log('node抓取热点失败!');
+                        });
+                    });
+                }
             } else {
                 clearInterval(mrrd_dsq);
             }
@@ -4888,6 +4917,12 @@ klm_qr.addEventListener('click', function(e) {
         localStorage.dr_mmdr_drsj = 0;
 
         location.reload();
+    } else if (klm == '˞˟˔˕') {
+        localStorage.Sku_node = 1;
+        Sku_tctx('已开启 node!');
+    } else if (klm == '˞˟˞˟˔˕') {
+        localStorage.Sku_node = 0;
+        Sku_tctx('已关闭 node!');
     } else {
         Sku_tctx('无效口令! 请检查口令码是否正确');
     }

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="Sku3.css">
     <link rel="stylesheet" href="Sku4.css">
     <link rel="stylesheet" href="Sku5.css">
+    <link rel="stylesheet" href="Sku6.css">
 
     <!-- 在线jquery -->
     <script src="https://cdn.staticfile.net/jquery/3.7.1/jquery.js"></script>
@@ -28,6 +29,7 @@
     <script src="Sku3.js" defer></script>
     <script src="Sku4.js" defer></script>
     <script src="Sku5.js" defer></script>
+    <script src="Sku6.js" defer></script>
     <script src="Sku.js" defer></script>
 
     <style class="style_s1"></style>
@@ -53,6 +55,7 @@
             <div>任务</div>
             <div>设置</div>
             <div>AI</div>
+            <div>习惯</div>
         </div>
 
         <!-- 搜索 -->
@@ -78,7 +81,7 @@
 
     </div>
 
-    <!-- 内容大盒子,里面包括4个页面 -->
+    <!-- 内容大盒子,里面包括n个页面 -->
     <div class="nrmax" style="display: block;">
 
         <!-- 首页 -->
@@ -120,7 +123,7 @@
                 <div class="sy_ke_biao_max fundong">
                     <input class="ke_biao_zhoushu" type="number">
                     <div class="sy_zpzs_kaiguan2"></div>
-                    <div class="sy_zpzs_kaiguan_ts2">锁定课表</div>
+                    <div class="sy_zpzs_kaiguan_ts2">锁定</div>
                     <div class="ke_biao_tianjia"><i class="iconfont icon-tianjia1 ke_biao_tianjia_tb"></i></div>
                     <div class="sy_ke_biao_top sy_ke_biao_h_s">
                         <div class="sy_ke_biao_top_s sy_ke_biao_l_s"></div>
@@ -1107,6 +1110,82 @@
             </div>
         </div>
 
+        <!-- 打卡页面 -->
+        <div class="nrmaxs nrmaxs5" style="display: none;">
+            <div class="daka_max">
+                <div class="daka_l">
+                    <div class="daka_l_top">
+                        <div class="daka_l_top_wz">习惯</div>
+                        <div class="daka_quanpin_anniu"><i class="iconfont icon-quanping daka_qp_tp"></i></div>
+                        <div class="daka_qiehuan_anniu"><i class="iconfont daka_qh_tp"></i></div>
+                        <div class="daka_tianjia_anniu"><i class="iconfont icon-tianjia1 daka_tj_tp"></i></div>
+                    </div>
+                    <div class="daka_l_bot">
+                        <!-- 输出列表 -->
+                    </div>
+                </div>
+                <div class="daka_r"></div>
+            </div>
+
+            <div class="daka_tianjia_ym">
+                <div class="daka_tianjia_wenzi">添加习惯</div>
+                <div class="daka_tianjia_tx"></div>
+                <input type="text" class="daka_tianjia_tx_srk" placeholder="url / 文字">
+                <div class="daka_tianjia_mc">名称</div>
+                <input type="text" class="daka_tianjia_mc_srk" placeholder="输入名称">
+                <div class="daka_tianjia_pl">打卡频率</div>
+                <div class="daka_tianjia_pl_srk">点击选择</div>
+                <div class="daka_tianjia_pl_ym">
+                    <div class="daka_tianjia_pl_ym_top">
+                        <div class="daka_tianjia_pl_ym_top_antian daka_tianjia_pl_ans" style="background-color: var(--zi_ti_color_20);">按天</div>
+                        <div class="daka_tianjia_pl_ym_top_anzhou daka_tianjia_pl_ans">按周次</div>
+                        <div class="daka_tianjia_pl_ym_top_jiange daka_tianjia_pl_ans">按时间间隔</div>
+                    </div>
+                    <div class="daka_tianjia_pl_ym_top_antian_ym daka_tianjia_pl_yms">
+                        <div class="daka_tianjia_pl_ym_top_antian_ym_zzxt">在这些天</div>
+                        <div class="daka_tianjia_pl_ym_top_antian_ss">一</div>
+                        <div class="daka_tianjia_pl_ym_top_antian_ss">二</div>
+                        <div class="daka_tianjia_pl_ym_top_antian_ss">三</div>
+                        <div class="daka_tianjia_pl_ym_top_antian_ss">四</div>
+                        <div class="daka_tianjia_pl_ym_top_antian_ss">五</div>
+                        <div class="daka_tianjia_pl_ym_top_antian_ss">六</div>
+                        <div class="daka_tianjia_pl_ym_top_antian_ss">日</div>
+                    </div>
+                    <div class="daka_tianjia_pl_ym_top_anzhou_ym daka_tianjia_pl_yms" style="display: none;">
+                        <div class="daka_tianjia_pl_ym_top_antian_ym_zzxt">每周 1 次</div>
+                        <div class="daka_tianjia_pl_ym_top_anz_ss">1</div>
+                        <div class="daka_tianjia_pl_ym_top_anz_ss">2</div>
+                        <div class="daka_tianjia_pl_ym_top_anz_ss">3</div>
+                        <div class="daka_tianjia_pl_ym_top_anz_ss">4</div>
+                        <div class="daka_tianjia_pl_ym_top_anz_ss">5</div>
+                        <div class="daka_tianjia_pl_ym_top_anz_ss">6</div>
+                        <div class="daka_tianjia_pl_ym_top_anz_ss">7</div>
+                    </div>
+                    <div class="daka_tianjia_pl_ym_top_jiange_ym daka_tianjia_pl_yms" style="display: none;">
+                        <div class="daka_tianjia_pl_ym_top_ansjjg_ym_m">每隔</div>
+                        <input type="number" min="1" class="daka_tianjia_pl_ym_top_ansjjg_ym_t">
+                        <div class="daka_tianjia_pl_ym_top_ansjjg_ym_m" style="left: 117px;">天</div>
+                    </div>
+                    <div class="daka_tianjia_pl_ym_qd">确定</div>
+                </div>
+                <div class="daka_tianjia_ksrq">开始日期</div>
+                <div class="daka_tianjia_ksrq_max">
+                    <input type="number" min="2003" class="daka_tianjia_ksrq_nian">
+                    <div>年</div>
+                    <input type="number" min="1" max="12" class="daka_tianjia_ksrq_yue" style="width: 20px;">
+                    <div>月</div>
+                    <input type="number" min="1" max="31" class="daka_tianjia_ksrq_ri" style="width: 20px;">
+                    <div>日</div>
+                </div>
+                <div class="daka_tianjia_jcts">坚持天数</div>
+                <div class="daka_tianjia_jcts_max">
+                    <input type="number" min="7" max="36500" class="daka_tianjia_jcts_srk">
+                    <div>天</div>
+                </div>
+                <div class="daka_tianjia_qd">确定</div>
+            </div>
+        </div>
+
     </div>
 
     <!-- 引擎 -->
@@ -1150,6 +1229,9 @@
     <!-- 版本显示 -->
     <div class="max_bbxs"></div>
     <div class="max_bbxs2"></div>
+
+    <!-- node -->
+    <div class="max_node"></div>
 
     <!-- root -->
     <div class="max_root"></div>

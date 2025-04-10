@@ -1,4 +1,4 @@
-var ban_ben_s = "913801";
+var ban_ben_s = "953078";
 
 function formatNumberString(input) {
     if (isAlreadyFormatted(input)) { return input; }
@@ -335,11 +335,26 @@ if (localStorage.syzsc == undefined) {
 }
 //自动导入本地
 if (localStorage.zddrbd == undefined) {
-    localStorage.zddrbd = 0;
+    localStorage.zddrbd = 1;
 }
 //自动加密导出
 if (localStorage.zdjmdc == undefined) {
     localStorage.zdjmdc = 0;
+}
+// node
+if (localStorage.Sku_node == undefined) {
+    localStorage.Sku_node = 1;
+}
+// 打卡
+if (localStorage.da_ka == undefined) {
+    var da_ka_csz = [
+        ["☽", "早睡", "每天", new Date().setHours(0, 0, 0, 0), 36500, [],
+            [
+                [new Date().setHours(0, 0, 0, 0), '坚持让我们闪闪发光!']
+            ]
+        ]
+    ];
+    localStorage.da_ka = JSON.stringify(da_ka_csz);
 }
 
 

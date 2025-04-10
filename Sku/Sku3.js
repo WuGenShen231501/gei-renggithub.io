@@ -71,10 +71,11 @@ function liu_yan_shuchu_sz() {
         div.setAttribute('liu_yan_num2', i2);
         //判断是否标记
         if (liu_yan_dx['liu_yan_sz' + i][2] == 2) {
-            div.innerHTML = '<div class="liu_yan_z liu_yan_z2">' + liu_yan_dx['liu_yan_sz' + i][0] + '</div><div class="liu_yan_tx" style="background-image: url(' + localStorage.tou_xiang + ');"></div><div class="liu_yan_time">' + liu_yan_dx['liu_yan_sz' + i][1] + '</div>';
+            div.innerHTML = '<div class="liu_yan_z liu_yan_z2">' + liu_yan_dx['liu_yan_sz' + i][0] + '</div><div class="liu_yan_tx"></div><div class="liu_yan_time">' + liu_yan_dx['liu_yan_sz' + i][1] + '</div>';
         } else if (liu_yan_dx['liu_yan_sz' + i][2] == 1) {
-            div.innerHTML = '<div class="liu_yan_z" style="border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';">' + liu_yan_dx['liu_yan_sz' + i][0] + '</div><div class="liu_yan_tx" style="background-image: url(' + localStorage.tou_xiang + ');"></div><div class="liu_yan_time">' + liu_yan_dx['liu_yan_sz' + i][1] + '</div>';
+            div.innerHTML = '<div class="liu_yan_z" style="border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';">' + liu_yan_dx['liu_yan_sz' + i][0] + '</div><div class="liu_yan_tx"></div><div class="liu_yan_time">' + liu_yan_dx['liu_yan_sz' + i][1] + '</div>';
         }
+        div.querySelector('.liu_yan_tx').style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
         liu_yan_top_min.appendChild(div);
         i2++;
     }
@@ -155,7 +156,8 @@ liu_yan_sxuan_bj.addEventListener('click', function() {
             div_1.className = 'liu_yan_z_max';
             div_1.setAttribute('liu_yan_num', i);
             div_1.setAttribute('liu_yan_num2', i2);
-            div_1.innerHTML = '<div class="liu_yan_z" style="border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';">' + liu_yan_dx['liu_yan_sz' + i][0] + '</div><div class="liu_yan_tx" style="background-image: url(' + localStorage.tou_xiang + ');"></div><div class="liu_yan_time">' + liu_yan_dx['liu_yan_sz' + i][1] + '</div>';
+            div_1.innerHTML = '<div class="liu_yan_z" style="border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';">' + liu_yan_dx['liu_yan_sz' + i][0] + '</div><div class="liu_yan_tx"></div><div class="liu_yan_time">' + liu_yan_dx['liu_yan_sz' + i][1] + '</div>';
+            div_1.querySelector('.liu_yan_tx').style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
             liu_yan_top_min.appendChild(div_1);
             i2++;
         }
@@ -191,7 +193,8 @@ liu_yan_sxuan_wbj.addEventListener('click', function() {
             div_0.className = 'liu_yan_z_max';
             div_0.setAttribute('liu_yan_num', i);
             div_0.setAttribute('liu_yan_num2', i2);
-            div_0.innerHTML = '<div class="liu_yan_z liu_yan_z2">' + liu_yan_dx['liu_yan_sz' + i][0] + '</div><div class="liu_yan_tx" style="background-image: url(' + localStorage.tou_xiang + ');"></div><div class="liu_yan_time">' + liu_yan_dx['liu_yan_sz' + i][1] + '</div>';
+            div_0.innerHTML = '<div class="liu_yan_z liu_yan_z2">' + liu_yan_dx['liu_yan_sz' + i][0] + '</div><div class="liu_yan_tx"></div><div class="liu_yan_time">' + liu_yan_dx['liu_yan_sz' + i][1] + '</div>';
+            div_0.querySelector('.liu_yan_tx').style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
             liu_yan_top_min.appendChild(div_0);
             i2++;
         }
@@ -253,10 +256,11 @@ i_liu_yan_ss_tp.addEventListener('click', function() {
                 div.setAttribute('liu_yan_num2', i2);
                 //判断是否标记
                 if (liu_yan_dx['liu_yan_sz' + i][2] == 2) {
-                    div.innerHTML = '<div class="liu_yan_z liu_yan_z2">' + liu_yan_dx['liu_yan_sz' + i][0] + '</div><div class="liu_yan_tx" style="background-image: url(' + localStorage.tou_xiang + ');"></div><div class="liu_yan_time">' + liu_yan_dx['liu_yan_sz' + i][1] + '</div>';
+                    div.innerHTML = '<div class="liu_yan_z liu_yan_z2">' + liu_yan_dx['liu_yan_sz' + i][0] + '</div><div class="liu_yan_tx"></div><div class="liu_yan_time">' + liu_yan_dx['liu_yan_sz' + i][1] + '</div>';
                 } else if (liu_yan_dx['liu_yan_sz' + i][2] == 1) {
-                    div.innerHTML = '<div class="liu_yan_z" style="border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';">' + liu_yan_dx['liu_yan_sz' + i][0] + '</div><div class="liu_yan_tx" style="background-image: url(' + localStorage.tou_xiang + ');"></div><div class="liu_yan_time">' + liu_yan_dx['liu_yan_sz' + i][1] + '</div>';
+                    div.innerHTML = '<div class="liu_yan_z" style="border-color:' + RGB_zhq(localStorage.zi_ti_click_color) + ';">' + liu_yan_dx['liu_yan_sz' + i][0] + '</div><div class="liu_yan_tx"></div><div class="liu_yan_time">' + liu_yan_dx['liu_yan_sz' + i][1] + '</div>';
                 }
+                div.querySelector('.liu_yan_tx').style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
                 liu_yan_top_min.appendChild(div);
                 i2++;
             }
