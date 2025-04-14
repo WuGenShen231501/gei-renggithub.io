@@ -4508,7 +4508,7 @@ function mrrd_sx() {
         mrrd_asd = 0;
 
         // 需要手动更改
-        mrrd_zg = 16;
+        mrrd_zg = 12;
 
         mrrd_zg_2 = 0;
         mrrd_F = 0;
@@ -4534,22 +4534,14 @@ function mrrd_sx() {
             } else if (mrrd_asd == 8) {
                 ssrd('https://api.vvhan.com/api/hotlist/itNews', 'IT之家', 'data', 'title'); //韩小韩Web API
             } else if (mrrd_asd == 9) {
-                ssrd('https://api.andeer.top/API/hot_bky.php', '博客', 'data', 'title'); //Aurora API
-            } else if (mrrd_asd == 10) {
-                ssrd('https://api.andeer.top/API/hot_tx.php', '腾讯', 'data', 'title'); //Aurora API
-            } else if (mrrd_asd == 11) {
-                ssrd('https://api.andeer.top/API/hot_cs.php', 'CSDN', 'data', 'title'); //Aurora API
-            } else if (mrrd_asd == 12) {
-                ssrd('https://api.andeer.top/API/hot_wy.php', '网易', 'data', 'titles'); //Aurora API
-            } else if (mrrd_asd == 13) {
                 ssrd('https://api.vvhan.com/api/hotlist/huPu', '虎扑', 'data', 'title'); //韩小韩Web API
-            } else if (mrrd_asd == 14) {
+            } else if (mrrd_asd == 10) {
                 ssrd('https://api.vvhan.com/api/hotlist/36Ke', '36氪', 'data', 'title'); //韩小韩Web API
-            } else if (mrrd_asd == 15) {
+            } else if (mrrd_asd == 11) {
                 ssrd('https://api.vvhan.com/api/hotlist/huXiu', '虎嗅', 'data', 'title'); //韩小韩Web API
-            } else if (mrrd_asd == 16) {
+            } else if (mrrd_asd == 12) {
                 ssrd('https://api.vvhan.com/api/hotlist/woShiPm', 'woShiPm', 'data', 'title'); //韩小韩Web API
-            } else if (mrrd_asd == 17) {
+            } else if (mrrd_asd == 13) {
                 var max_node = document.querySelector('.max_node');
                 if (max_node.innerText == 'node!') {
                     $(document).ready(function() {
@@ -4944,7 +4936,7 @@ if (localStorage.Sku_benghuai == 1) {
 
 
 
-// 滚动条
+// 滚动条(滚动页面、滚动条max、滚动条min)
 Sku_gundontiao('.bzsz_max', '.bizhi_gundontiao_max', '.bizhi_gundontiao_min');
 Sku_gundontiao('.shezhi_ym_max', '.ztfg_gundontiao_max', '.ztfg_gundontiao_min');
 Sku_gundontiao('.grb_j_max', '.ctysj_gundontiao_max', '.ctysj_gundontiao_min');
@@ -4955,6 +4947,7 @@ Sku_gundontiao('.ssbqym_max', '.ssbqym_gundontiao_max', '.ssbqym_gundontiao_min'
 Sku_gundontiao('.shezhi_min', '.shezhi_max_gundontiao_max', '.shezhi_max_gundontiao_min');
 Sku_gundontiao('.duibixx_max', '.xxdb_gundontiao_max', '.xxdb_gundontiao_min');
 Sku_gundontiao('.AI_kjzl_min', '.AI_kjzl_gundontiao_max', '.AI_kjzl_gundontiao_min');
+Sku_gundontiao('.daka_l_bot', '.daka_gundontiao_max', '.daka_gundontiao_min');
 
 
 

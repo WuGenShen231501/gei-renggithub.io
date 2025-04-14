@@ -196,6 +196,7 @@
     right: 70px;
     border-radius: 5px;
     overflow: hidden;
+    animation: nrmaxs_dh 0.4s;
 }
 
 .liu_yan_sxuan_s {
@@ -383,6 +384,7 @@
     background-color: var(--bei_jing_color);
     border: var(--bei_jing_kuan_true) solid var(--bei_jing_kuan_color);
     backdrop-filter: var(--mao_bo_li);
+    animation: nrmaxs_dh 0.4s;
 }
 
 .liu_yan_scsy_wz {
@@ -495,6 +497,7 @@
     top: 96px;
     right: 0px;
     margin-top: 0px !important;
+    animation: nrmaxs_dh 0.4s;
 }
 
 .ji_ru_ssk_max2 {

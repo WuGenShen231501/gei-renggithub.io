@@ -117,6 +117,7 @@
         height: 450px;
         background-color: rgba(0, 0, 0, 0.75);
         z-index: 1;
+        animation: nrmaxs_dh 0.4s;
     }
     
     .bzsz_tj_ym_TP {
@@ -879,6 +880,7 @@
         overflow: hidden;
         transition: 0.4s;
         z-index: 1;
+        animation: nrmaxs_dh 0.4s;
     }
     
     .ssbqym_max {
@@ -918,7 +920,8 @@
         left: calc(50% - 200px);
         border-radius: 10px;
         z-index: 1;
-        backdrop-filter: blur(var(--mao_bo_li));
+        backdrop-filter: var(--mao_bo_li);
+        animation: nrmaxs_dh 0.4s;
     }
     
     .daoru_ym_my {
@@ -1303,8 +1306,9 @@
         left: calc(50% - 200px);
         border-radius: 10px;
         z-index: 1;
-        backdrop-filter: blur(var(--mao_bo_li));
+        backdrop-filter: var(--mao_bo_li);
         background-color: var(--bei_jing_color);
+        animation: nrmaxs_dh 0.4s;
     }
     
     .ztfg_tj_ym_name {

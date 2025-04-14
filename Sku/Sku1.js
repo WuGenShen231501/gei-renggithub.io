@@ -3037,11 +3037,6 @@ document.addEventListener('keydown', function(e) {
             sy_dw_top.click();
         }
         if (sd_dtnr_max.style.display == 'block') {
-            // 如果首页，开始轮播图
-            if (nrmaxs0.style.display == 'block') {
-                var top_dhl_s = document.querySelector('.top_dhl').querySelectorAll('div');
-                top_dhl_s[0].click();
-            }
             // 去除定时器
             clearInterval(sy_lbnr_dsq_sd);
             // 清楚HTML
@@ -3050,6 +3045,11 @@ document.addEventListener('keydown', function(e) {
             topmax.style.display = 'block';
             nrmax.style.display = 'block';
             sd_dtnr_max.style.display = 'none';
+            // 如果首页，开始轮播图
+            if (nrmaxs0.style.display == 'block') {
+                var top_dhl_s = document.querySelector('.top_dhl').querySelectorAll('div');
+                top_dhl_s[0].click();
+            }
         }
     } else if (e.altKey && e.key == 'l') {
         if (localStorage.dr_mm == '') {

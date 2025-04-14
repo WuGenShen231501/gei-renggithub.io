@@ -157,6 +157,7 @@ html {
     border-radius: 5px;
     backdrop-filter: var(--mao_bo_li);
     transition: 0.4s;
+    animation: nrmaxs_dh 0.4s;
 }
 
 .so_yq_s_sjx {
@@ -376,6 +377,7 @@ html {
     top: 150px;
     border-radius: 5px;
     z-index: 1;
+    animation: nrmaxs_dh 0.4s;
 }
 
 .tou_xian_tp {
@@ -509,6 +511,7 @@ html {
     border-radius: 5px;
     z-index: 2;
     overflow: hidden;
+    animation: nrmaxs_dh 0.4s;
 }
 
 .music_hzmax {
@@ -725,6 +728,7 @@ html {
     left: calc(((100% /2) - 20px) + 78px);
     bottom: 50px;
     border-radius: 10px;
+    animation: nrmaxs_dh 0.4s;
 }
 
 .i_music_boyyom_tj {
@@ -751,6 +755,7 @@ html {
     left: calc((100% / 2) - 250px);
     top: 200px;
     border-radius: 10px;
+    animation: nrmaxs_dh 0.4s;
 }
 
 .music_bfq2 {

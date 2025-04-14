@@ -435,6 +435,7 @@
         top: 150px;
         left: calc((100% - 500px) / 2);
         background-color: rgb(0, 0, 0, 0.5);
+        animation: nrmaxs_dh 0.4s;
     }
     
     .input_djs_tjym_sj {
@@ -687,6 +688,7 @@
         height: 300px;
         border-radius: 5px;
         left: calc((100% - 500px) / 2);
+        animation: nrmaxs_dh 0.4s;
     }
     
     .input_sy_zp_tj {

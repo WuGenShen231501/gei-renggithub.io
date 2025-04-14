@@ -1,3 +1,12 @@
+// 开始
+var xg = document.querySelector('.top_dhl').querySelectorAll('div')[5];
+xg.addEventListener('click', function(e) {
+    daka_shuchu();
+});
+
+
+
+
 // 全屏
 var daka_max = document.querySelector('.daka_max');
 if (localStorage.daka_qp == undefined) {
@@ -322,7 +331,7 @@ daka_tianjia_qd.addEventListener('click', function(e) {
         da_ka_tj[6] = [];
         da_ka.push(da_ka_tj);
         localStorage.da_ka = JSON.stringify(da_ka);
-        Sku_tctx('习惯添加成功');
+        Sku_tctx('习惯添加:' + daka_tianjia_mc_srk.value);
         daka_shuchu();
         daka_tianjia_ym_huanyuan();
     } else {
@@ -334,7 +343,10 @@ daka_tianjia_qd.addEventListener('click', function(e) {
 
 
 // 输出打卡列表
-function daka_shuchu() {
+function daka_shuchu(dh_true) {
+    // 是否需要动画
+    var dh_trues = (dh_true !== undefined) ? dh_true : true;
+
     var daka_l_bot = document.querySelector('.daka_l_bot');
     daka_l_bot.innerHTML = '';
     var da_ka_max_gs = -1;
@@ -447,9 +459,14 @@ function daka_shuchu() {
         var da_ka_max = document.createElement('div');
 
         da_ka_max.style.setProperty('--delay-index', da_ka_max_gs);
-        da_ka_max.classList.add('daka_s_max');
+        if (dh_trues) {
+            da_ka_max.classList.add('daka_s_max');
+        } else {
+            da_ka_max.classList.add('daka_s_max_no_dh');
+        }
         da_ka_max.setAttribute('data_num', id);
-        var da_ka_pl_s = '';
+        var da_ka_jisuan_s = '✔ ' + da_ka[id][5].length + '🔥 ';
+        var da_ka_pl_s = da_ka[id][2] + ' | ' + new Date(da_ka[id][3]).getFullYear() + '年' + new Date(da_ka[id][3]).getMonth() + 1 + '月' + new Date(da_ka[id][3]).getDate() + '日 - ' + new Date(da_ka[id][3] + da_ka[id][4] * 24 * 60 * 60 * 1000).getFullYear() + '年' + new Date(da_ka[id][3] + da_ka[id][4] * 24 * 60 * 60 * 1000).getMonth() + 1 + '月' + new Date(da_ka[id][3] + da_ka[id][4] * 24 * 60 * 60 * 1000).getDate() + '日';
         var da_ka_zt_s = '';
         var da_ka_ztwz_s = '';
         if (liebie == '今日已打卡') {
@@ -465,7 +482,7 @@ function daka_shuchu() {
             da_ka_zt_s = '';
             da_ka_ztwz_s = '';
         }
-        da_ka_max.innerHTML = '<div class="daka_s_min"><div class="daka_s_tx" style="background-image:url(' + ((da_ka[id][0].startsWith("http") || da_ka[id][0].startsWith("data")) ? da_ka[id][0] : '') + ');">' + ((da_ka[id][0].startsWith("http") || da_ka[id][0].startsWith("data")) ? '' : da_ka[id][0]) + '</div><div class="daka_s_wzts_max"><div class="daka_s_wz">' + da_ka[id][1] + '</div><div class="daka_s_ts">' + da_ka_pl_s + '</div></div><div class="' + da_ka_zt_s + '">' + da_ka_ztwz_s + '</div></div>';
+        da_ka_max.innerHTML = '<div class="daka_s_min"><div class="daka_s_tx" style="background-image:url(' + ((da_ka[id][0].startsWith("http") || da_ka[id][0].startsWith("data")) ? da_ka[id][0] : '') + ');">' + ((da_ka[id][0].startsWith("http") || da_ka[id][0].startsWith("data")) ? '' : da_ka[id][0]) + '</div><div class="daka_s_wzts_max"><div class="daka_s_wz">' + da_ka[id][1] + ' ' + da_ka_jisuan_s + '</div><div class="daka_s_ts">' + da_ka_pl_s + '</div></div><div class="' + da_ka_zt_s + '">' + da_ka_ztwz_s + '</div></div>';
 
         daka_l_bot.appendChild(da_ka_max);
     }
@@ -480,9 +497,16 @@ daka_shuchu();
 var daka_l_bot = document.querySelector('.daka_l_bot');
 daka_l_bot.addEventListener('click', function(e) {
     if (e.target.classList.contains('daka_s_qd_dk')) {
-        console.log(1);
-    }
-    if (e.target.classList.contains('daka_s_qd_dk')) {
-        console.log(1);
+        var da_ka = JSON.parse(localStorage.da_ka);
+        var da_ka_zhixian = e.target.parentNode.parentNode.getAttribute('data_num')
+        console.log('指向: ' + da_ka_zhixian);
+        da_ka[da_ka_zhixian][5].push(new Date().getTime());
+        localStorage.da_ka = JSON.stringify(da_ka);
+        Sku_tctx('打卡完成: ' + da_ka[da_ka_zhixian][1]);
+        e.target.style.animation = 'daka_qr_dh 0.5s';
+        setTimeout(function() {
+            e.target.innerText = '✔';
+            e.target.className = 'daka_s_qd_dkcg';
+        }, 250);
     }
 });
