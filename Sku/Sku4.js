@@ -2082,6 +2082,15 @@ function bendidaoru_sc() {
     }
 }
 
+// 删除所有本地导入
+var shanchu_daoru_bendi = document.querySelector('.shanchu_daoru_bendi');
+shanchu_daoru_bendi.addEventListener('click', function(e) {
+    var daorubendi_s_cs = document.querySelectorAll('.daorubendi_s_cs');
+    for (let i = 0; i < daorubendi_s_cs.length; i++) {
+        daorubendi_s_cs[i].click();
+    }
+});
+
 
 
 
@@ -4947,8 +4956,6 @@ Sku_gundontiao('.ssbqym_max', '.ssbqym_gundontiao_max', '.ssbqym_gundontiao_min'
 Sku_gundontiao('.shezhi_min', '.shezhi_max_gundontiao_max', '.shezhi_max_gundontiao_min');
 Sku_gundontiao('.duibixx_max', '.xxdb_gundontiao_max', '.xxdb_gundontiao_min');
 Sku_gundontiao('.AI_kjzl_min', '.AI_kjzl_gundontiao_max', '.AI_kjzl_gundontiao_min');
-Sku_gundontiao('.daka_l_bot', '.daka_gundontiao_max', '.daka_gundontiao_min');
-
 
 
 

@@ -510,3 +510,9 @@ daka_l_bot.addEventListener('click', function(e) {
         }, 250);
     }
 });
+
+
+
+
+// 滚动条
+Sku_gundontiao('.daka_l_bot', '.daka_gundontiao_max', '.daka_gundontiao_min');

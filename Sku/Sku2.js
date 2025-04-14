@@ -1253,6 +1253,9 @@ i_lian_jie_ss_tb.addEventListener('click', function() {
         // 输出个数
         console.log("搜索匹配个数:" + ((sspp_gs - 0) + 1));
 
+        // tab从第一个开始
+        lian_jie_ssym_s_gs = 0;
+
         // Sku-a转换href
         a_click_self();
         // 下载转换href
@@ -1857,6 +1860,23 @@ Sku_gundontiao('.lian_jie_l', '.lianjied_gundontiao_max', '.lianjied_gundontiao_
 
 
 
+
+// 失去tab
+var lian_jie_ssym = document.querySelector('.lian_jie_ssym');
+lian_jie_ssym.addEventListener('mouseover', function(e) {
+    if (!e.target.classList.contains('lian_jie_ssym') && lian_jie_ssym_s_gs !== 0) {
+        var lian_jie_ssym_s = document.querySelector('.lian_jie_ssym').querySelectorAll('.lj_max');
+        for (var i = 0; i < lian_jie_ssym_s.length; i++) {
+            lian_jie_ssym_s[i].style.boxShadow = '';
+        }
+        lian_jie_ssym_s_gs = 0;
+    }
+});
+
+
+
+
+
 //全局事件
 dhr_xg_tj = document.querySelector('.dhr_xg_tj');
 dhr_shezhi_gn = document.querySelector('.dhr_shezhi_gn');
@@ -1890,7 +1910,26 @@ document.addEventListener('keyup', function(e) {
     }
 });
 
+var lian_jie_ssym_s_gs = 0;
 document.addEventListener('keydown', function(e) {
+    if (e.key == 'Tab') { // 搜索链接tab切换 
+        if (lian_jie_r2.style.display == 'block' && nrmaxs1.style.display == 'block') {
+            e.preventDefault();
+            lian_jie_ssk.blur(); //失去交点
+            var lian_jie_ssym_s = document.querySelector('.lian_jie_ssym').querySelectorAll('.lj_max');
+            lian_jie_ssym_s_gs++;
+            if (lian_jie_ssym_s_gs > lian_jie_ssym_s.length) {
+                lian_jie_ssym_s_gs = 1;
+            }
+            for (var i = 0; i < lian_jie_ssym_s.length; i++) {
+                if (lian_jie_ssym_s_gs - 1 == i) {
+                    lian_jie_ssym_s[i].style.boxShadow = 'inset 0px -17px 15px -20px var(--zi_ti_color)';
+                } else {
+                    lian_jie_ssym_s[i].style.boxShadow = '';
+                }
+            }
+        }
+    }
 
     if (nrmaxs1.style.display == 'block' && e.ctrlKey && e.key == '/') {
         lian_jie_ssk.focus();
@@ -1906,6 +1945,12 @@ document.addEventListener('keydown', function(e) {
     }
 
     if (e.key == 'Enter') {
+        // 搜索快速打开快捷键
+        if (lian_jie_r2.style.display == 'block' && sspp_gs == 0 && nrmaxs1.style.display == 'block') {
+            document.querySelector('.lian_jie_r2').querySelector('.lj_lj_t').click();
+        } else if (lian_jie_r2.style.display == 'block' && sspp_gs !== 0 && nrmaxs1.style.display == 'block' && lian_jie_ssym_s_gs !== 0) {
+            document.querySelector('.lian_jie_r2').querySelectorAll('.lj_lj_t')[lian_jie_ssym_s_gs - 1].click();
+        }
         // 添加更改快捷键
         if (dhr_xg_tj.style.display == 'block' || lj_xg_tj.style.display == 'block' || lj_zcb_ym.style.display == 'block') {
             dhr_xg_tj = document.querySelector('.dhr_xg_tj');
@@ -1932,10 +1977,6 @@ document.addEventListener('keydown', function(e) {
             if (lj_zcb_ym.style.display == 'block') {
                 lj_zcb_qr.click();
             }
-        }
-        // 搜索快速打开快捷键
-        if (lian_jie_r2.style.display == 'block' && sspp_gs == 0 && nrmaxs1.style.display == 'block') {
-            document.querySelector('.lian_jie_r2').querySelector('.lj_lj_t').click();
         }
     }
     if (e.key == 'ArrowUp' || e.key == 'ArrowDown') {

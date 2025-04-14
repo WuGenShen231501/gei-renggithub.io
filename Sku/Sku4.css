@@ -1816,3 +1816,20 @@
     .jm_daoru_zd_tishi:hover~.daoru_zd_kaiguan {
         opacity: 1;
     }
+    
+    .shanchu_daoru_bendi {
+        position: absolute;
+        border: 1px solid var(--zi_ti_color);
+        width: 112px;
+        height: 30px;
+        border-radius: 5px;
+        text-align: center;
+        right: 53px;
+        top: 10px;
+        line-height: 28px;
+        transition: 0.15s;
+    }
+    
+    .shanchu_daoru_bendi:hover {
+        transform: scale(1.1);
+    }
