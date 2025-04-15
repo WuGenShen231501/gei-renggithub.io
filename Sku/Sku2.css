@@ -12,7 +12,7 @@
 .lian_jie_l {
     position: relative;
     width: 300px;
-    height: 600px;
+    height: calc(100% + 2px);
     overflow-y: scroll;
 }
 
@@ -29,9 +29,11 @@
 
 .lian_jie_r {
     position: relative;
-    width: 970px;
-    height: 600px;
+    width: calc(100% + 85px);
+    height: calc(100%);
+    padding-right: 70px;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .lian_jie_l div {
@@ -51,7 +53,7 @@
 .lian_jie_r div {
     position: relative;
     display: inline-block;
-    width: 900px;
+    width: calc(100% + 2px);
     height: auto;
 }
 
@@ -89,14 +91,14 @@
 
 .lj_xx {
     float: left;
-    width: 120px !important;
+    width: calc(100% - 150px) !important;
     height: 60px !important;
     margin: 19.5px 0 19.5px 5px;
     overflow: hidden;
 }
 
 .lj_xx_t {
-    width: 120px !important;
+    width: 100% !important;
     height: 50% !important;
     overflow: hidden;
     font-size: 14px;
@@ -105,7 +107,7 @@
 }
 
 .lj_xx_b {
-    width: 120px !important;
+    width: 100% !important;
     height: 50% !important;
     font-size: 12px;
     line-height: 30px;
@@ -123,11 +125,11 @@
 }
 
 .lj_lj {
-    position: relative;
-    float: left;
+    position: absolute !important;
     width: 80px !important;
     height: 60px !important;
-    margin: 19.5px 0 19.5px 8px;
+    top: 19.5px;
+    right: 0;
 }
 
 .lj_lj_t {
@@ -343,9 +345,11 @@
 
 .lian_jie_r2 {
     position: relative;
-    width: 970px;
-    height: 600px;
+    width: calc(100% + 85px);
+    height: calc(100%);
+    padding-right: 70px;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .lian_jie_ssk {
@@ -543,7 +547,7 @@
     right: 0;
     top: -1px;
     width: 5px;
-    height: 600px;
+    height: calc(100% + 2px);
     border-radius: 5px;
     background-color: var(--zi_ti_color_20);
     overflow: hidden;
@@ -564,7 +568,7 @@
     left: 0;
     top: -1px;
     width: 5px;
-    height: 600px;
+    height: calc(100% + 2px);
     border-radius: 5px;
     background-color: var(--zi_ti_color_20);
     overflow: hidden;
@@ -579,3 +583,50 @@
     background-color: var(--zi_ti_color);
     opacity: 0.6;
 }
+
+
+/* 全屏 */
+
+
+/* .lian_jie_l_max {
+    position: relative;
+    float: left;
+    width: 230px;
+    height: 600px;
+    background-color: rgb(0, 0, 0, 0.75);
+    border-radius: 5px;
+    overflow: hidden;
+    animation: nrmaxs_dh 0.4s;
+}
+
+.lian_jie_r_max {
+    position: relative;
+    float: right;
+    width: 900px;
+    height: 600px;
+    background-color: rgb(0, 0, 0, 0.75);
+    border-radius: 5px;
+    overflow: hidden;
+    animation: nrmaxs_dh 0.4s;
+} */
+
+
+/* .lian_jie_l_max {
+    position: fixed;
+    width: 230px;
+    height: calc(100% - 56px);
+    top: 56px;
+    left: 0;
+    overflow: hidden;
+    animation: nrmaxs_dh 0.4s;
+}
+
+.lian_jie_r_max {
+    position: fixed;
+    width: calc(100% - 230px);
+    height: calc(100% - 56px);
+    top: 56px;
+    right: 0;
+    overflow: hidden;
+    animation: nrmaxs_dh 0.4s;
+} */

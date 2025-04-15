@@ -126,22 +126,31 @@ function WGS_wenbengundon(qwe, asd, hzxg) {
         var element = wb[i];
         var element_w = wb[i].offsetWidth;
         // 克隆元素并测量宽度
+        var parentElement = element.parentElement;
         var clone = element.cloneNode(true);
         clone.style.visibility = 'hidden';
         clone.style.position = 'absolute';
         if (element_w !== 0) { clone.style.width = element_w + 'px'; }
         clone.style.left = '-9999px'; // 将其移出视图
-        document.body.appendChild(clone);
+        if (parentElement.offsetWidth == 0) {
+            document.body.appendChild(clone);
+        } else {
+            parentElement.appendChild(clone);
+        }
         var scrollWidth2 = clone.scrollWidth;
         var offsetWidth2 = clone.offsetWidth + hzxg;
-        document.body.removeChild(clone);
+        if (parentElement.offsetWidth == 0) {
+            document.body.removeChild(clone);
+        } else {
+            parentElement.removeChild(clone);
+        }
 
         // 如果已经绑定了事件处理函数，则先移除
         if (element._onMouseOver && element._onMouseOut) {
             element.removeEventListener('mouseover', element._onMouseOver);
             element.removeEventListener('mouseout', element._onMouseOut);
         }
-        // console.log('内容' + scrollWidth2, '盒子' + offsetWidth2);
+        // console.log('内容' + scrollWidth2, '盒子' + offsetWidth2, 'class' + wb[i].className);
         if (scrollWidth2 > offsetWidth2) {
             // 定义鼠标悬停事件处理函数
             element._onMouseOver = function() {

@@ -1,77 +1,40 @@
-// 所有文本超出字体浮动效果
-// function WGS_wenbengundon(qwe) {
-//     var wb = document.querySelectorAll(qwe);
-//     for (var i = 0; i < wb.length; i++) {
-//         wb[i].addEventListener('mouseover', function(e) {
-//             var nrcd = this.scrollWidth;
-//             var hzcd = this.offsetWidth;
-//             if (nrcd > hzcd) {
-//                 var duochu = nrcd - hzcd;
-//                 var sj = duochu / 50;
-//                 this.style.transition = sj + 's linear';
-//                 this.style.textIndent = (nrcd * -1) + hzcd + 'px';
-//             }
-//         });
-//         wb[i].addEventListener('mouseout', function(e) {
-//             this.style.transition = '';
-//             this.style.textIndent = '0px';
-//         });
-//     }
-// }
-
 function WGS_wenbengundon9(qwe) {
+    // 获取目标元素
     var wb = document.querySelectorAll(qwe);
+    // 遍历每个元素
     for (var i = 0; i < wb.length; i++) {
-        // 克隆元素
-        var clone = wb[i].cloneNode(true);
-        clone.style.visibility = 'hidden';
-        clone.style.position = 'absolute';
-        clone.style.left = '-9999px'; // 将其移出视图
-        document.body.appendChild(clone);
-        // 进行测量
-        var scrollWidth = clone.scrollWidth;
-        var offsetWidth = clone.offsetWidth;
-        // 移除克隆元素
-        document.body.removeChild(clone);
-
-        if (scrollWidth > offsetWidth) {
-            wb[i].addEventListener('mouseover', function(e) {
+        var element = wb[i];
+        // 如果已经绑定了事件处理函数，则先移除
+        if (element._onMouseOver && element._onMouseOut) {
+            element.removeEventListener('mouseover', element._onMouseOver);
+            element.removeEventListener('mouseout', element._onMouseOut);
+        }
+        // 定义鼠标悬停事件处理函数
+        element._onMouseOver = function() {
+            if (this.scrollWidth > this.offsetWidth) {
                 var nrcd = this.scrollWidth;
                 var hzcd = this.offsetWidth;
                 var duochu = nrcd - hzcd;
                 var sj = duochu / 50;
                 this.style.transition = sj + 's linear';
                 this.style.textIndent = (nrcd * -1) + hzcd + 'px';
-            });
-            wb[i].addEventListener('mouseout', function(e) {
-                this.style.transition = '';
-                this.style.textIndent = '0px';
-            });
-        }
+            }
+        };
+        // 定义鼠标移出事件处理函数
+        element._onMouseOut = function() {
+            this.style.transition = '';
+            this.style.textIndent = '0px';
+        };
+        // 添加新的事件监听器
+        element.addEventListener('mouseover', element._onMouseOver);
+        element.addEventListener('mouseout', element._onMouseOut);
     }
 }
 
-// 单独文本超出字体浮动效果
-// function WGS_wenbengundon_dd(qwe) {
-//     qwe.addEventListener('mouseover', function(e) {
-//         var nrcd = this.scrollWidth;
-//         var hzcd = this.offsetWidth;
-//         if (nrcd > hzcd) {
-//             var duochu = nrcd - hzcd;
-//             var sj = duochu / 50;
-//             this.style.transition = sj + 's linear';
-//             this.style.textIndent = (nrcd * -1) + hzcd + 'px';
-//         }
-//     });
-//     qwe.addEventListener('mouseout', function(e) {
-//         this.style.transition = '';
-//         this.style.textIndent = '0px';
-//     });
-// }
 
 function WGS_wenbengundon_dd(qwe) {
     qwe.addEventListener('mouseover', function(e) {
-        if (qwe.scrollWidth > qwe.offsetWidth) {
+        if (this.scrollWidth > this.offsetWidth) {
             var nrcd = this.scrollWidth;
             var hzcd = this.offsetWidth;
             var duochu = nrcd - hzcd;
@@ -1849,7 +1812,6 @@ lj_xg_tj_bdtj.addEventListener('click', function(e) {
     }
     lj_srk_tpid.focus();
 });
-
 
 
 
