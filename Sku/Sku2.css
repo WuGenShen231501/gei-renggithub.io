@@ -589,44 +589,45 @@
 
 
 /* .lian_jie_l_max {
-    position: relative;
+    position: fixed !important;
+    width: 230px;
+    height: calc(100% - 56px) !important;
+    border-left: 0px !important;
+    border-top: 0px !important;
+    border-bottom: 0px !important;
+    top: 56px !important;
+    left: 0 !important;
+    overflow: hidden !important;
+    animation: nrmaxs_dh 0.4s !important;
+    margin-left: 0 !important;
+    border-radius: 0 !important;
+}
+
+.lian_jie_r_max {
+    position: fixed !important;
+    width: calc(100% - 230px) !important;
+    height: calc(100% - 56px) !important;
+    border: 0 !important;
+    top: 56px !important;
+    right: 0 !important;
+    overflow: hidden !important;
+    animation: nrmaxs_dh 0.4s !important;
+    border-radius: 0 !important;
+}
+
+.lj_max {
     float: left;
-    width: 230px;
-    height: 600px;
-    background-color: rgb(0, 0, 0, 0.75);
-    border-radius: 5px;
-    overflow: hidden;
-    animation: nrmaxs_dh 0.4s;
-}
-
-.lian_jie_r_max {
     position: relative;
-    float: right;
-    width: 900px;
-    height: 600px;
-    background-color: rgb(0, 0, 0, 0.75);
-    border-radius: 5px;
-    overflow: hidden;
-    animation: nrmaxs_dh 0.4s;
-} */
-
-
-/* .lian_jie_l_max {
-    position: fixed;
-    width: 230px;
-    height: calc(100% - 56px);
-    top: 56px;
-    left: 0;
-    overflow: hidden;
-    animation: nrmaxs_dh 0.4s;
+    width: calc((100% - (6 * 20px)) / 5) !important;
+    height: 100px !important;
+    border-bottom: 1px solid rgb(255, 255, 255);
+    margin: 10px 0px 0px 20px;
 }
 
-.lian_jie_r_max {
-    position: fixed;
-    width: calc(100% - 230px);
-    height: calc(100% - 56px);
-    top: 56px;
-    right: 0;
-    overflow: hidden;
-    animation: nrmaxs_dh 0.4s;
+.lian_jie_ssk {
+    display: none !important;
+}
+
+.i_lian_jie_ss_tb {
+    display: none !important;
 } */

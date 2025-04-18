@@ -1118,7 +1118,7 @@ function djs_dttj_hs(dx1) {
     }
 
     var sy_djs = JSON.parse(localStorage.sy_djs);
-    sy_djs['sy_djs' + Object.keys(sy_djs).length] = dx2;
+    sy_djs['sy_djs' + Object.keys(sy_djs).length + 1] = dx2;
     localStorage.sy_djs = JSON.stringify(sy_djs);
 
     //更改HTML
