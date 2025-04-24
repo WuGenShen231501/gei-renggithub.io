@@ -1981,3 +1981,70 @@ document.addEventListener('keydown', function(e) {
     }
 
 });
+
+
+
+
+// 全屏按钮
+var icon_lj_qpan = document.querySelector('.icon_lj_qpan');
+if (localStorage.lianjie_qp == undefined) {
+    localStorage.lianjie_qp = 0;
+}
+var lian_jie_r_max = document.querySelector('.lian_jie_r_max');
+var lian_jie_l_max = document.querySelector('.lian_jie_l_max');
+var lian_jie_r = document.querySelector('.lian_jie_r');
+var lian_jie_r2 = document.querySelector('.lian_jie_r2');
+var lian_jie_ssk = document.querySelector('.lian_jie_ssk');
+var lj_zcb_i = document.querySelector('.lj_zcb_i');
+var i_lian_jie_ss_tb = document.querySelector('.i_lian_jie_ss_tb');
+var lian_jie_l2 = document.querySelector('.lian_jie_l2');
+var icon_lj_qpan = document.querySelector('.icon_lj_qpan');
+var lj_zcb_i_wz = document.querySelector('.lj_zcb_i_wz');
+var lianjie_gundontiao_max = document.querySelector('.lianjie_gundontiao_max');
+if (localStorage.lianjie_qp == 1) {
+    lian_jie_l_max.classList.add('lian_jie_l_max3');
+    lian_jie_r_max.classList.add('lian_jie_r_max3');
+    lian_jie_r.classList.add('lian_jie_r3');
+    lian_jie_r2.classList.add('lian_jie_r23');
+    lian_jie_ssk.classList.add('lian_jie_ssk3');
+    lj_zcb_i.classList.add('lj_zcb_i3');
+    i_lian_jie_ss_tb.classList.add('i_lian_jie_ss_tb3');
+    lian_jie_l2.classList.add('lian_jie_l23');
+    icon_lj_qpan.classList.add('icon_lj_qpan3');
+    lj_zcb_i_wz.classList.add('lj_zcb_i_wz3');
+    lianjie_gundontiao_max.classList.add('lianjie_gundontiao_max3');
+}
+icon_lj_qpan.addEventListener('click', function() {
+    if (localStorage.lianjie_qp == 0) {
+        localStorage.lianjie_qp = 1;
+        lian_jie_l_max.classList.add('lian_jie_l_max3');
+        lian_jie_r_max.classList.add('lian_jie_r_max3');
+        lian_jie_r.classList.add('lian_jie_r3');
+        lian_jie_r2.classList.add('lian_jie_r23');
+        lian_jie_ssk.classList.add('lian_jie_ssk3');
+        lj_zcb_i.classList.add('lj_zcb_i3');
+        i_lian_jie_ss_tb.classList.add('i_lian_jie_ss_tb3');
+        lian_jie_l2.classList.add('lian_jie_l23');
+        icon_lj_qpan.classList.add('icon_lj_qpan3');
+        lj_zcb_i_wz.classList.add('lj_zcb_i_wz3');
+        lianjie_gundontiao_max.classList.add('lianjie_gundontiao_max3');
+    } else {
+        localStorage.lianjie_qp = 0;
+        lian_jie_l_max.classList.remove('lian_jie_l_max3');
+        lian_jie_r_max.classList.remove('lian_jie_r_max3');
+        lian_jie_r.classList.remove('lian_jie_r3');
+        lian_jie_r2.classList.remove('lian_jie_r23');
+        lian_jie_ssk.classList.remove('lian_jie_ssk3');
+        lj_zcb_i.classList.remove('lj_zcb_i3');
+        i_lian_jie_ss_tb.classList.remove('i_lian_jie_ss_tb3');
+        lian_jie_l2.classList.remove('lian_jie_l23');
+        icon_lj_qpan.classList.remove('icon_lj_qpan3');
+        lj_zcb_i_wz.classList.remove('lj_zcb_i_wz3');
+        lianjie_gundontiao_max.classList.remove('lianjie_gundontiao_max3');
+    }
+})
+
+
+
+
+// 链接大小调整

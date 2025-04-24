@@ -459,13 +459,13 @@ function daka_shuchu(dh_true) {
         var da_ka_max = document.createElement('div');
 
         da_ka_max.style.setProperty('--delay-index', da_ka_max_gs);
-        if (dh_trues) {
+        if (dh_trues) { // 是否需要动画
             da_ka_max.classList.add('daka_s_max');
         } else {
             da_ka_max.classList.add('daka_s_max_no_dh');
         }
         da_ka_max.setAttribute('data_num', id);
-        var da_ka_jisuan_s = da_ka[id][5].length > 0 ? `✔${da_ka[id][5].length}天` : '';
+        var da_ka_jisuan_s = da_ka[id][5].length > 0 ? `🗲${da_ka[id][5].length}天` : '';
         var da_ka_pl_s = da_ka[id][2] + ' | ' + new Date(da_ka[id][3]).getFullYear() + '年' + new Date(da_ka[id][3]).getMonth() + 1 + '月' + new Date(da_ka[id][3]).getDate() + '日 - ' + new Date(da_ka[id][3] + da_ka[id][4] * 24 * 60 * 60 * 1000).getFullYear() + '年' + new Date(da_ka[id][3] + da_ka[id][4] * 24 * 60 * 60 * 1000).getMonth() + 1 + '月' + new Date(da_ka[id][3] + da_ka[id][4] * 24 * 60 * 60 * 1000).getDate() + '日';
         var da_ka_zt_s = '';
         var da_ka_ztwz_s = '';

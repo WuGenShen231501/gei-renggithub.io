@@ -653,19 +653,23 @@ function SC_djs() {
     WGS_wenbengundon('.sy_djs_r_t');
 
     //倒计时
-    function countDown(time) {
+    function countDown(time, dao) {
+        dao ? dao = dao : dao = 0;
         var nowTime = +new Date();
         var inputTime = +new Date(time);
+        if (dao == 1) {
+            nowTime = +new Date(time);
+            inputTime = +new Date();
+        }
         var times = (inputTime - nowTime) / 1000;
         var d = parseInt(times / 60 / 60 / 24);
-        d = d < 10 ? '0' + d : d;
         var h = parseInt(times / 60 / 60 % 24);
-        h = h < 10 ? '0' + h : h;
+        h = (h < 10 && h >= 0) ? '0' + h : h;
         var m = parseInt(times / 60 % 60);
-        m = m < 10 ? '0' + m : m;
+        m = (m < 10 && m >= 0) ? '0' + m : m;
         var s = parseInt(times % 60);
-        s = s < 10 ? '0' + s : s;
-        if (times / 60 / 60 > 24) {
+        s = (s < 10 && s >= 0) ? '0' + s : s;
+        if (times / 60 / 60 > 24 && dao == 0) {
             var time_ab = time.split(' ');
             var sytians = parseInt((+new Date(time_ab[0] + ' 00:00:00') - +new Date()) / 1000 / 60 / 60 / 24) + 1;
             if (sytians == 1) {
@@ -677,7 +681,8 @@ function SC_djs() {
             } else {
                 return sytians + '天后';
             }
-            // return (h + d * 24) + ':' + m + ':' + s;
+        } else if (times / 60 / 60 > 24 && dao == 1) {
+            return d + '天 ' + h + ':' + m + ':' + s;
         } else {
             return h + ':' + m + ':' + s;
         }
@@ -690,7 +695,7 @@ function SC_djs() {
                 sy_djs_r_s[i].style.color = localStorage.zi_ti_click_color;
                 sy_djs_r_s[i].querySelector('.sy_djs_r_time').style.fontSize = '18px';
                 sy_djs_r_s[i].querySelector('.sy_djs_r_time').style.lineHeight = '40px';
-                sy_djs_r_s[i].querySelector('.sy_djs_r_time').innerHTML = '时间已到<br>超过三天自动删除';
+                sy_djs_r_s[i].querySelector('.sy_djs_r_time').innerHTML = '时间已到<br>超过三天自动删除<br>' + countDown(sy_djs[Object.keys(sy_djs)[i]][2], 1);
             } else if (+new Date(sy_djs[Object.keys(sy_djs)[i]][2]) - +new Date() < (-1 * 1000 * 60 * 60 * 24 * 3)) {
                 //删除内存
                 sy_djs = JSON.parse(localStorage.sy_djs);
@@ -722,7 +727,7 @@ function SC_djs() {
                     sy_djs_r_s[i].style.color = localStorage.zi_ti_click_color;
                     sy_djs_r_s[i].querySelector('.sy_djs_r_time').style.fontSize = '18px';
                     sy_djs_r_s[i].querySelector('.sy_djs_r_time').style.lineHeight = '40px';
-                    sy_djs_r_s[i].querySelector('.sy_djs_r_time').innerHTML = '时间已到<br>超过三天自动删除';
+                    sy_djs_r_s[i].querySelector('.sy_djs_r_time').innerHTML = '时间已到<br>超过三天自动删除<br>' + countDown(sy_djs[Object.keys(sy_djs)[i]][2], 1);
                 } else if (+new Date(sy_djs[Object.keys(sy_djs)[i]][2]) - +new Date() < (-1 * 1000 * 60 * 60 * 24 * 3)) {
                     //删除内存
                     sy_djs = JSON.parse(localStorage.sy_djs);
@@ -2043,7 +2048,7 @@ function sy_djs_txl_jsq_hs() {
                 nrs = sy_djs_r_t_1.innerText;
             }
 
-            if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1 == '时间已到<br>超过三天自动删除') {
+            if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.startsWith('时间已到<br>超过三天自动删除')) {
                 sy_djs_txl.style.display = 'block';
 
                 nr = '『' + nrs + '』已到 ↓';
@@ -2071,7 +2076,7 @@ function sy_djs_txl_jsq_hs() {
                 nrs = sy_djs_r_t_1.innerText;
             }
 
-            if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1 == '时间已到<br>超过三天自动删除') {
+            if (nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.startsWith('时间已到<br>超过三天自动删除')) {
                 sy_djs_txl2.style.display = 'block';
 
                 nr = '『' + nrs + '』已到 ↓';
@@ -2189,8 +2194,8 @@ function sy_lbnr_hs2(max_gs) {
     sjnr_wz_shu = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     function sjnr_shuchu2(gs) {
-        // 1日程2作品3链接4未标记5设置6音乐
-        var sj_nr_bl = [1, 2, 3, 3, 3, 4, 5, 6, 7, 7];
+        // 1日程2作品3链接4未标记5设置6音乐7热点8周志9习惯
+        var sj_nr_bl = [1, 2, 3, 3, 3, 4, 5, 6, 7, 7, 7, 8, 9];
 
         // sz_zdsc(数组, 要删除的字符(不是索引号), 如果要替换成)
         function sz_zdsc(sz_s, sz_sc_zhi, sz_tj_zhi) {
@@ -2213,6 +2218,22 @@ function sy_lbnr_hs2(max_gs) {
             }
             if (count == 0) { sz_zdsc(sj_nr_bl, num); }
         }
+        // 检测习惯
+        var da_ka = JSON.parse(localStorage.da_ka);
+        da_ka.length == 0 ? sz_zdsc(sj_nr_bl, 9) : undefined;
+        // 检测周志
+        var sy_ke_biao_l_s2 = document.querySelectorAll('.sy_ke_biao_l_s2');
+        var allEmpty = true;
+        for (var i = 1; i < sy_ke_biao_l_s2.length; i++) {
+            if (sy_ke_biao_l_s2[i].value && sy_ke_biao_l_s2[i].value.trim() !== '') {
+                allEmpty = false;
+                break;
+            }
+        }
+        if (allEmpty) {
+            sz_zdsc(sj_nr_bl, 8);
+        }
+
         // 检测倒计时
         sj_nr_bl_schs('sy_djs', 1);
         // 检测作品
@@ -2268,6 +2289,7 @@ function sy_lbnr_hs2(max_gs) {
         // 检测每日热点
         var mrrd = JSON.parse(localStorage.mrrd);
         if (mrrd.length < 10) {
+            sz_zdsc(sj_nr_bl, 7);
             sz_zdsc(sj_nr_bl, 7);
             sz_zdsc(sj_nr_bl, 7);
         }
@@ -2407,9 +2429,9 @@ function sy_lbnr_hs2(max_gs) {
                     var sknr_sjs3 = sjs4(0, count3 - 1);
                     var sjnr_lj = dhr_ym_dx2['dhr_ym_sz' + sknr_sjs3]
                     if (sjnr_lj.length == 4) {
-                        div.innerHTML = '<div class="lbnr_ljtp" style="background-image: url(' + sjnr_lj[0] + ');"></div><div class="lbnr_lj_xx"><div class="lbnr_ljmz">' + sjnr_lj[1] + '</div><div class="lbnr_ljbz">' + sjnr_lj[2] + '</div></div><div class="lbnr_lj_dz"><a class="lbnr_ljdz" target="_blank" href="' + sjnr_lj[3] + '">进入</a></div>';
+                        div.innerHTML = ((sjnr_lj[0].startsWith("http") || sjnr_lj[0].startsWith("data")) ? '<div class="lbnr_ljtp" style="background-image: url(' + sjnr_lj[0] + ');"></div>' : '<div class="lbnr_ljtp">' + sjnr_lj[0] + '</div>') + '<div class="lbnr_lj_xx"><div class="lbnr_ljmz">' + sjnr_lj[1] + '</div><div class="lbnr_ljbz">' + sjnr_lj[2] + '</div></div><div class="lbnr_lj_dz"><a class="lbnr_ljdz" target="_blank" href="' + sjnr_lj[3] + '">进入</a></div>';
                     } else if (sjnr_lj.length == 5) {
-                        div.innerHTML = '<div class="lbnr_ljtp" style="background-image: url(' + sjnr_lj[0] + ');"></div><div class="lbnr_lj_xx"><div class="lbnr_ljmz">' + sjnr_lj[1] + '</div><div class="lbnr_ljbz">' + sjnr_lj[2] + '</div></div><div class="lbnr_lj_dz"><a class="lbnr_ljdz" target="_blank" href="' + sjnr_lj[3] + '">进入</a><a class="lbnr_ljxz" target="_blank" href="' + sjnr_lj[4] + '">下载</a></div>';
+                        div.innerHTML = ((sjnr_lj[0].startsWith("http") || sjnr_lj[0].startsWith("data")) ? '<div class="lbnr_ljtp" style="background-image: url(' + sjnr_lj[0] + ');"></div>' : '<div class="lbnr_ljtp">' + sjnr_lj[0] + '</div>') + '<div class="lbnr_lj_xx"><div class="lbnr_ljmz">' + sjnr_lj[1] + '</div><div class="lbnr_ljbz">' + sjnr_lj[2] + '</div></div><div class="lbnr_lj_dz"><a class="lbnr_ljdz" target="_blank" href="' + sjnr_lj[3] + '">进入</a><a class="lbnr_ljxz" target="_blank" href="' + sjnr_lj[4] + '">下载</a></div>';
                     }
 
                     lbnr_max[i].appendChild(div);
@@ -2541,6 +2563,46 @@ function sy_lbnr_hs2(max_gs) {
                     div.addEventListener('click', function(e) {
                         so_ssk.value = this.querySelector('.lbnr_sz2').innerText;
                         so_anniu.click();
+                    });
+
+                    lbnr_max[i].appendChild(div);
+                    // 固定位置
+                    div.style.left = sjnr_wz_shu[i] + 'px';
+                    sjnr_wz_shu[i] += div.offsetWidth + 12;
+                } else if (sknr_sjs == 8) { //周志
+                    var div = document.createElement('div');
+                    div.className = 'lbnr_min';
+
+                    var sy_ke_biao_l_s2 = document.querySelectorAll('.sy_ke_biao_l_s2');
+                    var allEmpty_js = [];
+                    for (var y = 1; y < sy_ke_biao_l_s2.length; y++) {
+                        if (sy_ke_biao_l_s2[y].value && sy_ke_biao_l_s2[y].value.trim() !== '') {
+                            allEmpty_js.push(sy_ke_biao_l_s2[y].value);
+                        }
+                    }
+                    var sknr_sjs22 = sjs4(0, allEmpty_js.length - 1);
+                    div.innerHTML = '<div class="lbnr_jl">' + sy_ke_biao_l_s2[0].innerText + '</div><div class="lbnr_jl2">' + allEmpty_js[sknr_sjs22] + '</div>';
+                    div.addEventListener('click', function(e) {
+                        sd_dtnr_min_s_click();
+                        document.querySelector('.sy_dw_kebiao').click();
+                    });
+
+                    lbnr_max[i].appendChild(div);
+                    // 固定位置
+                    div.style.left = sjnr_wz_shu[i] + 'px';
+                    sjnr_wz_shu[i] += div.offsetWidth + 12;
+                } else if (sknr_sjs == 9) { //习惯
+                    var div = document.createElement('div');
+                    div.className = 'lbnr_min';
+                    div.style.width = '302px';
+
+                    var da_ka = JSON.parse(localStorage.da_ka);
+                    var sknr_sjs2 = sjs4(0, da_ka.length - 1);
+                    var da_ka_jisuan_s = da_ka[sknr_sjs2][5].length > 0 ? ` 🗲${da_ka[sknr_sjs2][5].length}天` : '';
+                    div.innerHTML = ((da_ka[sknr_sjs2][0].startsWith("http") || da_ka[sknr_sjs2][0].startsWith("data")) ? '<div class="lbnr_ljtp" style="background-image: url(' + da_ka[sknr_sjs2][0] + ');"></div>' : '<div class="lbnr_ljtp">' + da_ka[sknr_sjs2][0] + '</div>') + '<div class="lbnr_lj_xx2"><div class="lbnr_ljmz2">' + da_ka[sknr_sjs2][1] + da_ka_jisuan_s + '</div><div class="lbnr_ljbz2">' + da_ka[sknr_sjs2][2] + '</div></div>';
+                    div.addEventListener('click', function(e) {
+                        sd_dtnr_min_s_click();
+                        document.querySelector('.top_dhl').querySelectorAll('div')[5].click();
                     });
 
                     lbnr_max[i].appendChild(div);

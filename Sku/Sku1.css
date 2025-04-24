@@ -160,17 +160,27 @@
         width: 60px;
         height: 60px;
         margin: 15px 0 0 10px;
+        text-align: center;
+        line-height: 60px;
         background-repeat: no-repeat;
         background-size: 100% auto;
         overflow: hidden;
         border-radius: 5px;
         background-position: center;
         border: 1px solid;
+        font-size: 30px;
     }
     
     .lbnr_lj_xx {
         float: left;
         width: 120px !important;
+        height: 60px !important;
+        margin: 15px 0 0 10px;
+    }
+    
+    .lbnr_lj_xx2 {
+        float: left;
+        width: 205px !important;
         height: 60px !important;
         margin: 15px 0 0 10px;
     }
@@ -185,9 +195,29 @@
         white-space: nowrap;
     }
     
+    .lbnr_ljmz2 {
+        float: left;
+        width: 205px !important;
+        height: 30px;
+        overflow: hidden;
+        font-size: 14px;
+        line-height: 30px;
+        white-space: nowrap;
+    }
+    
     .lbnr_ljbz {
         float: left;
         width: 120px;
+        height: 30px;
+        overflow: hidden;
+        font-size: 12px;
+        line-height: 30px;
+        white-space: nowrap;
+    }
+    
+    .lbnr_ljbz2 {
+        float: left;
+        width: 205px !important;
         height: 30px;
         overflow: hidden;
         font-size: 12px;
