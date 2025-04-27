@@ -538,15 +538,21 @@ function time_day_sfm() {
     m = m < 10 ? '0' + m : m;
     return s + ':' + f + ':' + m;
 }
-sy_djs_l_yr_time = document.querySelector('.sy_djs_l_yr_time');
-sy_djs_l_time = document.querySelector('.sy_djs_l_time');
+var sy_djs_l_yr_time = document.querySelector('.sy_djs_l_yr_time');
+var sy_djs_l_time = document.querySelector('.sy_djs_l_time');
+var sy_djs_l_b = document.querySelector('.sy_djs_l_b');
 sy_djs_l_yr_time.innerHTML = time_day_yr();
 sy_djs_l_time.innerHTML = time_day_sfm();
 var sy_djs_zxsj_sjq;
 sy_djs_zxsj_sjq = setInterval(function() {
     sy_djs_l_yr_time.innerHTML = time_day_yr();
     sy_djs_l_time.innerHTML = time_day_sfm();
+    sy_djs_l_b.innerHTML = getLunarDate(); //今日农历
 }, 1000);
+
+function getLunarDate() { //今日农历
+    return `农历 ${moment().lunar().format('YYYY-MM-DD')}`; // 例如"八月十五"
+}
 
 // 重新排序
 function sy_djs_px() {
@@ -926,13 +932,9 @@ djs_tjym_qr.addEventListener('click', function() {
 var djs_tjym_dttj = document.querySelectorAll('.djs_tjym_dttj');
 for (var i = 0; i < djs_tjym_dttj.length; i++) {
     djs_tjym_dttj[i].addEventListener('click', function() {
-        if (this.innerText !== '农') { //更新后删除
-            djs_tjym_qr_dt = this.innerText;
-            djs_tjym_qr.click();
-            djs_tjym_qr_dt = '';
-        } else {
-            Sku_tctx('农历待更新! 您有能力请联系作者!');
-        }
+        djs_tjym_qr_dt = this.innerText;
+        djs_tjym_qr.click();
+        djs_tjym_qr_dt = '';
     });
 }
 
@@ -1119,7 +1121,24 @@ function djs_dttj_hs(dx1) {
         date.setFullYear(date.getFullYear() + 1);
         dx2 = [dx[0], +date, formatTimestamp(+date), dx[3]];
     } else if (dx[3] == '农') {
-
+        try {
+            function convertTimestamp(timestamp) {
+                // 1. 将时间戳转换为moment对象
+                const date = moment(timestamp);
+                // 2. 转换为农历
+                const lunarDate = date.lunar();
+                // 3. 年份加1
+                const nextYearLunar = lunarDate.add(1, 'year');
+                // 4. 转回阳历
+                const solarDate = nextYearLunar.solar();
+                return solarDate.format('YYYY-MM-DD HH:mm:ss');
+            }
+            var mnjr = convertTimestamp(dx[1]);
+            const date = new Date(mnjr).getTime(); // 获取指定日期的时间戳
+            dx2 = [dx[0], +date, formatTimestamp(+date), dx[3]];
+        } catch (error) {
+            Sku_tctx('动态日程添加失败❌ 请检查 网络 或 插件');
+        }
     }
 
     var sy_djs = JSON.parse(localStorage.sy_djs);

@@ -843,7 +843,7 @@ function Sku_nczyb() {
     }
 
     // 放一个外来的：node服务器
-    if (localStorage.Sku_node == 1) {
+    if (localStorage.Sku_node == 1 && sku_wlzt.innerHTML == 'Status:Online') {
         var max_node = document.querySelector('.max_node');
         $(document).ready(function() {
             // 使用 $.get() 发起 GET 请求
@@ -1080,7 +1080,7 @@ window.onerror = function(message, source, lineno, colno, error) {
     if (message == 'Script error.') {
         Sku_tctx('脚本错误 ! 请检查内存是否充足 或 源代码问题');
     }
-    return true; // 阻止默认错误处理
+    // return true; // 阻止默认错误处理
 };
 
 
