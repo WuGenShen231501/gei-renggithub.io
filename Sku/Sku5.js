@@ -870,8 +870,6 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
     } else if (rw == 2) { //AI
 
         try {
-            // 使用mathjax解析数学公式
-            // var nr = nr.replace(/\[/g, '\\[').replace(/\]/g, '\\]').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
             // 使用marked解析Markdown
             var parsedHtml = marked.parse(nr);
             // 将解析后的HTML设置回div元素中
@@ -931,6 +929,8 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
                     AI_zj_a.forEach(link => {
                         link.setAttribute('target', '_blank');
                     });
+                    // 使用mathjax解析数学公式
+                    MathJax.typeset();
                 }
 
                 // 动态递增
@@ -959,6 +959,8 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
             AI_zj_a.forEach(link => {
                 link.setAttribute('target', '_blank');
             });
+            // 使用mathjax解析数学公式
+            MathJax.typeset();
         }
 
     }
