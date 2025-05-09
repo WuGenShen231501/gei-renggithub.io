@@ -790,6 +790,9 @@ setInterval(function() {
 }, 5000);
 Sku_nczyb();
 
+//node服务器请求次数
+var max_node_cs = 0;
+
 function Sku_nczyb() {
     function calculateLocalStorageLength() {
         let length = 0;
@@ -843,7 +846,7 @@ function Sku_nczyb() {
     }
 
     // 放一个外来的：node服务器
-    if (localStorage.Sku_node == 1 && sku_wlzt.innerHTML == 'Status:Online') {
+    if (localStorage.Sku_node == 1 && sku_wlzt.innerHTML == 'Status:Online' && max_node_cs < 20) {
         var max_node = document.querySelector('.max_node');
         $(document).ready(function() {
             // 使用 $.get() 发起 GET 请求
@@ -855,6 +858,9 @@ function Sku_nczyb() {
             }).fail(function(jqXHR, textStatus, errorThrown) {
                 // 如果请求失败，打印错误信息
                 max_node.innerText = '';
+                max_node_cs++;
+                console.log(max_node_cs);
+
             });
         });
     }

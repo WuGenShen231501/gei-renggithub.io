@@ -538,6 +538,7 @@ function time_day_sfm() {
     m = m < 10 ? '0' + m : m;
     return s + ':' + f + ':' + m;
 }
+var sku_wlzt = document.querySelector('.sku_wlzt');
 var sy_djs_l_yr_time = document.querySelector('.sy_djs_l_yr_time');
 var sy_djs_l_time = document.querySelector('.sy_djs_l_time');
 var sy_djs_l_b = document.querySelector('.sy_djs_l_b');
@@ -551,7 +552,15 @@ sy_djs_zxsj_sjq = setInterval(function() {
 }, 1000);
 
 function getLunarDate() { //今日农历
-    return `农历 ${moment().lunar().format('YYYY-MM-DD')}`; // 例如"八月十五"
+    if (sku_wlzt.innerText == 'Status:Online') {
+        try {
+            return `农历 ${moment().lunar().format('YYYY-MM-DD')}`; // 例如"八月十五"
+        } catch (error) {
+            return `倒数日★`;
+        }
+    } else {
+        return `倒数日★`;
+    }
 }
 
 // 重新排序
@@ -704,10 +713,11 @@ function SC_djs() {
                 sy_djs_r_s[i].querySelector('.sy_djs_r_time').innerHTML = '时间已到<br>超过三天自动删除<br>' + countDown(sy_djs[Object.keys(sy_djs)[i]][2], 1);
             } else if (+new Date(sy_djs[Object.keys(sy_djs)[i]][2]) - +new Date() < (-1 * 1000 * 60 * 60 * 24 * 3)) {
                 //删除内存
-                sy_djs = JSON.parse(localStorage.sy_djs);
-                var sy_djs_sc_dx = sy_djs['sy_djs' + i];
+                var sy_djs2 = JSON.parse(localStorage.sy_djs);
+                var sy_djs_sc_dx = sy_djs['sy_djs' + sy_djs_r_s[i].getAttribute('djs-num')];
+                delete sy_djs2['sy_djs' + sy_djs_r_s[i].getAttribute('djs-num')];
+                localStorage.sy_djs = JSON.stringify(sy_djs2);
                 delete sy_djs['sy_djs' + i];
-                localStorage.sy_djs = JSON.stringify(sy_djs);
                 sy_djs_r_min.style.left = '0px';
                 if (sy_djs_sc_dx.length >= 4 && ((sy_djs_sc_dx[1] - 0) < (+new Date() - 0))) {
                     djs_dttj_hs(sy_djs_sc_dx);
@@ -736,10 +746,12 @@ function SC_djs() {
                     sy_djs_r_s[i].querySelector('.sy_djs_r_time').innerHTML = '时间已到<br>超过三天自动删除<br>' + countDown(sy_djs[Object.keys(sy_djs)[i]][2], 1);
                 } else if (+new Date(sy_djs[Object.keys(sy_djs)[i]][2]) - +new Date() < (-1 * 1000 * 60 * 60 * 24 * 3)) {
                     //删除内存
-                    sy_djs = JSON.parse(localStorage.sy_djs);
-                    var sy_djs_sc_dx = sy_djs['sy_djs' + i];
+                    console.log(111111);
+                    var sy_djs2 = JSON.parse(localStorage.sy_djs);
+                    var sy_djs_sc_dx = sy_djs['sy_djs' + sy_djs_r_s[i].getAttribute('djs-num')];
+                    delete sy_djs2['sy_djs' + sy_djs_r_s[i].getAttribute('djs-num')];
+                    localStorage.sy_djs = JSON.stringify(sy_djs2);
                     delete sy_djs['sy_djs' + i];
-                    localStorage.sy_djs = JSON.stringify(sy_djs);
                     sy_djs_r_min.innerHTML = '';
                     if (sy_djs_sc_dx.length >= 4 && ((sy_djs_sc_dx[1] - 0) < (+new Date() - 0))) {
                         djs_dttj_hs(sy_djs_sc_dx);
@@ -1127,7 +1139,7 @@ function djs_dttj_hs(dx1) {
                 const date = moment(timestamp);
                 // 2. 转换为农历
                 const lunarDate = date.lunar();
-                // 3. 年份加1
+                // 3. 年份加1s
                 const nextYearLunar = lunarDate.add(1, 'year');
                 // 4. 转回阳历
                 const solarDate = nextYearLunar.solar();
@@ -1138,6 +1150,17 @@ function djs_dttj_hs(dx1) {
             dx2 = [dx[0], +date, formatTimestamp(+date), dx[3]];
         } catch (error) {
             Sku_tctx('动态日程添加失败❌ 请检查 网络 或 插件');
+
+            //更改HTML
+            clearInterval(djs_s);
+            sy_djs_r_min.innerHTML = '';
+            sy_djs_px();
+            SC_djs();
+            sy_djs_yd();
+            sy_djs_tj_yc();
+
+            // 结束代码
+            return;
         }
     }
 
