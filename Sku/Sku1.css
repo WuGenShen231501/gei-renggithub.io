@@ -37,6 +37,7 @@
         border-bottom: 12px solid transparent !important;
         transform: rotate(-45deg);
         border-radius: 3px 0px 0px 0px;
+        z-index: -1;
     }
     
     .sy_shezhi_gns {
@@ -1047,4 +1048,33 @@
         border: 0;
         outline: none;
         z-index: 1;
+    }
+    
+    .zhou_zhi_yckk_max {
+        position: absolute;
+        width: auto;
+        height: auto;
+        top: -25px;
+        right: 0;
+    }
+    
+    .zhou_zhi_yckk {
+        float: left;
+        width: 20px;
+        height: 20px;
+        border: 1px solid;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 18px;
+        margin-left: 15px;
+    }
+    
+    .zhou_zhi_yckk_wz {
+        float: left;
+        width: auto;
+        height: 20px;
+        font-size: 10px;
+        line-height: 20px;
+        opacity: 0.5;
+        margin-left: 5px;
     }

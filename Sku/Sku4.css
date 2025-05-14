@@ -1352,6 +1352,17 @@
         text-align: center;
     }
     
+    .sscl_xzk_py {
+        float: left;
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+        border: 1px solid var(--zi_ti_color);
+        margin-left: 55px;
+        line-height: 18px;
+        text-align: center;
+    }
+    
     .sscl_mz {
         float: left;
         margin-left: 20px;

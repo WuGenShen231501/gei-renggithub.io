@@ -4899,6 +4899,9 @@ shezhi_sscl.addEventListener('click', function(e) {
 if (localStorage.sscl == undefined) {
     localStorage.sscl = 1;
 }
+if (localStorage.sscl_py == undefined) {
+    localStorage.sscl_py = 1;
+}
 // 开始显示
 var sscl_xzk = document.querySelectorAll('.sscl_xzk');
 if (localStorage.sscl == 0) {
@@ -4907,6 +4910,10 @@ if (localStorage.sscl == 0) {
     sscl_xzk[1].innerHTML = '✔';
 } else if (localStorage.sscl == 2) {
     sscl_xzk[2].innerHTML = '✔';
+}
+var sscl_xzk_py = document.querySelector('.sscl_xzk_py');
+if (localStorage.sscl_py == 1) {
+    sscl_xzk_py.innerHTML = '✔';
 }
 // 切换显示
 for (var i = 0; i < sscl_xzk.length; i++) {
@@ -4918,6 +4925,15 @@ for (var i = 0; i < sscl_xzk.length; i++) {
         localStorage.sscl = this.getAttribute('data-ssclnum');
     });
 }
+sscl_xzk_py.addEventListener('click', function(e) {
+    if (localStorage.sscl_py == 1) {
+        localStorage.sscl_py = 0;
+        this.innerHTML = '';
+    } else {
+        localStorage.sscl_py = 1;
+        this.innerHTML = '✔';
+    }
+});
 
 
 

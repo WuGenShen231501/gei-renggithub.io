@@ -859,8 +859,6 @@ function Sku_nczyb() {
                 // 如果请求失败，打印错误信息
                 max_node.innerText = '';
                 max_node_cs++;
-                console.log(max_node_cs);
-
             });
         });
     }
