@@ -802,7 +802,6 @@ function SC_djs() {
                     sy_djs_r_s[i].querySelector('.sy_djs_r_time').innerHTML = '时间已到<br>超过三天自动删除<br>' + countDown(sy_djs[Object.keys(sy_djs)[i]][2], 1);
                 } else if (+new Date(sy_djs[Object.keys(sy_djs)[i]][2]) - +new Date() < (-1 * 1000 * 60 * 60 * 24 * 3)) {
                     //删除内存
-                    console.log(111111);
                     var sy_djs2 = JSON.parse(localStorage.sy_djs);
                     var sy_djs_sc_dx = sy_djs['sy_djs' + sy_djs_r_s[i].getAttribute('djs-num')];
                     delete sy_djs2['sy_djs' + sy_djs_r_s[i].getAttribute('djs-num')];
@@ -825,7 +824,6 @@ function SC_djs() {
             }
         }
     }, 1000);
-
 }
 SC_djs();
 
@@ -939,6 +937,10 @@ djs_tjym_qr.addEventListener('click', function() {
         sy_djs_yd();
         sy_djs_tj_yc();
 
+        if (localStorage.ke_biao_zdtjrc == 'true') {
+            zhou_zhi_genxin(); //周至更新
+        }
+
         if (djs_tjym_qr.innerText == '修改') {
             Sku_tctx('日程修改成功');
         } else {
@@ -1022,6 +1024,10 @@ function sy_djs_sc() {
     sy_djs_px();
     SC_djs();
     sy_djs_yd();
+
+    if (localStorage.ke_biao_zdtjrc == 'true') {
+        zhou_zhi_genxin(); //周至更新
+    }
 
     sy_djs_r_min.style.transition = '0s';
     if (sy_djs_r_s.length > 5 && parseFloat(sy_djs_r_min.style.left) + 200 < 0) {
@@ -1153,6 +1159,10 @@ djs_ssk.addEventListener('input', function(e) {
     SC_djs();
     sy_djs_yd();
     sy_djs_r_min.style.left = '0px'
+
+    if (localStorage.ke_biao_zdtjrc == 'true') {
+        zhou_zhi_genxin(); //周至更新
+    }
 });
 // 动态添加
 function djs_dttj_hs(dx1) {
@@ -1209,6 +1219,10 @@ function djs_dttj_hs(dx1) {
             sy_djs_yd();
             sy_djs_tj_yc();
 
+            if (localStorage.ke_biao_zdtjrc == 'true') {
+                zhou_zhi_genxin(); //周至更新
+            }
+
             // 结束代码
             return;
         }
@@ -1225,6 +1239,10 @@ function djs_dttj_hs(dx1) {
     SC_djs();
     sy_djs_yd();
     sy_djs_tj_yc();
+
+    if (localStorage.ke_biao_zdtjrc == 'true') {
+        zhou_zhi_genxin(); //周至更新
+    }
 }
 
 
@@ -2251,6 +2269,10 @@ for (var i = 0; i < top_dhl_S.length; i++) {
             SC_djs();
             sy_djs_yd();
 
+            if (localStorage.ke_biao_zdtjrc == 'true') {
+                zhou_zhi_genxin(); //周至更新
+            }
+
             // 倒计时提示优化
             sy_djs_txl_jsq_hs();
         });
@@ -3013,19 +3035,26 @@ function ke_biao_shuchu() { //输出课表
         var div_s = document.createElement('div');
 
         div_s.className = 'sy_ke_biao_h sy_ke_biao_h_s';
-        div_s.innerHTML = '<input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input>';
-        var div_s_input = div_s.querySelectorAll('.sy_ke_biao_l');
+        div_s.innerHTML = '<input value=""><input value=""><input value=""><input value=""><input value=""><input value=""><input value=""><input value="">';
+        var div_s_input = div_s.querySelectorAll('input');
         for (var p = 0; p < div_s_input.length; p++) {
+            div_s_input[p].className = 'sy_ke_biao_l sy_ke_biao_l_s';
+            div_s_input[p].classList.add(`zhou_zhi_xq${p}`);
             div_s_input[p].value = ke_biao[i][p];
         }
 
         sy_ke_biao_max.appendChild(div_s);
     }
 }
-ke_biao_shuchu(); //输出课表
-ke_biao_sdhs(); //锁定
-ke_biao_gaolian(); //高亮
-WGS_wenbengundon('.sy_ke_biao_l'); //滚动
+
+function zhou_zhi_genxin() {
+    ke_biao_shuchu(); //输出课表
+    zhou_zhi_zd(); //自动隐藏或删除
+    ke_biao_sdhs(); //锁定
+    ke_biao_gaolian(); //高亮
+    WGS_wenbengundon('.sy_ke_biao_l'); //滚动
+}
+zhou_zhi_genxin(); //周至更新
 // 保存当前
 function ke_biao_bchs() {
     var ke_biao_lssz = [];
@@ -3068,11 +3097,7 @@ sy_zpzs_kaiguan2.addEventListener('click', function(e) {
         sy_zpzs_kaiguan2.innerText = '✔';
         zhou_zhi_yckk_max.style.display = 'block';
     }
-    ke_biao_shuchu(); //重新输出课表 
-    ke_biao_gaolian(); //高亮
-    zhou_zhi_zd(); //自动隐藏或删除 
-    ke_biao_sdhs(); //锁定
-    WGS_wenbengundon('.sy_ke_biao_l'); //滚动
+    zhou_zhi_genxin(); //周至更新
 });
 // 右击删除
 sy_ke_biao_max.addEventListener('contextmenu', function(e) {
@@ -3093,8 +3118,11 @@ ke_biao_tianjia.addEventListener('click', function(e) {
     var div_s = document.createElement('div');
 
     div_s.className = 'sy_ke_biao_h sy_ke_biao_h_s';
-    div_s.innerHTML = '<input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input><input value="" class="sy_ke_biao_l sy_ke_biao_l_s"></input>';
-
+    div_s.innerHTML = '<input value=""><input value=""><input value=""><input value=""><input value=""><input value=""><input value=""><input value="">';
+    var div_s_input = div_s.querySelectorAll('input');
+    for (var p = 0; p < div_s_input.length; p++) {
+        div_s_input[p].className = 'sy_ke_biao_l sy_ke_biao_l_s';
+    }
     sy_ke_biao_max.appendChild(div_s);
 
     ke_biao_bchs();
@@ -3214,6 +3242,24 @@ sy_ke_biao_max.addEventListener('mouseout', function(e) {
 var zhou_zhi_yckk_zfw = document.querySelector('.zhou_zhi_yckk_zfw');
 var zhou_zhi_yckk_dsz = document.querySelector('.zhou_zhi_yckk_dsz');
 var zhou_zhi_yckk_zdsc = document.querySelector('.zhou_zhi_yckk_zdsc');
+var zhou_zhi_yckk_zdtrc = document.querySelector('.zhou_zhi_yckk_zdtrc');
+var zhou_zhi_yckk_zdtrc_qt = document.querySelector('.zhou_zhi_yckk_zdtrc_qt');
+var zhou_zhi_yckk_wz_zdtrc_qt = document.querySelector('.zhou_zhi_yckk_wz_zdtrc_qt');
+if (localStorage.ke_biao_zdtjrc_qb == undefined) {
+    localStorage.ke_biao_zdtjrc_qb = false;
+}
+if (localStorage.ke_biao_zdtjrc_qb == 'true') {
+    zhou_zhi_yckk_zdtrc_qt.innerText = '✔';
+}
+if (localStorage.ke_biao_zdtjrc == undefined) {
+    localStorage.ke_biao_zdtjrc = false;
+}
+if (localStorage.ke_biao_zdtjrc == 'true') {
+    zhou_zhi_yckk_zdtrc.innerText = '✔';
+} else {
+    zhou_zhi_yckk_wz_zdtrc_qt.style.display = 'none';
+    zhou_zhi_yckk_zdtrc_qt.style.display = 'none';
+}
 if (localStorage.ke_biao_zfw == undefined) {
     localStorage.ke_biao_zfw = false;
 }
@@ -3232,6 +3278,16 @@ if (localStorage.ke_biao_zdsc == undefined) {
 if (localStorage.ke_biao_zdsc == 'true') {
     zhou_zhi_yckk_zdsc.innerText = '✔';
 }
+zhou_zhi_yckk_zdtrc_qt.addEventListener('click', function(e) {
+    if (localStorage.ke_biao_zdtjrc_qb == 'true') {
+        localStorage.ke_biao_zdtjrc_qb = false;
+        this.innerText = '';
+    } else {
+        localStorage.ke_biao_zdtjrc_qb = true;
+        this.innerText = '✔';
+    }
+    zhou_zhi_genxin(); //周至更新
+});
 zhou_zhi_yckk_zfw.addEventListener('click', function(e) {
     if (localStorage.ke_biao_zfw == 'true') {
         localStorage.ke_biao_zfw = false;
@@ -3240,11 +3296,7 @@ zhou_zhi_yckk_zfw.addEventListener('click', function(e) {
         localStorage.ke_biao_zfw = true;
         zhou_zhi_yckk_zfw.innerText = '✔';
     }
-    ke_biao_shuchu(); //重新输出课表
-    ke_biao_gaolian(); //高亮
-    zhou_zhi_zd(); //自动隐藏或删除 
-    ke_biao_sdhs(); //锁定
-    WGS_wenbengundon('.sy_ke_biao_l'); //滚动
+    zhou_zhi_genxin(); //周至更新
 });
 zhou_zhi_yckk_dsz.addEventListener('click', function(e) {
     if (localStorage.ke_biao_dsz == 'true') {
@@ -3254,11 +3306,7 @@ zhou_zhi_yckk_dsz.addEventListener('click', function(e) {
         localStorage.ke_biao_dsz = true;
         zhou_zhi_yckk_dsz.innerText = '✔';
     }
-    ke_biao_shuchu(); //重新输出课表
-    ke_biao_gaolian(); //高亮
-    zhou_zhi_zd(); //自动隐藏或删除 
-    ke_biao_sdhs(); //锁定
-    WGS_wenbengundon('.sy_ke_biao_l'); //滚动
+    zhou_zhi_genxin(); //周至更新
 });
 zhou_zhi_yckk_zdsc.addEventListener('click', function(e) {
     if (localStorage.ke_biao_zdsc == 'true') {
@@ -3268,11 +3316,21 @@ zhou_zhi_yckk_zdsc.addEventListener('click', function(e) {
         localStorage.ke_biao_zdsc = true;
         zhou_zhi_yckk_zdsc.innerText = '✔';
     }
-    ke_biao_shuchu(); //重新输出课表
-    ke_biao_gaolian(); //高亮
-    zhou_zhi_zd(); //自动隐藏或删除 
-    ke_biao_sdhs(); //锁定
-    WGS_wenbengundon('.sy_ke_biao_l'); //滚动
+    zhou_zhi_genxin(); //周至更新
+});
+zhou_zhi_yckk_zdtrc.addEventListener('click', function(e) {
+    if (localStorage.ke_biao_zdtjrc == 'true') {
+        localStorage.ke_biao_zdtjrc = false;
+        zhou_zhi_yckk_zdtrc.innerText = '';
+        zhou_zhi_yckk_wz_zdtrc_qt.style.display = 'none';
+        zhou_zhi_yckk_zdtrc_qt.style.display = 'none';
+    } else {
+        localStorage.ke_biao_zdtjrc = true;
+        zhou_zhi_yckk_zdtrc.innerText = '✔';
+        zhou_zhi_yckk_wz_zdtrc_qt.style.display = 'block';
+        zhou_zhi_yckk_zdtrc_qt.style.display = 'block';
+    }
+    zhou_zhi_genxin(); //周至更新
 });
 // 自动隐藏或删除
 function zhou_zhi_zd() {
@@ -3312,11 +3370,153 @@ function zhou_zhi_zd() {
             if ((sy_ke_biao_l[i].value).indexOf('[双周]') !== -1 && ke_biao_zhoushu2 % 2 == 1 && localStorage.ke_biao_dsz == 'true') {
                 sy_ke_biao_l[i].value = '';
             }
+        }
 
+        // 日程自动添加到周至
+        if (localStorage.ke_biao_zdtjrc == 'true') {
+            zhou_zhi_rc_zdtj();
         }
     }
 }
-zhou_zhi_zd(); //自动隐藏或删除
+// 日程自动添加到周至
+function zhou_zhi_rc_zdtj() {
+    var djs_ssk = document.querySelector('.djs_ssk'); //筛选
+    var sy_djs = {};
+    var sy_djs_zhi_biao = [];
+    if (djs_ssk.value !== '') {
+        sy_djs2 = JSON.parse(localStorage.sy_djs);
+        for (var i = 0; i < Object.keys(sy_djs2).length; i++) {
+            if (containsAllChars(djs_ssk.value, JSON.stringify(sy_djs2['sy_djs' + [i]]))) {
+                // 获取当前最大的键名编号
+                const keys = Object.keys(sy_djs);
+                const maxIndex = keys.reduce((max, key) => {
+                    const num = parseInt(key.replace("sy_djs", ""), 10);
+                    return Math.max(max, num);
+                }, -1);
+                // 生成新键名
+                const newKey = `sy_djs${maxIndex + 1}`;
+                sy_djs[newKey] = sy_djs2['sy_djs' + [i]];
+                sy_djs_zhi_biao.push(i);
+            }
+        }
+    } else {
+        sy_djs = JSON.parse(localStorage.sy_djs);
+    }
+
+    // 提取今日到未来6天（共7天）的日程事件
+    function get7DaysEvents(eventObj) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const startTimestamp = today.getTime();
+        const endTimestamp = startTimestamp + 6 * 24 * 60 * 60 * 1000;
+        const result = [];
+        for (const key in eventObj) {
+            if (eventObj.hasOwnProperty(key)) {
+                const event = eventObj[key];
+                const eventTimestamp = event[1];
+                if (eventTimestamp >= startTimestamp && eventTimestamp <= endTimestamp) {
+                    result.push(event);
+                }
+            }
+        }
+        return result;
+    }
+    // 获取最近7天的事件
+    const recent7DaysEvents = get7DaysEvents(sy_djs);
+    recent7DaysEvents.forEach((event, index) => {
+        var jxxz = 1;
+        const timestamp1 = event[1]; // 提取时间戳（假设在数组的第2个位置）
+        const date = new Date(timestamp1); // 转换为日期对象
+        const weekDays = [7, 1, 2, 3, 4, 5, 6];
+        const dayOfWeek = weekDays[date.getDay()]; // 获取中文星期名称
+        var zhou_zhi_xqS_sj = document.querySelectorAll('.zhou_zhi_xq0');
+        // 判断时间戳是否在任意时间段内（返回 true/false）
+        function isTimestampInTimeRanges(timestamp, timeRangeStr) {
+            function timestampToMinutes(timestamp) {
+                const date = new Date(timestamp);
+                return date.getHours() * 60 + date.getMinutes();
+            }
+            const targetMinutes = timestampToMinutes(timestamp);
+            const ranges = parseTimeRanges(timeRangeStr);
+
+            function parseTimeRanges(timeRangeStr) {
+                const ranges = [];
+                const timeSegments = timeRangeStr.split(' ');
+                for (const segment of timeSegments) {
+                    const [startStr, endStr] = segment.replace(/-/g, '~').split('~');
+                    if (startStr && endStr) {
+                        function parseTimeToMinutes(timeStr) {
+                            const [hours, minutes] = timeStr.split(':').map(Number);
+                            if (!isNaN(hours) && !isNaN(minutes) && hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60) {
+                                return hours * 60 + minutes;
+                            }
+                            return NaN;
+                        }
+                        const start = parseTimeToMinutes(startStr);
+                        const end = parseTimeToMinutes(endStr);
+                        if (!isNaN(start) && !isNaN(end)) {
+                            ranges.push({ start, end });
+                        }
+                    }
+                }
+                return ranges;
+            }
+            for (const { start, end }
+                of ranges) {
+                // 检查目标时间是否在当前时间段内（假设时间段不跨天）
+                if (targetMinutes >= start && targetMinutes <= end) {
+                    jxxz = 0;
+                    return true;
+                } else if (targetMinutes < start) {
+                    jxxz = 0;
+                }
+            }
+            return false;
+        }
+        // 遍历所有 .zhou_zhi_xq0 元素
+        for (let i = 0; i < zhou_zhi_xqS_sj.length; i++) {
+            const element = zhou_zhi_xqS_sj[i];
+            const timeRangeStr = element.value; // 获取元素的 value（如 "10:35~11:15 11:20-12:00"）
+            const isInRange = isTimestampInTimeRanges(timestamp1, timeRangeStr);
+            if (isInRange) {
+                var zhou_zhi_xqS = document.querySelectorAll('.zhou_zhi_xq' + dayOfWeek)[i];
+                // 添加内容
+                if (zhou_zhi_xqS.value == '') {
+                    zhou_zhi_xqS.value = event[0];
+                } else {
+                    zhou_zhi_xqS.value += ' && ' + event[0];
+                }
+                zhou_zhi_xqS.classList.add('sy_ke_biao_l_s_rc');
+            } else if (jxxz == 0 && localStorage.ke_biao_zdtjrc_qb == 'true') { //没有时自动创建
+                var div_s = document.createElement('div');
+
+                div_s.className = 'sy_ke_biao_h sy_ke_biao_h_s';
+                div_s.innerHTML = '<input value=""><input value=""><input value=""><input value=""><input value=""><input value=""><input value=""><input value="">';
+                var div_s_input = div_s.querySelectorAll('input');
+                for (var p = 0; p < div_s_input.length; p++) {
+                    div_s_input[p].className = 'sy_ke_biao_l sy_ke_biao_l_s';
+                    div_s_input[p].classList.add(`zhou_zhi_xq${p}`);
+                    if (p == 0) {
+                        div_s_input[p].value = event[2].split(' ')[1].substring(0, 5) + '~' + event[2].split(' ')[1].substring(0, 5);
+                    } else if (p == dayOfWeek) {
+                        div_s_input[p].value = event[0];
+                        div_s_input[p].classList.add('sy_ke_biao_l_s_rc');
+                    }
+                }
+                const syKeBiaoHs = document.querySelectorAll('.sy_ke_biao_h');
+                const targetElement = syKeBiaoHs[i]; // 第 i 个 .sy_ke_biao_h 元素
+                if (targetElement) {
+                    sy_ke_biao_max.insertBefore(div_s, targetElement);
+                } else {
+                    sy_ke_biao_max.appendChild(div_s); // 兼容处理（i 超出范围时）
+                }
+            }
+            if (jxxz == 0) {
+                break;
+            }
+        }
+    });
+}
 
 
 
