@@ -1684,6 +1684,19 @@ i_music_boyyom_sy.addEventListener('click', function(e) {
     e.stopPropagation();
     music_boyyom_yj.style.display = 'block';
 });
+// 添加鼠标滚动事件监听
+i_music_boyyom_sy.addEventListener('wheel', function(e) {
+    e.preventDefault(); // 阻止页面默认滚动行为
+    const delta = e.deltaY; // 滚动方向：deltaY > 0 是向下滚，< 0 是向上滚
+    if (delta > 0) {
+        music_bottom_hk3.value--;
+    } else {
+        music_bottom_hk3.value++;
+    }
+    music_bottom_hk3.style.backgroundSize = music_bottom_hk3.value + '% 100%';
+    music_bfq.volume = music_bottom_hk3.value / 100;
+    localStorage.music_sydx = music_bottom_hk3.value / 100;
+});
 // 音量页面防止关闭
 music_boyyom_yj.addEventListener('click', function(e) {
     e.stopPropagation();
@@ -2996,7 +3009,49 @@ Sku_gundontiao('.music_hzmax', '.music_ym_gundontiao_max', '.music_ym_gundontiao
 
 
 
-// 课表
+// 课表...总
+// 单双周
+function getWeeksSinceWithMidnight(timestamp) {
+    const inputDate2 = new Date(timestamp);
+    const inputDate = new Date(inputDate2.getFullYear(), inputDate2.getMonth(), inputDate2.getDate(), 0, 0, 1);
+    const currentDate2 = new Date();
+    const currentDate = new Date(currentDate2.getFullYear(), currentDate2.getMonth(), currentDate2.getDate());
+    const inputDay = inputDate.getDay();
+    const currentDay = currentDate.getDay();
+    const normalizedInputDay = inputDay === 0 ? 7 : inputDay;
+    const normalizedCurrentDay = currentDay === 0 ? 7 : currentDay;
+    const diffDays = Math.floor((currentDate - inputDate) / (1000 * 60 * 60 * 24));
+    let weeks = Math.floor(diffDays / 7);
+    if (normalizedCurrentDay < normalizedInputDay || (normalizedCurrentDay === normalizedInputDay && diffDays > 0)) {
+        weeks += 1;
+    }
+    return weeks;
+}
+var ke_biao_zhou = JSON.parse(localStorage.ke_biao_zhou);
+if (getWeeksSinceWithMidnight(ke_biao_zhou[1]) > 0) {
+    ke_biao_zhou[0] = ke_biao_zhou[0] - 0 + getWeeksSinceWithMidnight(ke_biao_zhou[1]);
+    ke_biao_zhou[1] = (+new Date());
+    localStorage.ke_biao_zhou = JSON.stringify(ke_biao_zhou);
+}
+var sy_ke_biao_top_s_1 = document.querySelector('.sy_ke_biao_top_s');
+sy_ke_biao_top_s_1.innerText = (ke_biao_zhou[0] % 2 == 1 ? '/单周' : '/双周');
+var ke_biao_zhoushu = document.querySelector('.ke_biao_zhoushu');
+ke_biao_zhoushu.value = ke_biao_zhou[0];
+ke_biao_zhoushu.addEventListener('blur', function(e) {
+    if (ke_biao_zhoushu.value < 1) {
+        ke_biao_zhoushu.value = 1;
+        Sku_tctx('最小开始为第 1 周');
+    }
+    var ke_biao_zhou = JSON.parse(localStorage.ke_biao_zhou);
+    ke_biao_zhou[0] = ke_biao_zhoushu.value;
+    ke_biao_zhou[1] = (+new Date());
+    console.log(ke_biao_zhou);
+    localStorage.ke_biao_zhou = JSON.stringify(ke_biao_zhou);
+    sy_ke_biao_top_s_1.innerText = (ke_biao_zhou[0] % 2 == 1 ? '/单周' : '/双周');
+});
+ke_biao_zhoushu.addEventListener('input', function(e) {
+    sy_ke_biao_top_s_1.innerText = (ke_biao_zhoushu.value % 2 == 1 ? '/单周' : '/双周');
+});
 // 锁定 
 if (localStorage.ke_biao_sd == undefined) {
     localStorage.ke_biao_sd = false;
@@ -3142,48 +3197,6 @@ function ke_biao_gaolian() {
         }
     }
 }
-// 单双周
-function getWeeksSinceWithMidnight(timestamp) {
-    const inputDate2 = new Date(timestamp);
-    const inputDate = new Date(inputDate2.getFullYear(), inputDate2.getMonth(), inputDate2.getDate(), 0, 0, 1);
-    const currentDate2 = new Date();
-    const currentDate = new Date(currentDate2.getFullYear(), currentDate2.getMonth(), currentDate2.getDate());
-    const inputDay = inputDate.getDay();
-    const currentDay = currentDate.getDay();
-    const normalizedInputDay = inputDay === 0 ? 7 : inputDay;
-    const normalizedCurrentDay = currentDay === 0 ? 7 : currentDay;
-    const diffDays = Math.floor((currentDate - inputDate) / (1000 * 60 * 60 * 24));
-    let weeks = Math.floor(diffDays / 7);
-    if (normalizedCurrentDay < normalizedInputDay || (normalizedCurrentDay === normalizedInputDay && diffDays > 0)) {
-        weeks += 1;
-    }
-    return weeks;
-}
-var ke_biao_zhou = JSON.parse(localStorage.ke_biao_zhou);
-if (getWeeksSinceWithMidnight(ke_biao_zhou[1]) > 0) {
-    ke_biao_zhou[0] = ke_biao_zhou[0] - 0 + getWeeksSinceWithMidnight(ke_biao_zhou[1]);
-    ke_biao_zhou[1] = (+new Date());
-    localStorage.ke_biao_zhou = JSON.stringify(ke_biao_zhou);
-}
-var sy_ke_biao_top_s_1 = document.querySelector('.sy_ke_biao_top_s');
-sy_ke_biao_top_s_1.innerText = (ke_biao_zhou[0] % 2 == 1 ? '/单周' : '/双周');
-var ke_biao_zhoushu = document.querySelector('.ke_biao_zhoushu');
-ke_biao_zhoushu.value = ke_biao_zhou[0];
-ke_biao_zhoushu.addEventListener('blur', function(e) {
-    if (ke_biao_zhoushu.value < 1) {
-        ke_biao_zhoushu.value = 1;
-        Sku_tctx('最小开始为第 1 周');
-    }
-    var ke_biao_zhou = JSON.parse(localStorage.ke_biao_zhou);
-    ke_biao_zhou[0] = ke_biao_zhoushu.value;
-    ke_biao_zhou[1] = (+new Date());
-    console.log(ke_biao_zhou);
-    localStorage.ke_biao_zhou = JSON.stringify(ke_biao_zhou);
-    sy_ke_biao_top_s_1.innerText = (ke_biao_zhou[0] % 2 == 1 ? '/单周' : '/双周');
-});
-ke_biao_zhoushu.addEventListener('input', function(e) {
-    sy_ke_biao_top_s_1.innerText = (ke_biao_zhoushu.value % 2 == 1 ? '/单周' : '/双周');
-});
 // 号排序
 function timestampToDate(timestamp) {
     var date = new Date(timestamp);

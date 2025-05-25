@@ -5,5 +5,8 @@ echo.
 cd /d %~dp0
 node ./JS_MOD_GX.js
 echo.
-echo 完成脚本,等待用户按下任意键后退出
-pause >nul
+echo 完成脚本
+REM 等待5秒（/nobreak阻止用户按键跳过，>nul隐藏提示信息）
+timeout /t 5 /nobreak >nul
+REM 关闭当前命令窗口
+exit

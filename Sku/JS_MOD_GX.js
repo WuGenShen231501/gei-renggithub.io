@@ -37,9 +37,24 @@ function updateLocalFile(remoteUrl, localFileName) {
 }
 
 // 使用示例（可根据需要保留或删除）
-updateLocalFile('https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js', '本地jquery.js');
-updateLocalFile('https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.min.js', 'Markdown解析器.js');
-updateLocalFile('https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js', '数学标记渲染.js');
-updateLocalFile('https://cdn.jsdelivr.net/npm/moment/moment.min.js', '农历.js');
-updateLocalFile('https://cdn.jsdelivr.net/npm/moment-lunar/moment-lunar.min.js', '农历2.js');
-updateLocalFile('https://cdn.jsdelivr.net/npm/pinyin-pro/dist/index.min.js', '汉字拼音表.js');
+// 新增：顺序执行更新的异步函数
+async function updateFilesSequentially() {
+    // 定义需要更新的文件列表（保持原调用顺序）
+    const filesToUpdate = [
+        { url: 'https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js', name: '本地jquery.js' },
+        { url: 'https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.min.js', name: 'Markdown解析器.js' },
+        { url: 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js', name: '数学标记渲染.js' },
+        { url: 'https://cdn.jsdelivr.net/npm/moment/moment.min.js', name: '农历.js' },
+        { url: 'https://cdn.jsdelivr.net/npm/moment-lunar/moment-lunar.min.js', name: '农历2.js' },
+        { url: 'https://cdn.jsdelivr.net/npm/pinyin-pro/dist/index.min.js', name: '汉字拼音表.js' }
+    ];
+
+    // 循环执行：每次等待前一个完成+2秒间隔
+    for (const file of filesToUpdate) {
+        await updateLocalFile(file.url, file.name); // 等待当前文件更新完成
+        await new Promise(resolve => setTimeout(resolve, 2000)); // 等待2秒
+    }
+}
+
+// 启动顺序更新（替换原来的直接调用）
+updateFilesSequentially();
