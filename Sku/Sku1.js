@@ -3107,7 +3107,9 @@ function zhou_zhi_genxin() {
     zhou_zhi_zd(); //自动隐藏或删除
     ke_biao_sdhs(); //锁定
     ke_biao_gaolian(); //高亮
-    WGS_wenbengundon('.sy_ke_biao_l'); //滚动
+    setTimeout(function() {
+        WGS_wenbengundon('.sy_ke_biao_l'); //滚动
+    }, 100);
 }
 zhou_zhi_genxin(); //周至更新
 // 保存当前
@@ -3230,9 +3232,11 @@ sy_ke_biao_max.addEventListener('mouseover', function(e) {
         var target_nr = target.value;
         const result = target_nr.replace(/\s*\[.*$/, '').trim();
         if (result !== '') {
+            console.log(result);
             for (var i = 0; i < sy_ke_biao_l.length; i++) {
                 // 找相同项除了自己
-                if (containsAllChars(result, sy_ke_biao_l[i].value) && sy_ke_biao_l[i] !== target) {
+                // if (containsAllChars(result, sy_ke_biao_l[i].value) && sy_ke_biao_l[i] !== target) {
+                if (result == sy_ke_biao_l[i].value.replace(/\s*\[.*$/, '').trim() && sy_ke_biao_l[i] !== target) {
                     sy_ke_biao_l[i].classList.add('sy_ke_biao_l_gl');
                 }
             }
@@ -3441,10 +3445,10 @@ function zhou_zhi_rc_zdtj() {
         const timestamp1 = event[1]; // 提取时间戳（假设在数组的第2个位置）
         const date = new Date(timestamp1); // 转换为日期对象
         const weekDays = [7, 1, 2, 3, 4, 5, 6];
-        const dayOfWeek = weekDays[date.getDay()]; // 获取中文星期名称
+        const dayOfWeek = weekDays[date.getDay()]; // 获取中文星期名称w
         var zhou_zhi_xqS_sj = document.querySelectorAll('.zhou_zhi_xq0');
         // 判断时间戳是否在任意时间段内（返回 true/false）
-        function isTimestampInTimeRanges(timestamp, timeRangeStr) {
+        function isTimestampInTimeRanges(timestamp, timeRangeStr, ii) {
             function timestampToMinutes(timestamp) {
                 const date = new Date(timestamp);
                 return date.getHours() * 60 + date.getMinutes();
@@ -3482,6 +3486,8 @@ function zhou_zhi_rc_zdtj() {
                     return true;
                 } else if (targetMinutes < start) {
                     jxxz = 0;
+                } else if (targetMinutes > end && ii == (zhou_zhi_xqS_sj.length - 1)) {
+                    jxxz = 2;
                 }
             }
             return false;
@@ -3490,7 +3496,7 @@ function zhou_zhi_rc_zdtj() {
         for (let i = 0; i < zhou_zhi_xqS_sj.length; i++) {
             const element = zhou_zhi_xqS_sj[i];
             const timeRangeStr = element.value; // 获取元素的 value（如 "10:35~11:15 11:20-12:00"）
-            const isInRange = isTimestampInTimeRanges(timestamp1, timeRangeStr);
+            const isInRange = isTimestampInTimeRanges(timestamp1, timeRangeStr, i);
             if (isInRange) {
                 var zhou_zhi_xqS = document.querySelectorAll('.zhou_zhi_xq' + dayOfWeek)[i];
                 // 添加内容
@@ -3500,7 +3506,8 @@ function zhou_zhi_rc_zdtj() {
                     zhou_zhi_xqS.value += ' && ' + event[0];
                 }
                 zhou_zhi_xqS.classList.add('sy_ke_biao_l_s_rc');
-            } else if (jxxz == 0 && localStorage.ke_biao_zdtjrc_qb == 'true') { //没有时自动创建
+                break;
+            } else if ((jxxz == 0 || jxxz == 2) && localStorage.ke_biao_zdtjrc_qb == 'true') { //没有时自动创建
                 var div_s = document.createElement('div');
 
                 div_s.className = 'sy_ke_biao_h sy_ke_biao_h_s';
@@ -3517,14 +3524,15 @@ function zhou_zhi_rc_zdtj() {
                     }
                 }
                 const syKeBiaoHs = document.querySelectorAll('.sy_ke_biao_h');
-                const targetElement = syKeBiaoHs[i]; // 第 i 个 .sy_ke_biao_h 元素
-                if (targetElement) {
+                const targetElement = syKeBiaoHs[i]; // 第 i 个 .sy_ke_biao_h 元素;
+
+                if (targetElement && jxxz !== 2) {
                     sy_ke_biao_max.insertBefore(div_s, targetElement);
-                } else {
+                } else if (jxxz == 2) {
                     sy_ke_biao_max.appendChild(div_s); // 兼容处理（i 超出范围时）
                 }
             }
-            if (jxxz == 0) {
+            if ((jxxz == 0 || jxxz == 2)) {
                 break;
             }
         }

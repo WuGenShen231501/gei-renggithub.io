@@ -3823,14 +3823,15 @@ gywm_l.addEventListener('click', function(e) {
         gywm_ban_ben_djcs2 = 0;
 
         var WGS_HTSP_S = document.querySelector('.WGS_HTSP_S');
-        var s_sz = ['az', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'];
-        var s_sz_2 = ['vip', 'xyz'];
+        var s_sz = ['kt'];
+        var s_sz_2 = ['vip'];
         var s_sz_3 = ['9527'];
         var htsp_s_tjgs = 0;
         var htsp_s_tjgs_cg = 0;
         var htsp_s_tjgs_sb = 0;
         var htsp_cgqcfgs = 0;
         gywm_ban_ben.innerHTML = 'HTSP 玩命搜索中....';
+        sz_jcbbgx.style.display = 'none';
 
         // 剩余时间
         var htsp_miao = 0;
@@ -3861,7 +3862,7 @@ gywm_l.addEventListener('click', function(e) {
                         htsp_s_tjgs++;
                         var wz_shu = u < 10 ? '0' + u : u;
                         var imgs = document.createElement('img');
-                        imgs.src = 'https://ht' + wz_shu + s_sz[i] + '.' + s_sz_2[o] + ':' + s_sz_3[p] + '/favicon.ico';
+                        imgs.src = 'https://ht' + s_sz[i] + wz_shu + '.' + s_sz_2[o] + ':' + s_sz_3[p] + '/favicon.ico';
                         imgs.addEventListener('load', function(e) {
                             // 分支加速
                             setTimeout(function() {}, 0);
