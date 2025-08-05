@@ -4,7 +4,13 @@ xg.addEventListener('click', function(e) {
     daka_shuchu();
 });
 
-
+// 匹配浏览器高度
+nrmaxs5 = document.querySelector('.nrmaxs5');
+nrmaxs5.style.marginTop = (window.innerHeight + 56 - 523 - 80) / 2 + 'px';
+window.addEventListener('resize', function() {
+    nrmaxs5 = document.querySelector('.nrmaxs5');
+    nrmaxs5.style.marginTop = (window.innerHeight + 56 - 523 - 80) / 2 + 'px';
+});
 
 
 // 全屏
