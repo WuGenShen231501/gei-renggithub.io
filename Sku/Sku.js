@@ -475,10 +475,19 @@ top_tou_xian.addEventListener('click', function(e) {
 top_tou_xian_sc.addEventListener('click', function(e) {
     e.stopPropagation();
 });
+// 转义反斜杠
+function escapeBackslash2(path) {
+    var path2 = path.replace(/\\\\/g, '\\');
+    var path3 = path2.replace(/\//g, '\\');
+    var path4 = path3.replace(/\/\//g, '\\');
+    var path5 = path4.replace(/\"/g, '');
+    var path6 = path5.replace(/\'/g, '');
+    return path6.replace(/\\/g, '\\\\');
+}
 input_tou_xian.addEventListener('input', function(e) {
     if (input_tou_xian.value !== '') {
-        tou_xian_tp.style.backgroundImage = 'url(' + input_tou_xian.value + ')';
-        tou_xian_tp2.style.backgroundImage = 'url(' + input_tou_xian.value + ')';
+        tou_xian_tp.style.backgroundImage = 'url(' + escapeBackslash2(input_tou_xian.value) + ')';
+        tou_xian_tp2.style.backgroundImage = 'url(' + escapeBackslash2(input_tou_xian.value) + ')';
     } else {
         tou_xian_tp.style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
         tou_xian_tp2.style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
@@ -486,8 +495,8 @@ input_tou_xian.addEventListener('input', function(e) {
 });
 tou_xian_qr.addEventListener('click', function() {
     if (input_tou_xian.value !== '') {
-        localStorage.tou_xiang = input_tou_xian.value;
-        top_tou_xian.style.backgroundImage = 'url(' + input_tou_xian.value + ')';
+        localStorage.tou_xiang = escapeBackslash2(input_tou_xian.value);
+        top_tou_xian.style.backgroundImage = 'url(' + escapeBackslash2(input_tou_xian.value) + ')';
         input_tou_xian.value = '';
         top_tou_xian_sc.style.display = 'none';
         Sku_tctx('头像上传成功');
