@@ -3373,7 +3373,8 @@ function zhou_zhi_zd() {
                 if (ke_biao_zhoushu2 < zhou[0] || ke_biao_zhoushu2 > zhou[1]) {
                     sy_ke_biao_l[i].value = '';
                 }
-            } else if (zhou.length == 2 && ke_biao_zhoushu2 > zhou[1] && localStorage.ke_biao_zdsc == 'true') {
+            }
+            if (zhou.length == 2 && ke_biao_zhoushu2 > zhou[1] && localStorage.ke_biao_zdsc == 'true') {
                 var ke_biao = JSON.parse(localStorage.ke_biao);
                 ke_biao[Math.floor(i / 8)][i % 8] = '';
                 localStorage.ke_biao = JSON.stringify(ke_biao);
