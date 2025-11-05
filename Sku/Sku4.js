@@ -3249,7 +3249,7 @@ function sy_lbnr_hs() {
 
         function sjnr_shuchu(gs) {
             // 1日程2作品3链接4未标记5设置6音乐7热点8周志9习惯
-            var sj_nr_bl = [1, 2, 3, 3, 3, 4, 5, 6, 7, 7, 7, 8, 9];
+            var sj_nr_bl = [1, 2, 3, 3, 3, 4, 5, 6, 7, 7, 7, 8];
 
             // sz_zdsc(数组, 要删除的字符(不是索引号), 如果要替换成)
             function sz_zdsc(sz_s, sz_sc_zhi, sz_tj_zhi) {

@@ -1122,7 +1122,8 @@ html {
 
 /* ---------兼容手机端----------- */
 
-@media screen and (max-width: 700px) {
+
+/* @media screen and (max-width: 700px) {
     .sku_wlzt,
     .max_ncxs {
         display: none !important;
@@ -1193,4 +1194,4 @@ html {
     .lian_jie_l_max {
         margin-left: 0px;
     }
-}
+} */
