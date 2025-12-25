@@ -5026,6 +5026,89 @@ klm_qr.addEventListener('click', function(e) {
     } else if (klm == '˞˟˞˟˔˕') {
         localStorage.Sku_node = 0;
         Sku_tctx('已关闭 node!');
+    } else if (klm == 'ˈ˙˗˅ˑ˞') {
+        // 提取所有数据
+        const getLocalStorage = (key, transform = null) => {
+            const data = localStorage[key];
+            if (!data) return null;
+            const parsed = JSON.parse(data);
+            return transform ? transform(parsed) : parsed;
+        };
+        const processedData = {};
+        // 处理日程数据
+        processedData.日程数据 = getLocalStorage('sy_djs', data =>
+            Object.values(data).map(item => ({ 名字: item[0], 时间: item[2] }))
+        );
+        // 处理周志数据
+        processedData.周志数据 = getLocalStorage('ke_biao');
+        // 处理作品名字数据
+        processedData.作品名字数据 = getLocalStorage('sy_zpzs_mz');
+        // 处理所有链接数据
+        processedData.所有链接数据 = getLocalStorage('dhr_ym_dx', data => {
+            const links = [];
+            Object.values(data).forEach(category => Object.values(category).forEach(link => links.push({ 名字: link[1], 备注: link[2] || '' })));
+            return links;
+        });
+        // 处理任务数据
+        processedData.任务数据 = getLocalStorage('liu_yan_dx', data =>
+            Object.values(data).map(item => ({ 内容: item[0] }))
+        );
+        // 处理音乐数据
+        processedData.音乐数据 = getLocalStorage('music_cd', data => data[0]); // 歌曲名数组
+        // 处理历史搜索记录
+        processedData.历史搜索记录 = getLocalStorage('lsjl');
+        // 格式化输出内容
+        // 格式化输出内容（无换行，双引号加逗号分隔）
+        // 创建格式化输出辅助函数
+        const formatOutput = (key, data, formatter = null) => {
+            if (!data) return null;
+            const formattedValue = formatter ? formatter(data) : JSON.stringify(data);
+            return formattedValue ? `"${key}：${formattedValue}"` : null;
+        };
+        const outputItems = [];
+        // 处理日程数据
+        const scheduleItem = formatOutput('日程数据', processedData.日程数据, data =>
+            data.map(item => `名字: ${item.名字}，时间: ${item.时间}`).join('；')
+        );
+        if (scheduleItem) outputItems.push(scheduleItem);
+        // 处理周志数据
+        const journalItem = formatOutput('周志数据', processedData.周志数据);
+        if (journalItem) outputItems.push(journalItem);
+        // 处理作品名字数据
+        const workItem = formatOutput('作品名字数据', processedData.作品名字数据);
+        if (workItem) outputItems.push(workItem);
+        // 处理所有链接数据（不要备注，全部名字逗号分开）
+        const linkItem = formatOutput('所有链接数据', processedData.所有链接数据, data =>
+            data.map(item => item.名字).join('，')
+        );
+        if (linkItem) outputItems.push(linkItem);
+        // 处理任务数据
+        const taskItem = formatOutput('任务数据', processedData.任务数据, data =>
+            data.map(item => item.内容).join('；')
+        );
+        if (taskItem) outputItems.push(taskItem);
+        // 处理音乐数据
+        const musicItem = formatOutput('音乐数据', processedData.音乐数据);
+        if (musicItem) outputItems.push(musicItem);
+        // 处理历史搜索记录
+        const searchItem = formatOutput('历史搜索记录数据', processedData.历史搜索记录);
+        if (searchItem) outputItems.push(searchItem);
+        // 合并所有项，用换行符分隔
+        const output = outputItems.join('\n\n');
+        // 输出到控制台
+        console.log(output);
+        // 复制到剪贴板
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(output)
+                .then(() => {
+                    Sku_tctx('数据已提取、输出到控制台并复制到剪贴板');
+                })
+                .catch(() => {
+                    Sku_tctx('数据已提取并输出到控制台，但复制到剪贴板失败');
+                });
+        } else {
+            Sku_tctx('数据已提取并输出到控制台，当前环境不支持剪贴板复制');
+        }
     } else {
         Sku_tctx('无效口令! 请检查口令码是否正确');
     }
