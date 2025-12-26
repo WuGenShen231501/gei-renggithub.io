@@ -627,6 +627,7 @@
     }
     /* ---------导入/导出--------- */
     
+    .daoru_ym_yun,
     .daoru_ym_dc,
     .daoru_ym_dr,
     .daoru_ym_bendi,
@@ -641,6 +642,7 @@
         transition: 0.2s;
     }
     
+    .daoru_ym_yun:hover,
     .daoru_ym_dc:hover,
     .daoru_ym_dr:hover,
     .daoru_ym_bendi:hover,
@@ -678,7 +680,7 @@
         border: 0;
         border-bottom: 1px solid white;
         left: 50px;
-        top: 250px;
+        top: 200px;
     }
     
     .daoru_ym_bendi_click {
@@ -731,6 +733,7 @@
         overflow-y: scroll;
     }
     
+    .yun_key_s_max,
     .daorubendi_s {
         position: relative;
         width: 100%;
@@ -738,6 +741,7 @@
         margin-bottom: 30px;
     }
     
+    .daoruyun_s_sj,
     .daorubendi_s_sj {
         float: left;
         width: 435px;
@@ -751,6 +755,7 @@
         transition: 0.2s;
     }
     
+    .daoruyun_s_yy,
     .daorubendi_s_yy {
         float: left;
         width: 50px;
@@ -763,6 +768,7 @@
         transition: 0.2s;
     }
     
+    .daoruyun_s_cs,
     .daorubendi_s_cs {
         float: left;
         height: 30px;
@@ -775,6 +781,8 @@
         transition: 0.2s;
     }
     
+    .daoruyun_s_yy:hover,
+    .daoruyun_s_cs:hover,
     .daorubendi_s_yy:hover,
     .daorubendi_s_cs:hover {
         transform: scale(1.1);
@@ -787,7 +795,7 @@
         text-align: right;
         line-height: 30px;
         left: 148px;
-        top: 280px;
+        top: 230px;
     }
     
     .daoru_ym_sc_laiyuan {
@@ -797,7 +805,7 @@
         text-align: left;
         line-height: 30px;
         right: 148px;
-        top: 280px;
+        top: 230px;
     }
     /* 历史搜索记录 */
     
@@ -1843,4 +1851,75 @@
     
     .shanchu_daoru_bendi:hover {
         transform: scale(1.1);
+    }
+    
+    .daoru_ym_yun_click {
+        position: absolute;
+        bottom: 120px;
+        left: 160px;
+        width: auto;
+        height: auto;
+        border-bottom: 1px solid;
+        opacity: 0.5;
+    }
+    
+    .daoru_ym_yun_click:hover {
+        opacity: 1;
+    }
+    
+    .daoru_ym_yun {
+        bottom: 120px;
+        left: 50px;
+        background-color: var(--zi_ti_color_20);
+    }
+    
+    .daoru_ym_yun_key {
+        position: absolute;
+        bottom: 120px;
+        left: 332px;
+        width: auto;
+        height: auto;
+        border-bottom: 1px solid;
+        opacity: 0.5;
+    }
+    
+    .daoru_ym_yun_key:hover {
+        opacity: 1;
+    }
+    
+    .shanchu_daoru_yun {
+        position: absolute;
+        border: 1px solid var(--zi_ti_color);
+        width: 112px;
+        height: 30px;
+        border-radius: 5px;
+        text-align: center;
+        right: 53px;
+        top: 10px;
+        line-height: 28px;
+        transition: 0.15s;
+    }
+    
+    .shanchu_daoru_yun:hover {
+        transform: scale(1.1);
+    }
+    
+    .daoruyun_max_hd {
+        float: left;
+        width: calc(100% + 70px);
+        height: calc(100% - 50px);
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    
+    .daoruyun_min {
+        padding-top: 30px;
+        position: relative;
+    }
+    
+    .daoruyun_s_sj,
+    .daoruyun_s_yy,
+    .daoruyun_s_cs {
+        background-color: var(--zi_ti_color_20);
+        border-color: var(--zi_ti_color);
     }

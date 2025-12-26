@@ -1,4 +1,4 @@
-var ban_ben_s = "2705342";
+var ban_ben_s = "2723931";
 
 function formatNumberString(input) {
     if (isAlreadyFormatted(input)) { return input; }
@@ -356,7 +356,10 @@ if (localStorage.da_ka == undefined) {
     ];
     localStorage.da_ka = JSON.stringify(da_ka_csz);
 }
-
+//云服务器key
+if (localStorage.yun_key == undefined) {
+    localStorage.yun_key = '[]';
+}
 
 
 

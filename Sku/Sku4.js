@@ -107,12 +107,7 @@ function she_zhi_ym_fh() {
     shezhi_min = document.querySelector('.shezhi_min');
     shezhi_ym = document.querySelectorAll('.shezhi_ym');
 
-    if (shezhi_daoru_bendi_ym.style.display == 'block') {
-        for (var i = 0; i < shezhi_ym.length; i++) {
-            shezhi_ym[i].style.display = 'none';
-        }
-        shezhi_daoru_ym.style.display = 'block';
-    } else if (shezhi_duibixx_ym.style.display == 'block') {
+    if (shezhi_daoru_bendi_ym.style.display == 'block' || shezhi_duibixx_ym.style.display == 'block' || shezhi_daoru_yun_ym.style.display == 'block') {
         for (var i = 0; i < shezhi_ym.length; i++) {
             shezhi_ym[i].style.display = 'none';
         }
@@ -377,6 +372,7 @@ SHITIDONGHUA2_kssy('.bizhi_gundon4', '.ssjl_max');
 SHITIDONGHUA2_kssy('.bizhi_gundon5', '.grb_j_max');
 SHITIDONGHUA2_kssy('.bizhi_gundon6', '.shezhi_ym_max');
 SHITIDONGHUA2_kssy('.bizhi_gundon7', '.duibixx_max');
+SHITIDONGHUA2_kssy('.bizhi_gundon8', '.daoruyun_max_hd');
 
 
 
@@ -1537,8 +1533,8 @@ var shezhi_daoru_ym = document.querySelector('.shezhi_daoru_ym');
 var jisuan_bendidx = 0;
 
 // 集成应用与导入导出加密导入导出本地导入应用等
-var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'sy_lbxz', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_jl', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd', 'zdjmdc', 'da_ka'];
-// 导航栏,导航栏页面,万能搜索引擎,头像,留言,所有壁纸,当前壁纸,天气,字体颜色,重字体颜色,背景颜色,背景透明度,背景确认框,背景框颜色,背景框透明度,毛玻璃,自动备份,使用次数,倒计时,密码,作品展示,音乐,搜索记录,轮播选择,HTSP,注册表,背景颜色,主题风格,ai,ai快捷指令,课表,总时长,自动导入本地,自动加密导出,打卡
+var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'sy_lbxz', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_jl', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd', 'zdjmdc', 'da_ka', 'yun_key'];
+// 导航栏,导航栏页面,万能搜索引擎,头像,留言,所有壁纸,当前壁纸,天气,字体颜色,重字体颜色,背景颜色,背景透明度,背景确认框,背景框颜色,背景框透明度,毛玻璃,自动备份,使用次数,倒计时,密码,作品展示,音乐,搜索记录,轮播选择,HTSP,注册表,背景颜色,主题风格,ai,ai快捷指令,课表,总时长,自动导入本地,自动加密导出,打卡,云服务器key
 
 // 检查是否为时间
 function isValidDateTime(str) {
@@ -1574,7 +1570,10 @@ shezhi_daoru.addEventListener('click', function(e) {
     daoru_ym_sc.value = '';
     daoru_ym_sc.focus();
     daoru_ym_sc_tjzs();
+    bendidaxiao_jc(); //计算当前内容长度
+});
 
+function bendidaxiao_jc() { //计算当前内容长度
     var daochu_sz = [];
     for (var i = 0; i < daochu_daoru_max.length; i++) {
         daochu_sz[i] = localStorage.getItem(daochu_daoru_max[i]);
@@ -1593,7 +1592,7 @@ shezhi_daoru.addEventListener('click', function(e) {
     daochu_sz[daochu_daoru_max.length] = getFormattedTime();
 
     jisuan_bendidx = JSON.stringify(daochu_sz).length;
-});
+}
 
 //导出
 daoru_ym_dc.addEventListener('click', function(e) {
@@ -1751,7 +1750,7 @@ function daoru_sz_hs() {
         bdzdtj_true = 0;
         location.reload();
     } else {
-        Sku_tctx('格式错误 ! 缺少导入模块');
+        Sku_tctx('格式错误 ! 缺少导入模块 或 数据过时');
         daoru_ym_sc.value = '';
     }
 }
@@ -1891,12 +1890,12 @@ daoru_ym_bendi.addEventListener('click', function(e) {
         //保存
         if (beforeunload_jmdc == 0) {
             window.localStorage.setItem(
-                `${'DATE:' + getFormattedTime() + ' Byte:' + JSON.stringify(zd_daochu).length} 本地导入`,
+                `${'Date:' + getFormattedTime() + ' Byte:' + JSON.stringify(zd_daochu).length} 本地导入`,
                 JSON.stringify(zd_daochu)
             )
         } else {
             window.localStorage.setItem(
-                `${'DATE:' + getFormattedTime() + ' Byte:' + JSON.stringify(zd_daochu).length} 自动本地导入`,
+                `${'Date:' + getFormattedTime() + ' Byte:' + JSON.stringify(zd_daochu).length} 自动本地导入`,
                 JSON.stringify(zd_daochu)
             )
         }
@@ -1918,7 +1917,7 @@ daoru_ym_bendi.addEventListener('click', function(e) {
             daoru_ym_bendi.innerHTML = '导入本地';
         }, 2000);
 
-        Sku_tctx('导入成功 DATE:' + getFormattedTime() + ' Byte:' + JSON.stringify(zd_daochu).length);
+        Sku_tctx('导入成功 Date:' + getFormattedTime() + ' Byte:' + JSON.stringify(zd_daochu).length);
     }
 });
 
@@ -5141,6 +5140,8 @@ Sku_gundontiao('.ssbqym_max', '.ssbqym_gundontiao_max', '.ssbqym_gundontiao_min'
 Sku_gundontiao('.shezhi_min', '.shezhi_max_gundontiao_max', '.shezhi_max_gundontiao_min');
 Sku_gundontiao('.duibixx_max', '.xxdb_gundontiao_max', '.xxdb_gundontiao_min');
 Sku_gundontiao('.AI_kjzl_min', '.AI_kjzl_gundontiao_max', '.AI_kjzl_gundontiao_min');
+Sku_gundontiao('.daoruyun_max_hd', '.daoru_yun_gundontiao_max', '.daoru_yun_gundontiao_min');
+
 
 
 
@@ -5384,6 +5385,338 @@ window.addEventListener('beforeunload', function() {
         daoru_ym_jmdc.click();
     }
 });
+
+
+
+
+//导入云服务信息
+const API_KEY = 'd09e960212a26a82c045e56106ad585920dc2d9d6c455ef72eb68451d87fca4e4417f5a29772642e5bd5f76a8ccb279402af77eac19f5af71e4f9d64403a01db'; // 用户提供的 API Key
+const API_BASE_URL = 'https://hastebin.com'; // API 基础 URL
+
+// 上传按钮点击事件
+var daoru_ym_yun = document.querySelector('.daoru_ym_yun');
+var sku_wlzt = document.querySelector('.sku_wlzt');
+var daochu_daoru_max2 = [];
+daoru_ym_yun.addEventListener('click', async() => {
+    if (daoru_ym_yun.innerHTML == '导入云服务' && sku_wlzt.innerHTML == 'Status:Online') {
+        daoru_ym_yun.innerHTML = '导入中...';
+        var yun_daochu = [];
+        daochu_daoru_max2 = daochu_daoru_max.filter(item => item !== 'yun_key'); //不要yun_key
+        for (var i = 0; i < daochu_daoru_max2.length; i++) {
+            yun_daochu[i] = localStorage.getItem(daochu_daoru_max2[i]);
+        }
+        //上传时间
+        function getFormattedTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1 < 10 ? `0${now.getMonth() + 1}` : now.getMonth() + 1;
+            const date = now.getDate() < 10 ? `0${now.getDate()}` : now.getDate();
+            const hour = now.getHours() < 10 ? `0${now.getHours()}` : now.getHours();
+            const minute = now.getMinutes() < 10 ? `0${now.getMinutes()}` : now.getMinutes();
+            const second = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
+            return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
+        }
+        // 打包时间
+        yun_daochu[daochu_daoru_max2.length] = getFormattedTime();
+        console.log(yun_daochu);
+
+        const content = WGS_zfc_jiami(JSON.stringify(yun_daochu), miyao); //加密内容
+
+        if (!content.trim()) { //如果内容为空
+            Sku_tctx('导入失败！ 导入内容为空！'); //弹窗提醒
+            daoru_ym_yun.innerHTML = '导入云服务';
+            return;
+        }
+
+        try {
+            // 上传单部分内容到 Hastebin
+            async function uploadSinglePart(key, content) {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/documents`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${key}`,
+                            'Content-Type': 'text/plain'
+                        },
+                        body: content
+                    });
+                    if (!response.ok) { //如果上传失败
+                        Sku_tctx('导入失败！'); //弹窗提醒
+                        daoru_ym_yun.innerHTML = '导入云服务';
+                        throw new Error(`上传失败：${response.status} ${response.statusText}`);
+                    }
+                    const data = await response.json(); //解析上传成功的响应数据
+                    return data.key; //返回上传成功的文档 key
+                } catch (error) {
+                    console.error('上传单部分出错：', error);
+                    Sku_tctx('导入失败!'); //弹窗提醒
+                    daoru_ym_yun.innerHTML = '导入云服务';
+                    throw error;
+                }
+            }
+
+            // 上传内容到 Hastebin，支持大文件分割
+            async function uploadToHastebin(key, content) {
+                const MAX_PART_SIZE = 150000;
+                // 如果内容小于等于最大部分大小，直接上传
+                if (content.length <= MAX_PART_SIZE) {
+                    const singleKey = await uploadSinglePart(key, content);
+                    return singleKey;
+                }
+                // 分割内容
+                const parts = [];
+                for (let i = 0; i < content.length; i += MAX_PART_SIZE) {
+                    parts.push(content.slice(i, i + MAX_PART_SIZE));
+                }
+                console.log(`内容长度 ${content.length}，将分割为 ${parts.length} 部分上传`);
+                // 并行上传所有部分
+                const uploadPromises = parts.map(part => uploadSinglePart(key, part));
+                const keys = await Promise.all(uploadPromises);
+                // 返回逗号分隔的 key 列表
+                return keys.join(',');
+            }
+
+            const keyList = await uploadToHastebin(API_KEY, content);
+
+            // 自动复制到剪贴板
+            try {
+                await navigator.clipboard.writeText(keyList); //复制到剪贴板
+                Sku_tctx('上传成功！文档 Keys：' + keyList + '（已自动复制到剪贴板）');
+                console.log('上传成功！文档 Keys：' + keyList + '（已自动复制到剪贴板）');
+                daoru_ym_yun.innerHTML = '导入云服务';
+                // 保存到 localStorage
+                var yun_keys = JSON.parse(localStorage.yun_key);
+                const keyList_jm = WGS_zfc_jiami(keyList, miyao);
+                const tjnr = [keyList_jm, getFormattedTime(), content.length];
+                yun_keys.unshift(tjnr); //追加
+                localStorage.yun_key = JSON.stringify(yun_keys);
+
+                bendidaxiao_jc(); //计算当前内容长度
+            } catch (clipboardError) {
+                Sku_tctx('上传成功！文档 Keys：' + keyList + '（复制到剪贴板失败）');
+                console.log('上传成功！文档 Keys：' + keyList + '（复制到剪贴板失败）');
+                daoru_ym_yun.innerHTML = '导入云服务';
+            }
+
+        } catch (error) {
+            console.error('上传失败：', error);
+            Sku_tctx('导入失败！'); //弹窗提醒
+            daoru_ym_yun.innerHTML = '导入云服务';
+        }
+
+    } else {
+        if (sku_wlzt.innerHTML == 'Status:Offline') {
+            Sku_tctx('导入失败！ 请连接网络！'); //弹窗提醒
+        } else if (daoru_ym_yun.innerHTML == '导入中...') {
+            return; //导入中... 不能重复点击
+        } else {
+            Sku_tctx('导入失败！ 请联系管理员！'); //弹窗提醒
+        }
+    }
+});
+
+//查看详细云服务器信息
+var daoru_ym_yun_click = document.querySelector('.daoru_ym_yun_click');
+var shezhi_daoru_yun_ym = document.querySelector('.shezhi_daoru_yun_ym');
+var daoruyun_max_hd = document.querySelector('.daoruyun_max_hd');
+var daoruyun_min = document.querySelector('.daoruyun_min');
+var shezhi_daoru_ym = document.querySelector('.shezhi_daoru_ym');
+var bizhi_gundon8 = document.querySelector('.bizhi_gundon8');
+daoru_ym_yun_click.addEventListener('click', function() {
+    if (daoru_ym_yun.innerHTML == '导入云服务') {
+        shezhi_min.style.display = 'none';
+        shezhi_daoru_ym.style.display = 'none';
+        shezhi_daoru_yun_ym.style.display = 'block';
+        bizhi_gundon8.innerHTML = '↓';
+        daoruyun_max_hd.scroll(0, 0);
+        shanchu_30tian(); //30天自动删除
+
+        //循环输出云服务列表
+        daoruyun_min.innerHTML = '';
+        var yun_keys = JSON.parse(localStorage.yun_key);
+        for (var i = 0; i < yun_keys.length; i++) {
+            var div = document.createElement('div');
+            div.className = 'yun_key_s_max';
+            div.innerHTML = '<div class="daoruyun_s_sj">Date:' + yun_keys[i][1] + ' Byte:' + yun_keys[i][2] + '</div><div class="daoruyun_s_yy">应用</div><div class="daoruyun_s_cs"><i style="pointer-events: none;" class="iconfont icon-shanchu1 i_sc_tb"></i></div>';
+            daoruyun_min.appendChild(div);
+        }
+
+        //点击事件
+        daoruyun_min.addEventListener('mousedown', function(e) {
+            if (e.button === 0) {
+                var dj_dx = e.target;
+                if (dj_dx.classList.contains('daoruyun_s_sj')) { //复制key
+                    const yun_keys = JSON.parse(localStorage.yun_key);
+                    const dx_shijian = dj_dx.innerText.substring(5, 24); // 从第5位开始截取19个字符（时间格式长度）
+                    // 在yun_keys中匹配日期，找到对应的密钥
+                    const matchedItem = yun_keys.find(item => item[1] === dx_shijian);
+                    if (matchedItem) {
+                        const secretKey = matchedItem[0];
+                        // 复制密钥到剪贴板
+                        navigator.clipboard.writeText(WGS_zfc_jiami(secretKey, miyao))
+                            .then(() => {
+                                Sku_tctx('key已复制到剪贴板');
+                            })
+                            .catch(err => {
+                                console.error('提取key失败:', err);
+                            });
+                    } else {
+                        console.log('未找到匹配的key:', dx_shijian);
+                        Sku_tctx('未找到匹配的key！');
+                    }
+                } else if (dj_dx.classList.contains('daoruyun_s_yy')) {
+                    const yun_keys = JSON.parse(localStorage.yun_key);
+                    const dx_shijian = dj_dx.parentNode.querySelector('.daoruyun_s_sj').innerText.substring(5, 24);
+                    const matchedItem = yun_keys.find(item => item[1] === dx_shijian);
+                    if (matchedItem) {
+                        key_huoqu(matchedItem[0]);
+                    } else {
+                        console.log('未找到匹配的数据:', dx_shijian);
+                        Sku_tctx('未找到匹配的数据！');
+                    }
+                } else if (dj_dx.classList.contains('daoruyun_s_cs')) { //删除
+                    const dx_shijian = dj_dx.parentNode.querySelector('.daoruyun_s_sj').innerText.substring(5, 24);
+                    const yun_keys = JSON.parse(localStorage.yun_key);
+                    const matchedItem = yun_keys.find(item => item[1] === dx_shijian);
+                    if (matchedItem) {
+                        const index = yun_keys.indexOf(matchedItem);
+                        if (index !== -1) {
+                            yun_keys.splice(index, 1); //删除数组中的元素
+                            localStorage.yun_key = JSON.stringify(yun_keys); //更新本地存储
+                            Sku_tctx('删除成功！');
+                            dj_dx.parentNode.remove(); //删除dom元素
+                        }
+                    } else {
+                        console.log('未找到匹配的数据:', dx_shijian);
+                        Sku_tctx('未找到匹配的数据！');
+                    }
+                }
+            }
+        });
+    } else {
+        Sku_tctx('正在导入！请稍后查看'); //弹窗提醒
+    }
+});
+
+//删除所有
+var shanchu_daoru_yun = document.querySelector('.shanchu_daoru_yun');
+shanchu_daoru_yun.addEventListener('click', function() {
+    localStorage.yun_key = '[]';
+    daoruyun_min.innerHTML = '';
+    Sku_tctx('删除全部成功！');
+});
+
+//30天后的自动删除
+function shanchu_30tian() {
+    const yun_keys = JSON.parse(localStorage.yun_key);
+    const currentTime = Date.now();
+    const thirtyDaysInMillis = 30 * 24 * 60 * 60 * 1000;
+
+    const filteredKeys = yun_keys.filter(item => {
+        const importTime = new Date(item[1]).getTime();
+        return currentTime - importTime <= thirtyDaysInMillis;
+    });
+
+    localStorage.yun_key = JSON.stringify(filteredKeys);
+}
+
+// 获取事件
+var key_zzhq = 0;
+async function key_huoqu(keyss) {
+    if (key_zzhq == 0) {
+        key_zzhq = 1;
+        const documentKey = WGS_zfc_jiami(keyss, miyao);
+        console.log(documentKey);
+        if (!documentKey.trim()) {
+            Sku_tctx('没找到对应的key！');
+            key_zzhq = 0;
+            return;
+        }
+        Sku_tctx('正在获取内容，请稍后...'); //弹窗提醒
+        try {
+            // 从 Hastebin 获取单部分内容
+            async function fetchSinglePart(singleKey) {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/raw/${singleKey}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${API_KEY}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        Sku_tctx('获取失败，请联系管理员！');
+                        key_zzhq = 0;
+                        throw new Error(`获取失败：${response.status} ${response.statusText}`);
+                    }
+
+                    const content = await response.text();
+                    return content;
+                } catch (error) {
+                    Sku_tctx('获取失败，请联系管理员！');
+                    key_zzhq = 0;
+                    console.error(`获取单部分 ${singleKey} 出错：`, error);
+                    throw error;
+                }
+            }
+
+            // 从 Hastebin 获取内容
+            async function fetchFromHastebin(keyList) {
+                const keys = keyList.split(',').map(key => key.trim()).filter(key => key);
+
+                if (keys.length === 1) {
+                    return fetchSinglePart(keys[0]);
+                }
+
+                console.log(`开始获取 ${keys.length} 个部分的内容...`);
+
+                const fetchPromises = keys.map((key, index) =>
+                    fetchSinglePart(key).then(content => ({
+                        index,
+                        content
+                    }))
+                );
+
+                const results = await Promise.all(fetchPromises);
+                results.sort((a, b) => a.index - b.index);
+                const mergedContent = results.map(result => result.content).join('');
+
+                console.log(`获取完成！共 ${keys.length} 个部分，合并后内容长度：${mergedContent.length}`);
+                return mergedContent;
+            }
+
+            const content = await fetchFromHastebin(documentKey);
+
+            var daoru_szz = JSON.parse(WGS_zfc_jiami(content, miyao));
+            console.log(daoru_szz);
+            for (var i = 0; i < daoru_szz.length; i++) {
+                if (i == daoru_szz.length - 1) {
+                    if (isValidDateTime(daoru_szz[i])) { //判断是否是时间格式
+                        break;
+                    }
+                }
+                daochu_daoru_max2 = daochu_daoru_max.filter(item => item !== 'yun_key');
+                localStorage.setItem(daochu_daoru_max2[i], daoru_szz[i]);
+            }
+            localStorage.dr_mmdr_drsj = 0;
+            bdzdtj_true = 0; // 禁止刷新时自动导入
+            location.reload();
+        } catch (error) {
+            console.error('获取失败：', error);
+            key_zzhq = 0;
+            Sku_tctx('获取失败，请联系管理员！');
+        }
+    }
+}
+
+//打开获取密钥的网站
+var daoru_ym_yun_key = document.querySelector('.daoru_ym_yun_key');
+daoru_ym_yun_key.addEventListener('click', function(e) {
+    window.open('https://www.toptal.com/developers/hastebin/documentation');
+});
+
+
+
 
 
 
