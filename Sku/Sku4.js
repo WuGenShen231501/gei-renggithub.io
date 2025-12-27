@@ -1,3 +1,10 @@
+// 提示音
+var sku_tsy = document.querySelectorAll('.sku_tsy');
+
+function Sku_tsy(num) {
+    sku_tsy[num].play();
+}
+
 // 路径转换
 function escapeBackslash2(path) {
     var path2 = path.replace(/\"/g, '');
@@ -1533,8 +1540,8 @@ var shezhi_daoru_ym = document.querySelector('.shezhi_daoru_ym');
 var jisuan_bendidx = 0;
 
 // 集成应用与导入导出加密导入导出本地导入应用等
-var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'sy_lbxz', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_jl', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd', 'zdjmdc', 'da_ka', 'yun_key'];
-// 导航栏,导航栏页面,万能搜索引擎,头像,留言,所有壁纸,当前壁纸,天气,字体颜色,重字体颜色,背景颜色,背景透明度,背景确认框,背景框颜色,背景框透明度,毛玻璃,自动备份,使用次数,倒计时,密码,作品展示,音乐,搜索记录,轮播选择,HTSP,注册表,背景颜色,主题风格,ai,ai快捷指令,课表,总时长,自动导入本地,自动加密导出,打卡,云服务器key
+var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'sy_lbxz', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_jl', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd', 'zdjmdc', 'da_ka'];
+// 导航栏,导航栏页面,万能搜索引擎,头像,留言,所有壁纸,当前壁纸,天气,字体颜色,重字体颜色,背景颜色,背景透明度,背景确认框,背景框颜色,背景框透明度,毛玻璃,自动备份,使用次数,倒计时,密码,作品展示,音乐,搜索记录,轮播选择,HTSP,注册表,背景颜色,主题风格,ai,ai快捷指令,课表,总时长,自动导入本地,自动加密导出,打卡
 
 // 检查是否为时间
 function isValidDateTime(str) {
@@ -1758,9 +1765,11 @@ function daoru_sz_hs() {
 var daoru_ym_dr_mmym = document.querySelector('.daoru_ym_dr_mmym');
 var daoru_ym_dr_mmym_qr = document.querySelector('.daoru_ym_dr_mmym_qr');
 var daoru_ym_my = document.querySelector('.daoru_ym_my');
+var if_key_dr = 0;
 daoru_ym_dr.addEventListener('click', function(e) {
     e.stopPropagation();
     try {
+        if_key_dr = 0;
         if (daoru_ym_sc.value[0] == '[') {
             daoru_sz = JSON.parse(daoru_ym_sc.value);
             daoru_sz_hs();
@@ -1828,7 +1837,7 @@ daoru_ym_dr.addEventListener('click', function(e) {
                     daoru_ym_sc.disabled = '';
                     daoru_ym_sc.placeholder = '导入模块 / 密钥 / 网址';
                 });
-        } else {
+        } else if (daoru_ym_sc.value[0] == '˫') { //加密文件
             daoru_sz = JSON.parse(WGS_zfc_jiemi(daoru_ym_sc.value, miyao));
             if (daoru_sz[19] == '') {
                 daoru_sz_hs();
@@ -1836,6 +1845,17 @@ daoru_ym_dr.addEventListener('click', function(e) {
                 daoru_ym_dr_mmym.style.display = 'block';
                 daoru_ym_my.focus();
             }
+        } else if ((/^[a-z,]+$/.test(WGS_zfc_jiami(daoru_ym_sc.value, miyao)) && (WGS_zfc_jiami(daoru_ym_sc.value, miyao).replace(/,/g, '').length % 10 === 0) && WGS_zfc_jiami(daoru_ym_sc.value, miyao).replace(/,/g, '').length > 0) || (/^[a-z,]+$/.test(daoru_ym_sc.value) && (daoru_ym_sc.value.replace(/,/g, '').length % 10 === 0) && daoru_ym_sc.value.replace(/,/g, '').length > 0)) { //key
+            if_key_dr = 1;
+            if (/^[a-z,]+$/.test(daoru_ym_sc.value)) {
+                key_huoqu(WGS_zfc_jiami(daoru_ym_sc.value, miyao));
+            } else {
+                key_huoqu(daoru_ym_sc.value);
+            }
+        } else {
+            daoru_ym_sc.value = '';
+            daoru_ym_sc_tjzs();
+            Sku_tctx('格式错误 ! 不符合的导入模块');
         }
     } catch (error) {
         // 如果上面代码有异常时
@@ -5396,14 +5416,12 @@ const API_BASE_URL = 'https://hastebin.com'; // API 基础 URL
 // 上传按钮点击事件
 var daoru_ym_yun = document.querySelector('.daoru_ym_yun');
 var sku_wlzt = document.querySelector('.sku_wlzt');
-var daochu_daoru_max2 = [];
 daoru_ym_yun.addEventListener('click', async() => {
     if (daoru_ym_yun.innerHTML == '导入云服务' && sku_wlzt.innerHTML == 'Status:Online') {
         daoru_ym_yun.innerHTML = '导入中...';
         var yun_daochu = [];
-        daochu_daoru_max2 = daochu_daoru_max.filter(item => item !== 'yun_key'); //不要yun_key
-        for (var i = 0; i < daochu_daoru_max2.length; i++) {
-            yun_daochu[i] = localStorage.getItem(daochu_daoru_max2[i]);
+        for (var i = 0; i < daochu_daoru_max.length; i++) {
+            yun_daochu[i] = localStorage.getItem(daochu_daoru_max[i]);
         }
         //上传时间
         function getFormattedTime() {
@@ -5417,8 +5435,7 @@ daoru_ym_yun.addEventListener('click', async() => {
             return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
         }
         // 打包时间
-        yun_daochu[daochu_daoru_max2.length] = getFormattedTime();
-        console.log(yun_daochu);
+        yun_daochu[daochu_daoru_max.length] = getFormattedTime();
 
         const content = WGS_zfc_jiami(JSON.stringify(yun_daochu), miyao); //加密内容
 
@@ -5490,12 +5507,19 @@ daoru_ym_yun.addEventListener('click', async() => {
                 const tjnr = [keyList_jm, getFormattedTime(), content.length];
                 yun_keys.unshift(tjnr); //追加
                 localStorage.yun_key = JSON.stringify(yun_keys);
-
-                bendidaxiao_jc(); //计算当前内容长度
+                Sku_tsy(2); //播放提示音
             } catch (clipboardError) {
                 Sku_tctx('上传成功！文档 Keys：' + keyList + '（复制到剪贴板失败）');
                 console.log('上传成功！文档 Keys：' + keyList + '（复制到剪贴板失败）');
                 daoru_ym_yun.innerHTML = '导入云服务';
+                // 保存到 localStorage
+                var yun_keys = JSON.parse(localStorage.yun_key);
+                const keyList_jm = WGS_zfc_jiami(keyList, miyao);
+                const tjnr = [keyList_jm, getFormattedTime(), content.length];
+                yun_keys.unshift(tjnr); //追加
+                localStorage.yun_key = JSON.stringify(yun_keys);
+                Sku_tsy(2); //播放提示音
+                bendidaxiao_jc(); //计算当前内容长度
             }
 
         } catch (error) {
@@ -5553,7 +5577,7 @@ daoru_ym_yun_click.addEventListener('click', function() {
                     if (matchedItem) {
                         const secretKey = matchedItem[0];
                         // 复制密钥到剪贴板
-                        navigator.clipboard.writeText(WGS_zfc_jiami(secretKey, miyao))
+                        navigator.clipboard.writeText(secretKey)
                             .then(() => {
                                 Sku_tctx('key已复制到剪贴板');
                             })
@@ -5686,21 +5710,26 @@ async function key_huoqu(keyss) {
             }
 
             const content = await fetchFromHastebin(documentKey);
-
-            var daoru_szz = JSON.parse(WGS_zfc_jiami(content, miyao));
-            console.log(daoru_szz);
-            for (var i = 0; i < daoru_szz.length; i++) {
-                if (i == daoru_szz.length - 1) {
-                    if (isValidDateTime(daoru_szz[i])) { //判断是否是时间格式
-                        break;
+            if (if_key_dr == 0) { //不用于导入
+                var daoru_szz = JSON.parse(WGS_zfc_jiami(content, miyao));
+                for (var i = 0; i < daoru_szz.length; i++) {
+                    if (i == daoru_szz.length - 1) {
+                        if (isValidDateTime(daoru_szz[i])) { //判断是否是时间格式
+                            break;
+                        }
                     }
+                    localStorage.setItem(daochu_daoru_max[i], daoru_szz[i]);
                 }
-                daochu_daoru_max2 = daochu_daoru_max.filter(item => item !== 'yun_key');
-                localStorage.setItem(daochu_daoru_max2[i], daoru_szz[i]);
+                localStorage.dr_mmdr_drsj = 0;
+                bdzdtj_true = 0; // 禁止刷新时自动导入
+                location.reload();
+            } else if (if_key_dr == 1) { //用于导入
+                var daoru_ym_sc = document.querySelector('.daoru_ym_sc');
+                daoru_ym_sc.value = content;
+                daoru_ym_sc_tjzs();
+                if_key_dr = 0;
+                key_zzhq = 0;
             }
-            localStorage.dr_mmdr_drsj = 0;
-            bdzdtj_true = 0; // 禁止刷新时自动导入
-            location.reload();
         } catch (error) {
             console.error('获取失败：', error);
             key_zzhq = 0;

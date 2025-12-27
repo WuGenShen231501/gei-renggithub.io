@@ -1,4 +1,4 @@
-var ban_ben_s = "2723931";
+var ban_ben_s = "2725444";
 
 function formatNumberString(input) {
     if (isAlreadyFormatted(input)) { return input; }

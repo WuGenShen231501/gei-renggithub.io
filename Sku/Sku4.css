@@ -1805,8 +1805,8 @@
         width: 20px;
         height: 20px;
         border: 1px solid var(--zi_ti_color);
-        left: 442px;
-        bottom: 20px;
+        left: 270px;
+        top: 130px;
         border-radius: 5px;
         line-height: 18px;
         text-align: center;
@@ -1815,8 +1815,8 @@
     
     .jm_daoru_zd_tishi {
         position: absolute;
-        left: 465px;
-        bottom: 20px;
+        left: 293px;
+        top: 131px;
         opacity: 0.5;
     }
     
