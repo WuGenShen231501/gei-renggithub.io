@@ -1432,6 +1432,8 @@ drym_dr.addEventListener('click', function() {
 
         // 热点搜索
         mrrd_sx();
+        // 云导入
+        daoru_yun_click();
     } else {
         if (imput_drym_mm.value !== '') {
             localStorage.drym_cs++; //错误次数
@@ -5416,8 +5418,19 @@ const API_BASE_URL = 'https://hastebin.com'; // API 基础 URL
 // 上传按钮点击事件
 var daoru_ym_yun = document.querySelector('.daoru_ym_yun');
 var sku_wlzt = document.querySelector('.sku_wlzt');
+var sddr_key = 0; //手动导入云服务器
+var sddr_key_zdcs = 0; //自动上传的
+if (localStorage.yuncc_bijiao == undefined) {
+    localStorage.yuncc_bijiao = '[]';
+}
 daoru_ym_yun.addEventListener('click', async() => {
+    localStorage.zddryun_drsj = +new Date();
     if (daoru_ym_yun.innerHTML == '导入云服务' && sku_wlzt.innerHTML == 'Status:Online') {
+        if (shezhi_daoru_ym.style.display == 'block' && nrmaxs3.style.display == 'block') { //手动导入云服务器
+            sddr_key = 1;
+        } else {
+            sddr_key = 0;
+        }
         daoru_ym_yun.innerHTML = '导入中...';
         var yun_daochu = [];
         for (var i = 0; i < daochu_daoru_max.length; i++) {
@@ -5438,6 +5451,17 @@ daoru_ym_yun.addEventListener('click', async() => {
         yun_daochu[daochu_daoru_max.length] = getFormattedTime();
 
         const content = WGS_zfc_jiami(JSON.stringify(yun_daochu), miyao); //加密内容
+
+        if (sddr_key_zdcs == 1) { //自动上传吗
+            sddr_key_zdcs = 0;
+            var yuncc_bijiao_sz = JSON.parse(localStorage.yuncc_bijiao);
+            var yun_keys = JSON.parse(localStorage.yun_key);
+            if (content.length == yuncc_bijiao_sz[1].length && JSON.stringify(yun_keys) == JSON.stringify(yuncc_bijiao_sz[0])) {
+                console.log('导入失败！内容与上次相同！'); //弹窗提醒
+                daoru_ym_yun.innerHTML = '导入云服务';
+                return; //如果内容相同，不导入
+            }
+        }
 
         if (!content.trim()) { //如果内容为空
             Sku_tctx('导入失败！ 导入内容为空！'); //弹窗提醒
@@ -5496,31 +5520,31 @@ daoru_ym_yun.addEventListener('click', async() => {
             const keyList = await uploadToHastebin(API_KEY, content);
 
             // 自动复制到剪贴板
-            try {
-                await navigator.clipboard.writeText(keyList); //复制到剪贴板
-                Sku_tctx('上传成功！文档 Keys：' + keyList + '（已自动复制到剪贴板）');
-                console.log('上传成功！文档 Keys：' + keyList + '（已自动复制到剪贴板）');
-                daoru_ym_yun.innerHTML = '导入云服务';
-                // 保存到 localStorage
-                var yun_keys = JSON.parse(localStorage.yun_key);
-                const keyList_jm = WGS_zfc_jiami(keyList, miyao);
-                const tjnr = [keyList_jm, getFormattedTime(), content.length];
-                yun_keys.unshift(tjnr); //追加
-                localStorage.yun_key = JSON.stringify(yun_keys);
+            if (sddr_key == 1) { //页面打开是手动上传
+                try {
+                    await navigator.clipboard.writeText(keyList); //复制到剪贴板
+                    Sku_tctx('上传成功！文档 Keys：' + keyList + '（已自动复制到剪贴板）');
+                    console.log('上传成功！文档 Keys：' + keyList + '（已自动复制到剪贴板）');
+                } catch (clipboardError) {
+                    Sku_tctx('上传成功！文档 Keys：' + keyList + '（复制到剪贴板失败）');
+                    console.log('上传成功！文档 Keys：' + keyList + '（复制到剪贴板失败）');
+                }
                 Sku_tsy(2); //播放提示音
-            } catch (clipboardError) {
-                Sku_tctx('上传成功！文档 Keys：' + keyList + '（复制到剪贴板失败）');
-                console.log('上传成功！文档 Keys：' + keyList + '（复制到剪贴板失败）');
-                daoru_ym_yun.innerHTML = '导入云服务';
-                // 保存到 localStorage
-                var yun_keys = JSON.parse(localStorage.yun_key);
-                const keyList_jm = WGS_zfc_jiami(keyList, miyao);
-                const tjnr = [keyList_jm, getFormattedTime(), content.length];
-                yun_keys.unshift(tjnr); //追加
-                localStorage.yun_key = JSON.stringify(yun_keys);
-                Sku_tsy(2); //播放提示音
-                bendidaxiao_jc(); //计算当前内容长度
             }
+            daoru_ym_yun.innerHTML = '导入云服务';
+
+            // 保存到 localStorage
+            var yun_keys = JSON.parse(localStorage.yun_key);
+            const keyList_jm = WGS_zfc_jiami(keyList, miyao);
+            const tjnr = [keyList_jm, getFormattedTime(), content.length];
+            yun_keys.unshift(tjnr); //追加
+            localStorage.yun_key = JSON.stringify(yun_keys);
+
+            var yun_keys_bl = JSON.parse(localStorage.yun_key);
+            var yuncc_bijiao_sz = JSON.parse(localStorage.yuncc_bijiao);
+            yuncc_bijiao_sz[0] = yun_keys;
+            yuncc_bijiao_sz[1] = content;
+            localStorage.yuncc_bijiao = JSON.stringify(yuncc_bijiao_sz);
 
         } catch (error) {
             console.error('上传失败：', error);
@@ -5529,6 +5553,7 @@ daoru_ym_yun.addEventListener('click', async() => {
         }
 
     } else {
+        sddr_key_zdcs = 0;
         if (sku_wlzt.innerHTML == 'Status:Offline') {
             Sku_tctx('导入失败！ 请连接网络！'); //弹窗提醒
         } else if (daoru_ym_yun.innerHTML == '导入中...') {
@@ -5608,7 +5633,7 @@ daoru_ym_yun_click.addEventListener('click', function() {
                             yun_keys.splice(index, 1); //删除数组中的元素
                             localStorage.yun_key = JSON.stringify(yun_keys); //更新本地存储
                             Sku_tctx('删除成功！');
-                            dj_dx.parentNode.remove(); //删除dom元素
+                            dj_dx.parentNode.parentNode.removeChild(dj_dx.parentNode); //删除dom元素
                         }
                     } else {
                         console.log('未找到匹配的数据:', dx_shijian);
@@ -5744,6 +5769,89 @@ daoru_ym_yun_key.addEventListener('click', function(e) {
     window.open('https://www.toptal.com/developers/hastebin/documentation');
 });
 
+//自动导入云服务器
+if (localStorage.zddryun_drsj == undefined) {
+    localStorage.zddryun_drsj = +new Date();
+}
+var daoruyun_zd_timer = undefined;
+if (localStorage.zddryun == undefined) { //默认不自动导入
+    localStorage.zddryun = '0';
+}
+var daoruyun_zd_kaiguan = document.querySelector('.daoruyun_zd_kaiguan');
+if (localStorage.zddryun == '1') {
+    daoruyun_zd_kaiguan.innerHTML = '✔';
+} else if (localStorage.zddryun == '0') {
+    daoruyun_zd_kaiguan.innerHTML = '';
+}
+daoruyun_zd_kaiguan.addEventListener('click', function(e) {
+    if (localStorage.zddryun == '1') {
+        localStorage.zddryun = '0';
+        daoruyun_zd_kaiguan.innerHTML = '';
+        if (daoruyun_zd_timer) {
+            clearInterval(daoruyun_zd_timer); //清除定时器
+        }
+    } else if (localStorage.zddryun == '0') {
+        localStorage.zddryun = '1';
+        daoruyun_zd_kaiguan.innerHTML = '✔';
+        //创建定时器
+        daoruyun_zd_timer = setInterval(function() {
+            daoru_yun_click();
+        }, localStorage.zddryun_fz * 60 * 1000);
+    }
+});
+if (localStorage.zddryun_fz == undefined) { //每隔分钟
+    localStorage.zddryun_fz = '60';
+}
+var daoruyun_zd_fz = document.querySelector('.daoruyun_zd_fz');
+daoruyun_zd_fz.value = localStorage.zddryun_fz;
+daoruyun_zd_fz.addEventListener('blur', function(e) {
+    if (daoruyun_zd_fz.value >= 1 && daoruyun_zd_fz.value <= (60 * 24 * 10)) {
+        localStorage.zddryun_fz = daoruyun_zd_fz.value;
+        //创建定时器
+        if (localStorage.zddryun == '1') {
+            if (daoruyun_zd_timer) {
+                clearInterval(daoruyun_zd_timer); //清除定时器
+            }
+            daoruyun_zd_timer = setInterval(function() {
+                daoru_yun_click();
+            }, localStorage.zddryun_fz * 60 * 1000);
+        }
+    } else if (daoruyun_zd_fz.value < 1) {
+        Sku_tctx('时间不能小于 1 分钟');
+        daoruyun_zd_fz.value = localStorage.zddryun_fz;
+    } else if (daoruyun_zd_fz.value > (60 * 24 * 10)) {
+        Sku_tctx('时间不能大于 10 天');
+        daoruyun_zd_fz.value = localStorage.zddryun_fz;
+    }
+});
+
+//创建定时器
+if (localStorage.zddryun == '1') {
+    daoruyun_zd_timer = setInterval(function() {
+        daoru_yun_click();
+    }, localStorage.zddryun_fz * 60 * 1000);
+}
+//开机自动导入云服务器
+document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.zddryun == '1') {
+        daoru_yun_click();
+    };
+});
+// 返回时自动导入云服务器
+document.addEventListener('visibilitychange', function() { //可见时启动搜索热点
+    if (document.visibilityState === 'visible') { //可见时启动搜索热点
+        daoru_yun_click();
+    }
+});
+// 定义云导入点击函数
+function daoru_yun_click() {
+    if (drym_max.style.display == 'none' && document.visibilityState === 'visible' && localStorage.zddryun == '1' && (((+new Date()) - localStorage.zddryun_drsj) >= localStorage.zddryun_fz * 60 * 1000)) {
+        sddr_key_zdcs = 1;
+        daoru_ym_yun.click();
+    } else {
+        console.log('没那么快自动导入，等待 ' + ((localStorage.zddryun_fz * 60 * 1000 - (+new Date() - localStorage.zddryun_drsj)) / 1000).toFixed(2) + ' 秒后再试');
+    }
+};
 
 
 
@@ -5762,12 +5870,17 @@ document.addEventListener('keyup', function(e) {
 var sd_dtnr_max = document.querySelector('.sd_dtnr_max');
 document.addEventListener('keydown', function(e) {
     if (e.ctrlKey && e.key == 's') {
-        e.preventDefault();
+        e.preventDefault(); //阻止默认事件
         daoru_ym_bendi.click();
     }
     if (e.ctrlKey && e.key == 'S') {
         e.preventDefault();
         daoru_ym_jmdc.click();
+    }
+    if (e.altKey && e.key == 's') {
+        e.preventDefault();
+        daoru_ym_yun.click();
+        Sku_tctx('已发送云服务器');
     }
     if (e.shiftKey && Sku_benghuai_jsq_t == 1) {
         // 关闭闪退

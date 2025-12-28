@@ -1820,7 +1820,12 @@
         opacity: 0.5;
     }
     
+    .daoruyun_zd_kaiguan:hover,
     .jm_daoru_zd_kaiguan:hover {
+        opacity: 1;
+    }
+    
+    .daoruyun_zd_kaiguan:hover~.daoruyun_zd_tishi {
         opacity: 1;
     }
     
@@ -1828,11 +1833,8 @@
         opacity: 1;
     }
     
+    .daoruyun_zd_tishi:hover,
     .jm_daoru_zd_tishi:hover {
-        opacity: 1;
-    }
-    
-    .jm_daoru_zd_tishi:hover~.daoru_zd_kaiguan {
         opacity: 1;
     }
     
@@ -1922,4 +1924,35 @@
     .daoruyun_s_cs {
         background-color: var(--zi_ti_color_20);
         border-color: var(--zi_ti_color);
+    }
+    
+    .daoruyun_zd_tishi {
+        position: absolute;
+        left: 465px;
+        bottom: 120px;
+        opacity: 0.5;
+    }
+    
+    .daoruyun_zd_kaiguan {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--zi_ti_color);
+        left: 442px;
+        bottom: 120px;
+        border-radius: 5px;
+        line-height: 18px;
+        text-align: center;
+        opacity: 0.5;
+    }
+    
+    .daoruyun_zd_fz {
+        text-align: center;
+        width: 30px;
+        height: 20px;
+        border: 0;
+        border-bottom: 1px solid var(--zi_ti_color);
+        color: var(--zi_ti_color);
+        background-color: rgb(0, 0, 0, 0);
+        outline: none;
     }

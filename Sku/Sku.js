@@ -969,11 +969,11 @@ function sku_gjsp() {
 
 var zdsp_sjc = 0;
 setInterval(function() {
-    zdsp_sjc++;
-    if (zdsp_sjc == (localStorage.sku_xp_sp * 60)) {
+    zdsp_sjc += 60;
+    if (zdsp_sjc >= (localStorage.sku_xp_sp * 60)) {
         sku_gjsp();
     }
-}, 1000);
+}, 60000);
 
 function handleMouseMove() {
     zdsp_sjc = 0;
