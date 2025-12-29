@@ -543,7 +543,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'GLM-Zero-Preview' || mod_s == 'GLM-4-FlashX' || mod_s == 'glm-4-plus' || mod_s == 'GLM-4-Flash' || mod_s == 'glm-4-air') { //智谱AI开放平台(对话)
+    } else if (mod_s == 'GLM-Zero-Preview' || mod_s == 'GLM-4-Flash-250414' || mod_s == 'glm-4-plus' || mod_s == 'GLM-4-Flash' || mod_s == 'glm-4-air') { //智谱AI开放平台(对话)
 
         try {
             // 替换 <你的apikey> 为您的实际 API Key

@@ -5540,7 +5540,6 @@ daoru_ym_yun.addEventListener('click', async() => {
             yun_keys.unshift(tjnr); //追加
             localStorage.yun_key = JSON.stringify(yun_keys);
 
-            var yun_keys_bl = JSON.parse(localStorage.yun_key);
             var yuncc_bijiao_sz = JSON.parse(localStorage.yuncc_bijiao);
             yuncc_bijiao_sz[0] = yun_keys;
             yuncc_bijiao_sz[1] = content;
@@ -5613,7 +5612,7 @@ daoru_ym_yun_click.addEventListener('click', function() {
                         console.log('未找到匹配的key:', dx_shijian);
                         Sku_tctx('未找到匹配的key！');
                     }
-                } else if (dj_dx.classList.contains('daoruyun_s_yy')) {
+                } else if (dj_dx.classList.contains('daoruyun_s_yy')) { //应用
                     const yun_keys = JSON.parse(localStorage.yun_key);
                     const dx_shijian = dj_dx.parentNode.querySelector('.daoruyun_s_sj').innerText.substring(5, 24);
                     const matchedItem = yun_keys.find(item => item[1] === dx_shijian);
@@ -5735,7 +5734,7 @@ async function key_huoqu(keyss) {
             }
 
             const content = await fetchFromHastebin(documentKey);
-            if (if_key_dr == 0) { //不用于导入
+            if (if_key_dr == 0) { //用于应用
                 var daoru_szz = JSON.parse(WGS_zfc_jiami(content, miyao));
                 for (var i = 0; i < daoru_szz.length; i++) {
                     if (i == daoru_szz.length - 1) {
@@ -5747,6 +5746,9 @@ async function key_huoqu(keyss) {
                 }
                 localStorage.dr_mmdr_drsj = 0;
                 bdzdtj_true = 0; // 禁止刷新时自动导入
+                var yuncc_bijiao_sz = JSON.parse(localStorage.yuncc_bijiao); //临时记录内容
+                yuncc_bijiao_sz[1] = content;
+                localStorage.yuncc_bijiao = JSON.stringify(yuncc_bijiao_sz);
                 location.reload();
             } else if (if_key_dr == 1) { //用于导入
                 var daoru_ym_sc = document.querySelector('.daoru_ym_sc');
@@ -5839,7 +5841,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // 返回时自动导入云服务器
 document.addEventListener('visibilitychange', function() { //可见时启动搜索热点
-    if (document.visibilityState === 'visible') { //可见时启动搜索热点
+    if (document.visibilityState === 'visible' && localStorage.zddryun == '1') { //可见时启动搜索热点
         daoru_yun_click();
     }
 });
