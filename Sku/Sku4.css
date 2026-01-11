@@ -419,14 +419,14 @@
     }
     
     .bfsz_xzcd {
-        float: right;
+        float: left;
         width: 100px;
         height: 50px;
         border-radius: 5px;
         line-height: 48px;
         text-align: center;
         border: 1px solid white;
-        margin: 50px;
+        margin: 50px 0px;
         transition: 0.2s;
     }
     
@@ -1955,4 +1955,44 @@
         color: var(--zi_ti_color);
         background-color: rgb(0, 0, 0, 0);
         outline: none;
+    }
+    
+    .bfsz_wyID_tx {
+        float: left;
+        margin: 50px 0px 0px 50px;
+    }
+    
+    .bfsz_wyID {
+        float: left;
+        margin: 50px 0px 0 0;
+        width: 550px;
+        height: 20px;
+        border: 0;
+        border-bottom: 1px solid var(--zi_ti_color);
+        color: var(--zi_ti_color);
+        background-color: rgb(0, 0, 0, 0);
+        outline: none;
+    }
+    
+    .bfsz_bz {
+        float: left;
+        margin: 0px 50px 0 50px;
+    }
+    
+    .bfsz_xzcd_yy {
+        display: none;
+        float: left;
+        width: 265px;
+        height: 50px;
+        border-radius: 5px;
+        line-height: 48px;
+        text-align: center;
+        border: 1px solid var(--zi_ti_color);
+        background-color: var(--zi_ti_color_20);
+        margin: 50px 0px 0px 50px;
+        transition: 0.2s;
+    }
+    
+    .bfsz_xzcd_yy:hover {
+        transform: scale(1.1);
     }

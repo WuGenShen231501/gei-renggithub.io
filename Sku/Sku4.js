@@ -5775,6 +5775,250 @@ shezhi_bfsz.addEventListener('click', function() {
     shezhi_min.style.display = 'none';
     shezhi_bfsz_ym.style.display = 'block';
 });
+// 创建内存
+if (localStorage.yun_bf_ID == undefined) {
+    localStorage.yun_bf_ID = '';
+}
+//开机自动输入ID
+var bfsz_wyID = document.querySelector('.bfsz_wyID');
+bfsz_wyID.value = localStorage.yun_bf_ID;
+//当输入框失去焦点时，将ID保存到内存
+bfsz_wyID.addEventListener('blur', function(e) {
+    localStorage.yun_bf_ID = bfsz_wyID.value;
+});
+//备份点击事件
+var bfsz_sccd = document.querySelector('.bfsz_sccd');
+bfsz_sccd.addEventListener('click', async() => {
+    if (localStorage.yun_bf_ID == '') {
+        Sku_tctx('请输入ID');
+    } else if (bfsz_sccd.innerHTML == '备份中...') {
+        Sku_tctx('请稍后，备份中...');
+    } else {
+        bfsz_sccd.innerHTML = '备份中...';
+        const API_KEY = 'd09e960212a26a82c045e56106ad585920dc2d9d6c455ef72eb68451d87fca4e4417f5a29772642e5bd5f76a8ccb279402af77eac19f5af71e4f9d64403a01db';
+        const API_BASE_URL = 'https://hastebin.com';
+        var yun_daochu = [];
+        for (var i = 0; i < daochu_daoru_max.length; i++) {
+            yun_daochu[i] = localStorage.getItem(daochu_daoru_max[i]);
+        }
+        //上传时间
+        function getFormattedTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1 < 10 ? `0${now.getMonth() + 1}` : now.getMonth() + 1;
+            const date = now.getDate() < 10 ? `0${now.getDate()}` : now.getDate();
+            const hour = now.getHours() < 10 ? `0${now.getHours()}` : now.getHours();
+            const minute = now.getMinutes() < 10 ? `0${now.getMinutes()}` : now.getMinutes();
+            const second = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
+            return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
+        }
+        // 打包时间
+        yun_daochu[daochu_daoru_max.length] = getFormattedTime();
+        const content = WGS_zfc_jiami(JSON.stringify(yun_daochu), miyao); //加密内容
+
+        if (!content.trim()) {
+            Sku_tctx('整理内容出错！请联系管理员！');
+            bfsz_sccd.innerHTML = '备份';
+            return;
+        }
+
+        try {
+            // 上传单部分内容到 Hastebin
+            async function uploadSinglePart(key, content) {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/documents`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${key}`,
+                            'Content-Type': 'text/plain'
+                        },
+                        body: content
+                    });
+                    if (!response.ok) {
+                        Sku_tctx('Hastebin上传内容出错！请联系管理员！');
+                        bfsz_sccd.innerHTML = '备份';
+                        throw new Error(`上传失败：${response.status} ${response.statusText}`);
+                    }
+                    const data = await response.json();
+                    return data.key;
+                } catch (error) {
+                    Sku_tctx('Hastebin上传内容出错！请联系管理员！');
+                    bfsz_sccd.innerHTML = '备份';
+                    throw error;
+                }
+            }
+            // 上传内容到 Hastebin，支持大文件分割
+            async function uploadToHastebin(key, content) {
+                const MAX_PART_SIZE = 150000;
+                if (content.length <= MAX_PART_SIZE) {
+                    const singleKey = await uploadSinglePart(key, content);
+                    return singleKey;
+                }
+                const parts = [];
+                for (let i = 0; i < content.length; i += MAX_PART_SIZE) {
+                    parts.push(content.slice(i, i + MAX_PART_SIZE));
+                }
+                console.log(`内容长度 ${content.length}，将分割为 ${parts.length} 部分上传`);
+                // 并行上传所有部分
+                const uploadPromises = parts.map(part => uploadSinglePart(key, part));
+                const keys = await Promise.all(uploadPromises);
+
+                // 返回逗号分隔的 key 列表
+                return keys.join(',');
+            }
+            const keyList = await uploadToHastebin(API_KEY, content);
+            const keys = keyList.split(',');
+            if (keys.length > 1) {
+                console.log(`上传成功！共 ${keys.length} 个部分，文档 Keys：`, keyList, '（已自动复制到剪贴板）');
+            } else {
+                console.log('上传成功！文档 Key：', keyList, '（已自动复制到剪贴板）');
+            }
+
+            //上传TextDB 工具
+            const userKey = localStorage.yun_bf_ID;
+            const content2 = keyList;
+            const fullKey = 'Sku_yonhuID' + userKey;
+            const url = `https://textdb.online/update/?key=${encodeURIComponent(fullKey)}&value=${encodeURIComponent(content2)}`;
+            console.log(url);
+            fetch(url, {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    Sku_tctx('上传成功！');
+                    Sku_tsy(2); //播放提示音
+                    bfsz_sccd.innerHTML = '备份';
+                })
+                .catch(error => {
+                    Sku_tctx('TextDB上传内容出错！请联系管理员！');
+                    bfsz_sccd.innerHTML = '备份';
+                });
+
+        } catch (error) {
+            Sku_tctx('TextDB上传内容出错！请联系管理员！');
+            bfsz_sccd.innerHTML = '备份';
+        }
+    }
+});
+//下载备份点击事件
+var bfsz_xzcd = document.querySelector('.bfsz_xzcd');
+bfsz_xzcd.addEventListener('click', async() => {
+    if (localStorage.yun_bf_ID == '') {
+        Sku_tctx('请输入ID');
+    } else if (bfsz_xzcd.innerHTML == '下载中...') {
+        Sku_tctx('请稍后，下载中...');
+    } else {
+        bfsz_xzcd.innerHTML = '下载中...';
+        //先从 TextDB 工具获取备份内容
+        const userKey = localStorage.yun_bf_ID;
+        const fullKey = 'Sku_yonhuID' + userKey;
+        const url = `https://textdb.online/${encodeURIComponent(fullKey)}`;
+        console.log(url);
+        fetch(url)
+            .then(response => response.text())
+            .then(data => {
+                console.log('TextDB获取到的内容：', data);
+                if (data == '') {
+                    Sku_tctx('此ID从TextDB获取内容为空！');
+                    Sku_tsy(2); //播放提示音
+                    bfsz_xzcd.innerHTML = '下载备份';
+                } else {
+                    Hastebin_hq(data);
+                }
+            })
+            .catch(error => {
+                Sku_tctx('TextDB下载内容出错！请联系管理员！');
+                bfsz_xzcd.innerHTML = '下载备份';
+            });
+
+        //将TextDB获取到的内容赋值给Hastebin
+        async function Hastebin_hq(asd) {
+            const documentKey = asd;
+            try {
+                // 从 Hastebin 获取单部分内容
+                async function fetchSinglePart(singleKey) {
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/raw/${singleKey}`, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${API_KEY}`
+                            }
+                        });
+                        if (!response.ok) {
+                            Sku_tctx('Hastebin下载内容出错！请联系管理员！');
+                            bfsz_xzcd.innerHTML = '下载备份';
+                            throw new Error(`获取失败：${response.status} ${response.statusText}`);
+                        }
+                        const content = await response.text();
+                        return content;
+                    } catch (error) {
+                        Sku_tctx('Hastebin下载内容出错！请联系管理员！');
+                        bfsz_xzcd.innerHTML = '下载备份';
+                        throw error;
+                    }
+                }
+                // 从 Hastebin 获取内容
+                async function fetchFromHastebin(keyList) {
+                    const keys = keyList.split(',').map(key => key.trim()).filter(key => key);
+                    // 如果只有一个 key，直接获取
+                    if (keys.length === 1) {
+                        return fetchSinglePart(keys[0]);
+                    }
+                    console.log(`开始获取 ${keys.length} 个部分的内容...`);
+                    // 并行获取所有部分内容
+                    const fetchPromises = keys.map((key, index) =>
+                        fetchSinglePart(key).then(content => ({
+                            index,
+                            content
+                        }))
+                    );
+                    // 等待所有获取完成
+                    const results = await Promise.all(fetchPromises);
+                    // 按原始顺序排序并合并内容
+                    results.sort((a, b) => a.index - b.index);
+                    const mergedContent = results.map(result => result.content).join('');
+                    console.log(`获取完成！共 ${keys.length} 个部分，合并后内容长度：${mergedContent.length}`);
+                    return mergedContent;
+                }
+                const content = await fetchFromHastebin(documentKey);
+                bfsz_xzcd.innerHTML = '下载备份';
+                if (content == '') {
+                    Sku_tctx('此ID从Hastebin获取内容为空！');
+                    bfsz_xzcd_yy.style.display = 'none';
+                } else {
+                    Sku_tctx('下载完成！');
+                    bfsz_xzcd_yy.style.display = 'block';
+                    bfsz_xzcd_yy_zhi = content;
+                    const daoru_szz2 = JSON.parse(WGS_zfc_jiami(bfsz_xzcd_yy_zhi, miyao));
+                    const sj = daoru_szz2[daoru_szz2.length - 1];
+                    bfsz_xzcd_yy.innerHTML = '应用备份 ' + sj;
+                }
+                Sku_tsy(2); //播放提示音
+            } catch (error) {
+                Sku_tctx('Hastebin下载内容出错！请联系管理员！');
+                bfsz_xzcd.innerHTML = '下载备份';
+            }
+        }
+    }
+});
+//应用备份
+var bfsz_xzcd_yy_zhi = '';
+var bfsz_xzcd_yy = document.querySelector('.bfsz_xzcd_yy');
+bfsz_xzcd_yy.addEventListener('click', function(e) {
+    var daoru_szz = JSON.parse(WGS_zfc_jiami(bfsz_xzcd_yy_zhi, miyao));
+    for (var i = 0; i < daoru_szz.length; i++) {
+        if (i == daoru_szz.length - 1) {
+            if (isValidDateTime(daoru_szz[i])) { //判断是否是时间格式
+                break;
+            }
+        }
+        localStorage.setItem(daochu_daoru_max[i], daoru_szz[i]);
+    }
+    localStorage.dr_mmdr_drsj = 0;
+    bdzdtj_true = 0; // 禁止刷新时自动导入
+    location.reload();
+});
+
 
 
 
