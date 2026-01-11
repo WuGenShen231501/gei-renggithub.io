@@ -1181,99 +1181,6 @@ cdcsh_click.addEventListener('click', function(e) {
 
 
 
-//备份
-// 上传存档
-shezhi_bfsz_ym = document.querySelector('.shezhi_bfsz_ym');
-shezhi_bfsz = document.querySelector('.shezhi_bfsz');
-shezhi_bfsz.addEventListener('click', function() {
-    shezhi_min.style.display = 'none';
-    shezhi_bfsz_ym.style.display = 'block';
-});
-bfsz_sccd = document.querySelector('.bfsz_sccd');
-bfsz_sccd.addEventListener('click', function() {
-    if (bfsz_sccd.innerHTML == '备份') {
-        bfsz_sccd.innerHTML = '上传成功';
-        bfsz_xzcd.style.display = 'block';
-        setTimeout(function() {
-            bfsz_sccd.innerHTML = '备份';
-        }, 5000);
-        localStorage.dhr_sz_bf = localStorage.dhr_sz;
-        localStorage.dhr_ym_dx_bf = localStorage.dhr_ym_dx;
-        localStorage.bi_zhi_s_bf = localStorage.bi_zhi_s;
-        localStorage.liu_yan_dx_bf = localStorage.liu_yan_dx;
-        localStorage.sy_djs_bf = localStorage.sy_djs;
-        localStorage.sy_zpzs_lj_bf = localStorage.sy_zpzs_lj;
-        localStorage.sy_zpzs_mz_bf = localStorage.sy_zpzs_mz;
-        localStorage.music_cd_bf = localStorage.music_cd;
-        localStorage.lsjl_bf = localStorage.lsjl;
-        localStorage.htsp_s_bf = localStorage.htsp_s;
-        localStorage.sku_zcb_bf = localStorage.sku_zcb;
-        localStorage.ztfg_name_bf = localStorage.ztfg_name;
-        localStorage.ztfg_bf = localStorage.ztfg;
-        localStorage.AI_jl_bf = localStorage.AI_jl;
-        localStorage.AI_kjzl_bf = localStorage.AI_kjzl;
-        localStorage.ke_biao_bf = localStorage.ke_biao;
-        localStorage.ke_biao_zhou_bf = localStorage.ke_biao_zhou;
-        localStorage.da_ka_bf = localStorage.da_ka;
-    } else if (bfsz_sccd.innerHTML == '上传成功') {
-        Sku_tctx('🛈 短时间内禁止重复上传');
-    }
-});
-// 下载存档
-bfsz_xzcd = document.querySelector('.bfsz_xzcd');
-if (localStorage.dhr_sz_bf == '' && localStorage.dhr_ym_dx_bf == '' && localStorage.bi_zhi_s_bf == '' && localStorage.liu_yan_dx_bf == '' && localStorage.sy_djs_bf == '') {
-    bfsz_xzcd.style.display = 'none';
-} else {
-    bfsz_xzcd.style.display = 'block';
-}
-bfsz_xzcd.addEventListener('click', function() {
-    localStorage.dhr_sz = localStorage.dhr_sz_bf;
-    localStorage.dhr_ym_dx = localStorage.dhr_ym_dx_bf;
-    localStorage.bi_zhi_s = localStorage.bi_zhi_s_bf;
-    localStorage.liu_yan_dx = localStorage.liu_yan_dx_bf;
-    localStorage.sy_djs = localStorage.sy_djs_bf;
-    localStorage.sy_zpzs_lj = localStorage.sy_zpzs_lj_bf;
-    localStorage.sy_zpzs_mz = localStorage.sy_zpzs_mz_bf;
-    localStorage.music_cd = localStorage.music_cd_bf;
-    localStorage.lsjl = localStorage.lsjl_bf;
-    localStorage.htsp_s = localStorage.htsp_s_bf;
-    localStorage.sku_zcb = localStorage.sku_zcb_bf;
-    localStorage.ztfg_name = localStorage.ztfg_name_bf;
-    localStorage.ztfg = localStorage.ztfg_bf;
-    localStorage.AI_jl = localStorage.AI_jl_bf;
-    localStorage.AI_kjzl = localStorage.AI_kjzl_bf;
-    localStorage.ke_biao = localStorage.ke_biao_bf;
-    localStorage.ke_biao_zhou = localStorage.ke_biao_zhou_bf;
-    localStorage.da_ka = localStorage.da_ka_bf;
-
-    localStorage.dr_mmdr_drsj = 0;
-    bdzdtj_true = 0; // 禁止刷新时自动导入
-    location.reload();
-});
-//自动上传
-bfsz_zdbf_qrk = document.querySelector('.bfsz_zdbf_qrk');
-if (localStorage.zdbf == '1') {
-    bfsz_zdbf_qrk.innerHTML = '✔';
-} else if (localStorage.zdbf == '0') {
-    bfsz_zdbf_qrk.innerHTML = '';
-}
-bfsz_zdbf_qrk.addEventListener('click', function(e) {
-    if (localStorage.zdbf == '1') {
-        localStorage.zdbf = '0';
-        bfsz_zdbf_qrk.innerHTML = '';
-    } else if (localStorage.zdbf == '0') {
-        localStorage.zdbf = '1';
-        bfsz_zdbf_qrk.innerHTML = '✔';
-    }
-});
-window.addEventListener('beforeunload', function() {
-    if (localStorage.zdbf == '1') {
-        var bfsz_sccd = document.querySelector('.bfsz_sccd');
-        bfsz_sccd.click();
-    }
-});
-
-
 
 
 
@@ -5854,6 +5761,20 @@ function daoru_yun_click() {
         console.log('没那么快自动导入，等待 ' + ((localStorage.zddryun_fz * 60 * 1000 - (+new Date() - localStorage.zddryun_drsj)) / 1000).toFixed(2) + ' 秒后再试');
     }
 };
+
+
+
+
+
+
+//云备份
+// 打开页面
+shezhi_bfsz_ym = document.querySelector('.shezhi_bfsz_ym');
+shezhi_bfsz = document.querySelector('.shezhi_bfsz');
+shezhi_bfsz.addEventListener('click', function() {
+    shezhi_min.style.display = 'none';
+    shezhi_bfsz_ym.style.display = 'block';
+});
 
 
 

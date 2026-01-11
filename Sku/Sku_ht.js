@@ -1,4 +1,4 @@
-var ban_ben_s = "2731335";
+var ban_ben_s = "20260110";
 
 function formatNumberString(input) {
     if (isAlreadyFormatted(input)) { return input; }
@@ -144,10 +144,6 @@ if (localStorage.bei_jing_kuan_tmd == undefined) {
 //毛玻璃
 if (localStorage.mao_bo_li == undefined) {
     localStorage.mao_bo_li = '0';
-}
-//自动备份
-if (localStorage.zdbf == undefined) {
-    localStorage.zdbf = '0';
 }
 //备份
 if (localStorage.dhr_sz_bf == undefined) {
@@ -359,6 +355,10 @@ if (localStorage.da_ka == undefined) {
 //云服务器key
 if (localStorage.yun_key == undefined) {
     localStorage.yun_key = '[]';
+}
+//在线模式
+if (localStorage.Sku_zxms == undefined) {
+    localStorage.Sku_zxms = 'false';
 }
 
 
