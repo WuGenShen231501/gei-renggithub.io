@@ -1,3 +1,14 @@
+// 提示音
+var sku_tsy = document.querySelectorAll('.sku_tsy');
+
+function Sku_tsy(num) {
+    sku_tsy[num].play();
+}
+
+
+
+
+
 function WGS_wenbengundon9(qwe) {
     // 获取目标元素
     var wb = document.querySelectorAll(qwe);
@@ -1834,6 +1845,52 @@ lian_jie_ssym.addEventListener('mouseover', function(e) {
         lian_jie_ssym_s_gs = 0;
     }
 });
+
+
+
+
+
+//爬取链接内容
+var lj_xg_tj_paiqu = document.querySelector('.lj_xg_tj_paiqu');
+lj_xg_tj_paiqu.addEventListener('click', async function() {
+    if (lj_srk_wzid.value == '') { //判断是否输入网址
+        Sku_tctx('请输入网址');
+        return;
+    }
+    const url = lj_srk_wzid.value.trim(); //获取网址并去除空格
+    try {
+        // 调用封装的函数
+        const data = await fetchWebsiteInfo(url);
+        // 显示结果
+        lj_srk_zsm.value = data.title || '未找到标题'; //获取标题并显示
+        lj_srk_mc.value = data.title || '未找到标题'; //获取标题并显示
+        // document.getElementById('faviconImg').src = data.favicon || '';
+        lj_srk_tpid.value = data.favicon || '未找到图标'; //获取图标并显示
+        Sku_tctx('爬取成功');
+        Sku_tsy(2);
+    } catch (error) {
+        Sku_tctx('爬取失败，请检查网址是否正确或稍后重试');
+    }
+});
+async function fetchWebsiteInfo(url) {
+    if (!url) {
+        throw new Error('请输入网址');
+    }
+    try {
+        // 调用本地Node.js API
+        const apiUrl = `http://localhost/website-info?url=${encodeURIComponent(url)}`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        if (data.error) {
+            throw new Error(data.error);
+        }
+        return data;
+    } catch (error) {
+        console.error('爬取失败:', error);
+        throw error;
+    }
+}
+
 
 
 

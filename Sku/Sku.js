@@ -857,12 +857,14 @@ function Sku_nczyb() {
     // 放一个外来的：node服务器
     if (localStorage.Sku_node == 1 && sku_wlzt.innerHTML == 'Status:Online' && max_node_cs < 20) {
         var max_node = document.querySelector('.max_node');
+        var lj_xg_tj_paiqu = document.querySelector('.lj_xg_tj_paiqu');
         $(document).ready(function() {
             // 使用 $.get() 发起 GET 请求
             $.get("http://localhost", function(data, status) {
                 // data 是从服务器返回的数据
                 if (data == '欢迎使用!') {
                     max_node.innerText = 'node!';
+                    lj_xg_tj_paiqu.style.display = 'block';
                 }
             }).fail(function(jqXHR, textStatus, errorThrown) {
                 // 如果请求失败，打印错误信息

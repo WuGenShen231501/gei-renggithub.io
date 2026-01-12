@@ -506,6 +506,20 @@
     font-size: 20px;
 }
 
+.lj_xg_tj_paiqu {
+    position: absolute;
+    bottom: 25px;
+    right: -25px;
+    opacity: 0.3;
+    font-size: 20px;
+}
+
+.lj_xg_tj_paiqu:hover {
+    transition: 0.2s;
+    opacity: 1;
+    transform: scale(1.2);
+}
+
 .lj_xg_tj_bdtj:hover {
     transition: 0.2s;
     opacity: 1;
@@ -521,7 +535,20 @@
     font-size: 12px;
 }
 
+.lj_xg_tj_paiqu_wz {
+    display: none;
+    position: absolute;
+    left: 22px;
+    top: 2px;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
 .lj_xg_tj_bdtj:hover>.lj_xg_tj_bdtj_wz {
+    display: block;
+}
+
+.lj_xg_tj_paiqu:hover>.lj_xg_tj_paiqu_wz {
     display: block;
 }
 
