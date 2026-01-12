@@ -1450,7 +1450,7 @@ var jisuan_bendidx = 0;
 
 // 集成应用与导入导出加密导入导出本地导入应用等
 var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_jl', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd', 'zdjmdc', 'da_ka'];
-// 导航栏,导航栏页面,万能搜索引擎,头像,留言,所有壁纸,当前壁纸,天气,字体颜色,重字体颜色,背景颜色,背景透明度,背景确认框,背景框颜色,背景框透明度,毛玻璃,自动备份,使用次数,倒计时,密码,作品展示,音乐,搜索记录,轮播选择,HTSP,注册表,背景颜色,主题风格,ai,ai快捷指令,课表,总时长,自动导入本地,自动加密导出,打卡
+// 导航栏,导航栏页面,万能搜索引擎,头像,留言,所有壁纸,当前壁纸,天气,字体颜色,重字体颜色,背景颜色,背景透明度,背景确认框,背景框颜色,背景框透明度,毛玻璃,自动备份,使用次数,倒计时,密码,作品展示,音乐,搜索记录,HTSP,注册表,背景颜色,主题风格,ai,ai快捷指令,课表,总时长,自动导入本地,自动加密导出,打卡
 
 // 检查是否为时间
 function isValidDateTime(str) {
