@@ -1,13 +1,15 @@
 const path = require('path');
 const fs = require('fs');
 
-// 定义一个函数来获取当前时间，格式为YYYYMMDD
+// 定义一个函数来获取当前时间，格式为YYYYMMDDHHmm
 function getCurrentDate() {
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
-    return `${year}${month}${day}`;
+    const hour = String(now.getHours()).padStart(2, '0');
+    const minute = String(now.getMinutes()).padStart(2, '0');
+    return `${year}${month}${day}${hour}${minute}`;
 }
 
 // 文件路径
