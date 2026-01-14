@@ -1862,9 +1862,7 @@ lj_xg_tj_paiqu.addEventListener('click', async function() {
         // 调用封装的函数
         const data = await fetchWebsiteInfo(url);
         // 显示结果
-        lj_srk_zsm.value = data.title || '未找到标题'; //获取标题并显示
         lj_srk_mc.value = data.title || '未找到标题'; //获取标题并显示
-        // document.getElementById('faviconImg').src = data.favicon || '';
         lj_srk_tpid.value = data.favicon || '未找到图标'; //获取图标并显示
         Sku_tctx('爬取成功');
         Sku_tsy(2);

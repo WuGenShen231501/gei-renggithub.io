@@ -2267,10 +2267,15 @@ bijiao_kais.addEventListener('click', function(e) {
                 }
             }
             // 周程比较
+            var bijiao_dsj1 = bijiaonr1[33];
+            var bijiao_dsj2 = bijiaonr2[33];
+            if (bijiao_dsj1 !== bijiao_dsj2) {
+                bijiao_cj('周程', '修改周程 "' + bijiao_dsj1 + ' 改为 ' + bijiao_dsj2 + '"', bijiao_dsj1 + '\n\n改为\n\n' + bijiao_dsj2);
+            }
             var bijiao_dsj1 = bijiaonr1[34];
             var bijiao_dsj2 = bijiaonr2[34];
             if (bijiao_dsj1 !== bijiao_dsj2) {
-                bijiao_cj('周程', '修改周程 "' + bijiao_dsj1 + ' 改为 ' + bijiao_dsj2 + '"', bijiao_dsj1 + '\n\n改为\n\n' + bijiao_dsj2);
+                bijiao_cj('周程', '修改周数 "' + bijiao_dsj1 + ' 改为 ' + bijiao_dsj2 + '"', bijiao_dsj1 + '\n\n改为\n\n' + bijiao_dsj2);
             }
             // 作品比较
             var bijiao_zpzs1 = JSON.parse(bijiaonr1[20]);
@@ -2409,10 +2414,10 @@ bijiao_kais.addEventListener('click', function(e) {
                 }
             }
             // 主题比较
-            var bijiao_zt1 = JSON.parse(bijiaonr1[30]);
-            var bijiao_zt2 = JSON.parse(bijiaonr2[30]);
-            var bijiao_zt1_name = JSON.parse(bijiaonr1[31]);
-            var bijiao_zt2_name = JSON.parse(bijiaonr2[31]);
+            var bijiao_zt1 = JSON.parse(bijiaonr1[29]);
+            var bijiao_zt2 = JSON.parse(bijiaonr2[29]);
+            var bijiao_zt1_name = JSON.parse(bijiaonr1[30]);
+            var bijiao_zt2_name = JSON.parse(bijiaonr2[30]);
             for (var i = 0; i < bijiao_zt2_name.length; i++) {
                 if (bijiao_zt1_name.indexOf(bijiao_zt2_name[i]) == -1) {
                     bijiao_cj('主题', '添加主题<xmp>"' + bijiao_zt2_name[i] + '</xmp>"', '桌面壁纸: ' + (bijiao_zt2[i][1] == '' ? '无' : bijiao_zt2[i][1]) + '\n桌面颜色: ' + (bijiao_zt2[i][0] == '' ? '无' : bijiao_zt2[i][0]) + '\n字体颜色: ' + bijiao_zt2[i][2] + '\n重字体颜色: ' + bijiao_zt2[i][3] + '\n背景颜色: ' + bijiao_zt2[i][4] + '\n背景透明度: ' + bijiao_zt2[i][5] + '%\n背景框颜色: ' + bijiao_zt2[i][6] + '\n背景框透明度: ' + bijiao_zt2[i][7] + '%\n背景框状态: ' + (bijiao_zt2[i][8] == 1 ? '开启' : '关闭') + '\n毛玻璃深度: ' + bijiao_zt2[i][9] + ' px\n天气代码: ' + bijiao_zt2[i][10]);
@@ -2426,8 +2431,8 @@ bijiao_kais.addEventListener('click', function(e) {
             // 注册表比较
             var bijiao_zcb1 = [];
             var bijiao_zcb2 = [];
-            var bijiao_zcb1_2 = JSON.parse(bijiaonr1[28]);
-            var bijiao_zcb2_2 = JSON.parse(bijiaonr2[28]);
+            var bijiao_zcb1_2 = JSON.parse(bijiaonr1[27]);
+            var bijiao_zcb2_2 = JSON.parse(bijiaonr2[27]);
             for (var i = 0; i < bijiao_zcb1_2[0].length; i++) {
                 var lsbl = [bijiao_zcb1_2[0][i], bijiao_zcb1_2[1][i]];
                 bijiao_zcb1.push(lsbl);
@@ -2493,8 +2498,8 @@ bijiao_kais.addEventListener('click', function(e) {
                 bijiao_cj('音乐', '修改音乐声音 "' + (bijiao_yysydx1 * 100) + '% 改为 ' + (bijiao_yysydx2 * 100) + '%"', '修改音乐声音大小 ' + (bijiao_yysydx1 * 100) + '% 改为 ' + (bijiao_yysydx2 * 100) + '%');
             }
             // AI比较
-            var bijiao_jl1 = JSON.parse(bijiaonr1[32]);
-            var bijiao_jl2 = JSON.parse(bijiaonr2[32]);
+            var bijiao_jl1 = JSON.parse(bijiaonr1[31]);
+            var bijiao_jl2 = JSON.parse(bijiaonr2[31]);
             for (var i = 0; i < bijiao_jl2.length; i++) {
                 if (JSON.stringify(bijiao_jl1).indexOf(JSON.stringify(bijiao_jl2[i])) == -1) {
                     bijiao_cj('AI', (bijiao_jl2[i][0] == 1 ? '新增问答' : '新增回答') + '<xmp>"' + bijiao_jl2[i][1] + '</xmp>"', '时间: ' + bijiao_jl2[i][2] + '\n对象: ' + (bijiao_jl2[i][0] == 1 ? '用户' : 'AI') + '\n内容: 下方↓' + '\n\n' + bijiao_jl2[i][1]);
@@ -2506,8 +2511,8 @@ bijiao_kais.addEventListener('click', function(e) {
                 }
             }
             // AI快捷指令比较
-            var bijiao_jl1 = JSON.parse(bijiaonr1[33]);
-            var bijiao_jl2 = JSON.parse(bijiaonr2[33]);
+            var bijiao_jl1 = JSON.parse(bijiaonr1[32]);
+            var bijiao_jl2 = JSON.parse(bijiaonr2[32]);
             for (var i = 0; i < bijiao_jl2.length; i++) {
                 if (bijiao_jl1.indexOf(bijiao_jl2[i]) == -1) {
                     bijiao_cj('AI', '新增快捷指令<xmp>"' + bijiao_jl2[i] + '</xmp>"', bijiao_jl2[i]);
@@ -2519,8 +2524,8 @@ bijiao_kais.addEventListener('click', function(e) {
                 }
             }
             // 打卡比较
-            var bijiao_jl1 = collectArrays(JSON.parse(bijiaonr1[39]));
-            var bijiao_jl2 = collectArrays(JSON.parse(bijiaonr2[39]));
+            var bijiao_jl1 = collectArrays(JSON.parse(bijiaonr1[38]));
+            var bijiao_jl2 = collectArrays(JSON.parse(bijiaonr2[38]));
             let bijiao_jl1_sc56 = JSON.parse(JSON.stringify(bijiao_jl1));
             let bijiao_jl2_sc56 = JSON.parse(JSON.stringify(bijiao_jl2));
             bijiao_jl1_sc56 = bijiao_jl1_sc56.map(item => {
@@ -2572,8 +2577,8 @@ bijiao_kais.addEventListener('click', function(e) {
             if (bijiaonr1[13] !== bijiaonr2[13]) { //背景框颜色
                 bijiao_cj('个性化', '修改背景框颜色', bijiaonr1[13] + '\n' + '<div style="width: 50px;height: 50px;background-color:' + bijiaonr1[13] + ';"></div>' + '\n\n改为\n\n' + bijiaonr2[13] + '\n' + '<div style="width: 50px;height: 50px;background-color:' + bijiaonr2[13] + ';"></div>');
             }
-            if (bijiaonr1[29] !== bijiaonr2[29]) { //壁纸颜色
-                bijiao_cj('个性化', '修改壁纸颜色', (bijiaonr1[29] == '' ? '空' : (bijiaonr1[29] + '\n' + '<div style="width: 50px;height: 50px;background-color:' + bijiaonr1[29] + ';"></div>')) + '\n\n改为\n\n' + (bijiaonr2[29] == '' ? '空' : (bijiaonr2[29] + '\n' + '<div style="width: 50px;height: 50px;background-color:' + bijiaonr2[29] + ';"></div>')));
+            if (bijiaonr1[28] !== bijiaonr2[28]) { //壁纸颜色
+                bijiao_cj('个性化', '修改壁纸颜色', (bijiaonr1[28] == '' ? '空' : (bijiaonr1[28] + '\n' + '<div style="width: 50px;height: 50px;background-color:' + bijiaonr1[28] + ';"></div>')) + '\n\n改为\n\n' + (bijiaonr2[28] == '' ? '空' : (bijiaonr2[28] + '\n' + '<div style="width: 50px;height: 50px;background-color:' + bijiaonr2[28] + ';"></div>')));
             }
             if (bijiaonr1[11] !== bijiaonr2[11]) { //背景透明度
                 bijiao_cj('个性化', '修改背景透明度', (bijiaonr1[11] * 100) + '% 改为 ' + (bijiaonr2[11] * 100) + '%');
@@ -2588,8 +2593,8 @@ bijiao_kais.addEventListener('click', function(e) {
                 bijiao_cj('个性化', '修改毛玻璃深度', bijiaonr1[15] + 'px 改为 ' + bijiaonr2[15] + 'px');
             }
             // htsp比较
-            var bijiao_htsp1 = JSON.parse(bijiaonr1[27]);
-            var bijiao_htsp2 = JSON.parse(bijiaonr2[27]);
+            var bijiao_htsp1 = JSON.parse(bijiaonr1[26]);
+            var bijiao_htsp2 = JSON.parse(bijiaonr2[26]);
             for (var i = 0; i < bijiao_htsp2.length; i++) {
                 if (bijiao_htsp1.indexOf(bijiao_htsp2[i]) == -1) {
                     bijiao_cj('HTSP', '新增HTSP "' + bijiao_htsp2[i] + '"', bijiao_htsp2[i]);
@@ -2607,17 +2612,18 @@ bijiao_kais.addEventListener('click', function(e) {
             if (bijiaonr1[2] !== bijiaonr2[2]) { //搜索引擎
                 bijiao_cj('其他', '修改搜索引擎', bijiaonr1[2] + ' 改为 ' + bijiaonr2[2]);
             }
-            if (bijiaonr1[26] !== bijiaonr2[26]) { //大厅展览
-                bijiao_cj('其他', '修改大厅展览', (bijiaonr1[26] == 0 ? '解压雪球' : (bijiaonr1[26] == 1 ? '动态内容' : '空白流畅')) + ' 改为 ' + (bijiaonr2[26] == 0 ? '解压雪球' : (bijiaonr2[26] == 1 ? '动态内容' : '空白流畅')));
-            }
             if (bijiaonr1[16] !== bijiaonr2[16]) { //自动备份
                 bijiao_cj('其他', '修改自动备份状态', (bijiaonr1[16] == 1 ? '打开' : '关闭') + ' 改为 ' + (bijiaonr2[16] == 1 ? '打开' : '关闭'));
             }
             if (bijiaonr1[17] !== bijiaonr2[17]) { //使用次数 及 使用时长
-                bijiao_cj('其他', '使用次数 及 使用时长', '前 ' + bijiaonr1[17] + '次 ' + formatTime(bijiaonr1[36]) + '\n后 ' + bijiaonr2[17] + '次 ' + formatTime(bijiaonr2[36]) + '\n\n相差 ' + (bijiaonr2[17] - bijiaonr1[17]) + '次 ' + formatTime(bijiaonr2[36] - bijiaonr1[36]));
+                bijiao_cj('其他', '使用次数 及 使用时长', '前 ' + bijiaonr1[17] + '次 ' + formatTime(bijiaonr1[35]) + '\n后 ' + bijiaonr2[17] + '次 ' + formatTime(bijiaonr2[35]) + '\n\n相差 ' + (bijiaonr2[17] - bijiaonr1[17]) + '次 ' + formatTime(bijiaonr2[35] - bijiaonr1[35]));
             }
-
-
+            if (bijiaonr1[36] !== bijiaonr2[36]) { //自动导入本地
+                bijiao_cj('其他', '修改自动导入本地状态', (bijiaonr1[36] == 1 ? '打开' : '关闭') + ' 改为 ' + (bijiaonr2[36] == 1 ? '打开' : '关闭'));
+            }
+            if (bijiaonr1[37] !== bijiaonr2[37]) { //自动加密导出
+                bijiao_cj('其他', '修改自动加密导出状态', (bijiaonr1[37] == 1 ? '打开' : '关闭') + ' 改为 ' + (bijiaonr2[37] == 1 ? '打开' : '关闭'));
+            }
 
             // 创建元素函数
             function bijiao_cj(cj_max, cj_min, cj_xx) {
@@ -2712,6 +2718,8 @@ bijiao_kais.addEventListener('click', function(e) {
     } catch (error) {
         // 这个块会在 try 中有错误抛出时执行
         Sku_tctx('格式错误 ! 不符合的导入模块');
+        // 第几行错误
+        console.log(error);
     }
 
 });
