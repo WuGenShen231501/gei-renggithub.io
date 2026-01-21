@@ -299,7 +299,7 @@ liu_yan_srk.addEventListener('blur', function(e) {
     liu_yan_srk_jc = 0;
 
     // 失去焦点暂停更改(重命名)功能
-    if (cmm_jc == 1) {
+    if (cmm_jc == 1 && i_liu_yan_ksbc == 0) {
         cmm_jc = 0;
         liu_yan_button.innerHTML = '发送(E)';
         liu_yan_srk.value = '';
@@ -553,11 +553,22 @@ liu_yan_scsy_qx.addEventListener('click', function(e) {
 
 
 //快速编程
+var i_liu_yan_ksbc = 0;
 i_liu_yan_tpbc_tp = document.querySelector('.i_liu_yan_tpbc_tp');
 i_liu_yan_spbc_tp = document.querySelector('.i_liu_yan_spbc_tp');
 i_liu_yan_yybc_tp = document.querySelector('.i_liu_yan_yybc_tp');
 i_liu_yan_ljbc_tp = document.querySelector('.i_liu_yan_ljbc_tp');
 i_liu_yan_wzbc_tp = document.querySelector('.i_liu_yan_wzbc_tp');
+// 批量添加鼠标事件
+var liu_yan_btns = [i_liu_yan_tpbc_tp, i_liu_yan_spbc_tp, i_liu_yan_yybc_tp, i_liu_yan_ljbc_tp, i_liu_yan_wzbc_tp];
+liu_yan_btns.forEach(function(btn) {
+    btn.addEventListener('mouseover', function() {
+        i_liu_yan_ksbc = 1;
+    });
+    btn.addEventListener('mouseout', function() {
+        i_liu_yan_ksbc = 0;
+    });
+});
 //字符串指定添加脚本
 function insertStr(source, start, newStr) {
     return source.slice(0, start) + newStr + source.slice(start)
