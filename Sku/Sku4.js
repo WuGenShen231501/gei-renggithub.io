@@ -5822,6 +5822,7 @@ bfsz_sccd.addEventListener('click', async() => {
         }
         // 打包时间
         yun_daochu[daochu_daoru_max.length] = getFormattedTime();
+        yun_daochu[yun_daochu.length] = localStorage.getItem('yun_key'); //加一个保存云key
         const content = WGS_zfc_jiami(JSON.stringify(yun_daochu), miyao); //加密内容
 
         if (!content.trim()) {
@@ -5996,7 +5997,10 @@ bfsz_xzcd.addEventListener('click', async() => {
                 } else {
                     Sku_tctx('下载完成！');
                     bfsz_xzcd_yy.style.display = 'block';
-                    bfsz_xzcd_yy_zhi = content;
+                    const daoru_szz3 = JSON.parse(WGS_zfc_jiami(content, miyao));
+                    yun_key_zfc = daoru_szz3[daoru_szz3.length - 1];
+                    daoru_szz3.pop(); //删掉最后一个对象
+                    bfsz_xzcd_yy_zhi = WGS_zfc_jiami(JSON.stringify(daoru_szz3), miyao);
                     const daoru_szz2 = JSON.parse(WGS_zfc_jiami(bfsz_xzcd_yy_zhi, miyao));
                     const sj = daoru_szz2[daoru_szz2.length - 1];
                     bfsz_xzcd_yy.innerHTML = '应用备份 ' + sj;
@@ -6011,6 +6015,7 @@ bfsz_xzcd.addEventListener('click', async() => {
 });
 //应用备份
 var bfsz_xzcd_yy_zhi = '';
+var yun_key_zfc = '';
 var bfsz_xzcd_yy = document.querySelector('.bfsz_xzcd_yy');
 bfsz_xzcd_yy.addEventListener('click', function(e) {
     var daoru_szz = JSON.parse(WGS_zfc_jiami(bfsz_xzcd_yy_zhi, miyao));
@@ -6022,6 +6027,7 @@ bfsz_xzcd_yy.addEventListener('click', function(e) {
         }
         localStorage.setItem(daochu_daoru_max[i], daoru_szz[i]);
     }
+    localStorage.setItem('yun_key', yun_key_zfc);
     localStorage.dr_mmdr_drsj = 0;
     bdzdtj_true = 0; // 禁止刷新时自动导入
     location.reload();
