@@ -251,7 +251,7 @@ function WGS_wenbengundon(qwe, asd, hzxg) {
 // 弹窗提醒
 function Sku_tctx(zdysx1) {
     // 防止重复调用
-    if (typeof Sku_tctx_ture === 'undefined') Sku_tctx_ture = 1;
+    if (typeof Sku_tctx_ture === 'undefined') { Sku_tctx_ture = 1 };
     if (Sku_tctx_ture === 1) {
         Sku_tctx_ture = 0;
         setTimeout(() => Sku_tctx_ture = 1, 500);

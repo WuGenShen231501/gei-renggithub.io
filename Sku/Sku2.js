@@ -1963,9 +1963,9 @@ document.addEventListener('keydown', function(e) {
 
     if (e.key == 'Enter') {
         // 搜索快速打开快捷键
-        if (lian_jie_r2.style.display == 'block' && sspp_gs == 0 && nrmaxs1.style.display == 'block') {
+        if (lian_jie_r2.style.display == 'block' && sspp_gs == 0 && nrmaxs1.style.display == 'block' && ssbqym.style.display == 'none') {
             document.querySelector('.lian_jie_r2').querySelector('.lj_lj_t').click();
-        } else if (lian_jie_r2.style.display == 'block' && sspp_gs !== 0 && nrmaxs1.style.display == 'block' && lian_jie_ssym_s_gs !== 0) {
+        } else if (lian_jie_r2.style.display == 'block' && sspp_gs !== 0 && nrmaxs1.style.display == 'block' && lian_jie_ssym_s_gs !== 0 && ssbqym.style.display == 'none') {
             document.querySelector('.lian_jie_r2').querySelectorAll('.lj_lj_t')[lian_jie_ssym_s_gs - 1].click();
         }
         // 添加更改快捷键
