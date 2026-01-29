@@ -896,6 +896,125 @@ html {
 }
 
 
+/* 语音AI */
+
+.yuyanAI_max {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    right: 100px;
+    top: 5px;
+    text-align: center;
+    line-height: 45px;
+}
+
+.i_yuyanAI_tb {
+    font-size: 45px;
+    transition: 0.1s;
+}
+
+.i_yuyanAI_tb:hover {
+    font-size: 50px;
+}
+
+.yuyanAI_ym {
+    position: absolute;
+    width: 350px;
+    height: 200px;
+    border: 1px solid var(--bei_jing_kuan_color);
+    background-color: var(--bei_jing_color);
+    backdrop-filter: var(--mao_bo_li);
+    right: 100px;
+    top: 56px;
+    border-radius: 5px;
+    z-index: 2;
+    overflow: hidden;
+    animation: nrmaxs_dh 0.4s;
+}
+
+.yuyanAI_input {
+    float: left;
+    text-align: center;
+    width: 300px;
+    height: 20px;
+    border: 0;
+    margin: 80px 25px 0;
+    font-size: 20px;
+    color: var(--zi_ti_color);
+    background-color: rgb(0, 0, 0, 0);
+    outline: none;
+}
+
+.yuyanAI_yy {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    bottom: 20px;
+    left: 65px;
+    text-align: center;
+    line-height: 45px;
+    opacity: 0.3;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.yuyanAI_yy:hover {
+    transform: scale(1.1);
+}
+
+.yuyanAI_yy_tp {
+    font-size: 30px;
+}
+
+.yuyanAI_qd {
+    position: absolute;
+    bottom: 20px;
+    left: calc((350px - 100px) / 2);
+    width: 100px;
+    height: 45px;
+    border-radius: 30px;
+    line-height: 43px;
+    text-align: center;
+    border: 1px solid var(--zi_ti_color);
+    background-color: var(--zi_ti_color_20);
+    transition: 0.2s;
+}
+
+.yuyanAI_qd:hover {
+    transform: scale(1.1);
+}
+
+.yuyanAI_qkcwzl {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 50%;
+    transition: 0.2s;
+    opacity: 0.3;
+}
+
+.yuyanAI_qkcwzl:hover {
+    opacity: 1;
+}
+
+.i_yuyanAI_qkcwzl_tp {
+    font-size: 10px;
+}
+
+.yuyanAI_qhmx {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    border-radius: 50%;
+    transition: 0.2s;
+    opacity: 0.3;
+}
+
+.yuyanAI_qhmx:hover {
+    opacity: 1;
+}
+
+
 /* ---------兼容电脑端----------- */
 
 @media screen and (min-width: 2000px) {
@@ -957,13 +1076,13 @@ html {
         right: 36px !important;
     }
     .so_suo {
-        right: 100px;
+        right: 150px;
     }
     .i_lian_jie_ss_tb {
         right: 80px !important;
     }
     .ssbqym {
-        right: 135px !important;
+        right: 185px !important;
     }
 }
 

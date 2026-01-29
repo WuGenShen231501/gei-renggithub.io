@@ -17,8 +17,8 @@ function RGB_zhq(hex, opacity) {
 
     // 返回 RGB 或 RGBA 字符串
     return opacity !== undefined ?
-        `rgba(${r}, ${g}, ${b}, ${opacity})` :
-        `rgb(${r}, ${g}, ${b})`;
+        `rgba(${r},${g},${b},${opacity})` :
+        `rgb(${r},${g},${b})`;
 }
 
 
@@ -52,16 +52,16 @@ function WGS_zfc_jiemi(nr, key) {
 //     const data = encoder.encode(str);
 
 //     // 计算 SHA-256 哈希
-//     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+//     const hashBuffer = await crypto.subtle.digest('SHA-256',data);
 
 //     // 将哈希转换为十六进制字符串
 //     const hashArray = Array.from(new Uint8Array(hashBuffer));
-//     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+//     const hashHex = hashArray.map(b => b.toString(16).padStart(2,'0')).join('');
 
 //     return hashHex;
 // }
 
-// hashString("Hello, World!").then(hash => {
+// hashString("Hello,World!").then(hash => {
 //     console.log(hash); // 输出哈希值
 // });
 
@@ -84,37 +84,41 @@ function collectArrays(obj) {
 
 
 // 匹配函数/不区分大小写
-function containsAllChars(str11, str22) {
-    var str1 = str11.toLowerCase(); //全部转为小写
-    var str2 = str22.toLowerCase(); //全部转为小写
+function containsAllChars(str11, str22, zdyy) {
+    var containsAllChars_zdyy = 'none';
+    if (zdyy) {
+        containsAllChars_zdyy = zdyy;
+    }
+    var str1 = str11.toLowerCase().replace(/\s/g, ''); //全部转为小写并去掉空格
+    var str2 = str22.toLowerCase().replace(/\s/g, ''); //全部转为小写并去掉空格
     var str1_py = '';
     var str2_py = '';
     var str1_py_szm = '';
     var str2_py_szm = '';
 
-    // 检测 str1 是否包含中文字符（Unicode 范围：\u4E00-\u9FA5 为常用汉字）
+    // 检测 str1 是否包含中文字符（Unicode 范围:\u4E00-\u9FA5 为常用汉字）
     const hasChinese = /^[a-zA-Z]+$/.test(str1.replace(/\s/g, ''));
     if (hasChinese && localStorage.sscl_py == 1) {
-        // 如果 str1 包含中文字符，则使用 pinyin 库进行拼音匹配
+        // 如果 str1 包含中文字符,则使用 pinyin 库进行拼音匹配
         str1_py = str1.replace(/\s/g, '');
         str2_py = pinyin(str2, { toneType: 'none' }).replace(/\s/g, '');
         str1_py_szm = str1.replace(/\s/g, '');
         str2_py_szm = pinyin(str2, { pattern: 'first' }).replace(/\s/g, '');
     }
 
-    if (localStorage.sscl == 0) {
+    if (localStorage.sscl == 0 || containsAllChars_zdyy == 0) {
         // 创建一个对象来记录str1中每个字符的出现次数
         const charCounts = {};
         for (const char of str1) {
             // 增加字符在str1中的出现次数
             charCounts[char] = (charCounts[char] || 0) + 1;
         }
-        // 遍历str2，减少每个字符的计数
+        // 遍历str2,减少每个字符的计数
         for (const char of str2) {
             if (charCounts.hasOwnProperty(char)) {
-                // 如果字符在str1中出现过，则减少其计数
+                // 如果字符在str1中出现过,则减少其计数
                 charCounts[char]--;
-                // 如果计数变为0，则从对象中删除该字符
+                // 如果计数变为0,则从对象中删除该字符
                 if (charCounts[char] === 0) {
                     delete charCounts[char];
                 }
@@ -127,12 +131,12 @@ function containsAllChars(str11, str22) {
             // 增加字符在str1中的出现次数
             charCounts2[char] = (charCounts2[char] || 0) + 1;
         }
-        // 遍历str2，减少每个字符的计数
+        // 遍历str2,减少每个字符的计数
         for (const char of str2_py) {
             if (charCounts2.hasOwnProperty(char)) {
-                // 如果字符在str1中出现过，则减少其计数
+                // 如果字符在str1中出现过,则减少其计数
                 charCounts2[char]--;
-                // 如果计数变为0，则从对象中删除该字符
+                // 如果计数变为0,则从对象中删除该字符
                 if (charCounts2[char] === 0) {
                     delete charCounts2[char];
                 }
@@ -145,19 +149,19 @@ function containsAllChars(str11, str22) {
             // 增加字符在str1中的出现次数
             charCounts3[char] = (charCounts3[char] || 0) + 1;
         }
-        // 遍历str2，减少每个字符的计数
+        // 遍历str2,减少每个字符的计数
         for (const char of str2_py_szm) {
             if (charCounts3.hasOwnProperty(char)) {
-                // 如果字符在str1中出现过，则减少其计数
+                // 如果字符在str1中出现过,则减少其计数
                 charCounts3[char]--;
-                // 如果计数变为0，则从对象中删除该字符
+                // 如果计数变为0,则从对象中删除该字符
                 if (charCounts3[char] === 0) {
                     delete charCounts3[char];
                 }
             }
         }
 
-        // 如果对象中没有剩余的字符，则说明str2中包含了str1中所有字符且满足出现次数要求
+        // 如果对象中没有剩余的字符,则说明str2中包含了str1中所有字符且满足出现次数要求
         return Object.keys(charCounts).length === 0 || (str1_py == '' ? false : Object.keys(charCounts2).length === 0) || (str1_py_szm == '' ? false : Object.keys(charCounts2).length === 0);
     } else if (localStorage.sscl == 1) {
         return str2.indexOf(str1) !== -1 || (str1_py == '' ? false : str2_py.indexOf(str1_py) !== -1) || (str1_py_szm == '' ? false : str2_py_szm.indexOf(str1_py_szm) !== -1);
@@ -200,12 +204,12 @@ function WGS_wenbengundon(qwe, asd, hzxg) {
             parentElement.removeChild(clone);
         }
 
-        // 如果已经绑定了事件处理函数，则先移除
+        // 如果已经绑定了事件处理函数,则先移除
         if (element._onMouseOver && element._onMouseOut) {
             element.removeEventListener('mouseover', element._onMouseOver);
             element.removeEventListener('mouseout', element._onMouseOut);
         }
-        // console.log('内容' + scrollWidth2, '盒子' + offsetWidth2, 'class' + wb[i].className);
+        // console.log('内容' + scrollWidth2,'盒子' + offsetWidth2,'class' + wb[i].className);
         if (scrollWidth2 > offsetWidth2) {
             // 定义鼠标悬停事件处理函数
             element._onMouseOver = function() {
@@ -220,12 +224,12 @@ function WGS_wenbengundon(qwe, asd, hzxg) {
                 // document.body.appendChild(clone);
                 // var scrollWidth2 = clone.scrollWidth;
                 // var offsetWidth2 = clone.offsetWidth + hzxg;
-                // console.log('复制内容' + scrollWidth2, '复制盒子' + offsetWidth2);
+                // console.log('复制内容' + scrollWidth2,'复制盒子' + offsetWidth2);
                 // document.body.removeChild(clone);
 
                 var nrcd = this.scrollWidth;
                 var hzcd = this.offsetWidth + hzxg;
-                // console.log('内容' + nrcd, '盒子' + hzcd);
+                // console.log('内容' + nrcd,'盒子' + hzcd);
                 var duochu = nrcd - hzcd;
                 var sj = duochu / 50;
                 this.style.transition = sj + 's linear';
@@ -263,7 +267,7 @@ function Sku_tctx(zdysx1) {
 
         // 设置边框样式
         if (localStorage.bei_jing_kuan_ture == 1) {
-            div.style.border = `1px solid ${RGB_zhq(localStorage.bei_jing_kuan_color, localStorage.bei_jing_kuan_tmd)}`;
+            div.style.border = `1px solid ${RGB_zhq(localStorage.bei_jing_kuan_color,localStorage.bei_jing_kuan_tmd)}`;
         }
 
         // 添加到文档
@@ -389,7 +393,7 @@ function SKu_bo_fang_qi(text) {
         const audioContext = new(window.AudioContext || window.webkitAudioContext)();
         audioContext.resume().then(() => {
             // 创建一个临时的Buffer
-            const buffer = audioContext.createBuffer(1, 1, 480000); // 1通道，1帧，采样率22050Hz
+            const buffer = audioContext.createBuffer(1, 1, 480000); // 1通道,1帧,采样率22050Hz
             // 设置Buffer的数据
             const dataArray = buffer.getChannelData(0);
             dataArray[0] = 1; // 设置声音的振幅
@@ -399,7 +403,7 @@ function SKu_bo_fang_qi(text) {
             source.connect(audioContext.destination);
             // 播放音频
             source.start(0);
-            // 播放完成后，删除AudioContext
+            // 播放完成后,删除AudioContext
             setTimeout(() => {
                 audioContext.close();
             }, 100); // 确保音频播放完毕
@@ -506,7 +510,7 @@ if (localStorage.dr_mm == '' || (localStorage.dr_mm !== '' && mmdr_sf == 1)) {
 
 
 //浮动效果
-// fudong_xiaoguo(需要浮动的盒子, 相对盒子)
+// fudong_xiaoguo(需要浮动的盒子,相对盒子)
 function fudong_xiaoguo(dong_div_s, xian_dui_s) {
     var dong_div = document.querySelectorAll(dong_div_s);
     var xian_dui = document.querySelector(xian_dui_s);
@@ -1170,7 +1174,7 @@ function djs_dttj_hs(dx1) {
         if (timestamp.toString().length === 10) { timestamp *= 1000; }
         const date = new Date(timestamp);
         const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份从 0 开始，需加 1
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份从 0 开始,需加 1
         const day = String(date.getDate()).padStart(2, '0');
         const hours = String(date.getHours()).padStart(2, '0');
         const minutes = String(date.getMinutes()).padStart(2, '0');
@@ -1523,7 +1527,7 @@ function sy_dwck_ym_yc() {
 }
 
 //定位
-// function SHITIDONGHUA(class名, 移动距离(右为正, 左为负), function() {});
+// function SHITIDONGHUA(class名,移动距离(右为正,左为负),function() {});
 var obj_dwjsq = undefined;
 var gundon_dsj = undefined;
 
@@ -1687,7 +1691,7 @@ i_music_boyyom_sy.addEventListener('click', function(e) {
 // 添加鼠标滚动事件监听
 i_music_boyyom_sy.addEventListener('wheel', function(e) {
     e.preventDefault(); // 阻止页面默认滚动行为
-    const delta = e.deltaY; // 滚动方向：deltaY > 0 是向下滚，< 0 是向上滚
+    const delta = e.deltaY; // 滚动方向:deltaY > 0 是向下滚,< 0 是向上滚
     if (delta > 0) {
         music_bottom_hk3.value--;
     } else {
@@ -2368,7 +2372,7 @@ function sy_lbnr_hs2(max_gs) {
         // 1日程2作品3链接4未标记5设置6音乐7热点8周志9习惯
         var sj_nr_bl = [1, 2, 3, 3, 3, 4, 5, 6, 7, 7, 7, 8];
 
-        // sz_zdsc(数组, 要删除的字符(不是索引号), 如果要替换成)
+        // sz_zdsc(数组,要删除的字符(不是索引号),如果要替换成)
         function sz_zdsc(sz_s, sz_sc_zhi, sz_tj_zhi) {
             if (sz_sc_zhi && sz_s.indexOf(sz_sc_zhi) !== -1 && sz_tj_zhi) {
                 sz_s.splice(sz_s.indexOf(sz_sc_zhi), 2, sz_tj_zhi);
@@ -2383,7 +2387,7 @@ function sy_lbnr_hs2(max_gs) {
             var count = 0;
             // 获取个数
             for (var key in sz) {
-                if (sz.hasOwnProperty(key)) { // 确保属性是对象自身的属性，而不是原型链上的
+                if (sz.hasOwnProperty(key)) { // 确保属性是对象自身的属性,而不是原型链上的
                     count++;
                 }
             }
@@ -2414,7 +2418,7 @@ function sy_lbnr_hs2(max_gs) {
         var dhr_ym_dx_zzgs = 0;
         var count6 = 0;
         for (var key in dhr_ym_dx) {
-            if (dhr_ym_dx.hasOwnProperty(key)) { // 确保属性是对象自身的属性，而不是原型链上的
+            if (dhr_ym_dx.hasOwnProperty(key)) { // 确保属性是对象自身的属性,而不是原型链上的
                 count6++;
             }
         }
@@ -2422,7 +2426,7 @@ function sy_lbnr_hs2(max_gs) {
             var dhr_ym_dxs = dhr_ym_dx['dhr_ym_dx' + i];
             var count7 = 0;
             for (var key in dhr_ym_dxs) {
-                if (dhr_ym_dxs.hasOwnProperty(key)) { // 确保属性是对象自身的属性，而不是原型链上的
+                if (dhr_ym_dxs.hasOwnProperty(key)) { // 确保属性是对象自身的属性,而不是原型链上的
                     count7++;
                 }
             }
@@ -2440,7 +2444,7 @@ function sy_lbnr_hs2(max_gs) {
         var count8 = 0;
         var liu_yan_dx_wbj = 0;
         for (var key in liu_yan_dx) {
-            if (liu_yan_dx.hasOwnProperty(key)) { // 确保属性是对象自身的属性，而不是原型链上的
+            if (liu_yan_dx.hasOwnProperty(key)) { // 确保属性是对象自身的属性,而不是原型链上的
                 count8++;
             }
         }
@@ -2495,7 +2499,7 @@ function sy_lbnr_hs2(max_gs) {
                     var count = 0;
                     // 获取个数
                     for (var key in sy_djs) {
-                        if (sy_djs.hasOwnProperty(key)) { // 确保属性是对象自身的属性，而不是原型链上的
+                        if (sy_djs.hasOwnProperty(key)) { // 确保属性是对象自身的属性,而不是原型链上的
                             count++;
                         }
                     }
@@ -2568,7 +2572,7 @@ function sy_lbnr_hs2(max_gs) {
                     var count2 = 0;
                     // 获取个数
                     for (var key in dhr_ym_dx) {
-                        if (dhr_ym_dx.hasOwnProperty(key)) { // 确保属性是对象自身的属性，而不是原型链上的
+                        if (dhr_ym_dx.hasOwnProperty(key)) { // 确保属性是对象自身的属性,而不是原型链上的
                             count2++;
                         }
                     }
@@ -2578,7 +2582,7 @@ function sy_lbnr_hs2(max_gs) {
                     var count3 = 0;
                     // 获取个数
                     for (var key in dhr_ym_dx2) {
-                        if (dhr_ym_dx2.hasOwnProperty(key)) { // 确保属性是对象自身的属性，而不是原型链上的
+                        if (dhr_ym_dx2.hasOwnProperty(key)) { // 确保属性是对象自身的属性,而不是原型链上的
                             count3++;
                         }
                     }
@@ -2591,7 +2595,7 @@ function sy_lbnr_hs2(max_gs) {
                         count3 = 0;
                         // 获取个数
                         for (var key in dhr_ym_dx2) {
-                            if (dhr_ym_dx2.hasOwnProperty(key)) { // 确保属性是对象自身的属性，而不是原型链上的
+                            if (dhr_ym_dx2.hasOwnProperty(key)) { // 确保属性是对象自身的属性,而不是原型链上的
                                 count3++;
                             }
                         }
@@ -2635,7 +2639,7 @@ function sy_lbnr_hs2(max_gs) {
                     var count4 = 0;
                     // 获取个数
                     for (var key in liu_yan_dx) {
-                        if (liu_yan_dx.hasOwnProperty(key)) { // 确保属性是对象自身的属性，而不是原型链上的
+                        if (liu_yan_dx.hasOwnProperty(key)) { // 确保属性是对象自身的属性,而不是原型链上的
                             count4++;
                         }
                     }
@@ -3235,7 +3239,7 @@ sy_ke_biao_max.addEventListener('mouseover', function(e) {
             console.log(result);
             for (var i = 0; i < sy_ke_biao_l.length; i++) {
                 // 找相同项除了自己
-                // if (containsAllChars(result, sy_ke_biao_l[i].value) && sy_ke_biao_l[i] !== target) {
+                // if (containsAllChars(result,sy_ke_biao_l[i].value) && sy_ke_biao_l[i] !== target) {
                 if (result == sy_ke_biao_l[i].value.replace(/\s*\[.*$/, '').trim() && sy_ke_biao_l[i] !== target) {
                     sy_ke_biao_l[i].classList.add('sy_ke_biao_l_gl');
                 }
@@ -3426,13 +3430,13 @@ function zhou_zhi_rc_zdtj() {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const startTimestamp = today.getTime();
-        const endTimestamp = startTimestamp + 6 * 24 * 60 * 60 * 1000;
+        const endTimestamp = startTimestamp + 7 * 24 * 60 * 60 * 1000;
         const result = [];
         for (const key in eventObj) {
             if (eventObj.hasOwnProperty(key)) {
                 const event = eventObj[key];
                 const eventTimestamp = event[1];
-                if (eventTimestamp >= startTimestamp && eventTimestamp <= endTimestamp) {
+                if (eventTimestamp >= startTimestamp && eventTimestamp < endTimestamp) {
                     result.push(event);
                 }
             }
@@ -3545,6 +3549,499 @@ function zhou_zhi_rc_zdtj() {
 
 
 
+// 语音AI
+var yuyanAI_yy = document.querySelector('.yuyanAI_yy');
+var i_yuyanAI_tb = document.querySelector('.i_yuyanAI_tb');
+var yuyanAI_ym = document.querySelector('.yuyanAI_ym');
+var yuyanAI_input = document.querySelector('.yuyanAI_input');
+var yuyanAI_yy_tp = document.querySelector('.yuyanAI_yy_tp');
+// 打开音乐总页面
+var yuyanAI_ym_zdgb = 0; //长时间未使用自动关闭计时器
+var yuyanAI_ym_zdgb_hs; //长时间未使用自动关闭计时器函数
+i_yuyanAI_tb.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (yuyanAI_ym.style.display == 'none') {
+        yuyanAI_ym.style.display = 'block';
+        if (yuyanAI_input.value[0] == '●') {
+            yuyanAI_input.value = '●●●';
+        } else {
+            yuyanAI_input.value = '';
+        }
+        yuyanAI_input.focus();
+
+        yuyanAI_ym_zdgb_hs = setInterval(() => {
+            yuyanAI_ym_zdgb++;
+            if (yuyanAI_ym_zdgb >= 10) {
+                clearInterval(yuyanAI_ym_zdgb_hs);
+                yuyanAI_ym_zdgb = 0; //重置计数器
+                yuyanAI_ym.style.display = 'none';
+            }
+        }, 1000);
+    } else {
+        yuyanAI_qxsr();
+        yuyanAI_ym.style.display = 'none';
+        clearInterval(yuyanAI_ym_zdgb_hs);
+        yuyanAI_ym_zdgb = 0; //重置计数器
+    }
+});
+yuyanAI_ym.addEventListener('click', function(e) {
+    e.stopPropagation();
+    yuyanAI_ym_zdgb = 0; //重置计数器
+});
+
+// 初始化语音输入
+initVoiceInput('yuyanAI_input', 'yuyanAI_yy_tp');
+
+function initVoiceInput(inputClass, toggleBtnClass) {
+    // 获取DOM元素
+    const inputElement = document.querySelector(`.${inputClass}`);
+    const toggleBtn = document.querySelector(`.${toggleBtnClass}`);
+
+    // 检查元素是否存在
+    if (!inputElement || !toggleBtn) {
+        Sku_tctx('语音输入初始化失败');
+        return null;
+    }
+
+    // 检查浏览器是否支持Web Speech API
+    if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+        Sku_tctx('浏览器不支持语音识别功能');
+        return null;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+
+    // 配置语音识别
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'zh-CN';
+
+    var finalTranscript = '';
+    let isRecording = false;
+
+    // 监听输入框的 input 事件，当用户手动修改内容时更新 finalTranscript
+    inputElement.addEventListener('input', function() {
+        finalTranscript = this.value;
+    });
+    inputElement.addEventListener('focus', function() {
+        finalTranscript = this.value;
+    });
+
+    // 处理语音识别结果
+    recognition.onresult = function(event) {
+        let interimTranscript = '';
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+                finalTranscript += transcript;
+            } else {
+                interimTranscript += transcript; // 临时结果
+            }
+        }
+
+        inputElement.value = finalTranscript + interimTranscript;
+        yuyanAI_ym_zdgb = 0; //重置计数器
+    };
+
+    // 处理语音识别错误
+    recognition.onerror = function(event) {
+        console.error('语音识别错误:', event.error);
+        isRecording = false;
+        yuyanAI_yy.style.opacity = 0.3;
+        finalTranscript = '';
+    };
+
+    // 处理语音识别结束
+    recognition.onend = function() {
+        isRecording = false;
+        yuyanAI_yy.style.opacity = 0.3;
+        finalTranscript = '';
+    };
+
+    // 绑定按钮点击事件
+    toggleBtn.addEventListener('click', function() {
+        // 检查浏览器是否支持
+        if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+            console.error('浏览器不支持语音识别功能');
+            yuyanAI_yy.style.opacity = 0.3;
+            finalTranscript = '';
+            return;
+        }
+
+        if (isRecording) {
+            // 停止语音输入
+            try {
+                recognition.stop();
+                isRecording = false;
+                yuyanAI_yy.style.opacity = 0.3;
+                finalTranscript = '';
+            } catch (error) {
+                console.error('停止语音输入失败:', error.message);
+            }
+        } else {
+            // 开始语音输入
+            try {
+                recognition.start();
+                isRecording = true;
+                yuyanAI_yy.style.opacity = 1;
+            } catch (error) {
+                console.error('开始语音输入失败:', error.message);
+                yuyanAI_yy.style.opacity = 0.3;
+                finalTranscript = '';
+            }
+        }
+    });
+
+    // 返回控制对象
+    return {
+        toggle: function() {
+            // 检查浏览器是否支持
+            if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+                console.error('浏览器不支持语音识别功能');
+                yuyanAI_yy.style.opacity = 0.3;
+                finalTranscript = '';
+                return false;
+            }
+
+            if (isRecording) {
+                // 停止语音输入
+                try {
+                    recognition.stop();
+                    isRecording = false;
+                    yuyanAI_yy.style.opacity = 0.3;
+                    finalTranscript = '';
+                    return true;
+                } catch (error) {
+                    console.error('停止语音输入失败:', error.message);
+                    return false;
+                }
+            } else {
+                // 开始语音输入
+                try {
+                    recognition.start();
+                    isRecording = true;
+                    yuyanAI_yy.style.opacity = 1;
+                    return true;
+                } catch (error) {
+                    console.error('开始语音输入失败:', error.message);
+                    yuyanAI_yy.style.opacity = 0.3;
+                    finalTranscript = '';
+                    return false;
+                }
+            }
+        },
+        start: function() {
+            // 检查浏览器是否支持
+            if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+                console.error('浏览器不支持语音识别功能');
+                yuyanAI_yy.style.opacity = 0.3;
+                finalTranscript = '';
+                return false;
+            }
+
+            if (!isRecording) {
+                try {
+                    recognition.start();
+                    isRecording = true;
+                    yuyanAI_yy.style.opacity = 1;
+                    return true;
+                } catch (error) {
+                    console.error('开始语音输入失败:', error.message);
+                    yuyanAI_yy.style.opacity = 0.3;
+                    finalTranscript = '';
+                    return false;
+                }
+            }
+            return false;
+        },
+        stop: function() {
+            if (isRecording) {
+                try {
+                    recognition.stop();
+                    isRecording = false;
+                    yuyanAI_yy.style.opacity = 0.3;
+                    finalTranscript = '';
+                    return true;
+                } catch (error) {
+                    console.error('停止语音输入失败:', error.message);
+                    return false;
+                }
+            }
+            return false;
+        },
+        clear: function() {
+            finalTranscript = '';
+            inputElement.value = '';
+        },
+        isSupported: function() {
+            return 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
+        },
+        isRecording: function() {
+            return isRecording;
+        }
+    };
+}
+
+yuyanAI_input.addEventListener('input', function() {
+    yuyanAI_ym_zdgb = 0; //重置计数器
+});
+yuyanAI_input.addEventListener('focus', function() {
+    yuyanAI_ym_zdgb = 0; //重置计数器
+});
+
+//取消语音输入
+function yuyanAI_qxsr() {
+    if (yuyanAI_yy.style.opacity == 1) {
+        yuyanAI_yy_tp.click();
+    }
+}
+
+//确定语音输入
+var yuyanAI_qd = document.querySelector('.yuyanAI_qd');
+yuyanAI_qd.addEventListener('click', async function(e) {
+    if (yuyanAI_input.value != '' && yuyanAI_input.value != '暂时还不会呢' && yuyanAI_input.value != '正在执行对应指令' && yuyanAI_input.value != '指令执行完成') {
+        if (yuyanAI_yy.style.opacity == 1) {
+            yuyanAI_yy_tp.click();
+        }
+        const shuru = yuyanAI_input.value;
+        yuyanAI_input.disabled = true;
+        yuyanAI_qd.style.display = 'none';
+        yuyanAI_yy.style.display = 'none';
+        yuyanAI_input.value = '●●●';
+        const dendaitishi = setInterval(() => {
+            yuyanAI_input.value += '●';
+            yuyanAI_input.value.length == 7 ? yuyanAI_input.value = '●●●' : null;
+            yuyanAI_ym_zdgb = 0; //重置计数器
+        }, 500);
+
+        AI_diaoyon = localStorage.Sku_zhilin_qhmx; //先调用用户选择的模型
+        const shuchunr = await callZhiPuAI(shuru, 'a425dc93999e4afb8a45c769956df6c9.4lwlymysuIDCDwII', AI_heji[AI_diaoyon]);
+        shuchunr2 = shuchunr;
+        clearInterval(dendaitishi);
+        yuyanAI_input.disabled = false;
+        yuyanAI_qd.style.display = 'block';
+        yuyanAI_yy.style.display = 'block';
+
+        if (shuchunr == '请求失败') { yuyanAI_input.value = '请求失败' } else {
+            // 拆分指令到数组,并执行指令
+            var zhilinji = [];
+            const regex = /\[([^\]]+)\]/g;
+            let match;
+            while ((match = regex.exec(shuchunr)) !== null) {
+                zhilinji.push(match[1]); // match[1] 是捕获组,即方括号内的内容
+            }
+            if (zhilinji.length == 1 && zhilinji[0] == '错误指令') {
+                yuyanAI_input.value = '暂时还不会呢';
+                setTimeout(() => {
+                    if (yuyanAI_input.value == '暂时还不会呢') {
+                        yuyanAI_input.value = '';
+                        yuyanAI_input.focus();
+                        yuyanAI_ym_zdgb = 0; //重置计数器
+                    }
+                }, 3000);
+                console.log('[' + AI_diaoyon + ']' + AI_heji[AI_diaoyon], zhilinji);
+            } else {
+                yuyanAI_input.value = '正在执行对应指令';
+                var zhilinji_sjcc_gs = 0;
+                const zhilinji_sjcc = setInterval(() => {
+                    yuyanAI_ym_zdgb = 0; //重置计数器
+                    AI_zdcc_ks(zhilinji[zhilinji_sjcc_gs]); //执行指令
+                    zhilinji_sjcc_gs++;
+                    if (zhilinji_sjcc_gs == zhilinji.length) {
+                        yuyanAI_input.value = '指令执行完成';
+                        setTimeout(() => {
+                            if (yuyanAI_input.value == '指令执行完成') {
+                                yuyanAI_input.value = '';
+                                yuyanAI_input.focus();
+                                yuyanAI_ym_zdgb = 0; //重置计数器
+                            }
+                        }, 3000);
+                        clearInterval(zhilinji_sjcc);
+                        Sku_tctx('指令执行完成' + '[' + AI_diaoyon + ']');
+                        console.log('[' + AI_diaoyon + ']' + AI_heji[AI_diaoyon], zhilinji);
+                        Sku_tsy(2);
+                    }
+                }, 500);
+            }
+        }
+    }
+});
+
+//参数集自动获取
+var AIzhilin_chanshu_shezhi = Array.from(document.querySelectorAll('.shezhi_mins')).map(item => item.textContent).join(',').replace(/\s+/g, ''); //更换壁纸,主题风格,场景...
+var AIzhilin = `
+1、记住你只能输出指令!记住你只能输出指令!记住你只能输出指令!
+2、这是个人网站(S-ku)上的快捷AI指令系统!
+3、不要有多余的废话,开头不能加好的或者我知道了等废话!
+4、分析用户的问题找到对应的指令,输出对应指令即可!
+5、指令永远被[]包裹,所有你输出的指令一定不能省去[]!
+6、遇到指令里的{}时,根据用户需求自行输出对应的内容!
+7、有指定参数时,不可以使用参数以外的值,仅可在参数里面找到大致对应的值并使用.无参数指令时,不可自行添加参数!
+8、一次可以输出多个指令,比如[][][]...,根据用户需求输出1个或若干个指令!
+9、没有找到对应指令输出错误指令即可,绝不能凭空捏造指令,绝不能凭空捏造指令,绝不能凭空捏造指令!
+10、比如用户问: 我还有哪些任务没完成.你输出:[跳转到任务]
+比如用户问: 搜索一下我的世界怎么玩.你输出:[搜索内容;我的世界游戏攻略]
+比如用户问: 我要重新设置登录密码.你输出:[找到设置;登入管理/登入密码]
+11、下面是所有指令集,":"左边是给你的提示,":"右边是才是对应可以输出的指令!下面是所有指令集,":"左边是给你的提示,":"右边是才是对应可以输出的指令!下面是所有指令集,":"左边是给你的提示,":"右边是才是对应可以输出的指令!
+
+没有对应指令(错误指令):[错误指令]
+仅打开首页(大厅):[跳转到首页]
+仅打开链接页面(保存用户个人网址的地方):[跳转到链接]
+仅打开任务页面(类似记事本):[跳转到任务]
+仅打开设置页面:[跳转到设置]
+仅打开AI聊天页面:[跳转到AI]
+调用搜索引擎搜索内容:[搜索内容;{用户可能需要搜索的内容}]
+指定搜索引擎搜索内容(参数只能是[百度,搜狗,360,必应,神马,头条,中国,谷歌,抖音,知乎,B站,淘宝,京东,微博,游戏]):[指定引擎搜索内容;{参数};{用户可能需要搜索的内容}]
+打开具体的设置页面(参数只能是[${AIzhilin_chanshu_shezhi}]):[找到设置;{参数}]
+调用AI问AI问题:[问AI;{用户可能需要提出的内容}]
+仅打开音乐列表页面:[打开音乐列表]
+打开修改头像页面:[修改头像]
+仅打开日程页面(记录了用户日程倒计时剩余时间):[跳转到日程]
+仅打开周志页面(记录了用户一周每个时间段的任务):[跳转到周志]
+仅打开作品展示页面(记录了用户自己的网页作品):[跳转到作品展示]
+
+12、下面是你之前输出过的无用指令(以后不得出现类似错误,不得再重复输出无用指令,意思相近不在指令集中也会不起作用,严格按规定指令形式输出,没有找到对应指令输出指令集中的错误指令即可,请认真思考)!
+${localStorage.Sku_cwzlj != '' ? ('无用指令集:' + localStorage.Sku_cwzlj) : '暂无出现无用指令'}
+
+。那么开始吧,用户说:
+`;
+// console.log(AIzhilin);
+console.log(localStorage.Sku_cwzlj);
+
+//开始自动操作
+function AI_zdcc_ks(ksczzz) {
+    try {
+        if (ksczzz == '跳转到首页') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[0].click();
+        } else if (ksczzz == '跳转到链接') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[1].click();
+        } else if (ksczzz == '跳转到任务') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[2].click();
+        } else if (ksczzz == '跳转到设置') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[3].click();
+        } else if (ksczzz == '跳转到AI') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[4].click();
+        } else if (ksczzz.substring(0, 5) == '搜索内容;') {
+            document.querySelector('.so_ssk').value = (ksczzz.split(';', 2)[1]);
+            document.querySelector('.so_anniu').click();
+        } else if (ksczzz.substring(0, 9) == '指定引擎搜索内容;') {
+            document.querySelector('.so_yq').innerHTML = (ksczzz.split(';', 3)[1]);
+            document.querySelector('.so_ssk').value = (ksczzz.split(';', 3)[2]);
+            document.querySelector('.so_anniu').click();
+        } else if (ksczzz.substring(0, 5) == '找到设置;') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[3].click();
+            const shezhi_mins = document.querySelectorAll('.shezhi_mins');
+            for (let i = 0; i < shezhi_mins.length; i++) {
+                if (containsAllChars((ksczzz.split(';', 2)[1]), (shezhi_mins[i].textContent), 0)) {
+                    shezhi_mins[i].click();
+                    break;
+                }
+                if (i == shezhi_mins.length - 1) {
+                    Sku_tctx('抱歉,AI又在胡编乱造指令,优化中');
+                    localStorage.Sku_cwzlj += shuchunr2.length > 20 ? (shuchunr2.substring(0, 20) + '...]') : shuchunr2;
+                }
+            }
+        } else if (ksczzz.substring(0, 4) == '问AI;') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[4].click();
+            document.querySelector('.AI_bottom_srk').value = (ksczzz.split(';', 2)[1]);
+            document.querySelector('.AI_bottom_srk_fs').click();
+        } else if (ksczzz == '打开音乐列表') {
+            document.querySelector('.i_music_tb').click();
+        } else if (ksczzz == '修改头像') {
+            document.querySelector('.top_tou_xian').click();
+        } else if (ksczzz == '跳转到日程') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[0].click();
+            document.querySelector('.sy_dw_richen').click();
+        } else if (ksczzz == '跳转到周志') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[0].click();
+            document.querySelector('.sy_dw_kebiao').click();
+        } else if (ksczzz == '跳转到作品展示') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[0].click();
+            document.querySelector('.sy_dw_zpzs').click();
+        } else {
+            Sku_tctx('抱歉,AI又在胡编乱造指令,优化中');
+            localStorage.Sku_cwzlj += shuchunr2.length > 20 ? (shuchunr2.substring(0, 20) + '...]') : shuchunr2;
+        }
+    } catch (error) {
+        // 执行失败,输出错误指令
+        Sku_tctx('抱歉,AI又在胡编乱造指令,优化中');
+        localStorage.Sku_cwzlj += shuchunr2.length > 20 ? (shuchunr2.substring(0, 20) + '...]') : shuchunr2;
+    }
+}
+
+//AI
+var shuchunr2 = '';
+var AI_diaoyon = 0; //调用AI索引,默认调用第一个AI
+var AI_heji = ['GLM-4-Flash', 'GLM-4-Flash-250414', 'GLM-4.7-Flash', 'GLM-Z1-Flash'];
+async function callZhiPuAI(userInput, apiKey, models) {
+    if (!userInput) {
+        throw new Error('请输入问题内容');
+    }
+    if (!apiKey) {
+        throw new Error('请提供 API Key');
+    }
+    try {
+        // 调用智谱AI API
+        const response = await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                model: models,
+                messages: [{
+                    role: 'user', //用户输入
+                    content: AIzhilin + userInput
+                }],
+                temperature: 1.0,
+                stream: false
+            })
+        });
+        if (!response.ok) {
+            throw new Error('[' + AI_diaoyon + ']' + models + ' API 请求失败:' + response.statusText);
+        }
+        const data = await response.json();
+        console.log(data.choices[0].message.content);
+        return data.choices[0].message.content;
+    } catch (error) {
+        AI_diaoyon++; //调用下一个AI
+        if (AI_diaoyon == AI_heji.length) {
+            console.log('所有API调用错误:' + error.message);
+            return '请求失败';
+        } else {
+            console.log('当前AI调用失败,调用下一个AI:' + AI_heji[AI_diaoyon]);
+            Sku_tctx('临时切换模型 ' + AI_heji[AI_diaoyon]);
+            return await callZhiPuAI(userInput, apiKey, AI_heji[AI_diaoyon]);
+        }
+    }
+}
+
+//清空错误指令
+var yuyanAI_qkcwzl = document.querySelector('.yuyanAI_qkcwzl');
+yuyanAI_qkcwzl.addEventListener('click', function(e) {
+    localStorage.Sku_cwzlj = '';
+    Sku_tctx('已清空错误指令');
+});
+
+//切换模型
+if (localStorage.Sku_zhilin_qhmx == undefined) {
+    localStorage.Sku_zhilin_qhmx = 0;
+}
+var yuyanAI_qhmx = document.querySelector('.yuyanAI_qhmx');
+yuyanAI_qhmx.innerHTML = localStorage.Sku_zhilin_qhmx;
+yuyanAI_qhmx.addEventListener('click', function(e) {
+    localStorage.Sku_zhilin_qhmx = (localStorage.Sku_zhilin_qhmx++ >= AI_heji.length - 1) ? 0 : localStorage.Sku_zhilin_qhmx++;
+    yuyanAI_qhmx.innerHTML = localStorage.Sku_zhilin_qhmx;
+    Sku_tctx('已切换到模型 ' + AI_heji[localStorage.Sku_zhilin_qhmx]);
+});
+
+
+
+
+
 
 //全局按键事件
 let isShiftPressed = false;
@@ -3593,6 +4090,9 @@ document.addEventListener('keydown', function(e) {
         if (music_boyyom_tj_ym.style.display == 'block') {
             music_tjym_qd.click();
         }
+        if (yuyanAI_ym.style.display == 'block') {
+            yuyanAI_qd.click();
+        }
     } else if (e.key == 'Escape') {
         if (nrmaxs0.style.display == 'block') {
             sy_dw_top.click();
@@ -3606,7 +4106,7 @@ document.addEventListener('keydown', function(e) {
             topmax.style.display = 'block';
             nrmax.style.display = 'block';
             sd_dtnr_max.style.display = 'none';
-            // 如果首页，开始轮播图
+            // 如果首页,开始轮播图
             if (nrmaxs0.style.display == 'block') {
                 var top_dhl_s = document.querySelector('.top_dhl').querySelectorAll('div');
                 top_dhl_s[0].click();
@@ -3691,6 +4191,10 @@ document.addEventListener('keydown', function(e) {
             sy_shezhi_gn_tj.click();
         }
     }
+
+    if (e.ctrlKey && e.key == '?') {
+        i_yuyanAI_tb.click();
+    }
 });
 
 
@@ -3700,6 +4204,7 @@ document.addEventListener('contextmenu', function() {
     sy_zp_tj_sc();
     sy_dwck_ym_yc();
     music_yms_yc();
+    yuyanAI_qxsr();
 });
 //全局左击事件
 document.addEventListener('click', function() {
@@ -3707,4 +4212,5 @@ document.addEventListener('click', function() {
     sy_zp_tj_sc();
     sy_dwck_ym_yc();
     music_yms_yc();
+    yuyanAI_qxsr();
 });

@@ -393,10 +393,10 @@ so_anniu.addEventListener('click', function() {
 
 
     // 检测是否在记录里
-    var inputValue = so_ssk.value;;
+    var inputValue = so_ssk.value;
     var trimmedValue = inputValue.trim();
     // 检测输入的值是否全是空格
-    if (trimmedValue.length !== 0) {
+    if (trimmedValue.length !== 0 && document.querySelector('.yuyanAI_input').value != '正在执行对应指令') {
         if (so_ssk.value[0] !== '[' && so_ssk.value[so_ssk.value.length - 1] !== ']') {
             var lsjl = JSON.parse(localStorage.lsjl);
             var qrgs = lsjl.indexOf(so_ssk.value);
@@ -1016,7 +1016,7 @@ shezhi_sp_xp_min2.addEventListener('blur', function(e) {
 // 相互关闭
 // 点击的,不需要隐藏的...
 function xhgb_dx(class1, class2, class3) {
-    var xhgb_dx = ['daka_tianjia_ym', 'liu_yan_sxuan_div', 'AI_szym_max', 'AI_kjzl_max', 'AI_mods_max', 'lj_zcb_ym', 'so_yq_s', 'ssbqym', 'music_ym', 'top_tou_xian_sc', 'lj_xg_tj', 'dhr_xg_tj'];
+    var xhgb_dx = ['yuyanAI_ym', 'daka_tianjia_ym', 'liu_yan_sxuan_div', 'AI_szym_max', 'AI_kjzl_max', 'AI_mods_max', 'lj_zcb_ym', 'so_yq_s', 'ssbqym', 'music_ym', 'top_tou_xian_sc', 'lj_xg_tj', 'dhr_xg_tj'];
     var dj = document.querySelectorAll('.' + class1);
     for (var i = 0; i < dj.length; i++) {
         dj[i].addEventListener('click', function(e) {
@@ -1040,6 +1040,7 @@ xhgb_dx('AI_kjzl', 'AI_kjzl_max');
 xhgb_dx('AI_dhsz', 'AI_szym_max');
 xhgb_dx('liu_yan_sxuan', 'liu_yan_sxuan_div');
 xhgb_dx('daka_tianjia_anniu', 'daka_tianjia_ym');
+xhgb_dx('i_yuyanAI_tb', 'yuyanAI_ym');
 
 
 
