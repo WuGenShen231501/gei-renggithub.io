@@ -387,6 +387,8 @@ so_anniu.addEventListener('click', function() {
                 window.open('https://s.weibo.com/weibo?q=' + so_ssk.value);
             } else if (so_yq.innerHTML == '游戏') {
                 window.open('https://www.mikuclub.win/search_page?search=' + so_ssk.value);
+            } else if (so_yq.innerHTML == 'YD') {
+                window.open('https://yandex.com/search/?text=' + so_ssk.value);
             }
         }
     }

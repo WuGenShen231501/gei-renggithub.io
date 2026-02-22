@@ -165,7 +165,7 @@ html {
     border: 10px solid var(--bei_jing_kuan_color);
     border-right: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    top: -9px;
+    top: -10px;
     left: 40px;
     transform: rotate(45deg);
 }
@@ -209,6 +209,10 @@ html {
 
 .so_yq_bing {
     background-image: url(https://rescdn.ilive.cn/eimg/bing.png);
+}
+
+.so_yq_yandex {
+    background-image: url(https://biz-crm-waimao.su.bcebos.com/biz-crm-waimao/maichongxing/maichongxing/online/banner/a8c7217496794f59bb5f755b91cf453d.png);
 }
 
 .so_yq_sm {
@@ -1078,6 +1082,9 @@ html {
     .so_suo {
         right: 150px;
     }
+    .so_yq_s {
+        right: 420px;
+    }
     .i_lian_jie_ss_tb {
         right: 80px !important;
     }
@@ -1088,7 +1095,7 @@ html {
 
 @media screen and (max-width: 1140px) {
     .so_yq_s {
-        right: 370px;
+        right: 420px;
     }
     .top_dhl {
         left: 50px;

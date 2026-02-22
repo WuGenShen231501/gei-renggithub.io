@@ -409,7 +409,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
         }
     }, 300);
 
-    if (mod_s == 'qwen-max-latest' || mod_s == 'qwen-max') { //阿里云百练(联网)(对话)
+    if (mod_s == 'qwen-max-latest') { //阿里云百练(联网)(对话)
 
         try {
             const apiKey = key_s;
@@ -456,7 +456,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'deepseek-r1') { //阿里云百练(不联网)(对话)
+    } else if (mod_s == '#') { //阿里云百练(不联网)(对话)
 
         try {
             const apiKey = key_s;
@@ -502,7 +502,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'gpt-4o-mini' || mod_s == 'gpt-3.5-turbo' || mod_s == 'gpt-4') { //GPT_API_free(GitHub)(对话)
+    } else if (mod_s == 'GPT-5-mini' || mod_s == 'deepseek-v3-2-exp' || mod_s == 'gpt-5.2') { //GPT_API_free(GitHub)(对话)
 
         try { // 可能产生错误的代码
             var myHeaders = new Headers();
@@ -543,7 +543,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'GLM-Zero-Preview' || mod_s == 'GLM-4-Flash-250414' || mod_s == 'glm-4-plus' || mod_s == 'GLM-4-Flash' || mod_s == 'glm-4-air') { //智谱AI开放平台(对话)
+    } else if (mod_s == 'GLM-4-Flash' || mod_s == 'GLM-4-Flash-250414' || mod_s == 'GLM-4.7-Flash' || mod_s == 'GLM-Z1-Flash') { //智谱AI开放平台(对话)
 
         try {
             // 替换 <你的apikey> 为您的实际 API Key
@@ -593,120 +593,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
         }
 
-    } else if (mod_s == 'cogView-3-plus') { //智谱AI开放平台(文生图)
-
-        try {
-            // 替换 <你的apikey> 为您的实际 API Key
-            const apiKey = key_s;
-            const url = 'https://open.bigmodel.cn/api/paas/v4/images/generations';
-
-            // 请求数据
-            const requestData = {
-                max_tokens: 4095,
-                model: mod_s,
-                messages: [{
-                    role: "user",
-                    content: nr_s
-                }]
-            };
-
-            // 将请求数据转换为JSON字符串
-            const jsonData = JSON.stringify(requestData);
-
-            // 使用 fetch 发起 POST 请求
-            fetch(url, {
-                    method: 'POST', // 或者 'GET'，根据API的要求
-                    headers: {
-                        'Authorization': `Bearer ${apiKey}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: jsonData // 对于 POST 请求，请求数据在 body 中
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok ' + response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(data); // 处理返回的数据
-
-                    AI_cl('<img src="' + data.choices[0].message.content[0].url + '">', 2, mod_s, AI_ID);
-                })
-                .catch(err => {
-                    console.log(err);
-
-                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
-                });
-        } catch (error) {
-            // 这个块会在 try 中有错误抛出时执行
-            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
-        }
-
-    } else if (mod_s == 'web-search-pro') { //智谱AI开放平台(联网搜索)
-
-        try {
-            // 定义API密钥和API URL
-            const apiKey = key_s;
-            const apiUrl = "https://open.bigmodel.cn/api/paas/v4/tools";
-
-            // 定义一个函数来运行API请求
-            function runV4Sync() {
-                // 构造请求数据
-                const msg = [{
-                    role: "user",
-                    content: nr_s
-                }];
-
-                const tool = mod_s;
-                const requestId = crypto.randomUUID(); // 使用crypto API生成请求ID
-
-                const data = {
-                    requestId: requestId,
-                    tool: tool,
-                    stream: false,
-                    messages: msg
-                };
-
-                // 使用fetch发送POST请求
-                fetch(apiUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': apiKey
-                        },
-                        body: JSON.stringify(data)
-                    })
-                    .then(response => response.text()) // 获取响应文本
-                    .then(function(content) {
-                        console.log(JSON.parse(content)); // 处理返回的数据
-                        var array = JSON.parse(content).choices[0].message.tool_calls[1].search_result;
-                        const contentArray = array.map(item => item.content); // 提取content字段
-                        const contentString = contentArray.join('\n\n'); // 将数组转换为字符串
-                        console.log(contentString);
-
-                        AI_cl(contentString, 2, mod_s, AI_ID);
-                        // 由模型GLM-4-flas重新总结
-                        AI_li_shi_xx = []; // 清空历史记录
-                        AI_fsxx('深度阅读以下来自个个平台搜索出来的多个文章，分析我的问题和文章,根据问题总结文章内容但不省略信息.我的问题是:\n' + nr_s + '\n搜索结果是:\n' + contentString, 'GLM-4-Flash', 'e468d888af568e3193feb8e889198fbe.OjcUgGQXJnHmQ8HW', AI_xian_cheng);
-                        // ID更改
-                        AI_xian_cheng++;
-                        // 正在执行数加一
-                        AI_zhi_xing_s++;
-                    })
-                    .catch(function(err) {
-                        console.log(err);
-                        AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
-                    });
-            }
-            // 调用函数
-            runV4Sync();
-        } catch (error) {
-            // 这个块会在 try 中有错误抛出时执行
-            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
-        }
-
-    } else if (mod_s == 'deepseek-ai/DeepSeek-R1' || mod_s == 'deepseek-ai/DeepSeek-R1-Distill-Llama-8B' || mod_s == 'Qwen/Qwen2.5-Coder-7B-Instruct' || mod_s == 'Qwen/Qwen2.5-7B-Instruct' || mod_s == 'Pro/Qwen/Qwen2-1.5B-Instruct' || mod_s == 'Qwen/Qwen2-7B-Instruct' || mod_s == 'Qwen/Qwen2-1.5B-Instruct' || mod_s == 'THUDM/chatglm3-6b' || mod_s == '01-ai/Yi-1.5-9B-Chat-16K' || mod_s == 'internlm/internlm2_5-7b-chat' || mod_s == 'google/gemma-2-9b-it' || mod_s == 'meta-llama/Meta-Llama-3-8B-Instruct' || mod_s == 'meta-llama/Meta-Llama-3.1-8B-Instruct' || mod_s == 'mistralai/Mistral-7B-Instruct-v0.2' || mod_s == 'Qwen/Qwen1.5-7B-Chat' || mod_s == 'THUDM/glm-4-9b-chat') { //SiliconCloud(max_tokens:4096)(对话)
+    } else if (mod_s == 'THUDM/GLM-4.1V-9B-Thinking' || mod_s == 'deepseek-ai/DeepSeek-R1-0528-Qwen3-8B' || mod_s == 'Qwen/Qwen3-8B' || mod_s == 'THUDM/GLM-Z1-9B-0414' || mod_s == 'deepseek-ai/DeepSeek-OCR') { //SiliconCloud(max_tokens:4096)(对话)
 
         try {
             const options = {
@@ -738,82 +625,6 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
                     console.log(response); // 处理返回的数据
 
                     AI_cl(response.choices[0].message.content, 2, mod_s, AI_ID);
-                })
-                .catch(function(err) {
-                    console.log(err);
-
-                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
-                });
-        } catch (error) {
-            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
-        }
-
-    } else if (mod_s == '01-ai/Yi-1.5-6B-Chat') { //SiliconCloud(max_tokens:2069)(对话)
-
-        try {
-            const options = {
-                method: 'POST',
-                headers: {
-                    accept: 'application/json',
-                    'content-type': 'application/json',
-                    authorization: 'Bearer ' + key_s
-                },
-                body: JSON.stringify({
-                    model: mod_s,
-                    messages: AI_li_shi_xx.length == 0 ? [{
-                        role: "user",
-                        content: nr_s
-                    }] : AI_li_shi_xx,
-                    stream: false,
-                    max_tokens: 2069,
-                    temperature: 0.7,
-                    top_p: 0.7,
-                    top_k: 50,
-                    frequency_penalty: 0.5,
-                    n: 1
-                })
-            };
-
-            fetch('https://api.siliconflow.cn/v1/chat/completions', options)
-                .then(response => response.json())
-                .then(function(response) {
-                    console.log(response); // 处理返回的数据
-
-                    AI_cl(response.choices[0].message.content, 2, mod_s, AI_ID);
-                })
-                .catch(function(err) {
-                    console.log(err);
-
-                    AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
-                });
-        } catch (error) {
-            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
-        }
-
-    } else if (mod_s == 'deepseek-ai/Janus-Pro-7B' || mod_s == 'stabilityai/stable-diffusion-3-5-large' || mod_s == 'black-forest-labs/FLUX.1-schnell' || mod_s == 'stabilityai/stable-diffusion-2-1' || mod_s == 'stabilityai/stable-diffusion-3-medium' || mod_s == 'stabilityai/stable-diffusion-xl-base-1.0') { //SiliconCloud(文生图)
-
-        try {
-            const options = {
-                method: 'POST',
-                headers: { Authorization: 'Bearer ' + key_s, 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    "model": mod_s,
-                    "prompt": nr_s,
-                    "negative_prompt": "<string>",
-                    "image_size": "1024x576",
-                    "batch_size": 1,
-                    "seed": 4999999999,
-                    "num_inference_steps": 50,
-                    "guidance_scale": 20
-                })
-            };
-
-            fetch('https://api.siliconflow.cn/v1/images/generations', options)
-                .then(response => response.json())
-                .then(function(response) {
-                    console.log(response); // 处理返回的数据
-
-                    AI_cl('<img src="' + response.images[0].url + '">', 2, mod_s, AI_ID);
                 })
                 .catch(function(err) {
                     console.log(err);

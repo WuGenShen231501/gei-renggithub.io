@@ -2,9 +2,8 @@
 window.pinyin = pinyinPro.pinyin;
 
 // 提示音
-var sku_tsy = document.querySelectorAll('.sku_tsy');
-
 function Sku_tsy(num) {
+    var sku_tsy = document.querySelectorAll('.sku_tsy');
     sku_tsy[num].play();
 }
 
@@ -3568,7 +3567,7 @@ i_yuyanAI_tb.addEventListener('click', function(e) {
             yuyanAI_input.value = '';
         }
         yuyanAI_input.focus();
-
+        clearInterval(yuyanAI_ym_zdgb_hs);
         yuyanAI_ym_zdgb_hs = setInterval(() => {
             yuyanAI_ym_zdgb++;
             if (yuyanAI_ym_zdgb >= 10) {
@@ -3630,19 +3629,21 @@ function initVoiceInput(inputClass, toggleBtnClass) {
 
     // 处理语音识别结果
     recognition.onresult = function(event) {
-        let interimTranscript = '';
+        if (yuyanAI_yy.style.opacity == 1) {
+            let interimTranscript = '';
 
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-            const transcript = event.results[i][0].transcript;
-            if (event.results[i].isFinal) {
-                finalTranscript += transcript;
-            } else {
-                interimTranscript += transcript; // 临时结果
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    finalTranscript += transcript;
+                } else {
+                    interimTranscript += transcript; // 临时结果
+                }
             }
-        }
 
-        inputElement.value = finalTranscript + interimTranscript;
-        yuyanAI_ym_zdgb = 0; //重置计数器
+            inputElement.value = finalTranscript + interimTranscript;
+            yuyanAI_ym_zdgb = 0; //重置计数器
+        }
     };
 
     // 处理语音识别错误
@@ -3882,25 +3883,32 @@ var AIzhilin = `
 8、一次可以输出多个指令,比如[][][]...,根据用户需求输出1个或若干个指令!
 9、没有找到对应指令输出错误指令即可,绝不能凭空捏造指令,绝不能凭空捏造指令,绝不能凭空捏造指令!
 10、比如用户问: 我还有哪些任务没完成.你输出:[跳转到任务]
-比如用户问: 搜索一下我的世界怎么玩.你输出:[搜索内容;我的世界游戏攻略]
-比如用户问: 我要重新设置登录密码.你输出:[找到设置;登入管理/登入密码]
+比如用户问:搜索一下我的世界怎么玩.你输出:[搜索内容;我的世界游戏攻略]
+比如用户问:我要重新设置登录密码.你输出:[找到设置;登入管理/登入密码]
+比如用户问:距离我的生日还有多少天?你输出:[筛选日程;生日]
 11、下面是所有指令集,":"左边是给你的提示,":"右边是才是对应可以输出的指令!下面是所有指令集,":"左边是给你的提示,":"右边是才是对应可以输出的指令!下面是所有指令集,":"左边是给你的提示,":"右边是才是对应可以输出的指令!
 
 没有对应指令(错误指令):[错误指令]
 仅打开首页(大厅):[跳转到首页]
 仅打开链接页面(保存用户个人网址的地方):[跳转到链接]
-仅打开任务页面(类似记事本):[跳转到任务]
+仅打开任务页面,查看所有任务(类似记事本):[跳转到任务]
 仅打开设置页面:[跳转到设置]
 仅打开AI聊天页面:[跳转到AI]
-调用搜索引擎搜索内容:[搜索内容;{用户可能需要搜索的内容}]
+调用搜索引擎搜索内容:[搜索内容;{润色用户可能需要搜索的内容}]
 指定搜索引擎搜索内容(参数只能是[百度,搜狗,360,必应,神马,头条,中国,谷歌,抖音,知乎,B站,淘宝,京东,微博,游戏]):[指定引擎搜索内容;{参数};{用户可能需要搜索的内容}]
 打开具体的设置页面(参数只能是[${AIzhilin_chanshu_shezhi}]):[找到设置;{参数}]
-调用AI问AI问题:[问AI;{用户可能需要提出的内容}]
+调用AI问AI问题:[问AI;{润色用户可能需要提出的问题}]
 仅打开音乐列表页面:[打开音乐列表]
 打开修改头像页面:[修改头像]
 仅打开日程页面(记录了用户日程倒计时剩余时间):[跳转到日程]
 仅打开周志页面(记录了用户一周每个时间段的任务):[跳转到周志]
 仅打开作品展示页面(记录了用户自己的网页作品):[跳转到作品展示]
+打开关于我们页面(页面记录着版本号,存储空间,作者信息,使用情况,说明书等):[跳转到关于我们]
+筛选日程:[筛选日程;{用户可能需要筛选的关键词}]
+筛选链接:[筛选链接;{用户可能需要筛选的关键词}]
+筛选任务:[筛选任务;{用户可能需要筛选的关键词}]
+查看所有已完成的任务:[查看已完成任务]
+查看所有未完成的任务:[查看未完成任务]
 
 12、下面是你之前输出过的无用指令(以后不得出现类似错误,不得再重复输出无用指令,意思相近不在指令集中也会不起作用,严格按规定指令形式输出,没有找到对应指令输出指令集中的错误指令即可,请认真思考)!
 ${localStorage.Sku_cwzlj != '' ? ('无用指令集:' + localStorage.Sku_cwzlj) : '暂无出现无用指令'}
@@ -3960,6 +3968,27 @@ function AI_zdcc_ks(ksczzz) {
         } else if (ksczzz == '跳转到作品展示') {
             document.querySelector('.top_dhl').querySelectorAll('div')[0].click();
             document.querySelector('.sy_dw_zpzs').click();
+        } else if (ksczzz == '跳转到关于我们') {
+            document.querySelector('.i_toplogo_tb').click();
+        } else if (ksczzz.substring(0, 5) == '筛选日程;') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[0].click();
+            document.querySelector('.sy_dw_richen').click();
+            document.querySelector('.djs_ssk').value = (ksczzz.split(';', 2)[1]);
+            document.querySelector('.djs_ssk').dispatchEvent(new Event('input'));
+        } else if (ksczzz.substring(0, 5) == '筛选链接;') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[1].click();
+            document.querySelector('.lian_jie_ssk').value = (ksczzz.split(';', 2)[1]);
+            document.querySelector('.i_lian_jie_ss_tb3').click();
+        } else if (ksczzz.substring(0, 5) == '筛选任务;') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[2].click();
+            document.querySelector('.input_ji_ru_srk').value = (ksczzz.split(';', 2)[1]);
+            document.querySelector('.i_liu_yan_ss_tp').click();
+        } else if (ksczzz == '查看已完成任务') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[2].click();
+            document.querySelector('.liu_yan_sxuan_bj').click();
+        } else if (ksczzz == '查看未完成任务') {
+            document.querySelector('.top_dhl').querySelectorAll('div')[2].click();
+            document.querySelector('.liu_yan_sxuan_wbj').click();
         } else {
             Sku_tctx('抱歉,AI又在胡编乱造指令,优化中');
             localStorage.Sku_cwzlj += shuchunr2.length > 20 ? (shuchunr2.substring(0, 20) + '...]') : shuchunr2;
@@ -4005,7 +4034,13 @@ async function callZhiPuAI(userInput, apiKey, models) {
         }
         const data = await response.json();
         console.log(data.choices[0].message.content);
-        return data.choices[0].message.content;
+        let result = data.choices[0].message.content;
+        let thinkStart = result.indexOf('<think>');
+        let thinkEnd = result.indexOf('</think>');
+        if (thinkStart > -1 && thinkEnd > thinkStart) { //思考模式删除思考过程,删除think标签和里面所有内容
+            result = result.substring(0, thinkStart) + result.substring(thinkEnd + 9);
+        }
+        return result;
     } catch (error) {
         AI_diaoyon++; //调用下一个AI
         if (AI_diaoyon == AI_heji.length) {
