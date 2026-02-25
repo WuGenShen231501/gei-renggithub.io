@@ -683,6 +683,9 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
         try {
             // 使用marked解析Markdown
             var parsedHtml = marked.parse(nr);
+            //把<think>变成<pre>
+            parsedHtml = parsedHtml.replace(/<think>/g, '<pre>');
+            parsedHtml = parsedHtml.replace(/<\/think>/g, '</pre>');
             // 将解析后的HTML设置回div元素中
             var nr = parsedHtml;
         } catch (error) {
@@ -1608,4 +1611,68 @@ function AI_zj_nrwz() {
     } else {
         AI_zhidi.style.display = 'none';
     }
+}
+
+
+
+
+//输入输出大小调整
+if (localStorage.AI_yemian_bianlian == undefined) {
+    localStorage.AI_yemian_bianlian = '0px';
+}
+var AI_tuozhuai = document.querySelector('.AI_tuozhuai');
+document.documentElement.style.setProperty('--AI_tuozhuai_bianlian', localStorage.AI_tuozhuai_bianlian);
+// 拖拽触发事件
+if (AI_tuozhuai) {
+    let isDragging2 = false;
+    let istuozhuai2 = false;
+    let startY2 = 0;
+    let startBottom2; // 初始底部位置
+    var tuozhuai_zhbl2;
+
+    AI_tuozhuai.addEventListener('mousedown', function(e) { // 拖拽点击事件
+        e.preventDefault();
+        isDragging2 = true;
+        startY2 = e.clientY;
+        // 记录拖拽开始时的底部位置
+        startBottom2 = parseInt(window.getComputedStyle(AI_tuozhuai).bottom); // 转换为整数并移除px单位
+        console.log(startBottom2);
+        AI_tuozhuai.style.opacity = 1;
+    });
+
+    document.addEventListener('mousemove', function(e) { // 拖拽移动事件
+        e.preventDefault();
+        if (isDragging2) {
+            istuozhuai2 = true;
+            // 计算拖拽距离
+            const currentY = e.clientY;
+            const dragDistance = currentY - startY2;
+            // 基于初始底部位置和拖拽距离更新位置
+            tuozhuai_zhbl2 = (startBottom2 - dragDistance - 140);
+            if (tuozhuai_zhbl2 < '0') {
+                tuozhuai_zhbl2 = '0';
+            } else if (tuozhuai_zhbl2 > '428') {
+                tuozhuai_zhbl2 = '428';
+            }
+            tuozhuai_zhbl2 = tuozhuai_zhbl2 + 'px';
+            AI_tuozhuai.style.bottom = 'calc(140px + ' + tuozhuai_zhbl2 + ')';
+        }
+    });
+
+    document.addEventListener('mouseup', function(e) { // 拖拽结束事件
+        e.preventDefault();
+        if (isDragging2) {
+            // 拖拽结束时触发事件
+            console.log('拖拽结束触发事件');
+            // 这里可以添加拖拽结束时的代码
+            AI_tuozhuai.style.opacity = null;
+            isDragging2 = false;
+            // 保存拖拽结束时的位置
+            if (istuozhuai2) {
+                localStorage.AI_tuozhuai_bianlian = tuozhuai_zhbl2;
+                document.documentElement.style.setProperty('--AI_tuozhuai_bianlian', tuozhuai_zhbl2);
+            }
+            istuozhuai2 = false;
+        }
+    });
 }

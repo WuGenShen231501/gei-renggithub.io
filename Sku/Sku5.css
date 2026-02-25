@@ -40,7 +40,7 @@
     position: relative;
     float: left;
     width: calc(100% + 70px);
-    height: calc(100% - 30px - 140px);
+    height: calc(100% - 30px - 140px - var(--AI_tuozhuai_bianlian));
     border-bottom: 1px solid var(--zi_ti_color_20);
     overflow-x: hidden;
     overflow-y: scroll;
@@ -64,7 +64,7 @@
     position: relative;
     float: left;
     width: 100%;
-    height: 140px;
+    height: calc(140px + var(--AI_tuozhuai_bianlian));
 }
 
 .AI_huida_tx {
@@ -148,7 +148,7 @@
 .AI_bottom_srk_hz {
     position: absolute;
     width: calc(100% - 30px);
-    height: 80px;
+    height: calc(80px + var(--AI_tuozhuai_bianlian));
     border-radius: 10px;
     border: 1px solid var(--zi_ti_color_20);
     bottom: 15px;
@@ -176,7 +176,7 @@
 
 .AI_bottom_srk_fs {
     position: absolute;
-    top: 22.5px;
+    bottom: 22.5px;
     right: 25px;
     width: 85px;
     height: 35px;
@@ -710,6 +710,11 @@
     background-color: rgb(0, 0, 0, 0);
 }
 
+.AI_huida_nr pre * {
+    display: inline-block;
+    margin: 10px 0;
+}
+
 .AI_huida_nr code {
     pointer-events: fill !important;
     font-size: 20px;
@@ -749,4 +754,18 @@
         opacity: 1;
         transform: translateY(0px);
     }
+}
+
+.AI_tuozhuai {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: calc(140px + var(--AI_tuozhuai_bianlian));
+    left: 0;
+    background-color: var(--zi_ti_color_50);
+    opacity: 0;
+}
+
+.AI_tuozhuai:hover {
+    opacity: 1;
 }

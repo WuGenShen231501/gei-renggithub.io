@@ -734,7 +734,6 @@ function liu_yan_quanpin_hs() {
     if (localStorage.liuyan_quanpin_true == 0) {
         liu_yan.className = 'liu_yan';
         liu_yan_mao_bo_li.className = 'liu_yan_mao_bo_li';
-        liu_yan_srk.className = 'liu_yan_srk';
         liu_yan_top.className = 'liu_yan_top';
         liuyan_gundontiao_max.className = 'liuyan_gundontiao_max';
         liu_yan_sxuan_div.className = 'liu_yan_sxuan_div';
@@ -743,7 +742,6 @@ function liu_yan_quanpin_hs() {
     } else {
         liu_yan.className = 'liu_yan liu_yan2';
         liu_yan_mao_bo_li.className = 'liu_yan_mao_bo_li liu_yan_mao_bo_li2';
-        liu_yan_srk.className = 'liu_yan_srk liu_yan_srk2';
         liu_yan_top.className = 'liu_yan_top liu_yan_top2';
         liuyan_gundontiao_max.className = 'liuyan_gundontiao_max liuyan_gundontiao_max2';
         liu_yan_sxuan_div.className = 'liu_yan_sxuan_div liu_yan_sxuan_div2';
@@ -761,6 +759,70 @@ liu_yan_quanpin.addEventListener('click', function() {
     }
     liu_yan_quanpin_hs();
 })
+
+
+
+
+//拖拉调整大小
+if (localStorage.liuyan_tuozhuai_bianlian == undefined) {
+    localStorage.liuyan_tuozhuai_bianlian = '0px';
+}
+var liuyan_tuozhuai = document.querySelector('.liuyan_tuozhuai');
+document.documentElement.style.setProperty('--liuyan_tuozhuai_bianlian', localStorage.liuyan_tuozhuai_bianlian);
+// 拖拽触发事件
+if (liuyan_tuozhuai) {
+    let isDragging = false;
+    let istuozhuai = false;
+    let startY = 0;
+    let startBottom; // 初始底部位置
+    var tuozhuai_zhbl;
+
+    liuyan_tuozhuai.addEventListener('mousedown', function(e) { // 拖拽点击事件
+        e.preventDefault();
+        isDragging = true;
+        startY = e.clientY;
+        // 记录拖拽开始时的底部位置
+        startBottom = parseInt(window.getComputedStyle(liuyan_tuozhuai).bottom); // 转换为整数并移除px单位
+        console.log(startBottom);
+        liuyan_tuozhuai.style.opacity = 1;
+    });
+
+    document.addEventListener('mousemove', function(e) { // 拖拽移动事件
+        e.preventDefault();
+        if (isDragging) {
+            istuozhuai = true;
+            // 计算拖拽距离
+            const currentY = e.clientY;
+            const dragDistance = currentY - startY;
+            // 基于初始底部位置和拖拽距离更新位置
+            tuozhuai_zhbl = (startBottom - dragDistance - 148);
+            if (tuozhuai_zhbl < '0') {
+                tuozhuai_zhbl = '0';
+            } else if (tuozhuai_zhbl > '409') {
+                tuozhuai_zhbl = '409';
+            }
+            tuozhuai_zhbl = tuozhuai_zhbl + 'px';
+            liuyan_tuozhuai.style.bottom = 'calc(148px + ' + tuozhuai_zhbl + ')';
+        }
+    });
+
+    document.addEventListener('mouseup', function(e) { // 拖拽结束事件
+        e.preventDefault();
+        if (isDragging) {
+            // 拖拽结束时触发事件
+            console.log('拖拽结束触发事件');
+            // 这里可以添加拖拽结束时的代码
+            liuyan_tuozhuai.style.opacity = null;
+            isDragging = false;
+            // 保存拖拽结束时的位置
+            if (istuozhuai) {
+                localStorage.liuyan_tuozhuai_bianlian = tuozhuai_zhbl;
+                document.documentElement.style.setProperty('--liuyan_tuozhuai_bianlian', tuozhuai_zhbl);
+            }
+            istuozhuai = false;
+        }
+    });
+}
 
 
 
