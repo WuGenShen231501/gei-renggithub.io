@@ -3140,22 +3140,27 @@ sy_ke_biao_max.addEventListener('input', function(event) {
 //锁定开关
 var sy_zpzs_kaiguan2 = document.querySelector('.sy_zpzs_kaiguan2');
 var zhou_zhi_yckk_max = document.querySelector('.zhou_zhi_yckk_max');
+var sy_zpzs_kaiguan_ts2 = document.querySelector('.sy_zpzs_kaiguan_ts2');
 if (JSON.parse(localStorage.ke_biao_sd) == true) {
     sy_zpzs_kaiguan2.innerText = '✔';
     zhou_zhi_yckk_max.style.display = 'block';
+    sy_zpzs_kaiguan_ts2.innerText = '锁定';
 } else {
     sy_zpzs_kaiguan2.innerText = '';
     zhou_zhi_yckk_max.style.display = 'none';
+    sy_zpzs_kaiguan_ts2.innerText = '锁定 (时间格式:8:00~10:00 11:00~13:00...) (单双周格式:[单周]/[双周]) (周范围格式:[1~3周])';
 }
 sy_zpzs_kaiguan2.addEventListener('click', function(e) {
     if (JSON.parse(localStorage.ke_biao_sd) == true) {
         localStorage.ke_biao_sd = false;
         sy_zpzs_kaiguan2.innerText = '';
         zhou_zhi_yckk_max.style.display = 'none';
+        sy_zpzs_kaiguan_ts2.innerText = '锁定 (时间格式:8:00~10:00 11:00~13:00...) (单双周格式:[单周]/[双周]) (周范围格式:[1~3周])';
     } else {
         localStorage.ke_biao_sd = true;
         sy_zpzs_kaiguan2.innerText = '✔';
         zhou_zhi_yckk_max.style.display = 'block';
+        sy_zpzs_kaiguan_ts2.innerText = '锁定';
     }
     zhou_zhi_genxin(); //周至更新
 });
@@ -3402,8 +3407,8 @@ function zhou_zhi_zd() {
 // 日程自动添加到周至
 function zhou_zhi_rc_zdtj() {
     var djs_ssk = document.querySelector('.djs_ssk'); //筛选
-    var sy_djs = {};
-    var sy_djs_zhi_biao = [];
+    var sy_djs = {}; //筛选后的日程
+    var sy_djs_zhi_biao = []; //筛选后的日程的索引
     if (djs_ssk.value !== '') {
         sy_djs2 = JSON.parse(localStorage.sy_djs);
         for (var i = 0; i < Object.keys(sy_djs2).length; i++) {
@@ -3501,6 +3506,7 @@ function zhou_zhi_rc_zdtj() {
             const element = zhou_zhi_xqS_sj[i];
             const timeRangeStr = element.value; // 获取元素的 value（如 "10:35~11:15 11:20-12:00"）
             const isInRange = isTimestampInTimeRanges(timestamp1, timeRangeStr, i);
+
             if (isInRange) {
                 var zhou_zhi_xqS = document.querySelectorAll('.zhou_zhi_xq' + dayOfWeek)[i];
                 // 添加内容

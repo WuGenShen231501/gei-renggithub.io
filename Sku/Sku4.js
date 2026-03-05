@@ -5265,7 +5265,7 @@ window.addEventListener('beforeunload', function() {
 
 
 //导入云服务信息
-const API_KEY = 'd09e960212a26a82c045e56106ad585920dc2d9d6c455ef72eb68451d87fca4e4417f5a29772642e5bd5f76a8ccb279402af77eac19f5af71e4f9d64403a01db'; // 用户提供的 API Key
+const API_KEY = 'b00aa849def5cb972111ffaf790d54ce29d26b58651598d433076df55ee450efa9bcbd1f56958f4226c90d3b044d3d321b8b1d44847fbf5f936a9d476acd2271'; // 用户提供的 API Key
 const API_BASE_URL = 'https://hastebin.com'; // API 基础 URL
 
 // 上传按钮点击事件
@@ -5741,7 +5741,7 @@ bfsz_sccd.addEventListener('click', async() => {
         Sku_tctx('请稍后，备份中...');
     } else {
         bfsz_sccd.innerHTML = '备份中...';
-        const API_KEY = 'd09e960212a26a82c045e56106ad585920dc2d9d6c455ef72eb68451d87fca4e4417f5a29772642e5bd5f76a8ccb279402af77eac19f5af71e4f9d64403a01db';
+        const API_KEY = 'b00aa849def5cb972111ffaf790d54ce29d26b58651598d433076df55ee450efa9bcbd1f56958f4226c90d3b044d3d321b8b1d44847fbf5f936a9d476acd2271';
         const API_BASE_URL = 'https://hastebin.com';
         var yun_daochu = [];
         for (var i = 0; i < daochu_daoru_max.length; i++) {
@@ -5989,17 +5989,17 @@ document.addEventListener('keyup', function(e) {
 var sd_dtnr_max = document.querySelector('.sd_dtnr_max');
 document.addEventListener('keydown', function(e) {
     if (e.ctrlKey && e.key == 's') {
-        e.preventDefault(); //阻止默认事件
-        daoru_ym_bendi.click();
-    }
-    if (e.ctrlKey && e.key == 'S') {
         e.preventDefault();
-        daoru_ym_jmdc.click();
+        daoru_ym_bendi.click();
     }
     if (e.altKey && e.key == 's') {
         e.preventDefault();
+        daoru_ym_jmdc.click();
+    }
+    if (e.altKey && e.key == 'y') {
+        e.preventDefault();
         daoru_ym_yun.click();
-        Sku_tctx('已发送云服务器');
+        Sku_tctx('导入云服务');
     }
     if (e.shiftKey && Sku_benghuai_jsq_t == 1) {
         // 关闭闪退
