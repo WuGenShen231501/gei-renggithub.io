@@ -807,8 +807,8 @@ if (liuyan_tuozhuai) {
     });
 
     document.addEventListener('mouseup', function(e) { // 拖拽结束事件
-        e.preventDefault();
         if (isDragging) {
+            e.preventDefault();
             // 拖拽结束时触发事件
             console.log('拖拽结束触发事件');
             // 这里可以添加拖拽结束时的代码

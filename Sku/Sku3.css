@@ -424,7 +424,7 @@
     right: 0;
     top: 39px;
     width: 5px;
-    height: 411px;
+    height: calc(411px - var(--liuyan_tuozhuai_bianlian));
     border-radius: 5px;
     background-color: var(--zi_ti_color_20);
     overflow: hidden;
@@ -498,7 +498,7 @@
 }
 
 .liuyan_gundontiao_max2 {
-    height: calc(100% - 188px);
+    height: calc(100% - 188px - var(--liuyan_tuozhuai_bianlian));
 }
 
 .liu_yan_sxuan_div2 {

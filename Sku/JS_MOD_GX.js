@@ -41,12 +41,12 @@ function updateLocalFile(remoteUrl, localFileName) {
 async function updateFilesSequentially() {
     // 定义需要更新的文件列表（保持原调用顺序）
     const filesToUpdate = [
-        { url: 'https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js', name: '本地jquery.js' },
-        { url: 'https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.min.js', name: 'Markdown解析器.js' },
-        { url: 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js', name: '数学标记渲染.js' },
-        { url: 'https://cdn.jsdelivr.net/npm/moment/moment.min.js', name: '农历.js' },
-        { url: 'https://cdn.jsdelivr.net/npm/moment-lunar/moment-lunar.min.js', name: '农历2.js' },
-        { url: 'https://cdn.jsdelivr.net/npm/pinyin-pro/dist/index.min.js', name: '汉字拼音表.js' }
+        { url: 'https://fastly.jsdelivr.net/npm/jquery/dist/jquery.min.js', name: '本地jquery.js' },
+        { url: 'https://fastly.jsdelivr.net/npm/marked/lib/marked.umd.min.js', name: 'Markdown解析器.js' },
+        { url: 'https://fastly.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js', name: '数学标记渲染.js' },
+        { url: 'https://fastly.jsdelivr.net/npm/moment/moment.min.js', name: '农历.js' },
+        { url: 'https://fastly.jsdelivr.net/npm/moment-lunar/moment-lunar.min.js', name: '农历2.js' },
+        { url: 'https://fastly.jsdelivr.net/npm/pinyin-pro/dist/index.min.js', name: '汉字拼音表.js' }
     ];
 
     // 循环执行：每次等待前一个完成+2秒间隔

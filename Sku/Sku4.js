@@ -6001,6 +6001,9 @@ document.addEventListener('keydown', function(e) {
         daoru_ym_yun.click();
         Sku_tctx('导入云服务');
     }
+    if (e.altKey && e.key == 'Y') {
+        Sku_tctx('云备份中...');
+    }
     if (e.shiftKey && Sku_benghuai_jsq_t == 1) {
         // 关闭闪退
         Sku_benghuai_jsq !== null ? clearInterval(Sku_benghuai_jsq) : undefined;

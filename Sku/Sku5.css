@@ -129,7 +129,7 @@
     right: 0;
     top: 30px;
     width: 5px;
-    height: calc(100% - 30px - 140px);
+    height: calc(100% - 30px - 140px - var(--AI_tuozhuai_bianlian));
     border-radius: 5px;
     background-color: var(--zi_ti_color_20);
     overflow: hidden;
@@ -268,9 +268,9 @@
 
 .AI_mods_max {
     position: absolute;
-    bottom: 141px;
+    bottom: calc(141px + var(--AI_tuozhuai_bianlian));
     left: 0;
-    height: calc(100% - 30px - 141px);
+    height: calc(100% - 30px - 141px - var(--AI_tuozhuai_bianlian));
     width: 100%;
     background-color: var(--bei_jing_color);
     backdrop-filter: var(--mao_bo_li);
@@ -285,7 +285,7 @@
     }
     100% {
         /* 动画结束的画面 */
-        height: calc(100% - 30px - 140px - 10px);
+        height: calc(100% - 30px - 140px - 10px - var(--AI_tuozhuai_bianlian));
     }
 }
 
@@ -382,8 +382,8 @@
     position: absolute;
     left: 0;
     width: 100%;
-    bottom: 141px;
-    height: calc(100% - 30px - 141px);
+    bottom: calc(141px + var(--AI_tuozhuai_bianlian));
+    height: calc(100% - 30px - 141px - var(--AI_tuozhuai_bianlian));
     background-color: var(--bei_jing_color);
     backdrop-filter: var(--mao_bo_li);
     overflow: hidden;
@@ -397,7 +397,7 @@
     }
     100% {
         /* 动画结束的画面 */
-        height: calc(100% - 30px - 141px);
+        height: calc(100% - 30px - 141px - var(--AI_tuozhuai_bianlian));
     }
 }
 
@@ -465,8 +465,8 @@
     position: absolute;
     left: 0;
     width: 100%;
-    bottom: 141px;
-    height: calc(100% - 30px - 141px);
+    bottom: calc(141px + var(--AI_tuozhuai_bianlian));
+    height: calc(100% - 30px - 141px - var(--AI_tuozhuai_bianlian));
     background-color: var(--bei_jing_color);
     backdrop-filter: var(--mao_bo_li);
     overflow: hidden;
@@ -480,7 +480,7 @@
     }
     100% {
         /* 动画结束的画面 */
-        height: calc(100% - 30px - 141px);
+        height: calc(100% - 30px - 141px - var(--AI_tuozhuai_bianlian));
     }
 }
 

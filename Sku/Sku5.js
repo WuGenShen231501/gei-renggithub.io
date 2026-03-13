@@ -1616,7 +1616,7 @@ function AI_zj_nrwz() {
 
 
 
-//输入输出大小调整
+// 输入输出大小调整
 if (localStorage.AI_yemian_bianlian == undefined) {
     localStorage.AI_yemian_bianlian = '0px';
 }
@@ -1660,8 +1660,8 @@ if (AI_tuozhuai) {
     });
 
     document.addEventListener('mouseup', function(e) { // 拖拽结束事件
-        e.preventDefault();
         if (isDragging2) {
+            e.preventDefault();
             // 拖拽结束时触发事件
             console.log('拖拽结束触发事件');
             // 这里可以添加拖拽结束时的代码
