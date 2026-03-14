@@ -2006,3 +2006,25 @@
         color: var(--zi_ti_color);
         text-decoration: underline;
     }
+    
+    .sscl_xzk_mrrd_jgsj {
+        text-align: center;
+        width: 80px;
+        height: 20px;
+        border: 0;
+        border-bottom: 1px solid var(--zi_ti_color);
+        color: var(--zi_ti_color);
+        background-color: rgb(0, 0, 0, 0);
+        outline: none;
+    }
+    
+    .sscl_xzk_mrrd {
+        float: left;
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+        border: 1px solid var(--zi_ti_color);
+        margin-left: 55px;
+        line-height: 18px;
+        text-align: center;
+    }

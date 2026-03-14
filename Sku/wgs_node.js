@@ -54,10 +54,11 @@ app.get('/:wgs', function(req, res) { //wgs参数
                     return $(el).find('.t').length;
                 }).get();
                 // 修改为通过map获取数组
-                // 获取所有.cc-cd-lb元素的文本内容，转换为数组
-                const rd = $('.cc-cd-lb').map((i, el) => $(el).text()).get();
-                // 获取所有.t元素的文本内容，转换为数组
-                const rd2 = $('.t').map((i, el) => $(el).text()).get();
+                // 获取所有.cc-cd-lb span 元素的文本内容，转换为数组
+                const rd = $('.cc-cd-lb span').map((i, el) => $(el).text().replace(/\n/g, '').replace(/\t/g, '').trim()).get();
+                console.log(rd);
+                // 获取所有.t 元素的文本内容，转换为数组
+                const rd2 = $('.t').map((i, el) => $(el).text().replace(/\n/g, '').replace(/\t/g, '').trim()).get();
                 // 添加HTML结构包装
                 // 发送响应，包含三个数组：分类列表、内容列表和每个分类的内容数量
                 res.send([rd, rd2, counts]); // 删除模板字符串自带的换行

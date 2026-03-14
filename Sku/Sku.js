@@ -302,6 +302,7 @@ so_ssk.addEventListener('blur', function() {
     so_ssk_num = 0;
 });
 //搜索按钮
+var max_node = document.querySelector('.max_node');
 so_anniu.addEventListener('click', function() {
     if (so_ssk.value !== '') {
         // 检测是否是直接网址
@@ -321,7 +322,11 @@ so_anniu.addEventListener('click', function() {
             Sku_tctx('已添 ' + rsjl2.length + ' 条无重复搜索记录');
         } else if (so_ssk.value == 'wugenshen') {
             mrrd_sx();
-        } else if (so_ssk.value == 'wugenshen_mrrd') {
+        } else if (so_ssk.value == 'wugenshen_mrrd' && max_node.innerText == 'node!') {
+            Sku_tctx('正在爬取热点...');
+            localStorage.mrrd = '[]';
+            localStorage.mrrd_top = '[]';
+            localStorage.mrrd_name = '[]';
             $(document).ready(function() {
                 // 使用 $.get() 发起 GET 请求
                 $.get("http://localhost/mrrd", function(data, status) {
@@ -355,6 +360,8 @@ so_anniu.addEventListener('click', function() {
                     Sku_tctx('获取失败');
                 });
             });
+        } else if (so_ssk.value == 'wugenshen_mrrd' && max_node.innerText !== 'node!') {
+            Sku_tctx('抓取热点中前请先打开node.js服务!');
         } else {
             // 不是直接网址时搜索
             if (so_yq.innerHTML == '百度') {
