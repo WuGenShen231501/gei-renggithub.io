@@ -6,6 +6,11 @@ const app = express();
 const fs = require('fs');
 // 引入CORS中间件，用于处理跨域请求
 const cors = require('cors');
+// 引入multer模块，用于处理文件上传
+const multer = require('multer');
+// 引入path模块，用于处理文件路径
+const path = require('path');
+
 
 
 // 使用CORS中间件，允许跨域请求
@@ -18,6 +23,8 @@ app.get('/', function(req, res) {
     // 返回欢迎信息
     res.send('欢迎使用!');
 });
+
+
 
 // 定义带参数的GET请求处理，参数为wgs
 app.get('/:wgs', function(req, res) { //wgs参数
@@ -108,9 +115,10 @@ app.get('/:wgs', function(req, res) { //wgs参数
                 console.error('请求失败:', error.message);
                 res.status(500).send({ error: '请求失败', details: error.message });
             });
-    } else if (req.params.wgs == 'wgs') {
-        // 如果请求参数wgs等于'wgs'，返回欢迎信息
-        res.send('欢迎使用!');
+    } else if (req.params.wgs == 'Sku-Photo') {
+        res.status(405).json({ success: false, error: '方法不允许' });
+    } else if (req.params.wgs == 'Sku-Photo-Delete') {
+        res.status(405).json({ success: false, error: '方法不允许' });
     } else {
         // 其他情况，返回欢迎信息
         res.send('欢迎使用!');
@@ -143,6 +151,101 @@ function parseWebsiteInfo(html, baseUrl) {
     }
     return { title, favicon };
 }
+
+//photo处理
+function photoHandle() {
+    // 处理文件上传的POST路由
+    app.post('/Sku-Photo', multer({
+        storage: multer.diskStorage({
+            destination: (req, file, cb) => {
+                const uploadPath = path.join(__dirname, req.query.path || 'photo');
+                // 确保目录存在
+                if (!fs.existsSync(uploadPath)) {
+                    fs.mkdirSync(uploadPath, { recursive: true });
+                }
+                cb(null, uploadPath);
+            },
+            filename: (req, file, cb) => {
+                // 使用原文件名
+                cb(null, file.originalname);
+            }
+        })
+    }).single('image'), (req, res) => {
+        if (!req.file) {
+            return res.status(400).json({ success: false, error: '没有文件被上传' });
+        }
+
+        let isDuplicate = false;
+        const uploadPath = path.join(__dirname, req.query.path || 'photo');
+        const filePath = path.join(uploadPath, req.file.originalname);
+
+        // 检查文件是否存在
+        if (fs.existsSync(filePath)) {
+            // 如果文件存在，比较文件大小
+            const existingFileStats = fs.statSync(filePath);
+            if (existingFileStats.size === req.file.size) {
+                // 文件大小相同，视为重复文件
+                isDuplicate = true;
+            }
+        }
+
+        // 无论是否重复上传，都返回成功信息
+        const relativePath = 'photo/' + req.file.filename; // 生成相对路径
+        res.json({
+            success: true,
+            originalname: req.file.originalname,
+            filename: req.file.filename,
+            path: relativePath,
+            isDuplicate: isDuplicate
+        });
+    });
+}
+photoHandle(); // 调用photoHandle函数，注册文件上传功能
+
+//photo删除处理
+function photoDeleteHandle() {
+    // 解析JSON请求体
+    app.use(express.json());
+
+    // 处理删除未使用图片的POST路由
+    app.post('/Sku-Photo-Delete', (req, res) => {
+        const usedPhotos = req.body.usedPhotos || [];
+        const photoDir = path.join(__dirname, 'photo');
+
+        try {
+            // 检查photo目录是否存在
+            if (!fs.existsSync(photoDir)) {
+                return res.json({ success: true, message: 'photo目录不存在，无需删除' });
+            }
+
+            // 读取photo目录中的所有文件
+            const files = fs.readdirSync(photoDir);
+            const deletedFiles = [];
+
+            // 遍历文件，删除未使用的图片
+            files.forEach(file => {
+                const filePath = path.join(photoDir, file);
+                const relativePath = 'photo/' + file;
+
+                // 如果文件不在使用列表中，删除它
+                if (!usedPhotos.includes(relativePath)) {
+                    fs.unlinkSync(filePath);
+                    deletedFiles.push(relativePath);
+                }
+            });
+
+            res.json({
+                success: true,
+                message: '未使用的图片删除成功',
+                deletedFiles: deletedFiles
+            });
+        } catch (error) {
+            console.error('删除图片时出错:', error);
+            res.status(500).json({ success: false, error: '删除图片失败' });
+        }
+    });
+}
+photoDeleteHandle(); // 调用photoDeleteHandle函数，注册图片删除功能
 
 // 配置静态资源服务，将/Sku路径映射到../Sku目录
 app.use('/Sku', express.static('../Sku'));

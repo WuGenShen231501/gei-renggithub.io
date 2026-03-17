@@ -641,31 +641,6 @@ liu_yan_srk.addEventListener('keydown', function(e) {
 
 
 
-
-
-// 拖拽读取导入信息
-liu_yan.addEventListener('dragover', function(e) {
-    e.preventDefault();
-});
-liu_yan.addEventListener('drop', function(e) {
-    e.preventDefault();
-    var dt = e.dataTransfer;
-    var files = dt.files;
-    var dx = new FileReader();
-    dx.readAsText(files[0]);
-    dx.onload = function(e) {
-        var wj = e.target.result;
-        // 处理信息
-        liu_yan_srk.value = wj;
-        liu_yan_button.click();
-    }
-});
-
-
-
-
-
-
 // 滚动条
 Sku_gundontiao('.liu_yan_top', '.liuyan_gundontiao_max', '.liuyan_gundontiao_min');
 
@@ -823,6 +798,197 @@ if (liuyan_tuozhuai) {
         }
     });
 }
+
+
+
+
+//图片拖拽保存及应用
+function ImageUploader(elementClass, savePath, options = {}) {
+    const config = {
+        uploadUrl: 'http://localhost/Sku-Photo',
+        onSuccess: options.onSuccess || null,
+        onError: options.onError || null,
+        dragOverClass: options.dragOverClass || 'drag-over',
+        allowedTypes: options.allowedTypes || ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
+    };
+
+    // 初始化所有元素
+    document.querySelectorAll('.' + elementClass).forEach(element => {
+        element.setAttribute('tabindex', '0');
+        element.addEventListener('dragover', e => {
+            e.preventDefault();
+            e.currentTarget.classList.add(config.dragOverClass);
+        });
+        element.addEventListener('dragleave', e => {
+            e.preventDefault();
+            e.currentTarget.classList.remove(config.dragOverClass);
+        });
+        element.addEventListener('drop', e => {
+            e.preventDefault();
+            const element = e.currentTarget;
+            element.classList.remove(config.dragOverClass);
+
+            Array.from(e.dataTransfer.files).forEach(file => {
+                // 检查是否为图片文件
+                if (config.allowedTypes.includes(file.type)) {
+                    uploadFile(file, element);
+                }
+                // 检查是否为文本文件
+                else if (file.type.startsWith('text/') || file.type === 'application/json' || file.type === 'application/javascript') {
+                    const reader = new FileReader();
+                    reader.readAsText(file);
+                    reader.onload = function(e) {
+                        const content = e.target.result;
+                        // 在光标处插入文本
+                        if (element.tagName === 'TEXTAREA' || element.isContentEditable) {
+                            if (element.tagName === 'TEXTAREA') {
+                                // 对于textarea，在光标位置插入文本
+                                const startPos = element.selectionStart;
+                                const endPos = element.selectionEnd;
+                                const textBefore = element.value.substring(0, startPos);
+                                const textAfter = element.value.substring(endPos);
+                                element.value = textBefore + content + textAfter;
+                                // 重新设置光标位置
+                                element.selectionStart = element.selectionEnd = startPos + content.length;
+                            } else if (element.isContentEditable) {
+                                // 对于可编辑元素，在光标位置插入文本
+                                const selection = window.getSelection();
+                                if (selection.rangeCount > 0) {
+                                    const range = selection.getRangeAt(0);
+                                    range.deleteContents();
+                                    const textNode = document.createTextNode(content);
+                                    range.insertNode(textNode);
+                                    // 移动光标到插入文本的末尾
+                                    range.setStartAfter(textNode);
+                                    range.collapse(true);
+                                    selection.removeAllRanges();
+                                    selection.addRange(range);
+                                }
+                            }
+                        }
+                    };
+                } else {
+                    config.onError && config.onError('不支持的文件类型', element);
+                    Sku_tctx('不支持的文件类型');
+                }
+            });
+        });
+        element.addEventListener('paste', e => {
+            const items = e.clipboardData.items;
+            let hasImage = false;
+            // 检查是否有图片
+            for (const item of items) {
+                if (item.type.startsWith('image/')) {
+                    hasImage = true;
+                    break;
+                }
+            }
+            // 只有当有图片时才阻止默认行为
+            if (hasImage) {
+                e.preventDefault();
+                const element = e.currentTarget;
+                Array.from(items).forEach(item => {
+                    if (item.type.startsWith('image/')) {
+                        uploadFile(item.getAsFile(), element);
+                    }
+                });
+            }
+            // 否则允许默认的文本粘贴行为
+        });
+
+    });
+
+    // 上传文件
+    async function uploadFile(file, element) {
+        // 检查服务器状态
+        const maxNode = document.querySelector('.max_node');
+        if (!maxNode || maxNode.textContent.trim() !== 'node!') {
+            config.onError && config.onError('服务器未开启，无法上传文件', element);
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('image', file);
+        try {
+            const response = await fetch(`${config.uploadUrl}?path=${encodeURIComponent(savePath)}`, {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            if (result.success) {
+                config.onSuccess && config.onSuccess(result, file, element);
+            } else {
+                config.onError && config.onError(result.error || '上传失败', element);
+            }
+        } catch (error) {
+            config.onError && config.onError(error.message, element);
+        }
+    }
+}
+if (typeof module !== 'undefined' && module.exports) { // 导出ImageUploader函数
+    module.exports = ImageUploader;
+}
+// 初始化上传组件
+ImageUploader('liu_yan_srk', 'photo', {
+    onSuccess: (result, file, element) => { // 处理上传成功后的逻辑
+        console.log(`上传成功: ${result.originalname}`);
+        //快速添加图片
+        var zfc = liu_yan_srk.value;
+        var cswz = liu_yan_srk.selectionEnd;
+        var zfc_x = insertStr(zfc, cswz, '<img src="' + result.path + '" width="" height="" loading="lazy">');
+        liu_yan_srk.value = zfc_x;
+        liu_yan_srk.focus();
+        liu_yan_srk.setSelectionRange(cswz + result.path.length + 46, cswz + result.path.length + 46); //最右边
+    },
+    onError: (message, element) => { // 处理上传失败后的逻辑
+        console.log(`上传失败: ${message}`);
+    }
+});
+
+//图片检查无应用时删除
+var i_liu_yan_photoSH_tp = document.querySelector('.i_liu_yan_photoSH_tp');
+i_liu_yan_photoSH_tp.addEventListener('click', async function() {
+    if (max_node.textContent.trim() == 'node!') { // 检查服务器状态
+        const i_liu_yan_photo_src = [];
+        var liu_yan_dx_s = JSON.parse(localStorage.liu_yan_dx);
+        for (var key in liu_yan_dx_s) {
+            const content = liu_yan_dx_s[key][0];
+            // 提取所有img的src
+            const imgRegex = /<img[^>]*src="([^"]+)"[^>]*>/g;
+            let match;
+            while ((match = imgRegex.exec(content)) !== null) {
+                const src = match[1];
+                if (src.startsWith('photo/')) { // 只添加src前缀是photo/的
+                    i_liu_yan_photo_src.push(src);
+                }
+            }
+        }
+        console.log('使用中的图片:', i_liu_yan_photo_src);
+
+        // 发送删除请求到服务器
+        try {
+            const response = await fetch('http://localhost/Sku-Photo-Delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ usedPhotos: i_liu_yan_photo_src })
+            });
+            const result = await response.json();
+            if (result.success) {
+                console.log('未使用的图片删除成功:', result.deletedFiles);
+                Sku_tctx('图片回收' + result.deletedFiles.length + '张');
+            } else {
+                console.error('删除失败:', result.error);
+            }
+        } catch (error) {
+            console.error('请求失败:', error);
+        }
+    } else {
+        Sku_tctx('服务器未开启，无法回收图片');
+    }
+});
+
 
 
 

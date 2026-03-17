@@ -114,7 +114,8 @@
 }
 
 .liu_yan_z img {
-    max-width: 658px;
+    max-width: calc(100%);
+    border-radius: 5px;
 }
 
 .liu_yan_z video {
@@ -292,7 +293,8 @@
 .i_liu_yan_spbc_tp,
 .i_liu_yan_yybc_tp,
 .i_liu_yan_ljbc_tp,
-.i_liu_yan_wzbc_tp {
+.i_liu_yan_wzbc_tp,
+.i_liu_yan_photoSH_tp {
     position: absolute;
     bottom: 10px;
     opacity: 0.5;
@@ -302,7 +304,8 @@
 .i_liu_yan_spbc_tp:hover,
 .i_liu_yan_yybc_tp:hover,
 .i_liu_yan_ljbc_tp:hover,
-.i_liu_yan_wzbc_tp:hover {
+.i_liu_yan_wzbc_tp:hover,
+.i_liu_yan_photoSH_tp:hover {
     opacity: 1;
 }
 
@@ -328,6 +331,11 @@
 
 .i_liu_yan_wzbc_tp {
     left: 170px;
+    font-size: 25px;
+}
+
+.i_liu_yan_photoSH_tp {
+    left: 210px;
     font-size: 25px;
 }
 

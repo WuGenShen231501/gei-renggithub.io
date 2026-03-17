@@ -69,8 +69,10 @@ dhr_xg_tj = document.querySelector('.dhr_xg_tj');
 lj_xg_tj = document.querySelector('.lj_xg_tj');
 lj_zcb_ym = document.querySelector('.lj_zcb_ym');
 nrmaxs1.style.marginTop = (window.innerHeight + 56 - 523 - 80) / 2 + 'px';
-dhr_xg_tj.style.top = (window.innerHeight - dhr_xg_tj.offsetHeight) / 2 + 'px';
-lj_xg_tj.style.top = (window.innerHeight - 221) / 2 + 'px';
+dhr_xg_tj.style.top = '50%';
+dhr_xg_tj.style.transform = 'translate(-50%, -50%)';
+lj_xg_tj.style.top = '50%';
+lj_xg_tj.style.transform = 'translate(-50%, -50%)';
 lj_zcb_ym.style.top = (window.innerHeight - 221) / 2 + 'px';
 window.addEventListener('resize', function() {
     nrmaxs1 = document.querySelector('.nrmaxs1');
@@ -78,8 +80,10 @@ window.addEventListener('resize', function() {
     lj_xg_tj = document.querySelector('.lj_xg_tj');
     lj_zcb_ym = document.querySelector('.lj_zcb_ym');
     nrmaxs1.style.marginTop = (window.innerHeight + 56 - 523 - 80) / 2 + 'px';
-    dhr_xg_tj.style.top = (window.innerHeight - dhr_xg_tj.offsetHeight) / 2 + 'px';
-    lj_xg_tj.style.top = (window.innerHeight - 221) / 2 + 'px';
+    dhr_xg_tj.style.top = '50%';
+    dhr_xg_tj.style.transform = 'translate(-50%, -50%)';
+    lj_xg_tj.style.top = '50%';
+    lj_xg_tj.style.transform = 'translate(-50%, -50%)';
     lj_zcb_ym.style.top = (window.innerHeight - 221) / 2 + 'px';
 });
 
@@ -492,7 +496,7 @@ dhr_shezhi_gn_cmm.addEventListener('click', function(e) {
         dhr_shezhi_gn = document.querySelector('.dhr_shezhi_gn');
         dhr_shezhi_gn.style.display = 'none';
         //显示修改框 
-        dhr_xg_tj.style.display = 'block';
+        dhr_xg_tj.style.display = 'flex';
         dhr_srk.value = JSON.parse(localStorage.dhr_sz)[dhr_zhi_xian2];
         dhr_srk.select();
     } else if (zhi_xian == '链接') {
@@ -704,7 +708,7 @@ dhr_shezhi_gn_tj.addEventListener('click', function(e) {
         dhr_shezhi_gn = document.querySelector('.dhr_shezhi_gn');
         dhr_shezhi_gn.style.display = 'none';
         //显示修改框 
-        dhr_xg_tj.style.display = 'block';
+        dhr_xg_tj.style.display = 'flex';
         dhr_srk.select();
     } else if (zhi_xian == '链接') {
         //功能指向
@@ -1915,7 +1919,7 @@ document.addEventListener('click', function() {
 //全局回车事件
 document.addEventListener('keyup', function(e) {
     if (nrmaxs1.style.display == 'block') {
-        if (e.key == '+') {
+        if (e.key == '+' && lj_xg_tj.style.display == 'none' && dhr_xg_tj.style.display == 'none') {
             dhr_shezhi_gn_tj.click();
         }
         if (e.key == 'Delete' && dhr_shezhi_gn_sc.style.display == 'block' && dhr_shezhi_gn.style.display == 'block') {

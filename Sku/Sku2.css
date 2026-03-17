@@ -195,7 +195,7 @@
     border-bottom: 12px solid transparent !important;
     transform: rotate(-45deg);
     border-radius: 3px 0px 0px 0px;
-    z-index: -1;
+    z-index: 2;
 }
 
 .dhr_shezhi_gn_cmm {
@@ -242,96 +242,166 @@
 
 .dhr_xg_tj {
     position: fixed;
-    top: 250px;
-    left: calc((100% - 450px) / 2);
-    width: 450px;
-    height: 50px;
-    border-radius: 50px;
-    background-color: rgb(0, 0, 0, 0.75);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 550px;
+    max-width: 95vw;
+    height: 60px;
+    padding: 8px;
+    background-color: var(--bei_jing_color);
+    border: 1px solid var(--bei_jing_kuan_color);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    backdrop-filter: var(--mao_bo_li);
     animation: nrmaxs_dh 0.4s;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .dhr_srk {
-    float: left;
-    width: 350px;
-    height: 40px;
-    margin: 4px 0px 5px 5px;
-    border: 1px solid white;
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
-    color: rgb(255, 255, 255);
-    background-color: rgb(0, 0, 0, 0);
+    flex: 1;
+    height: 45px;
+    border: 1px solid var(--zi_ti_color);
+    color: var(--zi_ti_color);
+    background-color: rgba(255, 255, 255, 0);
     outline: none;
-    text-indent: 1em;
+    padding: 0 14px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-family: inherit;
+    backdrop-filter: blur(10px);
+    margin-bottom: 0;
+}
+
+.dhr_srk:focus {
+    border-color: var(--zi_ti_click_color);
+    box-shadow: 0 0 0 3px var(--zi_ti_click_color_15);
+}
+
+.dhr_srk::placeholder {
+    color: var(--zi_ti_color_50);
+    font-size: 14px;
 }
 
 .dhr_qrk {
-    float: right;
-    width: 85px;
-    height: 40px;
-    margin: 4px 5px 5px 0px;
-    border: 1px solid white;
-    border-top-right-radius: 40px;
-    border-bottom-right-radius: 40px;
+    width: 60px;
+    height: 45px;
+    border: 1px solid var(--zi_ti_color);
+    color: var(--zi_ti_color);
+    line-height: 43px;
+    border-radius: 8px;
     text-align: center;
-    line-height: 38px;
-    font-size: 30px;
     font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 24px;
+    font-family: inherit;
+    background-color: rgba(255, 255, 255, 0);
+    backdrop-filter: blur(10px);
 }
 
 .dhr_qrk:hover {
-    border: 1px solid rgb(255, 213, 0);
-    color: rgb(255, 213, 0);
+    border-color: var(--zi_ti_click_color);
+    color: var(--zi_ti_click_color);
+    background-color: var(--zi_ti_click_color_15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dhr_qrk:active {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .lj_xg_tj {
     position: fixed;
-    left: calc((100% - 450px) / 2);
-    width: 450px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 550px;
+    max-width: 95vw;
     height: auto;
-    padding: 5px 5px;
-    background-color: rgba(0, 0, 0, 0.75);
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    padding: 15px;
+    background-color: var(--bei_jing_color);
+    border: 1px solid var(--bei_jing_kuan_color);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    backdrop-filter: var(--mao_bo_li);
     animation: nrmaxs_dh 0.4s;
+    z-index: 2;
 }
 
 .lj_xg_tj input {
-    float: left;
-    width: 440px;
-    height: 40px;
-    border: 1px solid white;
-    color: rgb(255, 255, 255);
-    background-color: rgb(0, 0, 0, 0);
+    width: 100%;
+    height: 45px;
+    border: 1px solid var(--zi_ti_color);
+    color: var(--zi_ti_color);
+    background-color: rgba(255, 255, 255, 0);
     outline: none;
-    text-indent: 1em;
-    margin-bottom: 5px;
+    padding: 0 14px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-family: inherit;
+    backdrop-filter: blur(10px);
+}
+
+.lj_xg_tj input:focus {
+    border-color: var(--zi_ti_click_color);
+    box-shadow: 0 0 0 3px var(--zi_ti_click_color_15);
+    transform: translateY(-1px);
+}
+
+.lj_xg_tj input::placeholder {
+    color: var(--zi_ti_color_50);
+    font-size: 14px;
 }
 
 .jl_qrk {
-    float: left;
-    width: 440px;
-    height: 40px;
-    border: 1px solid white;
-    color: rgb(255, 255, 255);
-    text-indent: 1em;
-    line-height: 38px;
-    border-bottom-left-radius: 35px;
-    border-bottom-right-radius: 35px;
+    width: 100%;
+    height: 48px;
+    border: 1px solid var(--zi_ti_color);
+    color: var(--zi_ti_color);
+    line-height: 46px;
+    border-radius: 8px;
     text-align: center;
     font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    background-color: rgba(255, 255, 255, 0);
+    backdrop-filter: blur(10px);
+}
+
+.jl_qrk:hover {
+    border-color: var(--zi_ti_click_color);
+    color: var(--zi_ti_click_color);
+    background-color: var(--zi_ti_click_color_15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.jl_qrk:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .jl_qrk_fh {
     position: absolute;
-    font-size: 30px;
+    font-size: 24px;
+    color: var(--zi_ti_color);
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.jl_qrk:hover {
-    border-color: rgb(255, 213, 0);
-    color: rgb(255, 213, 0);
+.jl_qrk_fh:hover {
+    color: var(--zi_ti_click_color);
+    transform: scale(1.1);
 }
 
 .lian_jie_ssym {
@@ -500,48 +570,62 @@
 
 .lj_xg_tj_bdtj {
     position: absolute;
-    bottom: 0px;
-    right: -20px;
-    opacity: 0.3;
+    bottom: 20px;
+    right: -40px;
+    color: var(--zi_ti_color);
+    opacity: 0.6;
     font-size: 20px;
+    cursor: default;
+    transition: all 0.3s ease;
 }
 
 .lj_xg_tj_paiqu {
     position: absolute;
-    bottom: 25px;
-    right: -25px;
-    opacity: 0.3;
+    bottom: 50px;
+    right: -40px;
+    color: var(--zi_ti_color);
+    opacity: 0.6;
     font-size: 20px;
+    cursor: default;
+    transition: all 0.3s ease;
 }
 
+.lj_xg_tj_bdtj:hover,
 .lj_xg_tj_paiqu:hover {
-    transition: 0.2s;
+    color: var(--zi_ti_click_color);
     opacity: 1;
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
-.lj_xg_tj_bdtj:hover {
-    transition: 0.2s;
-    opacity: 1;
-    transform: scale(1.2);
-}
-
-.lj_xg_tj_bdtj_wz {
-    display: none;
-    position: absolute;
-    left: 22px;
-    top: 2px;
-    white-space: nowrap;
-    font-size: 12px;
-}
-
+.lj_xg_tj_bdtj_wz,
 .lj_xg_tj_paiqu_wz {
     display: none;
     position: absolute;
-    left: 22px;
-    top: 2px;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
     white-space: nowrap;
     font-size: 12px;
+    background-color: var(--bei_jing_color);
+    border: 1px solid var(--bei_jing_kuan_color);
+    color: var(--zi_ti_color);
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-left: 8px;
+    backdrop-filter: var(--mao_bo_li);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+}
+
+.lj_xg_tj_bdtj_wz::before,
+.lj_xg_tj_paiqu_wz::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 4px solid transparent;
+    border-right-color: var(--bei_jing_kuan_color);
 }
 
 .lj_xg_tj_bdtj:hover>.lj_xg_tj_bdtj_wz {
