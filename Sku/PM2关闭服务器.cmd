@@ -2,6 +2,10 @@
 chcp 65001 >nul
 echo P2正在关闭服务器...
 cd /d %~dp0
-pm2 stop wgs_node.js
-echo 完成脚本,等待用户按下任意键后退出
-pause >nul
+pm2 stop all
+echo.
+echo 完成脚本
+REM 等待5秒（/nobreak阻止用户按键跳过，>nul隐藏提示信息）
+timeout /t 5 /nobreak >nul
+REM 关闭当前命令窗口
+exit

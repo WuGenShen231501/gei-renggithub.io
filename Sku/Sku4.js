@@ -4579,17 +4579,17 @@ function mryy_s() {
             console.log('抓取成功 ( 每日一言 )');
             //提取精华
             // var data2 = JSON.parse(data);
-            var data2 = data.text || '';
+            var data2 = data.hitokoto || '';
             // 处理返回的数据
             var mymj = data2[data2.length - 1] == '。' ? data2.substring(0, data2.length - 1) : data2; // 移除最后一个字符 '。' 如果存在
             if (mymj !== '') {
                 mryy.innerText = mymj;
                 localStorage.mryy = mymj;
                 //添加其他
-                // if (data2.data.en !== '') {
-                //     mryy.innerText = mymj + ' —— ' + data2.data.en;
-                //     localStorage.mryy = mymj + ' —— ' + data2.data.en;
-                // }
+                if (data.from !== '' && data.from !== '网络') {
+                    mryy.innerText = mymj + ' —— ' + data.from;
+                    localStorage.mryy = mymj + ' —— ' + data.from;
+                }
             }
 
             mrrd_T++;

@@ -1310,9 +1310,15 @@ function isAlphaDash(str) {
 lj_zcb_qr.addEventListener('click', function(e) {
     // if (isAlphaDash(lj_zcb_name.value) && lj_zcb_name.value != '' && lj_zcb_dizhi.value != '' && (lj_zcb_dizhi.value.substr(lj_zcb_dizhi.value.length - 4, lj_zcb_dizhi.value.length) == 'exe"' || lj_zcb_dizhi.value.substr(lj_zcb_dizhi.value.length - 4, lj_zcb_dizhi.value.length) == 'exe\'' || lj_zcb_dizhi.value.substr(lj_zcb_dizhi.value.length - 3, lj_zcb_dizhi.value.length) == 'exe')) {
     if (isAlphaDash(lj_zcb_name.value) && lj_zcb_name.value != '' && lj_zcb_dizhi.value != '') {
-        // 保存历史
+        // 检查是否已存在相同名称
         var sku_zcb = JSON.parse(localStorage.sku_zcb);
-        sku_zcb[0].unshift('Sku-' + lj_zcb_name.value);
+        var newProtocolName = 'Sku-' + lj_zcb_name.value;
+        if (sku_zcb[0].includes(newProtocolName)) {
+            Sku_tctx('创建失败! 该名称已存在');
+            return;
+        }
+        // 保存历史
+        sku_zcb[0].unshift(newProtocolName);
         console.log(escapeBackslash(lj_zcb_dizhi.value));
         sku_zcb[1].unshift('' + escapeBackslash(lj_zcb_dizhi.value));
         localStorage.sku_zcb = JSON.stringify(sku_zcb);
@@ -1325,9 +1331,19 @@ lj_zcb_qr.addEventListener('click', function(e) {
             // 创建文本内容
             var text = txt;
 
-            // 创建Blob对象
-            var blob = new Blob([text], {
-                type: 'text/plain;charset=utf-16le'
+            // 创建 UTF-16 LE 编码的 Blob，添加 BOM 标记
+            var bom = new Uint8Array([0xFF, 0xFE]); // UTF-16 LE BOM
+            var textBytes = [];
+
+            // 手动将文本转换为 UTF-16 LE 编码
+            for (var i = 0; i < text.length; i++) {
+                var code = text.charCodeAt(i);
+                textBytes.push(code & 0xFF); // 低字节
+                textBytes.push(code >> 8); // 高字节
+            }
+
+            var blob = new Blob([bom, new Uint8Array(textBytes)], {
+                type: 'text/plain'
             });
 
             // 创建下载链接
@@ -1338,6 +1354,9 @@ lj_zcb_qr.addEventListener('click', function(e) {
             document.body.appendChild(link);
             link.click();
             URL.revokeObjectURL(url); // 释放内存
+
+            // 提示用户如何处理 Windows 安全中心阻止的问题
+            Sku_tctx('提示: 如果 Windows 安全中心阻止打开文件，请右键点击文件 -> 属性 -> 勾选「解除锁定」-> 确定');
         }
 
     } else if (isAlphaDash(lj_zcb_name.value) == false) {
