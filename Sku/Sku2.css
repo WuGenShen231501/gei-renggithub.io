@@ -195,7 +195,7 @@
     border-bottom: 12px solid transparent !important;
     transform: rotate(-45deg);
     border-radius: 3px 0px 0px 0px;
-    z-index: 2;
+    z-index: -1;
 }
 
 .dhr_shezhi_gn_cmm {

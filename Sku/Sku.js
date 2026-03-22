@@ -804,11 +804,9 @@ max_bbxs.innerHTML = localStorage.ban_ben;
 
 
 //内存占用比
-
 setInterval(function() {
     Sku_nczyb();
 }, 5000);
-Sku_nczyb();
 
 //node服务器请求次数
 var max_node_cs = 0;

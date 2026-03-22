@@ -10,6 +10,8 @@ const cors = require('cors');
 const multer = require('multer');
 // 引入path模块，用于处理文件路径
 const path = require('path');
+// 引入crypto模块，用于计算文件哈希值
+const crypto = require('crypto');
 
 
 
@@ -154,49 +156,97 @@ function parseWebsiteInfo(html, baseUrl) {
 
 //photo处理
 function photoHandle() {
+    // 计算文件哈希值的辅助函数
+    function calculateHash(buffer) {
+        return crypto.createHash('md5').update(buffer).digest('hex');
+    }
+
+    // 计算已有文件哈希值的辅助函数
+    function calculateFileHash(filePath) {
+        const fileBuffer = fs.readFileSync(filePath);
+        return calculateHash(fileBuffer);
+    }
+
     // 处理文件上传的POST路由
-    app.post('/Sku-Photo', multer({
-        storage: multer.diskStorage({
-            destination: (req, file, cb) => {
-                const uploadPath = path.join(__dirname, req.query.path || 'photo');
-                // 确保目录存在
-                if (!fs.existsSync(uploadPath)) {
-                    fs.mkdirSync(uploadPath, { recursive: true });
-                }
-                cb(null, uploadPath);
-            },
-            filename: (req, file, cb) => {
-                // 使用原文件名
-                cb(null, file.originalname);
-            }
-        })
-    }).single('image'), (req, res) => {
-        if (!req.file) {
-            return res.status(400).json({ success: false, error: '没有文件被上传' });
-        }
-
-        let isDuplicate = false;
+    app.post('/Sku-Photo', (req, res) => {
         const uploadPath = path.join(__dirname, req.query.path || 'photo');
-        const filePath = path.join(uploadPath, req.file.originalname);
+        const relativePathPrefix = req.query.path || 'photo';
 
-        // 检查文件是否存在
-        if (fs.existsSync(filePath)) {
-            // 如果文件存在，比较文件大小
-            const existingFileStats = fs.statSync(filePath);
-            if (existingFileStats.size === req.file.size) {
-                // 文件大小相同，视为重复文件
-                isDuplicate = true;
+        // 先检查文件信息，不立即使用multer
+        const upload = multer().single('image');
+
+        upload(req, res, (err) => {
+            if (err) {
+                return res.status(500).json({ success: false, error: err.message });
             }
-        }
 
-        // 无论是否重复上传，都返回成功信息
-        const relativePath = 'photo/' + req.file.filename; // 生成相对路径
-        res.json({
-            success: true,
-            originalname: req.file.originalname,
-            filename: req.file.filename,
-            path: relativePath,
-            isDuplicate: isDuplicate
+            if (!req.file) {
+                return res.status(400).json({ success: false, error: '没有文件被上传' });
+            }
+
+            // 确保目录存在
+            if (!fs.existsSync(uploadPath)) {
+                fs.mkdirSync(uploadPath, { recursive: true });
+            }
+
+            const originalName = req.file.originalname;
+            const originalFilePath = path.join(uploadPath, originalName);
+            const newFileSize = req.file.size;
+            const newFileHash = calculateHash(req.file.buffer);
+
+            console.log(`[文件上传] 文件名: ${originalName}, 新文件大小: ${newFileSize} 字节, 新文件哈希: ${newFileHash}`);
+
+            // 检查是否存在同名文件
+            if (fs.existsSync(originalFilePath)) {
+                const existingFileStats = fs.statSync(originalFilePath);
+                const existingFileSize = existingFileStats.size;
+                const existingFileHash = calculateFileHash(originalFilePath);
+
+                console.log(`[文件上传] 已存在文件大小: ${existingFileSize} 字节, 已存在文件哈希: ${existingFileHash}`);
+
+                if (existingFileHash === newFileHash) {
+                    console.log(`[文件上传] 文件哈希相同，判定为重复文件`);
+                    // 文件名和哈希都相同，直接返回已保存的路径
+                    const relativePath = path.join(relativePathPrefix, originalName);
+                    res.json({
+                        success: true,
+                        originalname: originalName,
+                        filename: originalName,
+                        path: relativePath.replace(/\\/g, '/'),
+                        isDuplicate: true,
+                        message: '文件已存在，无需重新上传'
+                    });
+                    return;
+                } else {
+                    console.log(`[文件上传] 文件哈希不同 (${existingFileHash} vs ${newFileHash})，需要保存为新文件`);
+                }
+            } else {
+                console.log(`[文件上传] 文件不存在，保存新文件`);
+            }
+
+            // 需要保存文件，先确定最终文件名
+            let finalFileName = originalName;
+            const ext = path.extname(originalName);
+            const baseName = path.basename(originalName, ext);
+            let counter = 1;
+
+            while (fs.existsSync(path.join(uploadPath, finalFileName))) {
+                finalFileName = `${baseName}${counter}${ext}`;
+                counter++;
+            }
+
+            // 保存文件
+            const finalFilePath = path.join(uploadPath, finalFileName);
+            fs.writeFileSync(finalFilePath, req.file.buffer);
+
+            const relativePath = path.join(relativePathPrefix, finalFileName);
+            res.json({
+                success: true,
+                originalname: originalName,
+                filename: finalFileName,
+                path: relativePath.replace(/\\/g, '/'),
+                isDuplicate: false
+            });
         });
     });
 }

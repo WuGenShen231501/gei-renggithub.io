@@ -1,4 +1,4 @@
-var ban_ben_s = "202603181037";
+var ban_ben_s = "202603222014";
 
 function formatNumberString(input) {
     if (isAlreadyFormatted(input)) { return input; }
@@ -379,6 +379,10 @@ if (localStorage.bi_zhi == 'sj') {
 } else if (localStorage.bi_zhi !== 'sj' && localStorage.bi_zhi_ys == '') {
     document.documentElement.style.backgroundImage = 'url(' + localStorage.bi_zhi + ')';
 }
+//信息获取(放前面免卡顿)
+document.addEventListener('DOMContentLoaded', function() {
+    Sku_nczyb();
+});
 
 // var str = 'wgs';
 // var str64 = window.btoa(str);
