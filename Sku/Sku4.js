@@ -4522,14 +4522,14 @@ function mrrd_sx() {
 
     } else
     if (((+new Date()) - localStorage.mrrd_sxsj) < (1000 * 60 * localStorage.mrrd_jian_ge_shi_jian) && drym_max.style.display == 'none' && localStorage.sf_mrrd == 'true') {
-        console.log('热点抓取时间间隔小于5分钟,已放弃抓取\n下次抓取时间:' + ((1000 * 60 * localStorage.mrrd_jian_ge_shi_jian) - ((+new Date()) - localStorage.mrrd_sxsj)) / 1000 + '秒后');
+        console.log('热点抓取时间间隔小于' + (localStorage.mrrd_jian_ge_shi_jian) + '分钟,已放弃抓取\n下次抓取时间:' + ((1000 * 60 * localStorage.mrrd_jian_ge_shi_jian) - ((+new Date()) - localStorage.mrrd_sxsj)) / 1000 + '秒后');
     } else if (((+new Date()) - localStorage.mrrd_sxsj) >= (1000 * 60 * localStorage.mrrd_jian_ge_shi_jian) && drym_max.style.display == 'block' && localStorage.sf_mrrd == 'true') {
         console.log('热点抓取时为锁屏状态,已放弃抓取');
     } else if (((+new Date()) - localStorage.mrrd_sxsj) >= (1000 * 60 * localStorage.mrrd_jian_ge_shi_jian) && localStorage.sf_mrrd == 'false') {
         console.log('已放弃抓取热点');
     }
     //热点过期
-    if (((+new Date()) - localStorage.mrrd_sxsj) >= ((1000 * 60 * 60 * 24) + (1000 * 60 * localStorage.mrrd_jian_ge_shi_jian))) {
+    if (((+new Date()) - localStorage.mrrd_sxsj) >= ((1000 * 60 * 60 * 24) + (1000 * 60 * localStorage.mrrd_jian_ge_shi_jian))) { //24小时+间隔时间
         localStorage.mrrd = '[]';
         localStorage.mrrd_top = '[]';
         localStorage.mrrd_name = '[]';

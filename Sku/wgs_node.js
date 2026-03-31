@@ -12,6 +12,8 @@ const multer = require('multer');
 const path = require('path');
 // 引入crypto模块，用于计算文件哈希值
 const crypto = require('crypto');
+// 引入WebSocket模块，用于创建WebSocket服务器
+const WebSocket = require('ws');
 
 
 
@@ -304,4 +306,31 @@ app.use('/Sku', express.static('../Sku'));
 app.listen('80', function() {
     // 服务器启动成功后，打印信息到控制台
     console.log('服务器启动成功!');
+});
+
+// ===== 新增：WebSocket 单独开 8080 端口 =====
+const wss = new WebSocket.Server({ port: 8080 });
+const wg_clients = new Map();
+
+wss.on('connection', (wg_wxxy, req) => {
+    const id = req.url.slice(1) || crypto.randomUUID().slice(0, 8);
+    wg_clients.set(id, wg_wxxy);
+    console.log(`[WebSocket] 客户端连接: ${id}`);
+
+    wg_wxxy.on('message', (msg) => {
+        try {
+            const { target, data } = JSON.parse(msg);
+            const peer = wg_clients.get(target);
+            if (peer && peer.readyState === WebSocket.OPEN) {
+                peer.send(JSON.stringify({ from: id, data }));
+            }
+        } catch (e) {
+            console.error('[WebSocket] 消息解析错误:', e.message);
+        }
+    });
+
+    wg_wxxy.on('close', () => {
+        wg_clients.delete(id);
+        console.log(`[WebSocket] 客户端断开: ${id}`);
+    });
 });
