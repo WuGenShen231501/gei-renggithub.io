@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>棽棽的随身预览</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================================
+           响应式根字号：375屏≈16px，小屏自动缩小，大屏自动放大
+           ============================================================ */
+        
+        html {
+            font-size: clamp(14px, 4.267vw, 20px);
+        }
+        
+         :root {
+            --bg: #F2F2F7;
+            --surface: #FFFFFF;
+            --surface-elevated: #FFFFFF;
+            --text-primary: #1C1C1E;
+            --text-secondary: #8E8E93;
+            --text-tertiary: #AEAEB2;
+            --accent: #007AFF;
+            --accent-gradient: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            --success: #34C759;
+            --warning: #FF9500;
+            --danger: #FF3B30;
+            --border: rgba(0, 0, 0, 0.04);
+            --shadow-sm: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+            --radius-sm: 0.75rem;
+            --radius-md: 1rem;
+            --radius-lg: 1.5rem;
+            --radius-xl: 2rem;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+             :root {
+                --bg: #000000;
+                --surface: #1C1C1E;
+                --surface-elevated: #2C2C2E;
+                --text-primary: #F2F2F7;
+                --text-secondary: #8E8E93;
+                --text-tertiary: #636366;
+                --accent: #0A84FF;
+                --accent-gradient: linear-gradient(135deg, #0A84FF 0%, #5E5CE6 100%);
+                --success: #30D158;
+                --warning: #FF9F0A;
+                --danger: #FF453A;
+                --border: rgba(255, 255, 255, 0.06);
+                --shadow-sm: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
+                --shadow-md: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.3);
+                --shadow-lg: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.4);
+            }
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* ==================== 置顶按钮 ==================== */
+        
+        .back-to-top {
+            position: fixed;
+            bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+            right: 1.125rem;
+            width: 3.25rem;
+            height: 3.25rem;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            color: #fff;
+            border: none;
+            font-size: 1.375rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0.25rem 1rem rgba(0, 122, 255, 0.35);
+            z-index: 940;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(1.25rem) scale(0.8);
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
+        
+        .back-to-top:active {
+            transform: scale(0.9);
+        }
+        /* ==================== 同步弹窗 ==================== */
+        
+        .sync-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(1.25rem);
+            -webkit-backdrop-filter: blur(1.25rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 1.5rem;
+        }
+        
+        .sync-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .sync-modal {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 2.25rem 1.75rem;
+            width: 100%;
+            max-width: 22.5rem;
+            transform: scale(0.95) translateY(1.25rem);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .sync-modal-overlay.active .sync-modal {
+            transform: scale(1) translateY(0);
+        }
+        
+        .sync-modal-icon {
+            width: 4.5rem;
+            height: 4.5rem;
+            background: var(--accent-gradient);
+            border-radius: 1.375rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.25rem;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 0.5rem 1.25rem rgba(0, 122, 255, 0.3);
+        }
+        
+        .sync-modal h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sync-modal p {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            margin-bottom: 1.75rem;
+            line-height: 1.6;
+        }
+        
+        .sync-input {
+            width: 100%;
+            padding: 1.125rem 1.25rem;
+            background: var(--bg);
+            border: 0.125rem solid transparent;
+            border-radius: var(--radius-md);
+            font-size: 1.0625rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s ease;
+            margin-bottom: 1rem;
+        }
+        
+        .sync-input:focus {
+            border-color: var(--accent);
+            background: var(--surface);
+            box-shadow: 0 0 0 0.25rem rgba(0, 122, 255, 0.15);
+        }
+        
+        .sync-input::placeholder {
+            color: var(--text-tertiary);
+        }
+        
+        .sync-btn {
+            width: 100%;
+            padding: 1.125rem;
+            background: var(--accent-gradient);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 1.0625rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 122, 255, 0.3);
+            min-height: 3.375rem;
+        }
+        
+        .sync-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .sync-btn:disabled {
+            background: var(--text-tertiary);
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        
+        .sync-skip {
+            display: block;
+            text-align: center;
+            margin-top: 1.125rem;
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: inherit;
+            width: 100%;
+            padding: 0.75rem;
+            min-height: 3rem;
+        }
+        /* ==================== 侧边栏 ==================== */
+        
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(0.625rem);
+            -webkit-backdrop-filter: blur(0.625rem);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+            z-index: 1000;
+        }
+        
+        .sidebar-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: min(20rem, 82vw);
+            background: var(--surface);
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem 1.5rem;
+            padding-top: calc(env(safe-area-inset-top) + 1.5rem);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .sidebar-header h3 {
+            font-size: 1.375rem;
+            font-weight: 700;
+        }
+        
+        .close-btn {
+            width: 2.75rem;
+            height: 2.75rem;
+            background: var(--bg);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .sidebar-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        
+        .sidebar-item {
+            padding: 1rem 1.125rem;
+            border-radius: var(--radius-sm);
+            font-size: 1.0625rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 0.375rem;
+            min-height: 3.125rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-item:active {
+            transform: scale(0.98);
+        }
+        
+        .sidebar-item.active {
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+        }
+        /* ==================== 顶部栏 ==================== */
+        
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            padding: 1rem 1.25rem;
+            padding-top: calc(env(safe-area-inset-top) + 1rem);
+            background: rgba(242, 242, 247, 0.85);
+            backdrop-filter: blur(1.25rem);
+            -webkit-backdrop-filter: blur(1.25rem);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .app-header {
+                background: rgba(0, 0, 0, 0.85);
+            }
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .menu-btn {
+            width: 3rem;
+            height: 3rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--accent);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+        }
+        
+        .header-title {
+            font-size: 1.375rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        
+        .header-right {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .header-action {
+            width: 3rem;
+            height: 3rem;
+            background: none;
+            border: none;
+            font-size: 1.375rem;
+            color: var(--accent);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+        }
+        
+        .header-action:active {
+            background: rgba(0, 122, 255, 0.1);
+        }
+        /* ==================== 主内容 ==================== */
+        
+        .main-content {
+            padding: 1.25rem;
+            padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px) + 2rem);
+            transition: filter 0.3s ease, transform 0.3s ease;
+            min-height: calc(100vh - 6rem);
+        }
+        
+        .main-content.blurred {
+            filter: blur(0.625rem) brightness(0.8);
+            pointer-events: none;
+            transform: scale(0.96);
+        }
+        /* ==================== 底部 Tab 栏（大幅加高） ==================== */
+        
+        .tab-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: calc(3.5rem + env(safe-area-inset-bottom, 0px));
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            background: var(--surface);
+            backdrop-filter: blur(2rem);
+            -webkit-backdrop-filter: blur(2rem);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -0.0625rem 0 var(--border);
+            z-index: 950;
+        }
+        
+        .tab-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.1875rem;
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            padding: 0.5rem 0;
+            min-height: 3.5rem;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        .tab-item.active {
+            color: var(--accent);
+        }
+        
+        .tab-icon {
+            font-size: 1.625rem;
+            line-height: 1;
+            transition: transform 0.2s ease;
+        }
+        
+        .tab-item.active .tab-icon {
+            transform: scale(1.15);
+        }
+        
+        .tab-label {
+            font-size: 0.6875rem;
+            line-height: 1;
+            white-space: nowrap;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+            animation: pageIn 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        
+        @keyframes pageIn {
+            from {
+                opacity: 0;
+                transform: translateY(0.75rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* ==================== 日程页 ==================== */
+        
+        .schedule-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.75rem;
+        }
+        
+        .schedule-header h2 {
+            font-size: 1.875rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+        
+        .schedule-date {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            font-weight: 500;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5625rem;
+            top: 0.5rem;
+            bottom: 0.5rem;
+            width: 0.125rem;
+            background: linear-gradient(to bottom, var(--accent), var(--accent) 50%, var(--border) 50%);
+            border-radius: 1px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.375rem;
+            opacity: 0;
+            animation: fadeInUp 0.4s ease forwards;
+        }
+        
+        .timeline-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .timeline-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .timeline-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+        
+        .timeline-item:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+        
+        .timeline-item:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(1rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 0.1875rem solid var(--accent);
+            box-shadow: 0 0 0 0.25rem rgba(0, 122, 255, 0.15);
+        }
+        
+        .timeline-item.passed .timeline-dot {
+            border-color: var(--text-tertiary);
+            box-shadow: 0 0 0 0.25rem rgba(142, 142, 147, 0.1);
+        }
+        
+        .timeline-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1.375rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+        
+        .timeline-date {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.0625rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            flex-wrap: wrap;
+        }
+        
+        .timeline-countdown {
+            font-size: 0.8125rem;
+            padding: 0.3125rem 0.75rem;
+            border-radius: 1.25rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .timeline-countdown.future {
+            background: rgba(0, 122, 255, 0.1);
+            color: var(--accent);
+        }
+        
+        .timeline-countdown.past {
+            background: rgba(142, 142, 147, 0.1);
+            color: var(--text-secondary);
+        }
+        
+        .tag {
+            font-size: 0.8125rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .tag.lunar {
+            background: rgba(255, 149, 0, 0.12);
+            color: var(--warning);
+        }
+        
+        .tag.monthly {
+            background: rgba(52, 199, 89, 0.12);
+            color: var(--success);
+        }
+        
+        .tag.yearly {
+            background: rgba(88, 86, 214, 0.12);
+            color: #5856D6;
+        }
+        /* ==================== 导航页 ==================== */
+        
+        .nav-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .link-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 1.375rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            opacity: 0;
+            animation: fadeInUp 0.4s ease forwards;
+        }
+        
+        .link-card:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+        
+        .link-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        
+        .link-card:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+        
+        .link-card:nth-child(4) {
+            animation-delay: 0.2s;
+        }
+        
+        .card-top {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.125rem;
+        }
+        
+        .favicon {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: var(--radius-md);
+            object-fit: cover;
+            background: var(--bg);
+            box-shadow: var(--shadow-sm);
+            flex-shrink: 0;
+        }
+        
+        .card-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.01em;
+        }
+        
+        .card-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 0.625rem;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            padding: 0.75rem 1.375rem;
+            border-radius: 1.75rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            color: var(--text-primary);
+            background: var(--bg);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            min-height: 3rem;
+        }
+        
+        .action-btn:active {
+            transform: scale(0.96);
+        }
+        
+        .action-btn.primary {
+            background: var(--accent-gradient);
+            color: #fff;
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 122, 255, 0.25);
+        }
+        /* ==================== 任务页 ==================== */
+        
+        .tasks-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.75rem;
+        }
+        
+        .tasks-header h2 {
+            font-size: 1.875rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.875rem;
+            margin-bottom: 1.875rem;
+        }
+        
+        .stat-card {
+            background: var(--surface);
+            padding: 1.375rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+        
+        .stat-num {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.06em;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card.pending .stat-num {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-card.done .stat-num {
+            color: var(--success);
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.0625em;
+            margin-bottom: 1rem;
+            padding-left: 0.25rem;
+        }
+        
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            background: var(--surface);
+            padding: 1.125rem 1.25rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 0.75rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            opacity: 0;
+            animation: fadeInUp 0.3s ease forwards;
+        }
+        
+        .task-item:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+        
+        .task-item:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        
+        .task-item:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+        
+        .task-check {
+            width: 1.875rem;
+            height: 1.875rem;
+            border-radius: 50%;
+            border: 0.125rem solid var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            font-size: 1rem;
+            font-weight: bold;
+            color: transparent;
+            margin-top: 0.125rem;
+        }
+        
+        .task-check.done {
+            background: var(--success);
+            border-color: var(--success);
+            color: #fff;
+            box-shadow: 0 0.125rem 0.5rem rgba(52, 199, 89, 0.3);
+        }
+        
+        .task-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .task-title {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.375rem;
+            word-break: break-word;
+            line-height: 1.5;
+        }
+        
+        .task-item.done .task-title {
+            text-decoration: line-through;
+            color: var(--text-tertiary);
+        }
+        
+        .task-date {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        /* ==================== Toast & 空状态 ==================== */
+        
+        #toast {
+            position: fixed;
+            bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+            left: 50%;
+            transform: translateX(-50%) translateY(1.25rem);
+            background: var(--text-primary);
+            color: var(--bg);
+            padding: 0.875rem 1.75rem;
+            border-radius: 1.75rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+            pointer-events: none;
+            box-shadow: var(--shadow-lg);
+            white-space: nowrap;
+        }
+        
+        #toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3.75rem 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .empty-state-icon {
+            font-size: 3.25rem;
+            margin-bottom: 1rem;
+            opacity: 0.6;
+        }
+        
+        .empty-state-text {
+            font-size: 1.0625rem;
+            font-weight: 500;
+        }
+        
+         ::-webkit-scrollbar {
+            width: 0.375rem;
+        }
+        
+         ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background: var(--text-tertiary);
+            border-radius: 0.1875rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 同步弹窗 -->
+    <div class="sync-modal-overlay" id="syncModal">
+        <div class="sync-modal">
+            <div class="sync-modal-icon">☁️</div>
+            <h2>同步数据</h2>
+            <p>输入你的云备份 ID 来同步日程、导航和任务数据</p>
+            <input type="text" id="userKey" class="sync-input" placeholder="请输入云备份 ID (如: 棽棽)">
+            <button id="downloadBtn" class="sync-btn">同步数据</button>
+            <button id="skipBtn" class="sync-skip">跳过，稍后同步</button>
+        </div>
+    </div>
+
+    <!-- 主应用 -->
+    <div id="app-view">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>链接分类</h3>
+                <button class="close-btn" id="closeSidebar">✕</button>
+            </div>
+            <div class="sidebar-list" id="sidebarList"></div>
+        </aside>
+
+        <header class="app-header">
+            <div class="header-left">
+                <button class="menu-btn" id="menuBtn">☰</button>
+                <h1 class="header-title" id="pageTitle">日程</h1>
+            </div>
+            <div class="header-right">
+                <button class="header-action" id="syncBtn" title="同步数据">☁️</button>
+            </div>
+        </header>
+
+        <main class="main-content" id="mainContent">
+            <div id="page-schedule" class="page active">
+                <div class="schedule-header">
+                    <h2>日程安排</h2>
+                    <span class="schedule-date" id="currentDate"></span>
+                </div>
+                <div class="timeline" id="timelineContainer">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📅</div>
+                        <div class="empty-state-text">暂无日程数据，请先同步</div>
+                    </div>
+                </div>
+            </div>
+            <div id="page-nav" class="page">
+                <div class="nav-grid" id="navContainer">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔗</div>
+                        <div class="empty-state-text">暂无导航数据，请先同步</div>
+                    </div>
+                </div>
+            </div>
+            <div id="page-tasks" class="page">
+                <div class="tasks-header">
+                    <h2>任务清单</h2>
+                </div>
+                <div id="tasksContainer">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">✅</div>
+                        <div class="empty-state-text">暂无任务数据，请先同步</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 置顶按钮 -->
+        <button class="back-to-top" id="backToTop" title="回到顶部">↑</button>
+
+        <!-- 底部 Tab 栏 -->
+        <nav class="tab-bar">
+            <div class="tab-item active" data-page="schedule">
+                <span class="tab-icon">📅</span>
+                <span class="tab-label">日程</span>
+            </div>
+            <div class="tab-item" data-page="nav">
+                <span class="tab-icon">🔗</span>
+                <span class="tab-label">导航</span>
+            </div>
+            <div class="tab-item" data-page="tasks">
+                <span class="tab-icon">✅</span>
+                <span class="tab-label">任务</span>
+            </div>
+        </nav>
+    </div>
+
+    <div id="toast"></div>
+
+    <script>
+        const CONFIG = {
+            API_BASE_URL: 'https://hastebin.com',
+            API_KEY: 'b00aa849def5cb972111ffaf790d54ce29d26b58651598d433076df55ee450efa9bcbd1f56958f4226c90d3b044d3d321b8b1d44847fbf5f936a9d476acd2271',
+            SECRET_KEY: 688,
+            STORAGE_KEY: 'SKu-yulan'
+        };
+
+        let APP_DATA = {
+            dhr_sz: [],
+            dhr_ym_dx: {},
+            liu_yan_dx: {},
+            sy_djs: {}
+        };
+        let currentNavCategory = 0;
+
+        function saveToCache(data) {
+            try {
+                localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(data));
+            } catch (e) {
+                console.warn('localStorage 写入失败', e);
+            }
+        }
+
+        function loadFromCache() {
+            try {
+                const raw = localStorage.getItem(CONFIG.STORAGE_KEY);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                if (parsed && Array.isArray(parsed.dhr_sz)) return parsed;
+                return null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function showSyncModal() {
+            document.getElementById('syncModal').classList.add('active');
+        }
+
+        function hideSyncModal() {
+            document.getElementById('syncModal').classList.remove('active');
+        }
+
+        function WGS_zfc_jiemi(nr, key) {
+            let result = '';
+            for (let i = 0; i < nr.length; i++) result += String.fromCharCode(nr.charCodeAt(i) ^ key);
+            return result;
+        }
+
+        async function safeFetch(url, options = {}) {
+            try {
+                const res = await fetch(url, options);
+                if (res.ok) return res;
+                throw new Error(`Status ${res.status}`);
+            } catch (e) {
+                return fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`, options);
+            }
+        }
+
+        async function fetchSinglePart(singleKey) {
+            const res = await safeFetch(`${CONFIG.API_BASE_URL}/raw/${singleKey}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${CONFIG.API_KEY}`
+                }
+            });
+            return res.text();
+        }
+
+        async function fetchFromHastebin(keyList) {
+            const keys = keyList.split(',').map(k => k.trim()).filter(k => k);
+            if (keys.length === 1) return fetchSinglePart(keys[0]);
+            const results = await Promise.all(keys.map((key, index) =>
+                fetchSinglePart(key).then(content => ({
+                    index,
+                    content
+                }))
+            ));
+            results.sort((a, b) => a.index - b.index);
+            return results.map(r => r.content).join('');
+        }
+
+        async function fetchBackup(userKey) {
+            const textDbRes = await safeFetch(`https://textdb.online/Sku_yonhuID${userKey}`);
+            const documentKey = await textDbRes.text();
+            if (!documentKey || documentKey.trim() === '') throw new Error('TextDB 返回为空！');
+            const content = await fetchFromHastebin(documentKey);
+            const dataArray = JSON.parse(WGS_zfc_jiemi(content, CONFIG.SECRET_KEY));
+            return {
+                dhr_sz: JSON.parse(dataArray[0]),
+                dhr_ym_dx: JSON.parse(dataArray[1]),
+                liu_yan_dx: JSON.parse(dataArray[4]),
+                sy_djs: JSON.parse(dataArray[18])
+            };
+        }
+
+        /* ========== 渲染 ========== */
+
+        function renderSidebar() {
+            const list = document.getElementById('sidebarList');
+            list.innerHTML = '';
+            APP_DATA.dhr_sz.forEach((name, index) => {
+                const item = document.createElement('div');
+                item.className = `sidebar-item ${index === currentNavCategory ? 'active' : ''}`;
+                item.textContent = name;
+                item.onclick = () => {
+                    currentNavCategory = index;
+                    renderNavLinks();
+                    renderSidebar();
+                    toggleSidebar(false);
+                    updatePageTitle();
+                };
+                list.appendChild(item);
+            });
+        }
+
+        function renderNavLinks() {
+            const container = document.getElementById('navContainer');
+            container.innerHTML = '';
+            const linksObj = APP_DATA.dhr_ym_dx[`dhr_ym_dx${currentNavCategory}`];
+            if (!linksObj || Object.keys(linksObj).length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🔗</div><div class="empty-state-text">该分类下暂无链接</div></div>';
+                return;
+            }
+            Object.values(linksObj).forEach(linkArr => {
+                        if (!Array.isArray(linkArr) || linkArr.length < 4) return;
+                        const icon = linkArr[0],
+                            name = linkArr[1],
+                            desc = linkArr[2];
+                        const urls = linkArr.slice(3);
+                        const card = document.createElement('div');
+                        card.className = 'link-card';
+                        const actionsHtml = urls.map((url, idx) =>
+                                `<a href="${url}" target="_blank" class="action-btn ${idx === 0 ? 'primary' : ''}">${idx === 0 ? '🔗 主链接' : `备用 ${idx}`}</a>`
+                ).join('');
+                card.innerHTML = `
+                    <div class="card-top">
+                        <img src="${icon}" class="favicon" onerror="this.style.visibility='hidden'">
+                        <div class="card-info">
+                            <div class="card-title">${name}</div>
+                            <div class="card-desc">${desc}</div>
+                        </div>
+                    </div>
+                    <div class="card-actions">${actionsHtml}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderSchedule() {
+            const container = document.getElementById('timelineContainer');
+            container.innerHTML = '';
+            const today = new Date(); today.setHours(0, 0, 0, 0);
+            const events = Object.values(APP_DATA.sy_djs).map(item => {
+                const eventDate = new Date(item[1]); eventDate.setHours(0, 0, 0, 0);
+                const days = Math.round((eventDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+                return { name: item[0], timestamp: item[1], dateStr: item[2], type: item[3] || '', days };
+            });
+            events.sort((a, b) => a.timestamp - b.timestamp);
+            if (events.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📅</div><div class="empty-state-text">暂无日程数据</div></div>';
+                return;
+            }
+            events.forEach(event => {
+                const item = document.createElement('div');
+                item.className = `timeline-item ${event.days < 0 ? 'passed' : ''}`;
+                let typeTag = '';
+                if (event.type === '农') typeTag = '<span class="tag lunar">农历</span>';
+                if (event.type === '月') typeTag = '<span class="tag monthly">每月</span>';
+                if (event.type === '年') typeTag = '<span class="tag yearly">每年</span>';
+                const countdownClass = event.days >= 0 ? 'future' : 'past';
+                const countdownText = event.days >= 0 ? `${event.days} 天后` : `${Math.abs(event.days)} 天前`;
+                item.innerHTML = `
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-date">${event.dateStr.split(' ')[0]}</div>
+                        <div class="timeline-title">
+                            ${event.name} ${typeTag}
+                            <span class="timeline-countdown ${countdownClass}">${countdownText}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function renderTasks() {
+            const container = document.getElementById('tasksContainer');
+            container.innerHTML = '';
+            const tasks = Object.values(APP_DATA.liu_yan_dx).map(item => {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = item[0];
+                return { name: tempDiv.textContent || tempDiv.innerText || "", date: item[1], status: item[2] };
+            });
+            tasks.sort((a, b) => a.status !== b.status ? (a.status === 2 ? -1 : 1) : new Date(b.date) - new Date(a.date));
+            const pendingList = document.createElement('div');
+            const completedList = document.createElement('div');
+            let pC = 0, cC = 0;
+            tasks.forEach(task => {
+                const item = document.createElement('div');
+                item.className = `task-item ${task.status == 1 ? 'done' : ''}`;
+                item.innerHTML = `
+                    <div class="task-check ${task.status == 1 ? 'done' : ''}">${task.status == 1 ? '✓' : ''}</div>
+                    <div class="task-info">
+                        <div class="task-title">${task.name}</div>
+                        <div class="task-date">${task.date.split(' ')[0]}</div>
+                    </div>
+                `;
+                if (task.status == 1) { completedList.appendChild(item); cC++; }
+                else { pendingList.appendChild(item); pC++; }
+            });
+            if (tasks.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✅</div><div class="empty-state-text">暂无任务数据</div></div>';
+                return;
+            }
+            const stats = document.createElement('div');
+            stats.className = 'stats-grid';
+            stats.innerHTML = `
+                <div class="stat-card pending"><div class="stat-num">${pC}</div><div class="stat-label">待办事项</div></div>
+                <div class="stat-card done"><div class="stat-num">${cC}</div><div class="stat-label">已完成</div></div>
+            `;
+            container.appendChild(stats);
+            if (pC > 0) {
+                const t = document.createElement('div');
+                t.className = 'section-title'; t.textContent = '待办事项';
+                container.appendChild(t);
+                container.appendChild(pendingList);
+            }
+            if (cC > 0) {
+                const t = document.createElement('div');
+                t.className = 'section-title'; t.textContent = '已完成';
+                container.appendChild(t);
+                container.appendChild(completedList);
+            }
+        }
+
+        function renderAllPages() {
+            renderSidebar();
+            renderNavLinks();
+            renderSchedule();
+            renderTasks();
+            updatePageTitle();
+        }
+
+        function updatePageTitle() {
+            const activeTab = document.querySelector('.tab-item.active');
+            const pageKey = activeTab ? activeTab.dataset.page : 'schedule';
+            const titles = { schedule: '日程', nav: APP_DATA.dhr_sz[currentNavCategory] || '导航', tasks: '任务' };
+            document.getElementById('pageTitle').textContent = titles[pageKey] || '日程';
+            document.getElementById('menuBtn').style.visibility = pageKey === 'nav' ? 'visible' : 'hidden';
+        }
+
+        function toggleSidebar(show) {
+            document.getElementById('sidebar').classList.toggle('open', show);
+            document.getElementById('sidebarOverlay').classList.toggle('open', show);
+            document.getElementById('mainContent').classList.toggle('blurred', show);
+        }
+
+        /* ========== 置顶按钮 ========== */
+
+        const backToTopBtn = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 200) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        }, { passive: true });
+
+        backToTopBtn.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        /* ========== 事件绑定 ========== */
+
+        document.getElementById('menuBtn').onclick = () => toggleSidebar(true);
+        document.getElementById('closeSidebar').onclick = () => toggleSidebar(false);
+        document.getElementById('sidebarOverlay').onclick = () => toggleSidebar(false);
+        document.getElementById('syncBtn').onclick = () => showSyncModal();
+        document.getElementById('skipBtn').onclick = () => hideSyncModal();
+
+        document.querySelectorAll('.tab-item').forEach(tab => {
+            tab.onclick = () => {
+                document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(`page-${tab.dataset.page}`).classList.add('active');
+                updatePageTitle();
+                window.scrollTo({ top: 0, behavior: 'instant' });
+            };
+        });
+
+        const userInput = document.getElementById('userKey');
+        userInput.addEventListener('blur', function () {
+            let val = this.value.trim();
+            if (val && /[\u4e00-\u9fa5]/.test(val)) this.value = encodeURIComponent(val);
+        });
+
+        document.getElementById('downloadBtn').addEventListener('click', async () => {
+            let key = userInput.value.trim();
+            if (!key) return showToast('请输入 ID');
+            if (/[\u4e00-\u9fa5]/.test(key)) { key = encodeURIComponent(key); userInput.value = key; }
+            const btn = document.getElementById('downloadBtn');
+            btn.disabled = true;
+            btn.textContent = '同步中...';
+            try {
+                APP_DATA = await fetchBackup(key);
+                saveToCache(APP_DATA);
+                hideSyncModal();
+                activateTab('schedule');
+                renderAllPages();
+                showToast('同步成功！');
+            } catch (err) {
+                console.error(err);
+                showToast('同步失败: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '同步数据';
+            }
+        });
+
+        function activateTab(pageKey) {
+            document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const targetTab = document.querySelector(`.tab-item[data-page="${pageKey}"]`);
+            if (targetTab) targetTab.classList.add('active');
+            const targetPage = document.getElementById(`page-${pageKey}`);
+            if (targetPage) targetPage.classList.add('active');
+        }
+
+        /* ========== 初始化 ========== */
+
+        (function init() {
+            const now = new Date();
+            const months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+            document.getElementById('currentDate').textContent = `${months[now.getMonth()]} ${now.getDate()}日`;
+            const cached = loadFromCache();
+            if (cached) {
+                APP_DATA = cached;
+                renderAllPages();
+            } else {
+                showSyncModal();
+            }
+        })();
+    </script>
+</body>
+
+</html>

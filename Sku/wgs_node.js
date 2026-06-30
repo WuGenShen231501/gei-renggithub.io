@@ -15,178 +15,202 @@ const crypto = require('crypto');
 // 引入WebSocket模块，用于创建WebSocket服务器
 const WebSocket = require('ws');
 
-
-
 // 使用CORS中间件，允许跨域请求
-app.use(cors()); // 允许跨域
+app.use(cors());
 
 // 定义根路径GET请求处理
-app.get('/', function(req, res) {
-    // 打印请求URL到控制台
+app.get('/', function (req, res) {
     console.log(`检测到${req.url}请求`);
-    // 返回欢迎信息
     res.send('欢迎使用!');
 });
 
-
-
 // 定义带参数的GET请求处理，参数为wgs
-app.get('/:wgs', function(req, res) { //wgs参数
-    // 打印请求URL到控制台
+app.get('/:wgs', function (req, res) {
     console.log(`检测到${req.url}请求`);
 
-    // 如果请求参数wgs等于'mrrd'
-    if (req.params.wgs == 'mrrd') { // 新闻爬取
-        // 设置响应头，指定内容类型为HTML，编码为utf-8
+    // 如果请求参数wgs等于'mrrd' (新闻爬取)
+    if (req.params.wgs == 'mrrd') {
         res.setHeader('Content-Type', 'text/html;charset=utf-8');
-        // 引入axios模块，用于发送HTTP请求
         const axios = require('axios');
-        // 引入cheerio模块，用于解析HTML
         const cheerio = require('cheerio');
-        // 抓取网页数据
+
         async function fetchData() {
             try {
-                // 目标 URL
                 var url;
-                // 如果存在查询参数p，则使用带分页的URL
                 if (req.query.p) {
-                    url = 'https://tophub.today/c/news?&p=' + req.query.p;
+                    url = 'https://tophub.today/c/news?p=' + req.query.p;
                 } else {
-                    // 否则使用默认URL
                     url = 'https://tophub.today/';
                 }
-                // 发送 GET 请求获取网页数据
+
                 const { data } = await axios.get(url);
-                // 使用 Cheerio 加载 HTML，便于解析
                 const $ = cheerio.load(data);
-                // 新增：统计每个.cc-cd内的.t数量 ▼▼▼
+
                 const counts = $('.cc-cd').map((i, el) => {
-                    // 返回每个.cc-cd元素内.t元素的数量
                     return $(el).find('.t').length;
                 }).get();
-                // 修改为通过map获取数组
-                // 获取所有.cc-cd-lb span 元素的文本内容，转换为数组
+
                 const rd = $('.cc-cd-lb span').map((i, el) => $(el).text().replace(/\n/g, '').replace(/\t/g, '').trim()).get();
                 console.log(rd);
-                // 获取所有.t 元素的文本内容，转换为数组
+
                 const rd2 = $('.t').map((i, el) => $(el).text().replace(/\n/g, '').replace(/\t/g, '').trim()).get();
-                // 添加HTML结构包装
-                // 发送响应，包含三个数组：分类列表、内容列表和每个分类的内容数量
-                res.send([rd, rd2, counts]); // 删除模板字符串自带的换行
+
+                res.send([rd, rd2, counts]);
             } catch (error) {
-                // 打印抓取网页时的错误信息
                 console.error('抓取网页时出错:', error.message);
-                // 返回500错误和错误信息
-                res.status(500).send('数据获取失败'); // 添加错误响应
+                res.status(500).send('数据获取失败');
             }
         }
-        // 调用fetchData函数，开始抓取数据
         fetchData();
-    } else if (req.params.wgs == 'website-info') { //网站信息爬取
-        // 处理网站信息爬取请求
+
+    } else if (req.params.wgs == 'website-info') { // 网站信息爬取 (终极稳定版)
         const axios = require('axios');
+        const cheerio = require('cheerio');
         const url = req.query.url;
+
         if (!url) {
             res.status(400).send({ error: '缺少url参数' });
             return;
         }
-        // 验证URL格式
+
         let validatedUrl = url;
         if (!validatedUrl.startsWith('http://') && !validatedUrl.startsWith('https://')) {
             validatedUrl = 'https://' + validatedUrl;
         }
-        // 发送请求到目标网站
-        axios.get(validatedUrl, {
-                headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-                },
-                timeout: 10000
-            })
-            .then(response => {
-                const html = response.data;
-                const result = parseWebsiteInfo(html, validatedUrl);
 
-                if (result.title === 'Loading...' || result.title === 'loading...' || result.title === '') {
+        // 1. 获取网页 HTML
+        axios.get(validatedUrl, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            },
+            timeout: 10000
+        })
+            .then(async (response) => {
+                const html = response.data;
+                const $ = cheerio.load(html);
+
+                // 2. 解析标题
+                const title = $('title').text().trim() || '未找到标题';
+
+                // 3. 解析图标 (使用 cheerio，完美兼容 rel="shortcut icon" 或属性顺序颠倒)
+                let favicon = '';
+                const iconLink = $('link').filter((i, el) => {
+                    const rel = $(el).attr('rel');
+                    return rel && rel.toLowerCase().includes('icon');
+                }).first();
+
+                if (iconLink.length > 0) {
+                    favicon = iconLink.attr('href');
+                }
+
+                const urlObj = new URL(validatedUrl);
+                const origin = urlObj.origin;
+
+                // 辅助函数：将相对路径转为完整绝对路径
+                const resolveUrl = (fav) => {
+                    if (!fav) return null;
+                    if (fav.startsWith('http://') || fav.startsWith('https://')) return fav;
+                    if (fav.startsWith('/')) return origin + fav;
+                    return origin + '/' + fav;
+                };
+
+                // 辅助函数：轻量级探测图标是否真实存在且为图片 (带伪装头防CDN拦截)
+                const isFaviconValid = async (favUrl) => {
+                    if (!favUrl) return false;
+                    try {
+                        const headers = {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                            'Referer': validatedUrl
+                        };
+
+                        // 优先 HEAD 请求
+                        let res = await axios.head(favUrl, { timeout: 5000, headers, validateStatus: (s) => s < 500 });
+
+                        // 若被拦截(403/405)或无类型，降级为 GET (stream模式不下载大文件)
+                        if (res.status === 405 || res.status === 403 || !res.headers['content-type']) {
+                            res = await axios.get(favUrl, { timeout: 5000, responseType: 'stream', headers, validateStatus: (s) => s < 500 });
+                        }
+
+                        if (res.status === 200) {
+                            const ct = (res.headers['content-type'] || '').toLowerCase();
+                            return ct.includes('image') || ct.includes('icon') || ct.includes('svg') || ct.includes('octet-stream');
+                        }
+                        return false;
+                    } catch (e) {
+                        return false;
+                    }
+                };
+
+                let finalFavicon = origin + '/favicon.ico'; // 默认兜底完整路径
+
+                // 策略：优先验证 HTML 中提取的图标
+                if (favicon) {
+                    const absoluteFavicon = resolveUrl(favicon);
+                    if (await isFaviconValid(absoluteFavicon)) {
+                        finalFavicon = absoluteFavicon;
+                    } else {
+                        // 策略2：若提取的无效，尝试根目录
+                        const rootFavicon = origin + '/favicon.ico';
+                        if (await isFaviconValid(rootFavicon)) {
+                            finalFavicon = rootFavicon;
+                        }
+                    }
+                } else {
+                    // 没提取到，直接尝试根目录
+                    const rootFavicon = origin + '/favicon.ico';
+                    if (await isFaviconValid(rootFavicon)) {
+                        finalFavicon = rootFavicon;
+                    }
+                }
+
+                // 4. 校验并返回结果
+                if (title === 'Loading...' || title === 'loading...' || title === '未找到标题') {
                     res.status(503).send({
-                        error: '网站正在加载中，请稍后重试',
-                        details: '该网站使用JavaScript动态加载内容，建议使用浏览器访问'
+                        error: '网站正在加载中或无法获取标题',
+                        details: '该网站可能使用JavaScript动态加载内容或存在严格反爬'
                     });
                 } else {
-                    res.send(result);
+                    res.send({ title, favicon: finalFavicon }); // 确保返回完整路径
                 }
             })
             .catch(error => {
                 console.error('请求失败:', error.message);
                 res.status(500).send({ error: '请求失败', details: error.message });
             });
+
     } else if (req.params.wgs == 'Sku-Photo') {
         res.status(405).json({ success: false, error: '方法不允许' });
     } else if (req.params.wgs == 'Sku-Photo-Delete') {
         res.status(405).json({ success: false, error: '方法不允许' });
     } else {
-        // 其他情况，返回欢迎信息
         res.send('欢迎使用!');
     }
 });
 
-// 解析网站信息函数
-function parseWebsiteInfo(html, baseUrl) {
-    // 解析标题
-    const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
-    const title = titleMatch ? titleMatch[1].trim() : '未找到标题';
-    // 解析图标
-    let favicon = '';
-    const faviconMatch = html.match(/<link[^>]*rel=["']?icon["']?[^>]*href=["']([^"']+)["'][^>]*>/i);
-    if (faviconMatch) {
-        favicon = faviconMatch[1];
-    }
-    // 如果没有找到，尝试默认路径
-    else {
-        favicon = '/favicon.ico';
-    }
-    // 处理相对路径
-    if (favicon && !favicon.startsWith('http://') && !favicon.startsWith('https://')) {
-        const urlObj = new URL(baseUrl);
-        if (favicon.startsWith('/')) {
-            favicon = urlObj.origin + favicon;
-        } else {
-            favicon = urlObj.origin + '/' + favicon;
-        }
-    }
-    return { title, favicon };
-}
-
-//photo处理
+// photo处理
 function photoHandle() {
-    // 计算文件哈希值的辅助函数
     function calculateHash(buffer) {
         return crypto.createHash('md5').update(buffer).digest('hex');
     }
 
-    // 计算已有文件哈希值的辅助函数
     function calculateFileHash(filePath) {
         const fileBuffer = fs.readFileSync(filePath);
         return calculateHash(fileBuffer);
     }
 
-    // 处理文件上传的POST路由
     app.post('/Sku-Photo', (req, res) => {
         const uploadPath = path.join(__dirname, req.query.path || 'photo');
         const relativePathPrefix = req.query.path || 'photo';
-
-        // 先检查文件信息，不立即使用multer
         const upload = multer().single('image');
 
         upload(req, res, (err) => {
             if (err) {
                 return res.status(500).json({ success: false, error: err.message });
             }
-
             if (!req.file) {
                 return res.status(400).json({ success: false, error: '没有文件被上传' });
             }
 
-            // 确保目录存在
             if (!fs.existsSync(uploadPath)) {
                 fs.mkdirSync(uploadPath, { recursive: true });
             }
@@ -198,7 +222,6 @@ function photoHandle() {
 
             console.log(`[文件上传] 文件名: ${originalName}, 新文件大小: ${newFileSize} 字节, 新文件哈希: ${newFileHash}`);
 
-            // 检查是否存在同名文件
             if (fs.existsSync(originalFilePath)) {
                 const existingFileStats = fs.statSync(originalFilePath);
                 const existingFileSize = existingFileStats.size;
@@ -208,7 +231,6 @@ function photoHandle() {
 
                 if (existingFileHash === newFileHash) {
                     console.log(`[文件上传] 文件哈希相同，判定为重复文件`);
-                    // 文件名和哈希都相同，直接返回已保存的路径
                     const relativePath = path.join(relativePathPrefix, originalName);
                     res.json({
                         success: true,
@@ -226,7 +248,6 @@ function photoHandle() {
                 console.log(`[文件上传] 文件不存在，保存新文件`);
             }
 
-            // 需要保存文件，先确定最终文件名
             let finalFileName = originalName;
             const ext = path.extname(originalName);
             const baseName = path.basename(originalName, ext);
@@ -237,7 +258,6 @@ function photoHandle() {
                 counter++;
             }
 
-            // 保存文件
             const finalFilePath = path.join(uploadPath, finalFileName);
             fs.writeFileSync(finalFilePath, req.file.buffer);
 
@@ -252,34 +272,28 @@ function photoHandle() {
         });
     });
 }
-photoHandle(); // 调用photoHandle函数，注册文件上传功能
+photoHandle();
 
-//photo删除处理
+// photo删除处理
 function photoDeleteHandle() {
-    // 解析JSON请求体
     app.use(express.json());
 
-    // 处理删除未使用图片的POST路由
     app.post('/Sku-Photo-Delete', (req, res) => {
         const usedPhotos = req.body.usedPhotos || [];
         const photoDir = path.join(__dirname, 'photo');
 
         try {
-            // 检查photo目录是否存在
             if (!fs.existsSync(photoDir)) {
                 return res.json({ success: true, message: 'photo目录不存在，无需删除' });
             }
 
-            // 读取photo目录中的所有文件
             const files = fs.readdirSync(photoDir);
             const deletedFiles = [];
 
-            // 遍历文件，删除未使用的图片
             files.forEach(file => {
                 const filePath = path.join(photoDir, file);
                 const relativePath = 'photo/' + file;
 
-                // 如果文件不在使用列表中，删除它
                 if (!usedPhotos.includes(relativePath)) {
                     fs.unlinkSync(filePath);
                     deletedFiles.push(relativePath);
@@ -297,18 +311,17 @@ function photoDeleteHandle() {
         }
     });
 }
-photoDeleteHandle(); // 调用photoDeleteHandle函数，注册图片删除功能
+photoDeleteHandle();
 
-// 配置静态资源服务，将/Sku路径映射到../Sku目录
+// 配置静态资源服务
 app.use('/Sku', express.static('../Sku'));
 
 // 监听80端口，启动服务器
-app.listen('80', function() {
-    // 服务器启动成功后，打印信息到控制台
+app.listen('80', function () {
     console.log('服务器启动成功!');
 });
 
-// ===== 新增：WebSocket 单独开 8080 端口 =====
+// ===== WebSocket 单独开 8080 端口 =====
 const wss = new WebSocket.Server({ port: 8080 });
 const wg_clients = new Map();
 

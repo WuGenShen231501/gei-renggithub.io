@@ -1,11 +1,121 @@
 // 将 pinyin 函数显式挂载到全局 window 对象
 window.pinyin = pinyinPro.pinyin;
 
+
+// 防抖函数
+function Sku_fan_dou_don(callback, delay, immediate = false) {
+    if (typeof callback !== 'function') {
+        console.warn('⚠️ Sku_fan_dou_don: 第一个参数必须是函数，当前类型为', typeof callback);
+        return function (...args) {
+            try { callback && callback.apply(this, args); } catch (e) { }
+        };
+    }
+    if (typeof delay !== 'number' || delay < 0) {
+        console.warn('⚠️ Sku_fan_dou_don: delay 应为非负数字，当前值:', delay, '→ 已自动修正为 0');
+        delay = Math.max(0, Number(delay) || 0);
+    }
+    let timer = null;
+    let lastArgs = null;
+    let lastThis = null;
+
+    function debounced(...args) {
+        lastThis = this;
+        lastArgs = args;
+        const callNow = immediate && !timer;
+        if (timer) {
+            clearTimeout(timer);
+            timer = null;
+        }
+        if (callNow) {
+            callback.apply(lastThis, lastArgs);
+            timer = setTimeout(() => { timer = null; }, delay);
+            return;
+        }
+        timer = setTimeout(() => {
+            callback.apply(lastThis, lastArgs);
+            timer = null;
+        }, delay);
+    }
+    debounced.cancel = function () {
+        if (timer) {
+            clearTimeout(timer);
+            timer = null;
+        }
+    };
+    debounced.flush = function () {
+        if (timer) {
+            clearTimeout(timer);
+            timer = null;
+            if (lastArgs) {
+                callback.apply(lastThis, lastArgs);
+            }
+        }
+    };
+    return debounced;
+}
+
+
+
+// 节流函数
+function Sku_jie_liu(callback, delay, immediate = true) {
+    if (typeof callback !== 'function') {
+        console.warn('⚠️ Sku_jie_liu: 第一个参数必须是函数，当前类型为', typeof callback);
+        return function (...args) {
+            try { callback && callback.apply(this, args); } catch (e) { }
+        };
+    }
+    if (typeof delay !== 'number' || delay < 0) {
+        console.warn('⚠️ Sku_jie_liu: delay 应为非负数字，当前值:', delay, '→ 已自动修正为 0');
+        delay = Math.max(0, Number(delay) || 0);
+    }
+    let timer = null;
+    let lastArgs = null;
+    let lastThis = null;
+
+    function throttled(...args) {
+        lastThis = this;
+        lastArgs = args;
+
+        if (!timer) {
+            if (immediate) {
+                callback.apply(lastThis, lastArgs);
+            }
+            timer = setTimeout(() => {
+                timer = null;
+                if (!immediate && lastArgs) {
+                    callback.apply(lastThis, lastArgs);
+                }
+            }, delay);
+        }
+    }
+    throttled.cancel = function () {
+        if (timer) {
+            clearTimeout(timer);
+            timer = null;
+        }
+    };
+    throttled.flush = function () {
+        if (timer) {
+            clearTimeout(timer);
+            timer = null;
+            if (lastArgs) {
+                callback.apply(lastThis, lastArgs);
+            }
+        }
+    };
+    return throttled;
+}
+
+
+
 // 提示音
 function Sku_tsy(num) {
     var sku_tsy = document.querySelectorAll('.sku_tsy');
     sku_tsy[num].play();
 }
+
+
+
 
 // RGB转换器
 function RGB_zhq(hex, opacity) {
@@ -44,25 +154,94 @@ function WGS_zfc_jiemi(nr, key) {
 }
 
 
-// 哈希加密
-// async function hashString(str) {
-//     // 将字符串转换为 Uint8Array
-//     const encoder = new TextEncoder();
-//     const data = encoder.encode(str);
+//AES-256-GCM
+// 加密
+// const cipher = await aesGcmCrypt('你好世界', 'my-password', 'encrypt');// 返回 Base64 密文
+// 解密
+// const plain = await aesGcmCrypt(cipher, 'my-password', 'decrypt'); // 返回 "你好世界"
+async function Sku_AES256GCM(o, a, y = "encrypt") { //压缩版
+    const s = e => crypto.getRandomValues(new Uint8Array(e)),
+        L = e => btoa(Array.from(new Uint8Array(e), t => String.fromCharCode(t)).join("")),
+        A = e => Uint8Array.from(atob(e), t => t.charCodeAt(0));
+    async function i(e, t) {
+        const c = new TextEncoder,
+            n = await crypto.subtle.importKey("raw", c.encode(e), { name: "PBKDF2" }, !1, ["deriveKey"]);
+        return crypto.subtle.deriveKey({ name: "PBKDF2", salt: t, iterations: 2e5, hash: "SHA-256" }, n, { name: "AES-GCM", length: 256 }, !1, ["encrypt", "decrypt"])
+    }
+    if (y === "encrypt") {
+        const e = s(16),
+            t = s(12),
+            c = await i(a, e),
+            n = await crypto.subtle.encrypt({ name: "AES-GCM", iv: t }, c, new TextEncoder().encode(o)),
+            r = new Uint8Array(28 + n.byteLength);
+        return r.set(e, 0), r.set(t, 16), r.set(new Uint8Array(n), 28), L(r.buffer)
+    } else {
+        const e = A(o),
+            t = e.slice(0, 16),
+            c = e.slice(16, 28),
+            n = e.slice(28),
+            r = await i(a, t),
+            E = await crypto.subtle.decrypt({ name: "AES-GCM", iv: c }, r, n);
+        return new TextDecoder().decode(E)
+    }
+}
+// async function Sku_AES256GCM(input, password, mode = 'encrypt') {
+//     const PBKDF2_ITERATIONS = 200000;
+//     const SALT_LEN = 16;
+//     const IV_LEN = 12;
 
-//     // 计算 SHA-256 哈希
-//     const hashBuffer = await crypto.subtle.digest('SHA-256',data);
+//     const randomBytes = len => crypto.getRandomValues(new Uint8Array(len));
+//     const toBase64 = buf => btoa(Array.from(new Uint8Array(buf), b => String.fromCharCode(b)).join(''));
+//     const fromBase64 = b64 => Uint8Array.from(atob(b64), c => c.charCodeAt(0));
 
-//     // 将哈希转换为十六进制字符串
-//     const hashArray = Array.from(new Uint8Array(hashBuffer));
-//     const hashHex = hashArray.map(b => b.toString(16).padStart(2,'0')).join('');
+//     async function deriveKey(pwd, salt) {
+//         const enc = new TextEncoder();
+//         const keyMaterial = await crypto.subtle.importKey(
+//             'raw', enc.encode(pwd), { name: 'PBKDF2' }, false, ['deriveKey']
+//         );
+//         return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
+//             keyMaterial, { name: 'AES-GCM', length: 256 },
+//             false, ['encrypt', 'decrypt']
+//         );
+//     }
 
-//     return hashHex;
+//     if (mode === 'encrypt') {
+//         const salt = randomBytes(SALT_LEN);
+//         const iv = randomBytes(IV_LEN);
+//         const key = await deriveKey(password, salt);
+//         const ciphertext = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(input));
+//         const combined = new Uint8Array(SALT_LEN + IV_LEN + ciphertext.byteLength);
+//         combined.set(salt, 0);
+//         combined.set(iv, SALT_LEN);
+//         combined.set(new Uint8Array(ciphertext), SALT_LEN + IV_LEN);
+//         return toBase64(combined.buffer);
+//     } else {
+//         const combined = fromBase64(input);
+//         const salt = combined.slice(0, SALT_LEN);
+//         const iv = combined.slice(SALT_LEN, SALT_LEN + IV_LEN);
+//         const ciphertext = combined.slice(SALT_LEN + IV_LEN);
+//         const key = await deriveKey(password, salt);
+//         const plainBuffer = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext);
+//         return new TextDecoder().decode(plainBuffer);
+//     }
 // }
 
-// hashString("Hello,World!").then(hash => {
-//     console.log(hash); // 输出哈希值
-// });
+
+
+
+// 哈希加密
+async function Sku_haxijiami(str) {
+    // 将字符串转换为 Uint8Array
+    const encoder = new TextEncoder();
+    const data = encoder.encode(str);
+    // 计算 SHA-256 哈希
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    // 将哈希转换为十六进制字符串
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+}
+
 
 
 // 遍历对象到数组
@@ -82,92 +261,104 @@ function collectArrays(obj) {
 
 
 
+
 // 匹配函数/不区分大小写
-function containsAllChars(str11, str22, zdyy) {
-    var containsAllChars_zdyy = 'none';
-    if (zdyy) {
-        containsAllChars_zdyy = zdyy;
-    }
-    var str1 = str11.toLowerCase().replace(/\s/g, ''); //全部转为小写并去掉空格
-    var str2 = str22.toLowerCase().replace(/\s/g, ''); //全部转为小写并去掉空格
-    var str1_py = '';
-    var str2_py = '';
-    var str1_py_szm = '';
-    var str2_py_szm = '';
-
-    // 检测 str1 是否包含中文字符（Unicode 范围:\u4E00-\u9FA5 为常用汉字）
-    const hasChinese = /^[a-zA-Z]+$/.test(str1.replace(/\s/g, ''));
-    if (hasChinese && localStorage.sscl_py == 1) {
-        // 如果 str1 包含中文字符,则使用 pinyin 库进行拼音匹配
-        str1_py = str1.replace(/\s/g, '');
-        str2_py = pinyin(str2, { toneType: 'none' }).replace(/\s/g, '');
-        str1_py_szm = str1.replace(/\s/g, '');
-        str2_py_szm = pinyin(str2, { pattern: 'first' }).replace(/\s/g, '');
-    }
-
-    if (localStorage.sscl == 0 || containsAllChars_zdyy == 0) {
-        // 创建一个对象来记录str1中每个字符的出现次数
-        const charCounts = {};
-        for (const char of str1) {
-            // 增加字符在str1中的出现次数
-            charCounts[char] = (charCounts[char] || 0) + 1;
-        }
-        // 遍历str2,减少每个字符的计数
-        for (const char of str2) {
-            if (charCounts.hasOwnProperty(char)) {
-                // 如果字符在str1中出现过,则减少其计数
-                charCounts[char]--;
-                // 如果计数变为0,则从对象中删除该字符
-                if (charCounts[char] === 0) {
-                    delete charCounts[char];
-                }
-            }
-        }
-
-        // 创建一个对象来记录str1中每个字符的出现次数
-        const charCounts2 = {};
-        for (const char of str1_py) {
-            // 增加字符在str1中的出现次数
-            charCounts2[char] = (charCounts2[char] || 0) + 1;
-        }
-        // 遍历str2,减少每个字符的计数
-        for (const char of str2_py) {
-            if (charCounts2.hasOwnProperty(char)) {
-                // 如果字符在str1中出现过,则减少其计数
-                charCounts2[char]--;
-                // 如果计数变为0,则从对象中删除该字符
-                if (charCounts2[char] === 0) {
-                    delete charCounts2[char];
-                }
-            }
-        }
-
-        // 创建一个对象来记录str1中每个字符的出现次数
-        const charCounts3 = {};
-        for (const char of str1_py_szm) {
-            // 增加字符在str1中的出现次数
-            charCounts3[char] = (charCounts3[char] || 0) + 1;
-        }
-        // 遍历str2,减少每个字符的计数
-        for (const char of str2_py_szm) {
-            if (charCounts3.hasOwnProperty(char)) {
-                // 如果字符在str1中出现过,则减少其计数
-                charCounts3[char]--;
-                // 如果计数变为0,则从对象中删除该字符
-                if (charCounts3[char] === 0) {
-                    delete charCounts3[char];
-                }
-            }
-        }
-
-        // 如果对象中没有剩余的字符,则说明str2中包含了str1中所有字符且满足出现次数要求
-        return Object.keys(charCounts).length === 0 || (str1_py == '' ? false : Object.keys(charCounts2).length === 0) || (str1_py_szm == '' ? false : Object.keys(charCounts2).length === 0);
-    } else if (localStorage.sscl == 1) {
-        return str2.indexOf(str1) !== -1 || (str1_py == '' ? false : str2_py.indexOf(str1_py) !== -1) || (str1_py_szm == '' ? false : str2_py_szm.indexOf(str1_py_szm) !== -1);
-    } else if (localStorage.sscl == 2) {
-        return str2 === str1 || (str1_py == '' ? false : str2_py === str1_py) || (str1_py_szm == '' ? false : str2_py_szm === str1_py_szm);
-    }
+function containsAllChars(i, g, p) { //压缩版
+    var d = p || "none",
+        s = i.toLowerCase().replace(/\s/g, ""),
+        f = g.toLowerCase().replace(/\s/g, ""),
+        t = "",
+        a = "",
+        n = "",
+        c = "",
+        o, l, r, e;
+    if (/^[a-zA-Z]+$/.test(s) && localStorage.sscl_py == 1 && (t = s, a = pinyin(f, { toneType: "none" }).replace(/\s/g, ""), n = s, c = pinyin(f, { pattern: "first" }).replace(/\s/g, "")), localStorage.sscl == 0 || d == 0) { o = {}, l = {}, r = {}; for (e of s) o[e] = (o[e] || 0) + 1; for (e of f) o[e] && (o[e]--, o[e] === 0 && delete o[e]); for (e of t) l[e] = (l[e] || 0) + 1; for (e of a) l[e] && (l[e]--, l[e] === 0 && delete l[e]); for (e of n) r[e] = (r[e] || 0) + 1; for (e of c) r[e] && (r[e]--, r[e] === 0 && delete r[e]); return !Object.keys(o).length || (t == "" ? !1 : !Object.keys(l).length) || (n == "" ? !1 : !Object.keys(r).length) } else { if (localStorage.sscl == 1) return f.indexOf(s) != -1 || (t == "" ? !1 : a.indexOf(t) != -1) || (n == "" ? !1 : c.indexOf(n) != -1); if (localStorage.sscl == 2) return f === s || (t == "" ? !1 : a === t) || (n == "" ? !1 : c === n) }
 }
+// function containsAllChars(str11, str22, zdyy) {
+//     var containsAllChars_zdyy = 'none';
+//     if (zdyy) {
+//         containsAllChars_zdyy = zdyy;
+//     }
+//     var str1 = str11.toLowerCase().replace(/\s/g, ''); //全部转为小写并去掉空格
+//     var str2 = str22.toLowerCase().replace(/\s/g, ''); //全部转为小写并去掉空格
+//     var str1_py = '';
+//     var str2_py = '';
+//     var str1_py_szm = '';
+//     var str2_py_szm = '';
+
+//     // 检测 str1 是否包含中文字符（Unicode 范围:\u4E00-\u9FA5 为常用汉字）
+//     const hasChinese = /^[a-zA-Z]+$/.test(str1.replace(/\s/g, ''));
+//     if (hasChinese && localStorage.sscl_py == 1) {
+//         // 如果 str1 包含中文字符,则使用 pinyin 库进行拼音匹配
+//         str1_py = str1.replace(/\s/g, '');
+//         str2_py = pinyin(str2, { toneType: 'none' }).replace(/\s/g, '');
+//         str1_py_szm = str1.replace(/\s/g, '');
+//         str2_py_szm = pinyin(str2, { pattern: 'first' }).replace(/\s/g, '');
+//     }
+
+//     if (localStorage.sscl == 0 || containsAllChars_zdyy == 0) {
+//         // 创建一个对象来记录str1中每个字符的出现次数
+//         const charCounts = {};
+//         for (const char of str1) {
+//             // 增加字符在str1中的出现次数
+//             charCounts[char] = (charCounts[char] || 0) + 1;
+//         }
+//         // 遍历str2,减少每个字符的计数
+//         for (const char of str2) {
+//             if (charCounts.hasOwnProperty(char)) {
+//                 // 如果字符在str1中出现过,则减少其计数
+//                 charCounts[char]--;
+//                 // 如果计数变为0,则从对象中删除该字符
+//                 if (charCounts[char] === 0) {
+//                     delete charCounts[char];
+//                 }
+//             }
+//         }
+
+//         // 创建一个对象来记录str1中每个字符的出现次数
+//         const charCounts2 = {};
+//         for (const char of str1_py) {
+//             // 增加字符在str1中的出现次数
+//             charCounts2[char] = (charCounts2[char] || 0) + 1;
+//         }
+//         // 遍历str2,减少每个字符的计数
+//         for (const char of str2_py) {
+//             if (charCounts2.hasOwnProperty(char)) {
+//                 // 如果字符在str1中出现过,则减少其计数
+//                 charCounts2[char]--;
+//                 // 如果计数变为0,则从对象中删除该字符
+//                 if (charCounts2[char] === 0) {
+//                     delete charCounts2[char];
+//                 }
+//             }
+//         }
+
+//         // 创建一个对象来记录str1中每个字符的出现次数
+//         const charCounts3 = {};
+//         for (const char of str1_py_szm) {
+//             // 增加字符在str1中的出现次数
+//             charCounts3[char] = (charCounts3[char] || 0) + 1;
+//         }
+//         // 遍历str2,减少每个字符的计数
+//         for (const char of str2_py_szm) {
+//             if (charCounts3.hasOwnProperty(char)) {
+//                 // 如果字符在str1中出现过,则减少其计数
+//                 charCounts3[char]--;
+//                 // 如果计数变为0,则从对象中删除该字符
+//                 if (charCounts3[char] === 0) {
+//                     delete charCounts3[char];
+//                 }
+//             }
+//         }
+
+//         // 如果对象中没有剩余的字符,则说明str2中包含了str1中所有字符且满足出现次数要求
+//         return Object.keys(charCounts).length === 0 || (str1_py == '' ? false : Object.keys(charCounts2).length === 0) || (str1_py_szm == '' ? false : Object.keys(charCounts2).length === 0);
+//     } else if (localStorage.sscl == 1) {
+//         return str2.indexOf(str1) !== -1 || (str1_py == '' ? false : str2_py.indexOf(str1_py) !== -1) || (str1_py_szm == '' ? false : str2_py_szm.indexOf(str1_py_szm) !== -1);
+//     } else if (localStorage.sscl == 2) {
+//         return str2 === str1 || (str1_py == '' ? false : str2_py === str1_py) || (str1_py_szm == '' ? false : str2_py_szm === str1_py_szm);
+//     }
+// }
 
 
 // 所有文本超出字体浮动效果
@@ -211,7 +402,7 @@ function WGS_wenbengundon(qwe, asd, hzxg) {
         // console.log('内容' + scrollWidth2,'盒子' + offsetWidth2,'class' + wb[i].className);
         if (scrollWidth2 > offsetWidth2) {
             // 定义鼠标悬停事件处理函数
-            element._onMouseOver = function() {
+            element._onMouseOver = function () {
                 // 克隆元素并测量宽度(测试用)
                 // var element = this;
                 // var element_w = this.offsetWidth;
@@ -236,7 +427,7 @@ function WGS_wenbengundon(qwe, asd, hzxg) {
             };
 
             // 定义鼠标移出事件处理函数
-            element._onMouseOut = function() {
+            element._onMouseOut = function () {
                 this.style.transition = '';
                 this.style.textIndent = asd + 'px';
             };
@@ -266,7 +457,7 @@ function Sku_tctx(zdysx1) {
 
         // 设置边框样式
         if (localStorage.bei_jing_kuan_ture == 1) {
-            div.style.border = `1px solid ${RGB_zhq(localStorage.bei_jing_kuan_color,localStorage.bei_jing_kuan_tmd)}`;
+            div.style.border = `1px solid ${RGB_zhq(localStorage.bei_jing_kuan_color, localStorage.bei_jing_kuan_tmd)}`;
         }
 
         // 添加到文档
@@ -284,99 +475,119 @@ function Sku_tctx(zdysx1) {
 
 
 // 滚动条
-function Sku_gundontiao(gun_don_ye1, gun_don_tiao_max1, gun_don_tiao_min1) {
-    let scrollEndTimer;
-    var gun_don_ye = document.querySelector(gun_don_ye1);
-    var gun_don_tiao_max = document.querySelector(gun_don_tiao_max1);
-    var gun_don_tiao_min = document.querySelector(gun_don_tiao_min1);
-    // 页面滚动时
-    gun_don_ye.addEventListener('scroll', function(e) {
-        var gun_don_tiao_min_h = this.offsetHeight / this.scrollHeight;
-        if (gun_don_tiao_min_h * (gun_don_tiao_max.offsetHeight) < 20) {
-            gun_don_tiao_min.style.height = '20px';
-        } else {
-            gun_don_tiao_min.style.height = gun_don_tiao_min_h * 100 + '%';
-        }
-        var top_bdz;
-        if (this.scrollHeight > this.offsetHeight) {
-            top_bdz = (this.scrollTop / (this.scrollHeight - this.offsetHeight)) * (gun_don_tiao_max.offsetHeight - gun_don_tiao_min.offsetHeight);
-        } else {
-            top_bdz = 0;
-        }
-        gun_don_tiao_min.style.top = top_bdz + 'px';
-        if (gun_don_tiao_max.offsetHeight > gun_don_tiao_min.offsetHeight) {
-            gun_don_tiao_max.style.transition = '0.2s';
-            gun_don_tiao_max.style.opacity = '1';
-        } else {
-            gun_don_tiao_max.style.transition = '0s';
-            gun_don_tiao_max.style.opacity = '0';
-        }
-
-        // 滚动结束计时器
-        if (scrollEndTimer) clearTimeout(scrollEndTimer);
-        scrollEndTimer = setTimeout(onScrollEnd, 500);
-    });
-    // 触摸滚动条
-    gun_don_tiao_max.addEventListener('mouseover', function(e) {
-        var gun_don_tiao_min_h = gun_don_ye.offsetHeight / gun_don_ye.scrollHeight;
-        if (gun_don_tiao_min_h * (gun_don_tiao_max.offsetHeight) < 20) {
-            gun_don_tiao_min.style.height = '20px';
-        } else {
-            gun_don_tiao_min.style.height = gun_don_tiao_min_h * 100 + '%';
-        }
-        var top_bdz;
-        if (gun_don_ye.scrollHeight > gun_don_ye.offsetHeight) {
-            top_bdz = (gun_don_ye.scrollTop / (gun_don_ye.scrollHeight - gun_don_ye.offsetHeight)) * (gun_don_tiao_max.offsetHeight - gun_don_tiao_min.offsetHeight);
-        } else {
-            top_bdz = 0;
-        }
-        gun_don_tiao_min.style.top = top_bdz + 'px';
-        if (gun_don_tiao_max.offsetHeight > gun_don_tiao_min.offsetHeight) {
-            this.style.transition = '0.2s';
-            this.style.opacity = '1';
-        } else {
-            gun_don_tiao_max.style.transition = '0s';
-            gun_don_tiao_max.style.opacity = '0';
-        }
-    });
-    gun_don_tiao_max.addEventListener('mouseout', function(e) {
-        this.style.transition = '0.5s';
-        this.style.opacity = '0';
-    });
-    // 拖拉滚动条
-    gun_don_tiao_min.addEventListener('mousedown', function(e) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        var y2 = e.pageY - this.offsetTop;
-
-        document.addEventListener('mousemove', wgsLAIDONTIAO2);
-
-        function wgsLAIDONTIAO2(e) {
-            var y_ZhouPianYiLian = e.pageY - y2;
-            if (y_ZhouPianYiLian < 0) {
-                y_ZhouPianYiLian = 0;
-            } else if (y_ZhouPianYiLian > gun_don_tiao_max.offsetHeight - gun_don_tiao_min.offsetHeight) {
-                y_ZhouPianYiLian = gun_don_tiao_max.offsetHeight - gun_don_tiao_min.offsetHeight;
-            }
-
-            gun_don_tiao_min.style.top = y_ZhouPianYiLian + 'px';
-            gun_don_ye.scroll(0, parseFloat(gun_don_tiao_min.style.top) / (gun_don_tiao_max.offsetHeight - gun_don_tiao_min.offsetHeight) * (gun_don_ye.scrollHeight - gun_don_ye.offsetHeight));
-        }
-
-        document.addEventListener('mouseup', wgsTanQiXiaoChu2);
-
-        function wgsTanQiXiaoChu2(e) {
-            document.removeEventListener('mousemove', wgsLAIDONTIAO2);
-            document.removeEventListener('mouseup', wgsTanQiXiaoChu2);
-        }
-    });
-    // 滚动结束
-    function onScrollEnd() {
-        gun_don_tiao_max.style.transition = '0.5s';
-        gun_don_tiao_max.style.opacity = '0';
+function Sku_gundontiao(u, c, g) { //压缩版
+    let f, e = document.querySelector(u),
+        t = document.querySelector(c),
+        o = document.querySelector(g),
+        h = () => {
+            let s = e.offsetHeight / e.scrollHeight,
+                n = t.offsetHeight * s;
+            return o.style.height = n < 20 ? "20px" : s * 100 + "%", e.scrollHeight > e.offsetHeight ? e.scrollTop / (e.scrollHeight - e.offsetHeight) * (t.offsetHeight - o.offsetHeight) : 0
+        },
+        l = () => { o.style.top = h() + "px", t.style.transition = t.offsetHeight > o.offsetHeight ? "0.2s" : "0s", t.style.opacity = t.offsetHeight > o.offsetHeight ? "1" : "0" };
+    e.onscroll = function () { l(), f && clearTimeout(f), f = setTimeout(() => { t.style.transition = "0.5s", t.style.opacity = "0" }, 500) }, t.onmouseover = l, t.onmouseout = function () { this.style.transition = "0.5s", this.style.opacity = "0" }, o.onmousedown = function (s) {
+        s.stopPropagation(), s.preventDefault();
+        let n = s.pageY - this.offsetTop;
+        document.onmousemove = function (r) {
+            let i = r.pageY - n;
+            i < 0 ? i = 0 : i > t.offsetHeight - o.offsetHeight && (i = t.offsetHeight - o.offsetHeight), o.style.top = i + "px", e.scroll(0, i / (t.offsetHeight - o.offsetHeight) * (e.scrollHeight - e.offsetHeight))
+        }, document.onmouseup = function () { document.onmousemove = document.onmouseup = null }
     }
 }
+
+// function Sku_gundontiao(gun_don_ye1, gun_don_tiao_max1, gun_don_tiao_min1) {
+//     let scrollEndTimer;
+//     var gun_don_ye = document.querySelector(gun_don_ye1);
+//     var gun_don_tiao_max = document.querySelector(gun_don_tiao_max1);
+//     var gun_don_tiao_min = document.querySelector(gun_don_tiao_min1);
+//     // 页面滚动时
+//     gun_don_ye.addEventListener('scroll', function(e) {
+//         var gun_don_tiao_min_h = this.offsetHeight / this.scrollHeight;
+//         if (gun_don_tiao_min_h * (gun_don_tiao_max.offsetHeight) < 20) {
+//             gun_don_tiao_min.style.height = '20px';
+//         } else {
+//             gun_don_tiao_min.style.height = gun_don_tiao_min_h * 100 + '%';
+//         }
+//         var top_bdz;
+//         if (this.scrollHeight > this.offsetHeight) {
+//             top_bdz = (this.scrollTop / (this.scrollHeight - this.offsetHeight)) * (gun_don_tiao_max.offsetHeight - gun_don_tiao_min.offsetHeight);
+//         } else {
+//             top_bdz = 0;
+//         }
+//         gun_don_tiao_min.style.top = top_bdz + 'px';
+//         if (gun_don_tiao_max.offsetHeight > gun_don_tiao_min.offsetHeight) {
+//             gun_don_tiao_max.style.transition = '0.2s';
+//             gun_don_tiao_max.style.opacity = '1';
+//         } else {
+//             gun_don_tiao_max.style.transition = '0s';
+//             gun_don_tiao_max.style.opacity = '0';
+//         }
+
+//         // 滚动结束计时器
+//         if (scrollEndTimer) clearTimeout(scrollEndTimer);
+//         scrollEndTimer = setTimeout(onScrollEnd, 500);
+//     });
+//     // 触摸滚动条
+//     gun_don_tiao_max.addEventListener('mouseover', function(e) {
+//         var gun_don_tiao_min_h = gun_don_ye.offsetHeight / gun_don_ye.scrollHeight;
+//         if (gun_don_tiao_min_h * (gun_don_tiao_max.offsetHeight) < 20) {
+//             gun_don_tiao_min.style.height = '20px';
+//         } else {
+//             gun_don_tiao_min.style.height = gun_don_tiao_min_h * 100 + '%';
+//         }
+//         var top_bdz;
+//         if (gun_don_ye.scrollHeight > gun_don_ye.offsetHeight) {
+//             top_bdz = (gun_don_ye.scrollTop / (gun_don_ye.scrollHeight - gun_don_ye.offsetHeight)) * (gun_don_tiao_max.offsetHeight - gun_don_tiao_min.offsetHeight);
+//         } else {
+//             top_bdz = 0;
+//         }
+//         gun_don_tiao_min.style.top = top_bdz + 'px';
+//         if (gun_don_tiao_max.offsetHeight > gun_don_tiao_min.offsetHeight) {
+//             this.style.transition = '0.2s';
+//             this.style.opacity = '1';
+//         } else {
+//             gun_don_tiao_max.style.transition = '0s';
+//             gun_don_tiao_max.style.opacity = '0';
+//         }
+//     });
+//     gun_don_tiao_max.addEventListener('mouseout', function(e) {
+//         this.style.transition = '0.5s';
+//         this.style.opacity = '0';
+//     });
+//     // 拖拉滚动条
+//     gun_don_tiao_min.addEventListener('mousedown', function(e) {
+//         e.stopPropagation();
+//         e.preventDefault();
+
+//         var y2 = e.pageY - this.offsetTop;
+
+//         document.addEventListener('mousemove', wgsLAIDONTIAO2);
+
+//         function wgsLAIDONTIAO2(e) {
+//             var y_ZhouPianYiLian = e.pageY - y2;
+//             if (y_ZhouPianYiLian < 0) {
+//                 y_ZhouPianYiLian = 0;
+//             } else if (y_ZhouPianYiLian > gun_don_tiao_max.offsetHeight - gun_don_tiao_min.offsetHeight) {
+//                 y_ZhouPianYiLian = gun_don_tiao_max.offsetHeight - gun_don_tiao_min.offsetHeight;
+//             }
+
+//             gun_don_tiao_min.style.top = y_ZhouPianYiLian + 'px';
+//             gun_don_ye.scroll(0, parseFloat(gun_don_tiao_min.style.top) / (gun_don_tiao_max.offsetHeight - gun_don_tiao_min.offsetHeight) * (gun_don_ye.scrollHeight - gun_don_ye.offsetHeight));
+//         }
+
+//         document.addEventListener('mouseup', wgsTanQiXiaoChu2);
+
+//         function wgsTanQiXiaoChu2(e) {
+//             document.removeEventListener('mousemove', wgsLAIDONTIAO2);
+//             document.removeEventListener('mouseup', wgsTanQiXiaoChu2);
+//         }
+//     });
+//     // 滚动结束
+//     function onScrollEnd() {
+//         gun_don_tiao_max.style.transition = '0.5s';
+//         gun_don_tiao_max.style.opacity = '0';
+//     }
+// }
 
 
 
@@ -389,7 +600,7 @@ function SKu_bo_fang_qi(text) {
     let audioContext;
     // 确保有一个可以操作的AudioContext
     if (!audioContext) {
-        const audioContext = new(window.AudioContext || window.webkitAudioContext)();
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         audioContext.resume().then(() => {
             // 创建一个临时的Buffer
             const buffer = audioContext.createBuffer(1, 1, 480000); // 1通道,1帧,采样率22050Hz
@@ -426,7 +637,7 @@ function SKu_bo_fang_qi(text) {
 
 
 //定义高度
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     gaodu_hs();
 });
 
@@ -441,7 +652,7 @@ gaodu_hs();
 //滚动隐藏导航栏
 topmax = document.querySelector('.topmax');
 nrmaxs0_nr = document.querySelector('.nrmaxs0_nr');
-nrmaxs0_nr.addEventListener('scroll', function() {
+nrmaxs0_nr.addEventListener('scroll', function () {
     if (nrmaxs0_nr.scrollTop >= 90) {
         topmax.style.top = '-200px';
         topmax.click();
@@ -454,7 +665,7 @@ nrmaxs0_nr.addEventListener('scroll', function() {
 sy_lbt_b = document.querySelector('.sy_lbt_b');
 sy_hddb = document.querySelector('.sy_hddb');
 nrmaxs0_nr = document.querySelector('.nrmaxs0_nr');
-nrmaxs0_nr.addEventListener('scroll', function() {
+nrmaxs0_nr.addEventListener('scroll', function () {
     if (nrmaxs0_nr.scrollTop >= sy_lbt_b.offsetTop) {
         sy_hddb.style.transform = 'translateY(0px)';
         sy_hddb.style.opacity = '1';
@@ -463,7 +674,7 @@ nrmaxs0_nr.addEventListener('scroll', function() {
         sy_hddb.style.opacity = '0';
     }
 });
-sy_hddb.addEventListener('click', function() {
+sy_hddb.addEventListener('click', function () {
     sy_dw_top.click();
 });
 
@@ -476,7 +687,7 @@ sy_lbt.style.marginTop = (window.innerHeight + 56 - 523 - 84) / 2 + 'px';
 sy_lbt_b.style.marginTop = ((window.innerHeight + 56 - 523 - 84) / 2) - 56 + 'px';
 sy_djs_tjym.style.top = ((window.innerHeight - 300) / 2) + 'px';
 sy_zp_tj_ym.style.top = ((window.innerHeight - 300) / 2) + 'px';
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     sy_lbt = document.querySelector('.sy_lbt');
     sy_lbt_b = document.querySelector('.sy_lbt_b');
     sy_djs_tjym = document.querySelector('.sy_djs_tjym');
@@ -497,7 +708,7 @@ if (localStorage.dr_mmdr == 1 && ((localStorage.dr_mmdr_drsj - 0 + (1000 * 60 * 
 }
 
 if (localStorage.dr_mm == '' || (localStorage.dr_mm !== '' && mmdr_sf == 1)) {
-    setTimeout(function() {
+    setTimeout(function () {
         nrmaxs0_nr = document.querySelector('.nrmaxs0_nr');
         nrmaxs0_nr.style.opacity = 1;
         nrmaxs0_nr.style.transform = 'translateY(0px)';
@@ -526,7 +737,7 @@ function fudong_xiaoguo(dong_div_s, xian_dui_s) {
             dong_div[i].style.opacity = '1';
         }
     }
-    xian_dui.addEventListener('scroll', function() {
+    xian_dui.addEventListener('scroll', function () {
         for (var i = 0; i < dong_div.length; i++) {
             if (xian_dui.offsetHeight + xian_dui.scrollTop > dong_div[i].offsetTop) {
                 dong_div[i].style.transform = 'translateY(0px)';
@@ -563,7 +774,7 @@ sy_djs_r = document.querySelector('.sy_djs_r');
 sy_shezhi_gn = document.querySelector('.sy_shezhi_gn');
 sy_shezhi_gn_cmm = document.querySelector('.sy_shezhi_gn_cmm');
 sy_shezhi_gn_sc = document.querySelector('.sy_shezhi_gn_sc');
-sy_djs_r.addEventListener('contextmenu', function(e) {
+sy_djs_r.addEventListener('contextmenu', function (e) {
     e.stopPropagation();
     e.preventDefault();
     sy_gn_zhixian = '倒计时';
@@ -603,7 +814,7 @@ var sy_djs_l_b = document.querySelector('.sy_djs_l_b');
 sy_djs_l_yr_time.innerHTML = time_day_yr();
 sy_djs_l_time.innerHTML = time_day_sfm();
 var sy_djs_zxsj_sjq;
-sy_djs_zxsj_sjq = setInterval(function() {
+sy_djs_zxsj_sjq = setInterval(function () {
     sy_djs_l_yr_time.innerHTML = time_day_yr();
     sy_djs_l_time.innerHTML = time_day_sfm();
     sy_djs_l_b.innerHTML = getLunarDate(); //今日农历
@@ -682,7 +893,7 @@ function SC_djs() {
             divs.setAttribute('djs-num', i);
         }
         //添加按键
-        divs.addEventListener('contextmenu', function(e) {
+        divs.addEventListener('contextmenu', function (e) {
             e.stopPropagation();
             e.preventDefault();
             sy_nb_zhixian = this.getAttribute('djs-num');
@@ -795,7 +1006,7 @@ function SC_djs() {
     }
 
     djs_s ? clearInterval(djs_s) : undefined;
-    djs_s = setInterval(function() {
+    djs_s = setInterval(function () {
         for (var i = 0; i < Object.keys(sy_djs).length; i++) {
             if (+new Date(sy_djs[Object.keys(sy_djs)[i]][2]) - +new Date() < 0) {
                 if (+new Date(sy_djs[Object.keys(sy_djs)[i]][2]) - +new Date() > (-1 * 1000 * 60 * 60 * 24 * 3)) {
@@ -839,7 +1050,7 @@ function wgsTUODONGKUANG() {
     var tuoDongYuangSu = document.querySelector(arguments[1]);
     x_ZhouPianYiLian = 0;
 
-    dianJiYuangSu.addEventListener('mousedown', function(e) {
+    dianJiYuangSu.addEventListener('mousedown', function (e) {
         e.stopPropagation();
         e.preventDefault();
 
@@ -893,18 +1104,18 @@ sy_djs_yd();
 
 // 撤销默认
 sy_djs_tjym = document.querySelector('.sy_djs_tjym');
-sy_djs_tjym.addEventListener('click', function(e) {
+sy_djs_tjym.addEventListener('click', function (e) {
     e.stopPropagation();
     e.preventDefault();
 });
-sy_djs_tjym.addEventListener('contextmenu', function(e) {
+sy_djs_tjym.addEventListener('contextmenu', function (e) {
     e.stopPropagation();
     e.preventDefault();
 });
 //确认
 var djs_tjym_qr_dt = '';
 djs_tjym_qr = document.querySelector('.djs_tjym_qr');
-djs_tjym_qr.addEventListener('click', function() {
+djs_tjym_qr.addEventListener('click', function () {
     var djs_tjym_qr = document.querySelector('.djs_tjym_qr');
     if (djs_tjym_qr.innerText == '修改') {
         // 删除原来的
@@ -998,7 +1209,7 @@ djs_tjym_qr.addEventListener('click', function() {
 });
 var djs_tjym_dttj = document.querySelectorAll('.djs_tjym_dttj');
 for (var i = 0; i < djs_tjym_dttj.length; i++) {
-    djs_tjym_dttj[i].addEventListener('click', function() {
+    djs_tjym_dttj[i].addEventListener('click', function () {
         djs_tjym_qr_dt = this.innerText;
         djs_tjym_qr.click();
         djs_tjym_qr_dt = '';
@@ -1069,46 +1280,46 @@ function sy_djs_tj_yc() {
 input_djs_tjym_sj = document.querySelector('.input_djs_tjym_sj');
 input_djs_tjym_time_s = document.querySelectorAll('.input_djs_tjym_time_s');
 input_djs_tjym_time_s2 = document.querySelectorAll('.input_djs_tjym_time_s2');
-input_djs_tjym_sj.addEventListener('focus', function() {
+input_djs_tjym_sj.addEventListener('focus', function () {
     input_djs_tjym_gs = -1;
     this.select();
 });
-input_djs_tjym_time_s[0].addEventListener('focus', function() {
+input_djs_tjym_time_s[0].addEventListener('focus', function () {
     input_djs_tjym_gs = 0;
     this.select();
 });
-input_djs_tjym_time_s[1].addEventListener('focus', function() {
+input_djs_tjym_time_s[1].addEventListener('focus', function () {
     input_djs_tjym_gs = 1;
     this.select();
 });
-input_djs_tjym_time_s[2].addEventListener('focus', function() {
+input_djs_tjym_time_s[2].addEventListener('focus', function () {
     input_djs_tjym_gs = 2;
     this.select();
 });
-input_djs_tjym_time_s2[0].addEventListener('focus', function() {
+input_djs_tjym_time_s2[0].addEventListener('focus', function () {
     input_djs_tjym_gs = 2 + 3;
     this.select();
 });
-input_djs_tjym_time_s2[1].addEventListener('focus', function() {
+input_djs_tjym_time_s2[1].addEventListener('focus', function () {
     input_djs_tjym_gs = 1 + 3;
     this.select();
 });
-input_djs_tjym_time_s2[2].addEventListener('focus', function() {
+input_djs_tjym_time_s2[2].addEventListener('focus', function () {
     input_djs_tjym_gs = 0 + 3;
     this.select();
 });
 // 日程移动
 var sy_djs_cm = 0;
 var sy_djs = document.querySelector('.sy_djs');
-sy_djs.addEventListener('mouseover', function(e) {
+sy_djs.addEventListener('mouseover', function (e) {
     sy_djs_cm = 1;
 });
-sy_djs.addEventListener('mouseout', function(e) {
+sy_djs.addEventListener('mouseout', function (e) {
     sy_djs_cm = 0;
 });
 // 监听鼠标滚轮事件
 var sy_djs_r_min = document.querySelector('.sy_djs_r_min');
-document.addEventListener('wheel', function(e) {
+document.addEventListener('wheel', function (e) {
     if (isShiftPressed && e.deltaY < 0 && sy_djs_cm == 1) {
         sy_djs_r_min.style.transition = '0.05s linear';
         if (parseFloat(sy_djs_r_min.style.left) + 100 > 0) {
@@ -1132,7 +1343,7 @@ document.addEventListener('wheel', function(e) {
 // 按钮左右
 var i_djs_z_tb = document.querySelector('.i_djs_z_tb');
 var i_djs_y_tb = document.querySelector('.i_djs_y_tb');
-i_djs_z_tb.addEventListener('click', function(e) {
+i_djs_z_tb.addEventListener('click', function (e) {
     sy_djs_r_min.style.transition = '1s';
     if (parseFloat(sy_djs_r_min.style.left) + 1000 > 0) {
         sy_djs_r_min.style.left = '0px';
@@ -1140,7 +1351,7 @@ i_djs_z_tb.addEventListener('click', function(e) {
         sy_djs_r_min.style.left = parseFloat(sy_djs_r_min.style.left) + 1000 + 'px';
     }
 });
-i_djs_y_tb.addEventListener('click', function(e) {
+i_djs_y_tb.addEventListener('click', function (e) {
     sy_djs_r_min.style.transition = '1s';
     console.log(parseFloat(sy_djs_r_min.style.left));
 
@@ -1156,7 +1367,7 @@ i_djs_y_tb.addEventListener('click', function(e) {
 });
 // 筛选倒计时
 var djs_ssk = document.querySelector('.djs_ssk');
-djs_ssk.addEventListener('input', function(e) {
+djs_ssk.addEventListener('input', Sku_fan_dou_don(function (e) {
     sy_djs_r_min.innerHTML = '';
     sy_djs_px();
     SC_djs();
@@ -1166,7 +1377,7 @@ djs_ssk.addEventListener('input', function(e) {
     if (localStorage.ke_biao_zdtjrc == 'true') {
         zhou_zhi_genxin(); //周至更新
     }
-});
+}, 100));
 // 动态添加
 function djs_dttj_hs(dx1) {
     function formatTimestamp(timestamp) {
@@ -1300,7 +1511,7 @@ function iframe1_heigth() {
     }
 }
 iframe1_heigth();
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     iframe1_heigth();
 });
 
@@ -1310,18 +1521,18 @@ function iframe1_sygn() {
     for (var i = 0; i < iframe1.length; i++) {
         //取消鼠标
         if (localStorage.sy_zpzs_kaiguan == 0) {
-            iframe1[i].querySelector('iframe').addEventListener('mouseenter', function() {
+            iframe1[i].querySelector('iframe').addEventListener('mouseenter', function () {
                 su_biao.style.display = 'none';
             });
         }
         //进入
-        iframe1[i].querySelector('.sy_zpzs_jr').addEventListener('click', function() {
+        iframe1[i].querySelector('.sy_zpzs_jr').addEventListener('click', function () {
             var sy_zpzs_mz = JSON.parse(localStorage.sy_zpzs_mz);
             var sy_zpzs_lj = JSON.parse(localStorage.sy_zpzs_lj);
             window.open(sy_zpzs_lj[sy_zpzs_mz.indexOf(this.innerText)]);
         });
         //删除
-        iframe1[i].querySelector('.sy_zpzs_sc').addEventListener('click', function() {
+        iframe1[i].querySelector('.sy_zpzs_sc').addEventListener('click', function () {
             this.parentNode.parentNode.removeChild(this.parentNode);
             //删除内存
             var sy_zpzs_lj = JSON.parse(localStorage.sy_zpzs_lj);
@@ -1343,18 +1554,18 @@ function iframe1_sygn2() {
     var iframe1 = document.querySelector('.iframe1');
     //取消鼠标
     if (localStorage.sy_zpzs_kaiguan == 0) {
-        iframe1.querySelector('iframe').addEventListener('mouseenter', function() {
+        iframe1.querySelector('iframe').addEventListener('mouseenter', function () {
             su_biao.style.display = 'none';
         });
     }
     //进入
-    iframe1.querySelector('.sy_zpzs_jr').addEventListener('click', function() {
+    iframe1.querySelector('.sy_zpzs_jr').addEventListener('click', function () {
         var sy_zpzs_mz = JSON.parse(localStorage.sy_zpzs_mz);
         var sy_zpzs_lj = JSON.parse(localStorage.sy_zpzs_lj);
         window.open(sy_zpzs_lj[sy_zpzs_mz.indexOf(this.innerText)]);
     });
     //删除
-    iframe1.querySelector('.sy_zpzs_sc').addEventListener('click', function() {
+    iframe1.querySelector('.sy_zpzs_sc').addEventListener('click', function () {
         this.parentNode.parentNode.removeChild(this.parentNode);
         //删除内存
         var sy_zpzs_lj = JSON.parse(localStorage.sy_zpzs_lj);
@@ -1384,16 +1595,16 @@ sy_zp_tj_anniu = document.querySelector('.sy_zp_tj_anniu');
 sy_zp_tj_mz = document.querySelector('.sy_zp_tj_mz');
 sy_zp_tj_lj = document.querySelector('.sy_zp_tj_lj');
 sy_zp_tj_ym = document.querySelector('.sy_zp_tj_ym');
-sy_zp_tj_ym.addEventListener('click', function(e) {
+sy_zp_tj_ym.addEventListener('click', function (e) {
     e.stopPropagation();
     e.preventDefault();
 });
-sy_zp_tj_ym.addEventListener('contextmenu', function(e) {
+sy_zp_tj_ym.addEventListener('contextmenu', function (e) {
     e.stopPropagation();
     e.preventDefault();
 });
 sy_zpzs_tj = document.querySelector('.sy_zpzs_tj');
-sy_zpzs_tj.addEventListener('click', function(e) {
+sy_zpzs_tj.addEventListener('click', function (e) {
     e.stopPropagation();
     e.preventDefault();
     sy_zp_tj_ym.style.display = 'block';
@@ -1401,12 +1612,12 @@ sy_zpzs_tj.addEventListener('click', function(e) {
 });
 
 function sy_zp_tj_sc_dsq() {
-    setTimeout(function() {
+    setTimeout(function () {
         sy_zp_tj_mz.style.borderColor = '';
         sy_zp_tj_lj.style.borderColor = '';
     }, 2000);
 }
-sy_zp_tj_anniu.addEventListener('click', function() {
+sy_zp_tj_anniu.addEventListener('click', function () {
     if (sy_zp_tj_mz.value == '' || sy_zp_tj_lj.value == '') {
         sy_zp_tj_mz.style.borderColor = '';
         sy_zp_tj_lj.style.borderColor = '';
@@ -1462,7 +1673,7 @@ function sy_zp_tj_sc() {
 
 //隐藏作品按钮
 sy_zpzs_kaiguan = document.querySelector('.sy_zpzs_kaiguan');
-sy_zpzs_kaiguan.addEventListener('click', function(e) {
+sy_zpzs_kaiguan.addEventListener('click', function (e) {
     if (localStorage.sy_zpzs_kaiguan == 0) {
         localStorage.sy_zpzs_kaiguan = 1;
         sy_zpzs_kaiguan.innerText = '✔';
@@ -1507,7 +1718,7 @@ sy_dw_kcb = document.querySelector('.sy_dw_kcb');
 sy_dw_zpzs = document.querySelector('.sy_dw_zpzs');
 sy_dw_kebiao = document.querySelector('.sy_dw_kebiao');
 //点击显示窗口
-sy_dwck.addEventListener('click', function(e) {
+sy_dwck.addEventListener('click', function (e) {
     e.stopPropagation();
     e.preventDefault();
     sy_dwck_ym.style.left = '20px';
@@ -1519,7 +1730,7 @@ function sy_dwck_ym_yc() {
     if (sy_dwck_ym.style.left == '20px') {
         sy_dwck_ym.style.left = '-150px';
         sy_dwck_ym.style.opacity = '0';
-        sy_dwck_ym_dsq = setTimeout(function() {
+        sy_dwck_ym_dsq = setTimeout(function () {
             sy_dwck.style.display = 'block';
         }, 300);
     }
@@ -1534,7 +1745,7 @@ function SHITIDONGHUA2(bjs, jls, callback) {
     var jlss = Math.round(jls);
     obj_dwjsq = document.querySelector(bjs);
     clearInterval(obj_dwjsq.time);
-    obj_dwjsq.time = setInterval(function() {
+    obj_dwjsq.time = setInterval(function () {
         var jl = (jlss - obj_dwjsq.scrollTop) / 10;
         jl = jl > 0 ? Math.ceil(jl) : Math.floor(jl);
         if (Math.round(obj_dwjsq.scrollTop) == jlss) {
@@ -1546,28 +1757,28 @@ function SHITIDONGHUA2(bjs, jls, callback) {
         obj_dwjsq.scroll(0, obj_dwjsq.scrollTop + jl);
     }, 15);
     clearTimeout(gundon_dsj);
-    gundon_dsj = setTimeout(function() {
+    gundon_dsj = setTimeout(function () {
         clearInterval(obj_dwjsq.time);
     }, 1200);
 }
-sy_dw_top.addEventListener('click', function() {
+sy_dw_top.addEventListener('click', function () {
     SHITIDONGHUA2('.nrmaxs0_nr', 0);
 });
-sy_dw_richen.addEventListener('click', function() {
+sy_dw_richen.addEventListener('click', function () {
     var sz = sy_djs.offsetTop - window.innerHeight / 2 + 100;
     SHITIDONGHUA2('.nrmaxs0_nr', sz);
 });
-sy_dw_zpzs.addEventListener('click', function() {
+sy_dw_zpzs.addEventListener('click', function () {
     var sz = sy_zpzs_max.offsetTop - 80;
     SHITIDONGHUA2('.nrmaxs0_nr', sz);
 });
-sy_dw_kebiao.addEventListener('click', function() {
+sy_dw_kebiao.addEventListener('click', function () {
     var sy_ke_biao_max = document.querySelector('.sy_ke_biao_max');
     var sz = sy_ke_biao_max.offsetTop - 80;
     SHITIDONGHUA2('.nrmaxs0_nr', sz);
 });
 // 滚轮滚动暂停定位
-document.addEventListener('wheel', function(e) {
+document.addEventListener('wheel', function (e) {
     obj_dwjsq ? clearInterval(obj_dwjsq.time) : undefined;
 });
 
@@ -1578,7 +1789,7 @@ document.addEventListener('wheel', function(e) {
 
 //添加功能
 sy_shezhi_gn_tj = document.querySelector('.sy_shezhi_gn_tj');
-sy_shezhi_gn_tj.addEventListener('click', function(e) {
+sy_shezhi_gn_tj.addEventListener('click', function (e) {
     e.stopPropagation();
     e.preventDefault();
     sy_shezhi_gn.style.display = 'none';
@@ -1604,7 +1815,7 @@ sy_shezhi_gn_tj.addEventListener('click', function(e) {
 
 //删除功能
 sy_shezhi_gn_sc = document.querySelector('.sy_shezhi_gn_sc');
-sy_shezhi_gn_sc.addEventListener('click', function(e) {
+sy_shezhi_gn_sc.addEventListener('click', function (e) {
     e.stopPropagation();
     e.preventDefault();
     sy_shezhi_gn.style.display = 'none';
@@ -1615,7 +1826,7 @@ sy_shezhi_gn_sc.addEventListener('click', function(e) {
 
 // 修改功能
 sy_shezhi_gn_cmm = document.querySelector('.sy_shezhi_gn_cmm');
-sy_shezhi_gn_cmm.addEventListener('click', function(e) {
+sy_shezhi_gn_cmm.addEventListener('click', function (e) {
     e.stopPropagation();
     e.preventDefault();
     sy_shezhi_gn.style.display = 'none';
@@ -1672,23 +1883,23 @@ var music_bfq = document.querySelector('.music_bfq');
 var yy_ks = 0;
 var music_max_sj = 0;
 // 打开音乐总页面
-i_music_tb.addEventListener('click', function(e) {
+i_music_tb.addEventListener('click', function (e) {
     e.stopPropagation();
     music_ym.style.display = 'block';
 });
 // 防止音乐总页面关闭
-music_ym.addEventListener('click', function(e) {
+music_ym.addEventListener('click', function (e) {
     e.stopPropagation();
     music_boyyom_yj.style.display = 'none';
     music_boyyom_tj_ym.style.display = 'none';
 });
 // 打开音量页面
-i_music_boyyom_sy.addEventListener('click', function(e) {
+i_music_boyyom_sy.addEventListener('click', function (e) {
     e.stopPropagation();
     music_boyyom_yj.style.display = 'block';
 });
 // 添加鼠标滚动事件监听
-i_music_boyyom_sy.addEventListener('wheel', function(e) {
+i_music_boyyom_sy.addEventListener('wheel', function (e) {
     e.preventDefault(); // 阻止页面默认滚动行为
     const delta = e.deltaY; // 滚动方向:deltaY > 0 是向下滚,< 0 是向上滚
     if (delta > 0) {
@@ -1701,17 +1912,17 @@ i_music_boyyom_sy.addEventListener('wheel', function(e) {
     localStorage.music_sydx = music_bottom_hk3.value / 100;
 });
 // 音量页面防止关闭
-music_boyyom_yj.addEventListener('click', function(e) {
+music_boyyom_yj.addEventListener('click', function (e) {
     e.stopPropagation();
 });
 // 打开添加页面
-i_music_boyyom_tj.addEventListener('click', function(e) {
+i_music_boyyom_tj.addEventListener('click', function (e) {
     e.stopPropagation();
     music_boyyom_tj_ym.style.display = 'block';
     music_tjym_mz.focus();
 });
 // 添加页面防止关闭
-music_boyyom_tj_ym.addEventListener('click', function(e) {
+music_boyyom_tj_ym.addEventListener('click', function (e) {
     e.stopPropagation();
 });
 // 隐藏音乐
@@ -1744,7 +1955,7 @@ function music_cd_ks() {
     var music_s = document.querySelectorAll('.music_s');
     for (var i = 0; i < i_music_s_ks_tb.length; i++) {
         var music_cd = JSON.parse(localStorage.music_cd);
-        i_music_s_ks_tb[i].addEventListener('click', function(e) {
+        i_music_s_ks_tb[i].addEventListener('click', function (e) {
             // html变色
             for (var i = 0; i < music_s.length; i++) {
                 music_s[i].style.backgroundColor = '';
@@ -1764,7 +1975,7 @@ function music_cd_ks() {
             yy_ks = 1;
             music_kss();
             //总时间
-            music_bfq.addEventListener('canplay', function(e) {
+            music_bfq.addEventListener('canplay', function (e) {
                 music_boyyom_zsj.innerText = Math.floor(music_bfq.duration / 60) + ':' + (Math.floor(music_bfq.duration % 60) < 10 ? '0' + Math.floor(music_bfq.duration % 60) : Math.floor(music_bfq.duration % 60));
                 music_bfq.addEventListener('timeupdate', music_ssjc);
             });
@@ -1777,7 +1988,7 @@ music_cd_ks();
 function music_cd_zd() {
     var i_music_s_zd_tb = document.querySelectorAll('.i_music_s_zd_tb');
     for (var i = 0; i < i_music_s_zd_tb.length; i++) {
-        i_music_s_zd_tb[i].addEventListener('click', function(e) {
+        i_music_s_zd_tb[i].addEventListener('click', function (e) {
             var music_cd = JSON.parse(localStorage.music_cd);
             var music_lsbl2 = music_cd[1][music_cd[0].indexOf(this.previousElementSibling.previousElementSibling.innerText)];
             var music_lsbl = this.previousElementSibling.previousElementSibling.innerText;
@@ -1824,7 +2035,7 @@ function music_glxs() {
 function music_cd_dlt() {
     var i_music_s_cs_tp = document.querySelectorAll('.i_music_s_cs_tp');
     for (var i = 0; i < i_music_s_cs_tp.length; i++) {
-        i_music_s_cs_tp[i].addEventListener('click', function(e) {
+        i_music_s_cs_tp[i].addEventListener('click', function (e) {
             // 如果音乐正在播放
             var music_cd = JSON.parse(localStorage.music_cd);
             var music_lsbl3 = music_cd[1][music_cd[0].indexOf(this.previousElementSibling.innerText)];
@@ -1841,7 +2052,7 @@ function music_cd_dlt() {
                 // 内容删除
                 music_boyyom_gm.innerText = '';
                 // 滑动条
-                setTimeout(function() {
+                setTimeout(function () {
                     music_bottom_hk2.value = 0;
                     music_bottom_hk2.style.backgroundSize = '0% 100%';
                 });
@@ -1880,13 +2091,13 @@ function music_kss() {
 
         // 开始音乐
         var music_bfq = document.querySelector('.music_bfq');
-        music_bfq.play().then(function() { // 播放成功
+        music_bfq.play().then(function () { // 播放成功
             music_zd_dsq ? clearTimeout(music_zd_dsq) : undefined;
             // 显示开始
             i_music_boyyom_ks.classList.remove("icon-kaishi3");
             i_music_boyyom_ks.classList.add("icon-zanting");
             music_max_sj = 0;
-        }).catch(function() { // 播放失败
+        }).catch(function () { // 播放失败
             yy_ks = 0;
             // 显示暂停
             i_music_boyyom_ks.classList.remove("icon-zanting");
@@ -1905,14 +2116,14 @@ function music_kss() {
             } else {
                 // 自动下一首
                 music_zd_dsq ? clearTimeout(music_zd_dsq) : undefined;
-                music_zd_dsq = setTimeout(function() { i_music_boyyom_xys.click() }, 300);
+                music_zd_dsq = setTimeout(function () { i_music_boyyom_xys.click() }, 300);
             }
         });
     }
 }
 
 // 开始暂停
-i_music_boyyom_ks.addEventListener('click', function(e) {
+i_music_boyyom_ks.addEventListener('click', function (e) {
     if (yy_ks == 0) {
         yy_ks = 1;
         music_bfq2.pause();
@@ -1943,15 +2154,15 @@ music_bfq.addEventListener('timeupdate', music_ssjc);
 //滑动条
 music_bottom_hk2.value = 0;
 music_bottom_hk2.style.backgroundSize = '0% 100%';
-music_bottom_hk2.addEventListener('input', function(e) {
+music_bottom_hk2.addEventListener('input', function (e) {
     this.style.backgroundSize = this.value + '% 100%';
     console.log(music_bfq.duration);
     music_bfq.duration ? (music_boyyom_sssj.innerText = Math.floor(((this.value / 100) * music_bfq.duration) / 60) + ':' + (Math.floor(((this.value / 100) * music_bfq.duration) % 60) < 10 ? '0' + Math.floor(((this.value / 100) * music_bfq.duration) % 60) : Math.floor(((this.value / 100) * music_bfq.duration) % 60)) + ' /') : (music_boyyom_sssj.innerText = '0:00' + ' /');
 });
-music_bottom_hk2.addEventListener('mousedown', function(e) {
+music_bottom_hk2.addEventListener('mousedown', function (e) {
     music_bfq.removeEventListener('timeupdate', music_ssjc);
 });
-music_bottom_hk2.addEventListener('mouseup', function(e) {
+music_bottom_hk2.addEventListener('mouseup', function (e) {
     music_bfq.currentTime = (e.offsetX / this.offsetWidth) * (music_bfq.duration ? music_bfq.duration : 0);
     music_bfq.addEventListener('timeupdate', music_ssjc);
     if (yy_ks == 0) {
@@ -1969,7 +2180,7 @@ if (localStorage.music_bfsx == 2) {
     i_music_boyyom_bfsx.classList.add("icon-danquxunhuan");
 }
 
-i_music_boyyom_bfsx.addEventListener('click', function(e) {
+i_music_boyyom_bfsx.addEventListener('click', function (e) {
     console.clear();
     if (localStorage.music_bfsx == 1) {
         localStorage.music_bfsx = 2;
@@ -1996,7 +2207,7 @@ function sjs(min, max) {
 }
 
 // 下一首
-i_music_boyyom_xys.addEventListener('click', function(e) {
+i_music_boyyom_xys.addEventListener('click', function (e) {
     // 下一首
     if (localStorage.music_bfsx == 1 || localStorage.music_bfsx == 3) {
         var music_bfq = document.querySelector('.music_bfq');
@@ -2025,7 +2236,7 @@ i_music_boyyom_xys.addEventListener('click', function(e) {
 });
 
 // 上一首
-i_music_boyyom_sys.addEventListener('click', function(e) {
+i_music_boyyom_sys.addEventListener('click', function (e) {
     // kais
     if (localStorage.music_bfsx == 1 || localStorage.music_bfsx == 3) {
         var music_bfq = document.querySelector('.music_bfq');
@@ -2056,7 +2267,7 @@ i_music_boyyom_sys.addEventListener('click', function(e) {
 
 
 // 播放完时
-music_bfq.addEventListener('ended', function(e) {
+music_bfq.addEventListener('ended', function (e) {
     if (localStorage.music_bfsx == 1) {
         var music_bfq = document.querySelector('.music_bfq');
         var music_cd = JSON.parse(localStorage.music_cd);
@@ -2096,7 +2307,7 @@ music_bfq.volume = localStorage.music_sydx;
 music_bottom_hk3.style.backgroundSize = (localStorage.music_sydx * 100) + '% 100%';
 music_bottom_hk3.value = localStorage.music_sydx * 100;
 localStorage.music_sydx = yuan;
-music_bottom_hk3.addEventListener('input', function(e) {
+music_bottom_hk3.addEventListener('input', function (e) {
     music_bottom_hk3.style.backgroundSize = music_bottom_hk3.value + '% 100%';
     music_bfq.volume = music_bottom_hk3.value / 100;
     localStorage.music_sydx = music_bottom_hk3.value / 100;
@@ -2106,8 +2317,8 @@ music_bottom_hk3.addEventListener('input', function(e) {
 // 添加音乐
 var music_tj_cxg = 0;
 var music_tj_cxg2 = 0;
-music_tjym_qd.addEventListener('click', function(e) {
-    music_bfq2.play().then(function() { // 播放成功
+music_tjym_qd.addEventListener('click', function (e) {
+    music_bfq2.play().then(function () { // 播放成功
         music_bfq2.pause();
         // 检测重复
         var music_cd = JSON.parse(localStorage.music_cd);
@@ -2149,13 +2360,13 @@ music_tjym_qd.addEventListener('click', function(e) {
         } else {
             Sku_tctx('重复歌名或链接 !');
         }
-    }).catch(function() { // 播放失败
+    }).catch(function () { // 播放失败
         Sku_tctx('错误的URL !');
     });
 });
 
 
-music_tjym_url.addEventListener('input', function(e) {
+music_tjym_url.addEventListener('input', function (e) {
     if (music_tjym_url.value[0] == '"' && music_tjym_url.value[music_tjym_url.value.length - 1] == '"') {
         music_bfq2.src = music_tjym_url.value.substring(1, music_tjym_url.value.length - 1);
     } else {
@@ -2163,7 +2374,7 @@ music_tjym_url.addEventListener('input', function(e) {
     }
 });
 
-music_bfq2.addEventListener('play', function(e) {
+music_bfq2.addEventListener('play', function (e) {
     yy_ks = 0;
     // 显示暂停
     var music_bfq = document.querySelector('.music_bfq');
@@ -2174,13 +2385,13 @@ music_bfq2.addEventListener('play', function(e) {
 });
 
 // 音乐滚动条
-setTimeout(function() {
+setTimeout(function () {
     music_hzmax = document.querySelector('.music_hzmax');
     music_ym_gundontiao_max = document.querySelector('.music_ym_gundontiao_max');
     music_ym_gundontiao_max.style.height = parseFloat(music_hzmax.style.maxHeight) - 2 + 'px';
 });
-window.addEventListener('resize', function() {
-    setTimeout(function() {
+window.addEventListener('resize', function () {
+    setTimeout(function () {
         music_hzmax = document.querySelector('.music_hzmax');
         music_ym_gundontiao_max = document.querySelector('.music_ym_gundontiao_max');
         music_ym_gundontiao_max.style.height = parseFloat(music_hzmax.style.maxHeight) - 2 + 'px';
@@ -2193,18 +2404,18 @@ window.addEventListener('resize', function() {
 
 // 提醒栏
 var sy_djs_txl = document.querySelector('.sy_djs_txl');
-sy_djs_txl.addEventListener('click', function(e) {
+sy_djs_txl.addEventListener('click', function (e) {
     sy_dw_richen.click();
 });
 var sy_djs_txl2 = document.querySelector('.sy_djs_txl2');
-sy_djs_txl2.addEventListener('click', function(e) {
+sy_djs_txl2.addEventListener('click', function (e) {
     sy_dw_richen.click();
 });
 
 var sy_djs_txl_jsq;
 
 function sy_djs_txl_jsq_hs() {
-    sy_djs_txl_jsq = setInterval(function() {
+    sy_djs_txl_jsq = setInterval(function () {
         var sy_djs_r_s_one = document.querySelectorAll('.sy_djs_r_s')[0];
         if (sy_djs_r_s_one !== undefined) {
             var sy_djs_r_t_1 = document.querySelectorAll('.sy_djs_r_s')[0].querySelector('.sy_djs_r_t');
@@ -2272,12 +2483,12 @@ sy_djs_txl_jsq_hs();
 top_dhl_S = document.querySelector('.top_dhl').querySelectorAll('div');
 for (var i = 0; i < top_dhl_S.length; i++) {
     if (i == 0) {
-        top_dhl_S[i].addEventListener('click', function(e) {
+        top_dhl_S[i].addEventListener('click', function (e) {
             // 倒计时优化
             clearInterval(sy_djs_zxsj_sjq);
             sy_djs_r_min.innerHTML = '';
             clearInterval(djs_s);
-            sy_djs_zxsj_sjq = setInterval(function() {
+            sy_djs_zxsj_sjq = setInterval(function () {
                 sy_djs_l_yr_time.innerHTML = time_day_yr();
                 sy_djs_l_time.innerHTML = time_day_sfm();
             }, 1000);
@@ -2293,7 +2504,7 @@ for (var i = 0; i < top_dhl_S.length; i++) {
             sy_djs_txl_jsq_hs();
         });
     } else {
-        top_dhl_S[i].addEventListener('click', function(e) {
+        top_dhl_S[i].addEventListener('click', function (e) {
             clearInterval(sy_djs_zxsj_sjq);
             clearInterval(djs_s);
             sy_djs_r_min.innerHTML = '';
@@ -2335,7 +2546,7 @@ function sd_dtnr_min_s_click() {
 // 轮播内容定时器
 sy_lbnr_dsq_sd = undefined;
 //定义高度
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     sd_dtnr_min.style.top = (window.innerHeight - sd_dtnr_min.offsetHeight) / 2 + 'px';
 });
 
@@ -2484,11 +2695,11 @@ function sy_lbnr_hs2(max_gs) {
                     var div = document.createElement('div');
                     div.className = 'lbnr_min';
 
-                    div.addEventListener('click', function(e) {
+                    div.addEventListener('click', function (e) {
                         var top_dhl_s = document.querySelector('.top_dhl').querySelectorAll('div');
                         top_dhl_s[0].click();
                         sd_dtnr_min_s_click();
-                        setTimeout(function() {
+                        setTimeout(function () {
                             sy_dw_richen.click();
                         });
                     });
@@ -2546,14 +2757,14 @@ function sy_lbnr_hs2(max_gs) {
                     div.className = 'lbnr_min';
 
                     function decodeUriComponent(str) {
-                        return decodeURIComponent(str).replace(/%u([0-9a-f]{4})/gi, function(match, p1) {
+                        return decodeURIComponent(str).replace(/%u([0-9a-f]{4})/gi, function (match, p1) {
                             return String.fromCharCode(parseInt(p1, 16));
                         });
                     }
                     var sy_zpzs_mz = JSON.parse(localStorage.sy_zpzs_mz);
                     var sy_zpzs_lj = JSON.parse(localStorage.sy_zpzs_lj);
                     var sknr_sjs2 = sjs4(0, sy_zpzs_mz.length - 1);
-                    div.addEventListener('click', function(e) {
+                    div.addEventListener('click', function (e) {
                         window.open(this.querySelector('.lbnr_zp2').innerText.substring(3, 1000));
                     });
 
@@ -2653,7 +2864,7 @@ function sy_lbnr_hs2(max_gs) {
 
                     div.innerHTML = '<div class="lbnr_jl">未标记录 ' + liu_yan_sz[1] + '</div><div class="lbnr_jl2"></div>';
                     div.querySelector('.lbnr_jl2').innerText = liu_yan_sz[0];
-                    div.addEventListener('click', function(e) {
+                    div.addEventListener('click', function (e) {
                         sd_dtnr_min_s_click();
                         var top_dhl_div = document.querySelector('.top_dhl').querySelectorAll('div');
                         top_dhl_div[2].click();
@@ -2671,7 +2882,7 @@ function sy_lbnr_hs2(max_gs) {
                     var sknr_sjs2 = sjs4(0, shezhi_min_div.length - 1);
 
                     div.innerHTML = '<div class="lbnr_sz">设置</div><div class="lbnr_sz2">' + shezhi_min_div[sknr_sjs2].innerText + '</div>';
-                    div.addEventListener('click', function(e) {
+                    div.addEventListener('click', function (e) {
                         sd_dtnr_min_s_click();
                         var top_dhl_div = document.querySelector('.top_dhl').querySelectorAll('div');
                         top_dhl_div[3].click();
@@ -2693,7 +2904,7 @@ function sy_lbnr_hs2(max_gs) {
                     var sknr_sjs2 = sjs4(0, music_cd[0].length - 1);
 
                     div.innerHTML = '<div class="lbnr_yy"><i class="iconfont i_sy_sjnr_yybfq icon-kaishi3"></i><div>播放音乐</div></div><div class="lbnr_yy2">' + music_cd[0][sknr_sjs2] + '</div>';
-                    div.addEventListener('click', function(e) {
+                    div.addEventListener('click', function (e) {
                         var music_cd = JSON.parse(localStorage.music_cd);
                         var i_music_s_ks_tb = document.querySelectorAll('.i_music_s_ks_tb');
                         i_music_s_ks_tb[music_cd[0].indexOf(this.querySelector('.lbnr_yy2').innerText)].click();
@@ -2734,7 +2945,7 @@ function sy_lbnr_hs2(max_gs) {
 
                     div.innerHTML = '<div class="lbnr_sz">' + JSON.parse(localStorage.mrrd_name)[i2] + ' 🔥TOP ' + mrrd_numtop + '</div><div class="lbnr_sz2">' + mrrd[sknr_sjs2] + '</div>';
 
-                    div.addEventListener('click', function(e) {
+                    div.addEventListener('click', function (e) {
                         so_ssk.value = this.querySelector('.lbnr_sz2').innerText;
                         so_anniu.click();
                     });
@@ -2756,7 +2967,7 @@ function sy_lbnr_hs2(max_gs) {
                     }
                     var sknr_sjs22 = sjs4(0, allEmpty_js.length - 1);
                     div.innerHTML = '<div class="lbnr_jl">' + sy_ke_biao_l_s2[0].innerText + '</div><div class="lbnr_jl2">' + allEmpty_js[sknr_sjs22] + '</div>';
-                    div.addEventListener('click', function(e) {
+                    div.addEventListener('click', function (e) {
                         sd_dtnr_min_s_click();
                         document.querySelector('.sy_dw_kebiao').click();
                     });
@@ -2774,7 +2985,7 @@ function sy_lbnr_hs2(max_gs) {
                     var sknr_sjs2 = sjs4(0, da_ka.length - 1);
                     var da_ka_jisuan_s = da_ka[sknr_sjs2][5].length > 0 ? ` 🗲${da_ka[sknr_sjs2][5].length}天` : '';
                     div.innerHTML = ((da_ka[sknr_sjs2][0].startsWith("http") || da_ka[sknr_sjs2][0].startsWith("data")) ? '<div class="lbnr_ljtp" style="background-image: url(' + da_ka[sknr_sjs2][0] + ');"></div>' : '<div class="lbnr_ljtp">' + da_ka[sknr_sjs2][0] + '</div>') + '<div class="lbnr_lj_xx2"><div class="lbnr_ljmz2">' + da_ka[sknr_sjs2][1] + da_ka_jisuan_s + '</div><div class="lbnr_ljbz2">' + da_ka[sknr_sjs2][2] + '</div></div>';
-                    div.addEventListener('click', function(e) {
+                    div.addEventListener('click', function (e) {
                         sd_dtnr_min_s_click();
                         document.querySelector('.top_dhl').querySelectorAll('div')[5].click();
                     });
@@ -2805,7 +3016,7 @@ function sy_lbnr_hs2(max_gs) {
     var lbnr_max_shu_du_haomiao = 1000;
 
     // 滚动
-    sy_lbnr_dsq_sd = setInterval(function() {
+    sy_lbnr_dsq_sd = setInterval(function () {
         sjnr_ydjl += 100;
         var lbnr_max = document.querySelectorAll('.sd_dtnr_s');
         for (var i = 0; i < sjtiao_gs; i++) {
@@ -2825,12 +3036,12 @@ var sy_3d_kaiguan = document.querySelector('.sy_3d_kaiguan');
 var sd_dtnr_max = document.querySelector('.sd_dtnr_max');
 // 设置高度
 sy_3d_kaiguan.style.top = ((window.innerHeight + 56 - 523 - 84) / 2) + 497 + 'px';
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     sy_3d_kaiguan.style.top = ((window.innerHeight + 56 - 523 - 84) / 2) + 497 + 'px';
 });
 // 开始如果不是隐藏
 if (localStorage.sy_lbxz == 1) { sy_3d_kaiguan.style.display = 'block'; }
-sy_3d_kaiguan.addEventListener('click', function(e) {
+sy_3d_kaiguan.addEventListener('click', function (e) {
     topmax.style.display = 'none';
     nrmax.style.display = 'none';
     sd_dtnr_max.style.display = 'block';
@@ -2854,7 +3065,7 @@ function enableDragAndDrop3(className2) {
     huanwei_class_name3 = className2;
 
     // 移除已存在的拖拽相关事件监听器
-    draggies.forEach(function(draggie) {
+    draggies.forEach(function (draggie) {
         draggie.removeEventListener('dragstart', handleDragStart3);
         draggie.removeEventListener('dragover', handleDragOver3);
         draggie.removeEventListener('drop', handleDrop3);
@@ -2862,7 +3073,7 @@ function enableDragAndDrop3(className2) {
     });
 
     // 重新添加事件监听器
-    draggies.forEach(function(draggie) {
+    draggies.forEach(function (draggie) {
         draggie.addEventListener('dragstart', handleDragStart3, false);
         draggie.addEventListener('dragover', handleDragOver3, false);
         draggie.addEventListener('drop', handleDrop3, false);
@@ -3030,6 +3241,7 @@ function getWeeksSinceWithMidnight(timestamp) {
     }
     return weeks;
 }
+
 var ke_biao_zhou = JSON.parse(localStorage.ke_biao_zhou);
 if (getWeeksSinceWithMidnight(ke_biao_zhou[1]) > 0) {
     ke_biao_zhou[0] = ke_biao_zhou[0] - 0 + getWeeksSinceWithMidnight(ke_biao_zhou[1]);
@@ -3040,7 +3252,7 @@ var sy_ke_biao_top_s_1 = document.querySelector('.sy_ke_biao_top_s');
 sy_ke_biao_top_s_1.innerText = (ke_biao_zhou[0] % 2 == 1 ? '/单周' : '/双周');
 var ke_biao_zhoushu = document.querySelector('.ke_biao_zhoushu');
 ke_biao_zhoushu.value = ke_biao_zhou[0];
-ke_biao_zhoushu.addEventListener('blur', function(e) {
+ke_biao_zhoushu.addEventListener('blur', function (e) {
     if (ke_biao_zhoushu.value < 1) {
         ke_biao_zhoushu.value = 1;
         Sku_tctx('最小开始为第 1 周');
@@ -3052,7 +3264,7 @@ ke_biao_zhoushu.addEventListener('blur', function(e) {
     localStorage.ke_biao_zhou = JSON.stringify(ke_biao_zhou);
     sy_ke_biao_top_s_1.innerText = (ke_biao_zhou[0] % 2 == 1 ? '/单周' : '/双周');
 });
-ke_biao_zhoushu.addEventListener('input', function(e) {
+ke_biao_zhoushu.addEventListener('input', function (e) {
     sy_ke_biao_top_s_1.innerText = (ke_biao_zhoushu.value % 2 == 1 ? '/单周' : '/双周');
 });
 // 锁定 
@@ -3110,7 +3322,7 @@ function zhou_zhi_genxin() {
     zhou_zhi_zd(); //自动隐藏或删除
     ke_biao_sdhs(); //锁定
     ke_biao_gaolian(); //高亮
-    setTimeout(function() {
+    setTimeout(function () {
         WGS_wenbengundon('.sy_ke_biao_l'); //滚动
     }, 100);
 }
@@ -3132,7 +3344,7 @@ function ke_biao_bchs() {
     WGS_wenbengundon('.sy_ke_biao_l');
 }
 // 失去焦点确定
-sy_ke_biao_max.addEventListener('input', function(event) {
+sy_ke_biao_max.addEventListener('input', function (event) {
     if (event.target.tagName === 'INPUT') {
         ke_biao_bchs(); //保存
     }
@@ -3150,7 +3362,7 @@ if (JSON.parse(localStorage.ke_biao_sd) == true) {
     zhou_zhi_yckk_max.style.display = 'none';
     sy_zpzs_kaiguan_ts2.innerText = '锁定 (时间格式:8:00~10:00 11:00~13:00...) (单双周格式:[单周]/[双周]) (周范围格式:[1~3周])';
 }
-sy_zpzs_kaiguan2.addEventListener('click', function(e) {
+sy_zpzs_kaiguan2.addEventListener('click', function (e) {
     if (JSON.parse(localStorage.ke_biao_sd) == true) {
         localStorage.ke_biao_sd = false;
         sy_zpzs_kaiguan2.innerText = '';
@@ -3165,7 +3377,7 @@ sy_zpzs_kaiguan2.addEventListener('click', function(e) {
     zhou_zhi_genxin(); //周至更新
 });
 // 右击删除
-sy_ke_biao_max.addEventListener('contextmenu', function(e) {
+sy_ke_biao_max.addEventListener('contextmenu', function (e) {
     const target = e.target;
     if (target.classList[0] == 'sy_ke_biao_l' && JSON.parse(localStorage.ke_biao_sd) == false) {
         var sy_ke_biao_h = document.querySelectorAll('.sy_ke_biao_h');
@@ -3179,7 +3391,7 @@ sy_ke_biao_max.addEventListener('contextmenu', function(e) {
 });
 // 添加课表
 var ke_biao_tianjia = document.querySelector('.ke_biao_tianjia');
-ke_biao_tianjia.addEventListener('click', function(e) {
+ke_biao_tianjia.addEventListener('click', function (e) {
     var div_s = document.createElement('div');
 
     div_s.className = 'sy_ke_biao_h sy_ke_biao_h_s';
@@ -3228,7 +3440,7 @@ for (var i = 0; i < ke_biao_zd_hao.length; i++) {
     }
 }
 // 同一事件高亮
-sy_ke_biao_max.addEventListener('mouseover', function(e) {
+sy_ke_biao_max.addEventListener('mouseover', function (e) {
     const target = e.target;
     if (target.classList.contains('sy_ke_biao_l')) {
         // 删除所有高亮
@@ -3256,7 +3468,7 @@ sy_ke_biao_max.addEventListener('mouseover', function(e) {
         }
     }
 });
-sy_ke_biao_max.addEventListener('mouseout', function(e) {
+sy_ke_biao_max.addEventListener('mouseout', function (e) {
     // 删除所有高亮
     var sy_ke_biao_l = document.querySelectorAll('.sy_ke_biao_l');
     for (var i = 0; i < sy_ke_biao_l.length; i++) {
@@ -3303,7 +3515,7 @@ if (localStorage.ke_biao_zdsc == undefined) {
 if (localStorage.ke_biao_zdsc == 'true') {
     zhou_zhi_yckk_zdsc.innerText = '✔';
 }
-zhou_zhi_yckk_zdtrc_qt.addEventListener('click', function(e) {
+zhou_zhi_yckk_zdtrc_qt.addEventListener('click', function (e) {
     if (localStorage.ke_biao_zdtjrc_qb == 'true') {
         localStorage.ke_biao_zdtjrc_qb = false;
         this.innerText = '';
@@ -3313,7 +3525,7 @@ zhou_zhi_yckk_zdtrc_qt.addEventListener('click', function(e) {
     }
     zhou_zhi_genxin(); //周至更新
 });
-zhou_zhi_yckk_zfw.addEventListener('click', function(e) {
+zhou_zhi_yckk_zfw.addEventListener('click', function (e) {
     if (localStorage.ke_biao_zfw == 'true') {
         localStorage.ke_biao_zfw = false;
         zhou_zhi_yckk_zfw.innerText = '';
@@ -3323,7 +3535,7 @@ zhou_zhi_yckk_zfw.addEventListener('click', function(e) {
     }
     zhou_zhi_genxin(); //周至更新
 });
-zhou_zhi_yckk_dsz.addEventListener('click', function(e) {
+zhou_zhi_yckk_dsz.addEventListener('click', function (e) {
     if (localStorage.ke_biao_dsz == 'true') {
         localStorage.ke_biao_dsz = false;
         zhou_zhi_yckk_dsz.innerText = '';
@@ -3333,7 +3545,7 @@ zhou_zhi_yckk_dsz.addEventListener('click', function(e) {
     }
     zhou_zhi_genxin(); //周至更新
 });
-zhou_zhi_yckk_zdsc.addEventListener('click', function(e) {
+zhou_zhi_yckk_zdsc.addEventListener('click', function (e) {
     if (localStorage.ke_biao_zdsc == 'true') {
         localStorage.ke_biao_zdsc = false;
         zhou_zhi_yckk_zdsc.innerText = '';
@@ -3343,7 +3555,7 @@ zhou_zhi_yckk_zdsc.addEventListener('click', function(e) {
     }
     zhou_zhi_genxin(); //周至更新
 });
-zhou_zhi_yckk_zdtrc.addEventListener('click', function(e) {
+zhou_zhi_yckk_zdtrc.addEventListener('click', function (e) {
     if (localStorage.ke_biao_zdtjrc == 'true') {
         localStorage.ke_biao_zdtjrc = false;
         zhou_zhi_yckk_zdtrc.innerText = '';
@@ -3563,7 +3775,7 @@ var yuyanAI_yy_tp = document.querySelector('.yuyanAI_yy_tp');
 // 打开音乐总页面
 var yuyanAI_ym_zdgb = 0; //长时间未使用自动关闭计时器
 var yuyanAI_ym_zdgb_hs; //长时间未使用自动关闭计时器函数
-i_yuyanAI_tb.addEventListener('click', function(e) {
+i_yuyanAI_tb.addEventListener('click', function (e) {
     e.stopPropagation();
     if (yuyanAI_ym.style.display == 'none') {
         yuyanAI_ym.style.display = 'block';
@@ -3589,7 +3801,7 @@ i_yuyanAI_tb.addEventListener('click', function(e) {
         yuyanAI_ym_zdgb = 0; //重置计数器
     }
 });
-yuyanAI_ym.addEventListener('click', function(e) {
+yuyanAI_ym.addEventListener('click', function (e) {
     e.stopPropagation();
     yuyanAI_ym_zdgb = 0; //重置计数器
 });
@@ -3626,15 +3838,15 @@ function initVoiceInput(inputClass, toggleBtnClass) {
     let isRecording = false;
 
     // 监听输入框的 input 事件，当用户手动修改内容时更新 finalTranscript
-    inputElement.addEventListener('input', function() {
+    inputElement.addEventListener('input', function () {
         finalTranscript = this.value;
     });
-    inputElement.addEventListener('focus', function() {
+    inputElement.addEventListener('focus', function () {
         finalTranscript = this.value;
     });
 
     // 处理语音识别结果
-    recognition.onresult = function(event) {
+    recognition.onresult = function (event) {
         if (yuyanAI_yy.style.opacity == 1) {
             let interimTranscript = '';
 
@@ -3653,7 +3865,7 @@ function initVoiceInput(inputClass, toggleBtnClass) {
     };
 
     // 处理语音识别错误
-    recognition.onerror = function(event) {
+    recognition.onerror = function (event) {
         console.error('语音识别错误:', event.error);
         isRecording = false;
         yuyanAI_yy.style.opacity = 0.3;
@@ -3661,14 +3873,14 @@ function initVoiceInput(inputClass, toggleBtnClass) {
     };
 
     // 处理语音识别结束
-    recognition.onend = function() {
+    recognition.onend = function () {
         isRecording = false;
         yuyanAI_yy.style.opacity = 0.3;
         finalTranscript = '';
     };
 
     // 绑定按钮点击事件
-    toggleBtn.addEventListener('click', function() {
+    toggleBtn.addEventListener('click', function () {
         // 检查浏览器是否支持
         if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
             console.error('浏览器不支持语音识别功能');
@@ -3703,7 +3915,7 @@ function initVoiceInput(inputClass, toggleBtnClass) {
 
     // 返回控制对象
     return {
-        toggle: function() {
+        toggle: function () {
             // 检查浏览器是否支持
             if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
                 console.error('浏览器不支持语音识别功能');
@@ -3739,7 +3951,7 @@ function initVoiceInput(inputClass, toggleBtnClass) {
                 }
             }
         },
-        start: function() {
+        start: function () {
             // 检查浏览器是否支持
             if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
                 console.error('浏览器不支持语音识别功能');
@@ -3763,7 +3975,7 @@ function initVoiceInput(inputClass, toggleBtnClass) {
             }
             return false;
         },
-        stop: function() {
+        stop: function () {
             if (isRecording) {
                 try {
                     recognition.stop();
@@ -3778,23 +3990,23 @@ function initVoiceInput(inputClass, toggleBtnClass) {
             }
             return false;
         },
-        clear: function() {
+        clear: function () {
             finalTranscript = '';
             inputElement.value = '';
         },
-        isSupported: function() {
+        isSupported: function () {
             return 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
         },
-        isRecording: function() {
+        isRecording: function () {
             return isRecording;
         }
     };
 }
 
-yuyanAI_input.addEventListener('input', function() {
+yuyanAI_input.addEventListener('input', function () {
     yuyanAI_ym_zdgb = 0; //重置计数器
 });
-yuyanAI_input.addEventListener('focus', function() {
+yuyanAI_input.addEventListener('focus', function () {
     yuyanAI_ym_zdgb = 0; //重置计数器
 });
 
@@ -3807,7 +4019,7 @@ function yuyanAI_qxsr() {
 
 //确定语音输入
 var yuyanAI_qd = document.querySelector('.yuyanAI_qd');
-yuyanAI_qd.addEventListener('click', async function(e) {
+yuyanAI_qd.addEventListener('click', async function (e) {
     if (yuyanAI_input.value != '' && yuyanAI_input.value != '暂时还不会呢' && yuyanAI_input.value != '正在执行对应指令' && yuyanAI_input.value != '指令执行完成') {
         if (yuyanAI_yy.style.opacity == 1) {
             yuyanAI_yy_tp.click();
@@ -3823,8 +4035,16 @@ yuyanAI_qd.addEventListener('click', async function(e) {
             yuyanAI_ym_zdgb = 0; //重置计数器
         }, 500);
 
-        AI_diaoyon = localStorage.Sku_zhilin_qhmx; //先调用用户选择的模型
-        const shuchunr = await callZhiPuAI(shuru, 'a425dc93999e4afb8a45c769956df6c9.4lwlymysuIDCDwII', AI_heji[AI_diaoyon]);
+        AI_diaoyon = Number(localStorage.Sku_zhilin_qhmx) || 0; //先调用用户选择的模型，确保是数字
+        AI_diaoyon_ks = -1; //重置起始索引
+        AI_diaoyon_hb = []; //重置后备队列
+        let shuchunr;
+        try {
+            shuchunr = await callZhiPuAI(shuru, 'a425dc93999e4afb8a45c769956df6c9.4lwlymysuIDCDwII', AI_heji[AI_diaoyon]);
+        } catch (e) {
+            console.error('AI调用异常:', e.message);
+            shuchunr = '请求失败';
+        }
         shuchunr2 = shuchunr;
         clearInterval(dendaitishi);
         yuyanAI_input.disabled = false;
@@ -3879,49 +4099,55 @@ yuyanAI_qd.addEventListener('click', async function(e) {
 //参数集自动获取
 var AIzhilin_chanshu_shezhi = Array.from(document.querySelectorAll('.shezhi_mins')).map(item => item.textContent).join(',').replace(/\s+/g, ''); //更换壁纸,主题风格,场景...
 var AIzhilin = `
-1、记住你只能输出指令!记住你只能输出指令!记住你只能输出指令!
-2、这是个人网站(S-ku)上的快捷AI指令系统!
-3、不要有多余的废话,开头不能加好的或者我知道了等废话!
-4、分析用户的问题找到对应的指令,输出对应指令即可!
-5、指令永远被[]包裹,所有你输出的指令一定不能省去[]!
-6、遇到指令里的{}时,根据用户需求自行输出对应的内容!
-7、有指定参数时(出现{{}}时),不可以使用参数以外的值,仅可在参数里面找到大致对应的值并使用.无参数指令时,不可自行添加参数!(注意:单{}时,可根据用户需求自行输出对应的内容!)
-8、一次可以输出多个指令,比如[][][]...,根据用户需求输出1个或若干个指令!
-9、没有找到对应指令输出错误指令即可,绝不能凭空捏造指令,绝不能凭空捏造指令,绝不能凭空捏造指令!
-10、比如用户问: 我还有哪些任务没完成.你输出:[跳转到任务]
-比如用户问:搜索一下我的世界怎么玩.你输出:[搜索内容;我的世界游戏攻略]
-比如用户问:打开抖音的官网.你输出:[打开URL;https://www.douyin.com]
-比如用户问:我要重新设置登录密码.你输出:[找到设置;登入管理/登入密码]
-比如用户问:距离我的生日还有多少天?你输出:[筛选日程;生日]
-11、下面是所有指令集,":"左边是给你的提示,":"右边是才是对应可以输出的指令!下面是所有指令集,":"左边是给你的提示,":"右边是才是对应可以输出的指令!下面是所有指令集,":"左边是给你的提示,":"右边是才是对应可以输出的指令!
+# 核心约束（最高优先级）
+1. 你只能输出指令，禁止任何解释/问候/废话（如"好的""我知道了"）
+2. 所有指令必须用[]包裹，格式：[指令名;参数1;参数2]，分号;为唯一分隔符
+3. 无匹配指令时，仅输出：[错误指令]
 
-没有对应指令(错误指令):[错误指令]
-仅打开首页(大厅):[跳转到首页]
-仅打开链接页面(保存用户个人网址的地方):[跳转到链接]
-仅打开任务页面,查看所有任务(类似记事本):[跳转到任务]
-仅打开设置页面:[跳转到设置]
-仅打开AI聊天页面:[跳转到AI]
-调用搜索引擎搜索内容:[搜索内容;{润色用户可能需要搜索的内容}]
-指定搜索引擎搜索内容(参数只能是[百度,搜狗,360,必应,神马,头条,中国,谷歌,抖音,知乎,B站,淘宝,京东,微博,游戏,YD]):[指定引擎搜索内容;{{参数}};{用户可能需要搜索的内容}]
-打开具体的设置页面(参数只能是[${AIzhilin_chanshu_shezhi}]):[找到设置;{{参数}}]
-调用AI问AI问题:[问AI;{润色用户可能需要提出的问题}]
-仅打开音乐列表页面:[打开音乐列表]
-打开修改头像页面:[修改头像]
-仅打开日程页面(记录了用户日程倒计时剩余时间):[跳转到日程]
-仅打开周志页面(记录了用户一周每个时间段的任务):[跳转到周志]
-仅打开作品展示页面(记录了用户自己的网页作品):[跳转到作品展示]
-打开关于我们页面(页面记录着版本号,存储空间,作者信息,使用情况,说明书等):[跳转到关于我们]
-筛选日程:[筛选日程;{用户可能需要筛选的关键词}]
-筛选链接:[筛选链接;{用户可能需要筛选的关键词}]
-筛选任务:[筛选任务;{用户可能需要筛选的关键词}]
-查看所有已完成的任务:[查看已完成任务]
-查看所有未完成的任务:[查看未完成任务]
-打开URL(网址链接一定要加http://或https://):[打开URL;{用户可能需要找的URL,自行搜索添加}]
+# 参数语法（严格区分）
+- {自由内容}：根据用户意图润色生成，如{用户可能需要搜索的内容}
+- {{限定参数}}：必须从给定参数池选值，如{{参数}}只能选[百度,搜狗,360,...]，禁止自创
 
-12、下面是你之前输出过的无用指令(以后不得出现类似错误,不得再重复输出无用指令,意思相近不在指令集中也会不起作用,严格按规定指令形式输出,没有找到对应指令输出指令集中的错误指令即可,请认真思考)!
-${localStorage.Sku_cwzlj != '' ? ('无用指令集:' + localStorage.Sku_cwzlj) : '暂无出现无用指令'}
+# 指令映射表（提示词 → 输出指令）
+[跳转到首页] ← 打开首页/大厅
+[跳转到链接] ← 打开链接页面/个人网址
+[跳转到任务] ← 打开任务/记事本/查看任务
+[跳转到设置] ← 打开设置页面
+[跳转到AI] ← 打开AI聊天
+[搜索内容;{润色搜索词}] ← 搜索/查找/问一下+内容
+[指定引擎搜索内容;{{引擎名}};{搜索词}] ← 用百度/谷歌/抖音等搜+内容（引擎名必须来自参数池）
+[找到设置;{{设置项}}] ← 打开密码/存储/版本等具体设置（设置项来自${AIzhilin_chanshu_shezhi}）
+[问AI;{润色问题}] ← 问/请教/咨询+问题
+[打开音乐列表] ← 音乐/播放/歌单
+[修改头像] ← 换头像/设置头像
+[跳转到日程] ← 日程/倒计时/生日提醒
+[跳转到周志] ← 周志/周报/每周任务
+[跳转到作品展示] ← 作品/项目/网页展示
+[跳转到关于我们] ← 关于/版本/作者/说明
+[筛选日程;{关键词}] ← 筛选/查找+日程相关
+[筛选链接;{关键词}] ← 筛选/查找+链接相关
+[筛选任务;{关键词}] ← 筛选/查找+任务相关
+[查看已完成任务] ← 已完成/做完的任务
+[查看未完成任务] ← 未完成/待办的任务
+[打开URL;{完整网址}] ← 打开/访问+网址（必须含http/https）
 
-。那么开始吧,用户说:
+# 输出示例（学习格式）
+用户：我还有哪些任务没完成 → [筛选任务;未完成]
+用户：搜索我的世界怎么玩 → [搜索内容;我的世界游戏攻略]
+用户：打开抖音官网 → [打开URL;https://www.douyin.com]
+用户：用百度搜天气 → [指定引擎搜索内容;百度;天气预报]
+用户：距离生日还有几天 → [筛选日程;生日]
+
+# 严禁行为（负面约束）
+- 禁止输出[]外的任何字符（包括换行、空格、标点）
+- 禁止修改指令名或分隔符（如用逗号代替分号）
+- 禁止为{{限定参数}}自创值（如参数池无"微信"，就不能输出微信）
+- 禁止合并/拆分指令（如[跳转到首页;跳转到任务]是错的，应输出两个独立指令[跳转到首页][跳转到任务]）
+
+# 历史错误反馈（避免重复）
+${localStorage.Sku_cwzlj ? '曾错输出：' + localStorage.Sku_cwzlj : '暂无错误记录'}
+
+# 开始执行，用户输入：
 `;
 // console.log(AIzhilin);
 console.log(localStorage.Sku_cwzlj);
@@ -4014,15 +4240,17 @@ function AI_zdcc_ks(ksczzz) {
 //AI
 var shuchunr2 = '';
 var AI_diaoyon = 0; //调用AI索引,默认调用第一个AI
-var AI_heji = ['GLM-4-Flash', 'GLM-4-Flash-250414', 'GLM-4.7-Flash', 'GLM-Z1-Flash'];
+var AI_diaoyon_ks = -1; //记录本轮尝试的起始模型索引,-1表示未开始
+var AI_diaoyon_hb = []; //后备模型调用顺序队列
+var AI_heji = ['GLM-4-Flash', 'GLM-4-Flash-250414', 'GLM-4.5-Flash', 'GLM-4.7-Flash', 'GLM-Z1-Flash'];
 async function callZhiPuAI(userInput, apiKey, models) {
-    if (!userInput) {
-        throw new Error('请输入问题内容');
-    }
-    if (!apiKey) {
-        throw new Error('请提供 API Key');
-    }
     try {
+        if (!userInput) {
+            throw new Error('请输入问题内容');
+        }
+        if (!apiKey) {
+            throw new Error('请提供 API Key');
+        }
         // 调用智谱AI API
         const response = await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions', {
             method: 'POST',
@@ -4053,21 +4281,28 @@ async function callZhiPuAI(userInput, apiKey, models) {
         }
         return result;
     } catch (error) {
-        AI_diaoyon++; //调用下一个AI
-        if (AI_diaoyon == AI_heji.length) {
+        if (AI_diaoyon_ks === -1) {
+            AI_diaoyon_ks = AI_diaoyon;
+            AI_diaoyon_hb = [];
+            for (let i = AI_diaoyon + 1; i < AI_heji.length; i++) AI_diaoyon_hb.push(i);
+            for (let i = AI_diaoyon - 1; i >= 0; i--) AI_diaoyon_hb.push(i);
+        }
+        if (AI_diaoyon_hb.length === 0) {
+            AI_diaoyon_ks = -1;
+            AI_diaoyon_hb = [];
             console.log('所有API调用错误:' + error.message);
             return '请求失败';
-        } else {
-            console.log('当前AI调用失败,调用下一个AI:' + AI_heji[AI_diaoyon]);
-            Sku_tctx('临时切换模型 ' + AI_heji[AI_diaoyon]);
-            return await callZhiPuAI(userInput, apiKey, AI_heji[AI_diaoyon]);
         }
+        AI_diaoyon = AI_diaoyon_hb.shift();
+        console.log('当前AI调用失败,调用下一个AI:' + AI_heji[AI_diaoyon]);
+        Sku_tctx('临时切换模型 ' + AI_heji[AI_diaoyon]);
+        return await callZhiPuAI(userInput, apiKey, AI_heji[AI_diaoyon]);
     }
 }
 
 //清空错误指令
 var yuyanAI_qkcwzl = document.querySelector('.yuyanAI_qkcwzl');
-yuyanAI_qkcwzl.addEventListener('click', function(e) {
+yuyanAI_qkcwzl.addEventListener('click', function (e) {
     localStorage.Sku_cwzlj = '';
     Sku_tctx('已清空错误指令');
 });
@@ -4078,7 +4313,7 @@ if (localStorage.Sku_zhilin_qhmx == undefined) {
 }
 var yuyanAI_qhmx = document.querySelector('.yuyanAI_qhmx');
 yuyanAI_qhmx.innerHTML = localStorage.Sku_zhilin_qhmx;
-yuyanAI_qhmx.addEventListener('click', function(e) {
+yuyanAI_qhmx.addEventListener('click', function (e) {
     localStorage.Sku_zhilin_qhmx = (localStorage.Sku_zhilin_qhmx++ >= AI_heji.length - 1) ? 0 : localStorage.Sku_zhilin_qhmx++;
     yuyanAI_qhmx.innerHTML = localStorage.Sku_zhilin_qhmx;
     Sku_tctx('已切换到模型 ' + AI_heji[localStorage.Sku_zhilin_qhmx]);
@@ -4091,12 +4326,12 @@ yuyanAI_qhmx.addEventListener('click', function(e) {
 
 //全局按键事件
 let isShiftPressed = false;
-document.addEventListener('keyup', function(event) {
+document.addEventListener('keyup', function (event) {
     if (event.key === 'Shift') {
         isShiftPressed = false;
     }
 });
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if (e.key === 'Shift') {
         isShiftPressed = true;
     }
@@ -4186,7 +4421,7 @@ document.addEventListener('keydown', function(e) {
                 imput_drym_mm = document.querySelector('.imput_drym_mm');
                 imput_drym_mm.focus();
                 //添加防盗网
-                drmm_dsq = setInterval(function() {
+                drmm_dsq = setInterval(function () {
                     var drym_max = document.querySelector('.drym_max');
                     var drym_min = document.querySelector('.drym_min');
                     if (drym_min == null || drym_min.style.display == 'none' || nrmax.style.display !== 'none' || drym_max.style.display !== 'block' || drym_max == null || (localStorage.dr_mm_cf != 0 && imput_drym_mm.disabled == false)) {
@@ -4245,7 +4480,7 @@ document.addEventListener('keydown', function(e) {
 
 
 //全局右击事件
-document.addEventListener('contextmenu', function() {
+document.addEventListener('contextmenu', function () {
     sy_djs_tj_yc();
     sy_zp_tj_sc();
     sy_dwck_ym_yc();
@@ -4253,7 +4488,7 @@ document.addEventListener('contextmenu', function() {
     yuyanAI_qxsr();
 });
 //全局左击事件
-document.addEventListener('click', function() {
+document.addEventListener('click', function () {
     sy_djs_tj_yc();
     sy_zp_tj_sc();
     sy_dwck_ym_yc();

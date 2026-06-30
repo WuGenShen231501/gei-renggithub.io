@@ -19,8 +19,8 @@ input {
     cursor: none;
 }
 
-html {
-    cursor: none;
+html * {
+    cursor: none !important;
 }
 
 

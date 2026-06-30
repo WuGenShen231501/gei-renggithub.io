@@ -1082,170 +1082,173 @@ lian_jie_ssk = document.querySelector('.lian_jie_ssk');
 i_lian_jie_ss_tb = document.querySelector('.i_lian_jie_ss_tb');
 i_lian_jie_ss_tb.addEventListener('click', function() {
     if (lian_jie_ssk.value !== '') {
-        lian_jie_r.style.display = 'none';
-        lian_jie_l.style.display = 'none';
-        lian_jie_r2.style.display = 'block';
-        lian_jie_l2.style.display = 'block';
-        lian_jie_ssym.innerHTML = '';
-        var dhr_ym_dx = JSON.parse(localStorage.dhr_ym_dx);
-        // 集合所有对象
-        var lian_jie_dxs = {};
-        for (var i = 0; i < Object.keys(dhr_ym_dx).length; i++) {
-            var dhr_ym_dx_s = dhr_ym_dx['dhr_ym_dx' + i]
-            for (var o = 0; o < Object.keys(dhr_ym_dx_s).length; o++) {
-                lian_jie_dxs['lian_jie_dxs' + Object.keys(lian_jie_dxs).length] = dhr_ym_dx_s['dhr_ym_sz' + o];
-            }
-        }
-        // 所有对象合并成一个字符串
-        var lian_jie_szs = [];
-        for (var i = 0; i < Object.keys(dhr_ym_dx).length; i++) {
-            var dhr_ym_dx_s = dhr_ym_dx['dhr_ym_dx' + i]
-            for (var o = 0; o < Object.keys(dhr_ym_dx_s).length; o++) {
-                if (dhr_ym_dx_s['dhr_ym_sz' + o][4]) {
-                    var dhr_ym_dx_s_s = [];
-                    dhr_ym_dx_s_s[0] = dhr_ym_dx_s['dhr_ym_sz' + o][0];
-                    dhr_ym_dx_s_s[1] = dhr_ym_dx_s['dhr_ym_sz' + o][1];
-                    dhr_ym_dx_s_s[2] = dhr_ym_dx_s['dhr_ym_sz' + o][2];
-                    dhr_ym_dx_s_s[3] = dhr_ym_dx_s['dhr_ym_sz' + o][3];
-                    dhr_ym_dx_s_s[4] = dhr_ym_dx_s['dhr_ym_sz' + o][4];
-                    lian_jie_szs[lian_jie_szs.length] = dhr_ym_dx_s_s;
-                } else {
-                    var dhr_ym_dx_s_s = [];
-                    dhr_ym_dx_s_s[0] = dhr_ym_dx_s['dhr_ym_sz' + o][0];
-                    dhr_ym_dx_s_s[1] = dhr_ym_dx_s['dhr_ym_sz' + o][1];
-                    dhr_ym_dx_s_s[2] = dhr_ym_dx_s['dhr_ym_sz' + o][2];
-                    dhr_ym_dx_s_s[3] = dhr_ym_dx_s['dhr_ym_sz' + o][3];
-                    lian_jie_szs[lian_jie_szs.length] = dhr_ym_dx_s_s;
-                }
-            }
-        }
-        //获取每个导航栏中的个数
-        var lian_jie_dxs_s_gs = [];
-        for (var i = 0; i < Object.keys(dhr_ym_dx).length; i++) {
-            lian_jie_dxs_s_gs.push(Object.keys(dhr_ym_dx['dhr_ym_dx' + i]).length);
-        }
-        // 匹配
-        sspp_gs = -1;
-        for (var i = 0; i < lian_jie_szs.length; i++) {
-            for (var u = 0; u < lian_jie_szs[i].length; u++) {
-                if (containsAllChars(lian_jie_ssk.value, lian_jie_szs[i][u])) {
-                    sspp_gs++;
-
-                    var lian_jie_rs_div = document.createElement('div');
-                    lian_jie_rs_div.className = 'lj_max';
-                    lian_jie_rs_div.draggable = "true";
-
-                    // 来源
-                    var i2 = 0;
-                    var i3;
-                    for (var ii = 0; ii < lian_jie_dxs_s_gs.length; ii++) {
-                        var num_ss = -1;
-                        for (var tt = 0; tt <= ii; tt++) {
-                            num_ss += lian_jie_dxs_s_gs[tt];
-                        }
-                        if (num_ss >= i && ii >= 1) {
-                            i2 = ii;
-                            i3 = lian_jie_dxs_s_gs[tt - 1] + (i - num_ss);
-                            break;
-                        } else if (num_ss >= i && ii == 0) {
-                            i2 = ii;
-                            i3 = lian_jie_dxs_s_gs[tt - 1] + (i - num_ss);
-                            break;
-                        }
-                    }
-                    var dhr_sz = JSON.parse(localStorage.dhr_sz);
-
-                    if (lian_jie_dxs['lian_jie_dxs' + i][4]) {
-                        lian_jie_rs_div.innerHTML = '<div class="lj_laiyuan">来源：' + dhr_sz[i2] + ' [' + i3 + ']' + '</div><div class="lj_tp" style="background-image: url(' + ((lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("http") || lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("data")) ? lian_jie_dxs['lian_jie_dxs' + i][0] : '') + ');">' + ((lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("http") || lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("data")) ? '' : lian_jie_dxs['lian_jie_dxs' + i][0]) + '</div><div class="lj_xx"><div class="lj_xx_t">' + lian_jie_dxs['lian_jie_dxs' + i][1] + '</div><div class="lj_xx_b_2">' + lian_jie_dxs['lian_jie_dxs' + i][2] + '</div></div><div class="lj_lj"><a class="lj_lj_t" target="_blank" href="' + lian_jie_dxs['lian_jie_dxs' + i][3] + '">进入</a><a class="lj_lj_b" target="_blank" href="' + lian_jie_dxs['lian_jie_dxs' + i][4] + '">下载</a></div>';
-                    } else {
-                        lian_jie_rs_div.innerHTML = '<div class="lj_laiyuan">来源：' + dhr_sz[i2] + ' [' + i3 + ']' + '</div><div class="lj_tp" style="background-image: url(' + ((lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("http") || lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("data")) ? lian_jie_dxs['lian_jie_dxs' + i][0] : '') + ');">' + ((lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("http") || lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("data")) ? '' : lian_jie_dxs['lian_jie_dxs' + i][0]) + '</div><div class="lj_xx"><div class="lj_xx_t">' + lian_jie_dxs['lian_jie_dxs' + i][1] + '</div><div class="lj_xx_b_2">' + lian_jie_dxs['lian_jie_dxs' + i][2] + '</div></div><div class="lj_lj"><a class="lj_lj_t" target="_blank" href="' + lian_jie_dxs['lian_jie_dxs' + i][3] + '">进入</a></div>';
-                    }
-
-                    // 添加右击按钮修改链接功能
-                    lian_jie_rs_div.setAttribute('zong_lj_num', i);
-                    lian_jie_rs_div.setAttribute('lj_num', sspp_gs);
-
-                    lian_jie_rs_div.addEventListener('contextmenu', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        // 设置指向
-                        var i2 = 0;
-                        var zong_num_ph = this.getAttribute('zong_lj_num');
-                        suo_shui_zhon_num2 = this.getAttribute('zong_lj_num');
-                        suo_shui_zhon_num = this.getAttribute('lj_num');
-
-                        var dhr_ym_dx = JSON.parse(localStorage.dhr_ym_dx);
-                        //获取每个导航栏中的个数
-                        var lian_jie_dxs_s_gs = [];
-                        for (var i = 0; i < Object.keys(dhr_ym_dx).length; i++) {
-                            lian_jie_dxs_s_gs.push(Object.keys(dhr_ym_dx['dhr_ym_dx' + i]).length);
-                        }
-                        for (var ii = 0; ii < lian_jie_dxs_s_gs.length; ii++) {
-                            var num_ss = -1;
-                            for (var tt = 0; tt <= ii; tt++) {
-                                num_ss += lian_jie_dxs_s_gs[tt];
-                            }
-                            if (num_ss >= zong_num_ph && ii >= 1) {
-                                for (var pp = 0; pp < ii; pp++) {
-                                    zong_num_ph -= lian_jie_dxs_s_gs[pp];
-                                }
-                                i2 = ii;
-                                break;
-                            } else if (num_ss >= zong_num_ph && ii == 0) {
-                                i2 = ii;
-                                break;
-                            }
-                        }
-
-                        lj_zhi_xian = zong_num_ph;
-                        dhr_zhi_xian = i2;
-                        zhi_xian = '搜索中的链接';
-                        qjgnzx();
-
-                        //显示设置
-                        var dhr_shezhi_gn = document.querySelector('.dhr_shezhi_gn');
-                        var dhr_shezhi_gn_sc = document.querySelector('.dhr_shezhi_gn_sc');
-                        var dhr_shezhi_gn_cmm = document.querySelector('.dhr_shezhi_gn_cmm');
-                        var dhr_shezhi_gn_tj = document.querySelector('.dhr_shezhi_gn_tj');
-                        dhr_shezhi_gn.style.display = 'block';
-                        dhr_shezhi_gn_sc.style.display = 'block';
-                        dhr_shezhi_gn_cmm.style.display = 'block';
-                        dhr_shezhi_gn_tj.style.display = 'none';
-                        dhr_shezhi_gn.style.top = e.pageY + 'px';
-                        dhr_shezhi_gn.style.left = e.pageX + 'px';
-                        //隐藏修改框
-                        ycgn_dhr_xgk();
-                        ycgn_lj_xgk();
-                    });
-
-                    lian_jie_ssym.appendChild(lian_jie_rs_div);
-
-                    break;
-                }
-            }
-        }
-
-        lian_jie_r2.scroll(0, 0);
-        WGS_wenbengundon9('.lj_xx_b_2');
-
-        // 输出个数
-        console.log("搜索匹配个数:" + ((sspp_gs - 0) + 1));
-
-        // tab从第一个开始
-        lian_jie_ssym_s_gs = 0;
-
-        // Sku-a转换href
-        a_click_self();
-        // 下载转换href
-        a_click_self_xz();
-
+        i_lian_jie_ss_tb_debounce();
     } else {
+        i_lian_jie_ss_tb_debounce.cancel();
         lian_jie_r.style.display = 'block';
         lian_jie_r2.style.display = 'none';
         lian_jie_l.style.display = 'block';
         lian_jie_l2.style.display = 'none';
     }
 });
+var i_lian_jie_ss_tb_debounce = Sku_fan_dou_don(function(e) {
+    lian_jie_r.style.display = 'none';
+    lian_jie_l.style.display = 'none';
+    lian_jie_r2.style.display = 'block';
+    lian_jie_l2.style.display = 'block';
+    lian_jie_ssym.innerHTML = '';
+    var dhr_ym_dx = JSON.parse(localStorage.dhr_ym_dx);
+    // 集合所有对象
+    var lian_jie_dxs = {};
+    for (var i = 0; i < Object.keys(dhr_ym_dx).length; i++) {
+        var dhr_ym_dx_s = dhr_ym_dx['dhr_ym_dx' + i]
+        for (var o = 0; o < Object.keys(dhr_ym_dx_s).length; o++) {
+            lian_jie_dxs['lian_jie_dxs' + Object.keys(lian_jie_dxs).length] = dhr_ym_dx_s['dhr_ym_sz' + o];
+        }
+    }
+    // 所有对象合并成一个字符串
+    var lian_jie_szs = [];
+    for (var i = 0; i < Object.keys(dhr_ym_dx).length; i++) {
+        var dhr_ym_dx_s = dhr_ym_dx['dhr_ym_dx' + i]
+        for (var o = 0; o < Object.keys(dhr_ym_dx_s).length; o++) {
+            if (dhr_ym_dx_s['dhr_ym_sz' + o][4]) {
+                var dhr_ym_dx_s_s = [];
+                dhr_ym_dx_s_s[0] = dhr_ym_dx_s['dhr_ym_sz' + o][0];
+                dhr_ym_dx_s_s[1] = dhr_ym_dx_s['dhr_ym_sz' + o][1];
+                dhr_ym_dx_s_s[2] = dhr_ym_dx_s['dhr_ym_sz' + o][2];
+                dhr_ym_dx_s_s[3] = dhr_ym_dx_s['dhr_ym_sz' + o][3];
+                dhr_ym_dx_s_s[4] = dhr_ym_dx_s['dhr_ym_sz' + o][4];
+                lian_jie_szs[lian_jie_szs.length] = dhr_ym_dx_s_s;
+            } else {
+                var dhr_ym_dx_s_s = [];
+                dhr_ym_dx_s_s[0] = dhr_ym_dx_s['dhr_ym_sz' + o][0];
+                dhr_ym_dx_s_s[1] = dhr_ym_dx_s['dhr_ym_sz' + o][1];
+                dhr_ym_dx_s_s[2] = dhr_ym_dx_s['dhr_ym_sz' + o][2];
+                dhr_ym_dx_s_s[3] = dhr_ym_dx_s['dhr_ym_sz' + o][3];
+                lian_jie_szs[lian_jie_szs.length] = dhr_ym_dx_s_s;
+            }
+        }
+    }
+    //获取每个导航栏中的个数
+    var lian_jie_dxs_s_gs = [];
+    for (var i = 0; i < Object.keys(dhr_ym_dx).length; i++) {
+        lian_jie_dxs_s_gs.push(Object.keys(dhr_ym_dx['dhr_ym_dx' + i]).length);
+    }
+    // 匹配
+    sspp_gs = -1;
+    for (var i = 0; i < lian_jie_szs.length; i++) {
+        for (var u = 0; u < lian_jie_szs[i].length; u++) {
+            if (containsAllChars(lian_jie_ssk.value, lian_jie_szs[i][u])) {
+                sspp_gs++;
+
+                var lian_jie_rs_div = document.createElement('div');
+                lian_jie_rs_div.className = 'lj_max';
+                lian_jie_rs_div.draggable = "true";
+
+                // 来源
+                var i2 = 0;
+                var i3;
+                for (var ii = 0; ii < lian_jie_dxs_s_gs.length; ii++) {
+                    var num_ss = -1;
+                    for (var tt = 0; tt <= ii; tt++) {
+                        num_ss += lian_jie_dxs_s_gs[tt];
+                    }
+                    if (num_ss >= i && ii >= 1) {
+                        i2 = ii;
+                        i3 = lian_jie_dxs_s_gs[tt - 1] + (i - num_ss);
+                        break;
+                    } else if (num_ss >= i && ii == 0) {
+                        i2 = ii;
+                        i3 = lian_jie_dxs_s_gs[tt - 1] + (i - num_ss);
+                        break;
+                    }
+                }
+                var dhr_sz = JSON.parse(localStorage.dhr_sz);
+
+                if (lian_jie_dxs['lian_jie_dxs' + i][4]) {
+                    lian_jie_rs_div.innerHTML = '<div class="lj_laiyuan">来源：' + dhr_sz[i2] + ' [' + i3 + ']' + '</div><div class="lj_tp" style="background-image: url(' + ((lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("http") || lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("data")) ? lian_jie_dxs['lian_jie_dxs' + i][0] : '') + ');">' + ((lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("http") || lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("data")) ? '' : lian_jie_dxs['lian_jie_dxs' + i][0]) + '</div><div class="lj_xx"><div class="lj_xx_t">' + lian_jie_dxs['lian_jie_dxs' + i][1] + '</div><div class="lj_xx_b_2">' + lian_jie_dxs['lian_jie_dxs' + i][2] + '</div></div><div class="lj_lj"><a class="lj_lj_t" target="_blank" href="' + lian_jie_dxs['lian_jie_dxs' + i][3] + '">进入</a><a class="lj_lj_b" target="_blank" href="' + lian_jie_dxs['lian_jie_dxs' + i][4] + '">下载</a></div>';
+                } else {
+                    lian_jie_rs_div.innerHTML = '<div class="lj_laiyuan">来源：' + dhr_sz[i2] + ' [' + i3 + ']' + '</div><div class="lj_tp" style="background-image: url(' + ((lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("http") || lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("data")) ? lian_jie_dxs['lian_jie_dxs' + i][0] : '') + ');">' + ((lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("http") || lian_jie_dxs['lian_jie_dxs' + i][0].startsWith("data")) ? '' : lian_jie_dxs['lian_jie_dxs' + i][0]) + '</div><div class="lj_xx"><div class="lj_xx_t">' + lian_jie_dxs['lian_jie_dxs' + i][1] + '</div><div class="lj_xx_b_2">' + lian_jie_dxs['lian_jie_dxs' + i][2] + '</div></div><div class="lj_lj"><a class="lj_lj_t" target="_blank" href="' + lian_jie_dxs['lian_jie_dxs' + i][3] + '">进入</a></div>';
+                }
+
+                // 添加右击按钮修改链接功能
+                lian_jie_rs_div.setAttribute('zong_lj_num', i);
+                lian_jie_rs_div.setAttribute('lj_num', sspp_gs);
+
+                lian_jie_rs_div.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // 设置指向
+                    var i2 = 0;
+                    var zong_num_ph = this.getAttribute('zong_lj_num');
+                    suo_shui_zhon_num2 = this.getAttribute('zong_lj_num');
+                    suo_shui_zhon_num = this.getAttribute('lj_num');
+
+                    var dhr_ym_dx = JSON.parse(localStorage.dhr_ym_dx);
+                    //获取每个导航栏中的个数
+                    var lian_jie_dxs_s_gs = [];
+                    for (var i = 0; i < Object.keys(dhr_ym_dx).length; i++) {
+                        lian_jie_dxs_s_gs.push(Object.keys(dhr_ym_dx['dhr_ym_dx' + i]).length);
+                    }
+                    for (var ii = 0; ii < lian_jie_dxs_s_gs.length; ii++) {
+                        var num_ss = -1;
+                        for (var tt = 0; tt <= ii; tt++) {
+                            num_ss += lian_jie_dxs_s_gs[tt];
+                        }
+                        if (num_ss >= zong_num_ph && ii >= 1) {
+                            for (var pp = 0; pp < ii; pp++) {
+                                zong_num_ph -= lian_jie_dxs_s_gs[pp];
+                            }
+                            i2 = ii;
+                            break;
+                        } else if (num_ss >= zong_num_ph && ii == 0) {
+                            i2 = ii;
+                            break;
+                        }
+                    }
+
+                    lj_zhi_xian = zong_num_ph;
+                    dhr_zhi_xian = i2;
+                    zhi_xian = '搜索中的链接';
+                    qjgnzx();
+
+                    //显示设置
+                    var dhr_shezhi_gn = document.querySelector('.dhr_shezhi_gn');
+                    var dhr_shezhi_gn_sc = document.querySelector('.dhr_shezhi_gn_sc');
+                    var dhr_shezhi_gn_cmm = document.querySelector('.dhr_shezhi_gn_cmm');
+                    var dhr_shezhi_gn_tj = document.querySelector('.dhr_shezhi_gn_tj');
+                    dhr_shezhi_gn.style.display = 'block';
+                    dhr_shezhi_gn_sc.style.display = 'block';
+                    dhr_shezhi_gn_cmm.style.display = 'block';
+                    dhr_shezhi_gn_tj.style.display = 'none';
+                    dhr_shezhi_gn.style.top = e.pageY + 'px';
+                    dhr_shezhi_gn.style.left = e.pageX + 'px';
+                    //隐藏修改框
+                    ycgn_dhr_xgk();
+                    ycgn_lj_xgk();
+                });
+
+                lian_jie_ssym.appendChild(lian_jie_rs_div);
+
+                break;
+            }
+        }
+    }
+
+    lian_jie_r2.scroll(0, 0);
+    WGS_wenbengundon9('.lj_xx_b_2');
+
+    // 输出个数
+    console.log("搜索匹配个数:" + ((sspp_gs - 0) + 1));
+
+    // tab从第一个开始
+    lian_jie_ssym_s_gs = 0;
+
+    // Sku-a转换href
+    a_click_self();
+    // 下载转换href
+    a_click_self_xz();
+}, 100);
 
 //是否选中
 var lian_jie_ssk_xz = 0;
@@ -1376,149 +1379,98 @@ ls_zcb_kjj.addEventListener('click', function(e) {
 
 
 // 换位封装
-var huanwei_class_name;
-
 function enableDragAndDrop(className) {
-    var draggies = document.querySelectorAll('.' + className);
-    huanwei_class_name = className;
+    // 闭包状态变量（修复原代码 dragIndex2/dropIndex2 未用 var 声明导致的隐式全局变量 bug）
+    var draggedItem = null,
+        draggedItem_lg = null,
+        sfwuxiao = 0,
+        dragIndex2 = 0,
+        dropIndex2 = 0;
 
-    // 移除已存在的拖拽相关事件监听器
-    draggies.forEach(function(draggie) {
-        draggie.removeEventListener('dragstart', handleDragStart);
-        draggie.removeEventListener('dragover', handleDragOver);
-        draggie.removeEventListener('drop', handleDrop);
-        draggie.removeEventListener('dragend', handleDragEnd);
-    });
+    // 拖拽开始：记录初始位置
+    function handleDragStart(e) {
+        draggedItem = draggedItem_lg = this;
+        e.dataTransfer.effectAllowed = 'move';
+        su_biao.style.display = 'none';
+        dragIndex2 = dropIndex2 = Array.prototype.indexOf.call(this.parentNode.children, this);
+        sfwuxiao = 0;
+    }
 
-    // 重新添加事件监听器
-    draggies.forEach(function(draggie) {
-        draggie.addEventListener('dragstart', handleDragStart, false);
-        draggie.addEventListener('dragover', handleDragOver, false);
-        draggie.addEventListener('drop', handleDrop, false);
-        draggie.addEventListener('dragend', handleDragEnd, false);
-
-    });
-
-}
-
-var draggedItem = null;
-var draggedItem_lg = null;
-var sfwuxiao = 0;
-
-function handleDragStart(e) {
-    draggedItem = this;
-    draggedItem_lg = this;
-    e.dataTransfer.effectAllowed = 'move';
-
-    su_biao.style.display = 'none';
-
-    var parent = draggedItem.parentNode;
-    dragIndex2 = Array.prototype.indexOf.call(parent.children, draggedItem);
-    dropIndex2 = Array.prototype.indexOf.call(parent.children, this);
-
-    sfwuxiao = 0;
-
-}
-
-function handleDragOver(e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-
-    if (draggedItem !== this && draggedItem !== null) {
+    // 拖拽经过：实时交换 DOM 位置
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        if (!draggedItem || draggedItem === this) return;
         draggedItem.style.opacity = '';
-        // 交换两个元素的位置
-        var parent = draggedItem.parentNode;
-        var dragIndex = Array.prototype.indexOf.call(parent.children, draggedItem);
-        var dropIndex = Array.prototype.indexOf.call(parent.children, this);
-        dropIndex2 = Array.prototype.indexOf.call(parent.children, this);
-        if (dragIndex < dropIndex) {
-            var qb = parent.querySelectorAll('.' + huanwei_class_name);
-            parent.insertBefore(qb[dragIndex], qb[dropIndex + 1]);
-        } else {
-            var qb = parent.querySelectorAll('.' + huanwei_class_name);
-            parent.insertBefore(qb[dragIndex], qb[dropIndex]);
-        }
+        var p = draggedItem.parentNode,
+            di = Array.prototype.indexOf.call(p.children, draggedItem),
+            qi = Array.prototype.indexOf.call(p.children, this),
+            qb = p.querySelectorAll('.' + className);
+        dropIndex2 = qi;
+        // 核心：三元运算符 1 行搞定上下插入
+        p.insertBefore(qb[di], di < qi ? qb[qi + 1] : qb[qi]);
     }
-}
 
-function handleDrop(e) {
-    e.stopPropagation();
+    // 放置成功：仅标记状态
+    function handleDrop(e) {
+        e.stopPropagation();
+        su_biao.style.transform = 'scale(1)';
+        sfwuxiao = 1;
+    }
 
-    su_biao.style.transform = 'scale(1)';
+    // 拖拽结束：回滚 或 持久化
+    function handleDragEnd() {
+        draggedItem.style.opacity = '';
+        su_biao.style.transform = 'scale(1)';
+        var p = draggedItem.parentNode,
+            qb = p.querySelectorAll('.' + className);
 
-    sfwuxiao = 1;
-}
-
-function handleDragEnd(e) {
-    draggedItem.style.opacity = '';
-    su_biao.style.transform = 'scale(1)';
-    if (sfwuxiao == 0) {
-        var parent = draggedItem.parentNode;
-        var dragIndex = dropIndex2;
-        var dropIndex = dragIndex2;
-        if (dragIndex < dropIndex) {
-            var qb = parent.querySelectorAll('.' + huanwei_class_name);
-            parent.insertBefore(qb[dragIndex], qb[dropIndex + 1]);
+        if (!sfwuxiao) {
+            // 未成功 drop：利用 dropIndex2（最后悬停位置）回滚到 dragIndex2（原始位置）
+            p.insertBefore(qb[dropIndex2], dropIndex2 < dragIndex2 ? qb[dragIndex2 + 1] : qb[dragIndex2]);
         } else {
-            var qb = parent.querySelectorAll('.' + huanwei_class_name);
-            parent.insertBefore(qb[dragIndex], qb[dropIndex]);
-        }
-    } else if (sfwuxiao == 1) {
-        // 最后交换两个元素的位置
-        var parent = draggedItem.parentNode;
-        dropIndex2 = Array.prototype.indexOf.call(parent.children, this);
-        console.log(dragIndex2, dropIndex2);
-        // 内存替换
-        var dhr_ym_dx = JSON.parse(localStorage.dhr_ym_dx);
-        var dx_z = dhr_ym_dx['dhr_ym_dx' + dhr_zhi_xian];
+            // 成功 drop：计算最终索引并持久化
+            dropIndex2 = Array.prototype.indexOf.call(p.children, draggedItem);
+            if (dragIndex2 !== dropIndex2) {
+                var d = JSON.parse(localStorage.dhr_ym_dx),
+                    z = d['dhr_ym_dx' + dhr_zhi_xian],
+                    k = Object.keys(z),
+                    z2 = JSON.parse(JSON.stringify(z));
 
-        if (dragIndex2 !== dropIndex2) {
-            if (dragIndex2 < dropIndex2) {
-                var key = Object.keys(dx_z);
-                var dx_z2 = JSON.parse(JSON.stringify(dx_z));
-                for (var i = dragIndex2; i <= dropIndex2; i++) {
-                    if (i !== dropIndex2) {
-                        dx_z[key[i]] = dx_z2[key[i + 1]];
-                    } else {
-                        dx_z[key[dropIndex2]] = dx_z2[key[dragIndex2]];
-                    }
+                if (dragIndex2 < dropIndex2) {
+                    for (var i = dragIndex2; i <= dropIndex2; i++)
+                        z[k[i]] = i < dropIndex2 ? z2[k[i + 1]] : z2[k[dragIndex2]];
+                } else {
+                    for (var i = dragIndex2; i >= dropIndex2; i--)
+                        z[k[i]] = i > dropIndex2 ? z2[k[i - 1]] : z2[k[dragIndex2]];
                 }
-            } else {
-                var key = Object.keys(dx_z);
-                var dx_z2 = JSON.parse(JSON.stringify(dx_z));
-                for (var i = dragIndex2; i >= dropIndex2; i--) {
-                    if (i !== dropIndex2) {
-                        dx_z[key[i]] = dx_z2[key[i - 1]];
-                    } else {
-                        dx_z[key[dropIndex2]] = dx_z2[key[dragIndex2]];
-                    }
-                }
+
+                d['dhr_ym_dx' + dhr_zhi_xian] = z;
+                localStorage.dhr_ym_dx = JSON.stringify(d);
             }
+            // 同步更新链接排序属性
+            var ls = document.querySelector('.lian_jie_r').children[dhr_zhi_xian].children;
+            for (var i = 0; i < ls.length; i++) ls[i].setAttribute('lj_num', i);
         }
 
-        // 赋值
-        dhr_ym_dx['dhr_ym_dx' + dhr_zhi_xian] = dx_z;
-        localStorage.dhr_ym_dx = JSON.stringify(dhr_ym_dx);
+        draggedItem = null;
 
-        //链接排序
-        lian_jie_r = document.querySelector('.lian_jie_r');
-        lian_jie_r_s_s = lian_jie_r.children[dhr_zhi_xian].children;
-        for (var i = 0; i < lian_jie_r_s_s.length; i++) {
-            //指定顺序值
-            lian_jie_r_s_s[i].setAttribute('lj_num', i)
+        // 清除高亮背景
+        var els = document.querySelectorAll('[class*="dhr_num"], [dhr_num]:not([dhr_num="' + dhr_zhi_xian + '"])');
+        for (var i = 0; i < els.length; i++) els[i].style.backgroundColor = '';
+    }
+
+    // 统一事件绑定（通过 el._dnd 缓存 handler 引用，支持重复调用时正确解绑）
+    var h = [handleDragStart, handleDragOver, handleDrop, handleDragEnd],
+        ev = ['dragstart', 'dragover', 'drop', 'dragend'];
+
+    document.querySelectorAll('.' + className).forEach(function(el) {
+        for (var i = 0; i < 4; i++) {
+            if (el._dnd) el.removeEventListener(ev[i], el._dnd[i]);
+            el.addEventListener(ev[i], h[i]);
         }
-    }
-
-
-    draggedItem = null;
-
-    // 获取所有自定义属性dhr_num不等于现在的
-    var elements = document.querySelectorAll('[class*="dhr_num"], [dhr_num]:not([dhr_num="' + dhr_zhi_xian + '"])');
-    // 遍历所有元素并执行操作
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].style.backgroundColor = '';
-    }
-
+        el._dnd = h;
+    });
 }
 enableDragAndDrop('lj_max');
 
@@ -1986,18 +1938,18 @@ document.addEventListener('keydown', function(e) {
 
     if (e.key == 'Enter') {
         // 搜索快速打开快捷键
-        if (lian_jie_r2.style.display == 'block' && sspp_gs == 0 && nrmaxs1.style.display == 'block' && ssbqym.style.display == 'none') {
+        if (lian_jie_r2.style.display == 'block' && sspp_gs == 0 && nrmaxs1.style.display == 'block' && so_ssk_focus == 0) {
             document.querySelector('.lian_jie_r2').querySelector('.lj_lj_t').click();
-        } else if (lian_jie_r2.style.display == 'block' && sspp_gs !== 0 && nrmaxs1.style.display == 'block' && lian_jie_ssym_s_gs !== 0 && ssbqym.style.display == 'none') {
+        } else if (lian_jie_r2.style.display == 'block' && sspp_gs !== 0 && nrmaxs1.style.display == 'block' && lian_jie_ssym_s_gs !== 0 && so_ssk_focus == 0) {
             document.querySelector('.lian_jie_r2').querySelectorAll('.lj_lj_t')[lian_jie_ssym_s_gs - 1].click();
         }
         // 添加更改快捷键
-        if (dhr_xg_tj.style.display == 'block' || lj_xg_tj.style.display == 'block' || lj_zcb_ym.style.display == 'block') {
+        if (dhr_xg_tj.style.display !== 'none' || lj_xg_tj.style.display !== 'none' || lj_zcb_ym.style.display !== 'none') {
             dhr_xg_tj = document.querySelector('.dhr_xg_tj');
-            if (dhr_xg_tj.style.display == 'block') {
+            if (dhr_xg_tj.style.display !== 'none') {
                 dhr_qrk.click();
             }
-            if (lj_xg_tj.style.display == 'block') {
+            if (lj_xg_tj.style.display !== 'none') {
                 if (lj_xg_tj_ipt_xzs == 0) {
                     lj_srk_tpid.blur();
                     lj_srk_mc.select();
@@ -2014,7 +1966,7 @@ document.addEventListener('keydown', function(e) {
                     jl_qrk.click();
                 }
             }
-            if (lj_zcb_ym.style.display == 'block') {
+            if (lj_zcb_ym.style.display !== 'none') {
                 lj_zcb_qr.click();
             }
         }

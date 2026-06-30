@@ -35,7 +35,6 @@
     <script src="汉字拼音表.js" defer></script>
 
     <script src="Sku_ht.js"></script>
-    <!-- <script src="zx_Sku.js" defer></script> -->
     <script src="Sku1.js" defer></script>
     <script src="Sku2.js" defer></script>
     <script src="Sku3.js" defer></script>
@@ -429,6 +428,9 @@
                 <!-- 无用图片删除 -->
                 <i class="iconfont icon-ai49 i_liu_yan_photoSH_tp"></i>
 
+                <!-- AI润色 -->
+                <i class="iconfont icon-guizhengrunse i_liu_yan_AIlunse_tp"></i>
+
                 <!-- 留言搜索框 -->
                 <div class="ji_ru_ssk_max">
                     <input type="text" class="input_ji_ru_srk" placeholder=" 搜索相关记录 / Ctrl + ?">
@@ -458,8 +460,8 @@
                 <div class="liu_yan_sxuan_s liu_yan_sxuan_zh">综合</div>
                 <!-- 未标记 -->
                 <div class="liu_yan_sxuan_s liu_yan_sxuan_wbj">未标记<span> 0</span></div>
-                <!-- 标记 -->
-                <div class="liu_yan_sxuan_s liu_yan_sxuan_bj">标记<span> 0</span></div>
+                <!-- 已标记 -->
+                <div class="liu_yan_sxuan_s liu_yan_sxuan_bj">已标记<span> 0</span></div>
                 <!-- 删除所有 -->
                 <div class="liu_yan_sxuan_s liu_yan_sxuan_sc">删除所有</div>
             </div>
@@ -850,10 +852,11 @@
                 <!-- 自定义首页内容 -->
                 <div class="shezhi_ym shezhi_synr_ym" style="display: none;">
                     <div class="shezhi_ym_top"><i class="iconfont icon-fanhui1 i_fanhui_tp"></i>更换首页内容</div>
-                    <div class="ztfg_s sy_nr_xz3">空白页 ( 流畅 )</div>
-                    <div class="ztfg_s sy_nr_xz1">解压雪球 ( 基础 )</div>
-                    <div class="ztfg_s sy_nr_xz2">动态内容 ( 发烧级! )</div>
-                    <div class="ztfg_s sy_nr_xz4">待发布...</div>
+                    <div class="ztfg_s sy_nr_xz3">空白页</div>
+                    <div class="ztfg_s sy_nr_xz1">解压雪球</div>
+                    <div class="ztfg_s sy_nr_xz2">动态内容</div>
+                    <div class="ztfg_s sy_nr_xz4">天气</div>
+                    <div class="ztfg_s sy_nr_xz5">待发布...</div>
                 </div>
 
                 <!-- 锁屏 -->
@@ -965,6 +968,10 @@
                 <!-- mods -->
                 <div class="AI_mods_max" style="display: none;">
                     <div class="AI_mods_max_hd">
+                       <div class="AI_mods_min">
+                            <div class="AI_mods_name">agnes-2.0-flash</div>
+                            <div class="AI_mods_sm">Agnes (免费版)</div>
+                        </div>   
                         <div class="AI_mods_min">
                             <div class="AI_mods_name">GLM-4.7-Flash</div>
                             <div class="AI_mods_sm">智谱AI开放平台 (免费版)</div>
@@ -1332,6 +1339,44 @@
 
 </html>
 
-<!-- 
-2026/3/31 修复周至锁定提示词文本显示不全bug
+<!-- 快捷键
++                - 添加功能（主页面且修改弹窗未打开时）
+Delete           - 删除（删除确认弹窗和功能区都显示时）
+F2               - 重命名（重命名弹窗和功能区都显示时）
+Ctrl+/           - 聚焦到搜索链接输入框
+Ctrl+S           - 导入本地页面（阻止默认保存行为）
+Alt+S            - 导入页面（JSON导出）
+Alt+Y            - 导入云服务
+Alt+Shift+Y      - 云备份
 -->
+
+<!-- 更新日志
+2026/3/31 修复周至锁定提示词文本显示不全bug
+2026/4/2 添加哈希加密功能
+2026/4/3 添加AES-256-GCM加密解密功能
+2026/4/5 修复每日一言显示问题bug
+2026/4/5 添加搜索框右击选中功能
+2026/4/5 修复链接导航栏添加及修改快捷键问题
+2026/4/5 修复链接筛选快捷键干扰问题
+2026/4/8 添加任务页面Tab快捷切换功能
+2026/4/18 优化滚动条代码
+2026/4/18 优化AI指令映射表
+2026/4/18 优化匹配函数代码
+2026/4/18 优化AES-256-GCM代码
+2026/4/18 添加esbuild压缩代码
+2026/4/20 添加防抖动函数并应用
+2026/5/1 优化AI模型自动切换故障和回退顺序
+2026/5/1 添加节流函数并应用
+2026/5/4 AI语音添加GLM-4.5-Flash模型
+2026/5/10 添加首页天气功能
+2026/5/11 修复首页天气功能显示问题bug
+2026/5/30 添加手机预览版Sku
+2026/6/6 修复密码输入框特殊符号拦截 ( JavaScript 实时过滤非法字符 )
+2026/6/6 修复密码加密函数 btoa 非ASCII字符报错问题
+2026/6/8 添加搜索引擎面板拖拽排序功能
+2026/6/8 关闭爬取热点时清空热点数据
+2026/6/8 优化链接拖拽排序功能
+2026/6/8 添加云备份快捷键
+2026/6/28 添加留言AI润色功能
+2026/6/30 修复AI置底位置显示问题bug
+--

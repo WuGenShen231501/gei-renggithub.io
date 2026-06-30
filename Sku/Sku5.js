@@ -1,13 +1,13 @@
 // 可文字选中
 var AI_zj = document.querySelector('.AI_zj');
-AI_zj.addEventListener('selectstart', function(e) {
+AI_zj.addEventListener('selectstart', function (e) {
     e.stopPropagation();
 });
 
 // 匹配浏览器高度
 nrmaxs4 = document.querySelector('.nrmaxs4');
 nrmaxs4.style.marginTop = (window.innerHeight + 56 - 523 - 80) / 2 + 'px';
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     nrmaxs4 = document.querySelector('.nrmaxs4');
     nrmaxs4.style.marginTop = (window.innerHeight + 56 - 523 - 80) / 2 + 'px';
 });
@@ -16,7 +16,7 @@ window.addEventListener('resize', function() {
 Sku_gundontiao('.AI_zj', '.AI_gundontiao_max', '.AI_gundontiao_min');
 Sku_gundontiao('.AI_mods_max_hd', '.AI_mods_gundontiao_max', '.AI_mods_gundontiao_min');
 var AI_zj = document.querySelector('.AI_zj');
-AI_zj.addEventListener('wheel', function(e) {
+AI_zj.addEventListener('wheel', function (e) {
     zdxszxf = 0;
 });
 
@@ -29,7 +29,7 @@ function decodeHtmlEntities(str) {
         .replace(/&#39;/g, "'") // 替换 ' 的实体编码，注意 &#39; 是 ' 的数值实体编码
         .replace(/&#x2F;/g, '/') // 替换 / 的数值实体编码
         // 可以继续添加其他实体编码的替换规则
-    ;
+        ;
 }
 
 
@@ -113,10 +113,10 @@ function mods_qh() {
 
     // 页面关闭
     var AI_mods_max = document.querySelector('.AI_mods_max');
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
         AI_mods_max.style.display = 'none';
     })
-    AI_mods_max.addEventListener('click', function(e) {
+    AI_mods_max.addEventListener('click', function (e) {
         e.stopPropagation();
     });
 
@@ -124,7 +124,7 @@ function mods_qh() {
     var AI_mods_max_hd = document.querySelector('.AI_mods_max_hd');
     var AI_modss = document.querySelectorAll('.AI_mods');
     for (var i = 0; i < AI_modss.length; i++) {
-        AI_modss[i].addEventListener('click', function(e) {
+        AI_modss[i].addEventListener('click', function (e) {
             e.stopPropagation();
             AI_mods_max.style.display = 'block';
             AI_mods = this.querySelector('p');
@@ -148,7 +148,7 @@ function mods_qh() {
     // mods点击切换
     var AI_mods_min = document.querySelectorAll('.AI_mods_min');
     for (var i = 0; i < AI_mods_min.length; i++) {
-        AI_mods_min[i].addEventListener('click', function(e) {
+        AI_mods_min[i].addEventListener('click', function (e) {
             // 切换
             AI_mods.innerText = this.querySelector('.AI_mods_name').innerText;
             // 主线时替换默认mod
@@ -179,7 +179,7 @@ function mods_qh() {
     // 非主mods右击删除
     var AI_modss = document.querySelectorAll('.AI_mods');
     for (var i = 0; i < AI_modss.length; i++) {
-        AI_modss[i].addEventListener('contextmenu', function(e) {
+        AI_modss[i].addEventListener('contextmenu', function (e) {
             e.preventDefault();
             e.stopPropagation();
             this.querySelector('p').innerText = '';
@@ -216,7 +216,7 @@ function mods_da_xiao_shiying() {
         }
     }
 }
-window.addEventListener('resize', function(e) {
+window.addEventListener('resize', function (e) {
     mods_da_xiao_shiying();
 });
 
@@ -228,7 +228,7 @@ function AI_key_mr_xg() {
     var AI_key = document.querySelectorAll('.AI_key');
     for (var i = 0; i < AI_key.length; i++) {
         if (i == 0) {
-            AI_key[i].addEventListener('input', function(e) {
+            AI_key[i].addEventListener('input', function (e) {
                 // 修改当前key和默认key
                 var AI_mods = this.previousElementSibling.querySelector('p');
                 localStorage.AI_dq_key = this.value;
@@ -243,7 +243,7 @@ function AI_key_mr_xg() {
                 }
             });
         } else {
-            AI_key[i].addEventListener('input', function(e) {
+            AI_key[i].addEventListener('input', function (e) {
                 var AI_mods = this.previousElementSibling.querySelector('p');
                 // 如果和第一个key一样，则同时修改默认key
                 var AI_mods_0 = AI_key[0].previousElementSibling.querySelector('p');
@@ -290,7 +290,7 @@ var AI_li_shi_xx = [];
 // 发送
 var AI_bottom_srk_fs = document.querySelector('.AI_bottom_srk_fs');
 var zdxszxf = 0;
-AI_bottom_srk_fs.addEventListener('click', function(e) {
+AI_bottom_srk_fs.addEventListener('click', function (e) {
     var AI_bottom_srk = document.querySelector('.AI_bottom_srk');
     if (AI_bottom_srk_fs_true == 1 && AI_bottom_srk.value !== '') {
         var AI_bottom_srk = document.querySelector('.AI_bottom_srk');
@@ -402,7 +402,7 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
     // 动态创建定时器
     var AI_huida_shuchudh_s = 'AI_huida_shuchudh' + AI_ID;
     var AI_huida_nr = document.querySelector('.AI_huida_max_xiancheng' + AI_ID).querySelector('.AI_huida_nr');
-    window[AI_huida_shuchudh_s] = setInterval(function() {
+    window[AI_huida_shuchudh_s] = setInterval(function () {
         AI_huida_nr.innerText = AI_huida_nr.innerText + '.';
         if (AI_huida_nr.innerText.length > 9) {
             AI_huida_nr.innerText = '...';
@@ -430,13 +430,13 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
 
             // 使用 fetch 发起 POST 请求
             fetch(url, {
-                    method: 'POST', // 或者 'GET'，根据 API 的要求
-                    headers: {
-                        'Authorization': `Bearer ${apiKey}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: jsonData // 对于 POST 请求，请求数据在 body 中
-                })
+                method: 'POST', // 或者 'GET'，根据 API 的要求
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData // 对于 POST 请求，请求数据在 body 中
+            })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok ' + response.statusText);
@@ -476,13 +476,13 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
 
             // 使用 fetch 发起 POST 请求
             fetch(url, {
-                    method: 'POST', // 或者 'GET'，根据 API 的要求
-                    headers: {
-                        'Authorization': `Bearer ${apiKey}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: jsonData // 对于 POST 请求，请求数据在 body 中
-                })
+                method: 'POST', // 或者 'GET'，根据 API 的要求
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData // 对于 POST 请求，请求数据在 body 中
+            })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok ' + response.statusText);
@@ -528,13 +528,13 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
 
             fetch("https://api.chatanywhere.tech/v1/chat/completions", requestOptions)
                 .then(response => response.text())
-                .then(function(result) {
+                .then(function (result) {
                     var results = JSON.parse(result);
                     console.log(results);
 
                     AI_cl(results.choices[0].message.content, 2, mod_s, AI_ID);
                 })
-                .catch(function(err) {
+                .catch(function (err) {
                     console.log(err);
 
                     AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
@@ -565,13 +565,13 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
 
             // 使用 fetch 发起 POST 请求
             fetch(url, {
-                    method: 'POST', // 或者 'GET'，根据API的要求
-                    headers: {
-                        'Authorization': `Bearer ${apiKey}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: jsonData // 对于 POST 请求，请求数据在 body 中
-                })
+                method: 'POST', // 或者 'GET'，根据API的要求
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData // 对于 POST 请求，请求数据在 body 中
+            })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok ' + response.statusText);
@@ -621,15 +621,64 @@ function AI_fsxx(nr_s, mod_s, key_s, AI_ID) {
 
             fetch('https://api.siliconflow.cn/v1/chat/completions', options)
                 .then(response => response.json())
-                .then(function(response) {
+                .then(function (response) {
                     console.log(response); // 处理返回的数据
 
                     AI_cl(response.choices[0].message.content, 2, mod_s, AI_ID);
                 })
-                .catch(function(err) {
+                .catch(function (err) {
                     console.log(err);
 
                     AI_cl('请求失败 检查{key}是否正确 或 请求限制', 2, mod_s, AI_ID);
+                });
+        } catch (error) {
+            AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
+        }
+
+    } else if (mod_s == 'agnes-2.0-flash') { // Agnes(免费版)(对话)
+
+        try {
+            const apiKey = key_s;
+            const url = 'https://apihub.agnes-ai.com/v1/chat/completions';
+
+            const requestData = {
+                model: mod_s,
+                messages: AI_li_shi_xx.length == 0 ? [{
+                    role: "user",
+                    content: nr_s
+                }] : AI_li_shi_xx,
+                temperature: 0.7,
+                max_tokens: 4096
+            };
+
+            const jsonData = JSON.stringify(requestData);
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+
+                    if (data.choices) {
+                        AI_cl(data.choices[0].message.content, 2, mod_s, AI_ID);
+                    } else {
+                        AI_cl('错误：' + JSON.stringify(data, null, 2), 2, mod_s, AI_ID);
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    AI_cl('请求失败：' + err.message, 2, mod_s, AI_ID);
                 });
         } catch (error) {
             AI_cl('请求失败 检查 API 是否失效', 2, mod_s, AI_ID);
@@ -711,7 +760,7 @@ function AI_cl(nr, rw, mod_s, AI_ID) {
             var shuchu_wz_zf = '';
             // 动态创建定时器
             var AI_huida_shuchudh_s = 'AI_huida_shuchudh' + AI_ID;
-            window[AI_huida_shuchudh_s] = setInterval(function() {
+            window[AI_huida_shuchudh_s] = setInterval(function () {
                 // 动态输出
                 shuchu_wz_zf += nr[shuchu_wz]; //将字符串拼接
                 AI_huida_nr.innerHTML = shuchu_wz_zf;
@@ -811,7 +860,7 @@ AI_zj_a.forEach(link => {
 
 // 删除历史
 var AI_kjzl_sc = document.querySelector('.AI_kjzl_sc');
-AI_kjzl_sc.addEventListener('click', function(e) {
+AI_kjzl_sc.addEventListener('click', function (e) {
     if (AI_zhi_xing_s == 0) {
         AI_zj_nr.innerHTML = '';
         localStorage.AI_jl = '[]';
@@ -828,16 +877,16 @@ var AI_kjzl = document.querySelector('.AI_kjzl');
 var AI_kjzl_max = document.querySelector('.AI_kjzl_max');
 var AI_kjzl_s_tjl = document.querySelector('.AI_kjzl_s_tjl');
 var AI_kjzl_min = document.querySelector('.AI_kjzl_min');
-AI_kjzl.addEventListener('click', function(e) {
+AI_kjzl.addEventListener('click', function (e) {
     e.stopPropagation();
     AI_kjzl_max.style.display = 'block';
     AI_kjzl_s_tjl.focus(); // 聚焦
     AI_kjzl_min.scroll(0, 0);
 });
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     AI_kjzl_max.style.display = 'none';
 })
-AI_kjzl_max.addEventListener('click', function(e) {
+AI_kjzl_max.addEventListener('click', function (e) {
     e.stopPropagation();
 });
 // 输出快捷指令
@@ -867,7 +916,7 @@ function AI_kjzl_s_tjhs() {
     }
 }
 // 选择快捷指令
-AI_kjzl_max.addEventListener('click', function(e) {
+AI_kjzl_max.addEventListener('click', function (e) {
     const ai_kjzl_ss = e.target;
     if (ai_kjzl_ss.classList.contains('AI_kjzl_s')) {
         AI_bottom_srk.value += ai_kjzl_ss.innerText;
@@ -876,7 +925,7 @@ AI_kjzl_max.addEventListener('click', function(e) {
     }
 });
 // 删除快捷指令
-AI_kjzl_max.addEventListener('contextmenu', function(e) {
+AI_kjzl_max.addEventListener('contextmenu', function (e) {
     const ai_kjzl_ss = e.target;
     if (ai_kjzl_ss.classList.contains('AI_kjzl_s')) {
         //内存修改
@@ -928,7 +977,7 @@ function AI_ksfy() {
 
         fetch('https://api.siliconflow.cn/v1/chat/completions', options)
             .then(response => response.json())
-            .then(function(response) {
+            .then(function (response) {
                 console.log(response); // 处理返回的数据
                 AI_bottom_srk.value = response.choices[0].message.content.replace(/(\n{1,})/g, '').replace(/\n+$/, '');
 
@@ -939,7 +988,7 @@ function AI_ksfy() {
                 AI_bottom_srk.focus(); //聚焦
                 sf_shift2 = 0;
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 console.log(err);
 
                 // 可以使用
@@ -970,14 +1019,14 @@ var AI_dhsz = document.querySelector('.AI_dhsz');
 var AI_szym_max = document.querySelector('.AI_szym_max');
 var AI_kjzl_s_tjl = document.querySelector('.AI_kjzl_s_tjl');
 var AI_kjzl_min = document.querySelector('.AI_kjzl_min');
-AI_dhsz.addEventListener('click', function(e) {
+AI_dhsz.addEventListener('click', function (e) {
     e.stopPropagation();
     AI_szym_max.style.display = 'block';
 });
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     AI_szym_max.style.display = 'none';
 })
-AI_szym_max.addEventListener('click', function(e) {
+AI_szym_max.addEventListener('click', function (e) {
     e.stopPropagation();
 });
 var AI_sz_dydxc_kaiguan = document.querySelector('.AI_sz_dydxc_kaiguan');
@@ -1073,7 +1122,7 @@ if (localStorage.AI_lwss == 'true') {
 
 
 // 模型多线程处理
-AI_sz_dydxc_kaiguan.addEventListener('click', function(e) {
+AI_sz_dydxc_kaiguan.addEventListener('click', function (e) {
     if (localStorage.AI_xunhuan_cs - 0 == 1) {
         AI_sz_dydxc_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
         AI_sz_dydxc_kaiguan_d.style.left = '29px';
@@ -1124,7 +1173,7 @@ AI_sz_dydxc_kaiguan.addEventListener('click', function(e) {
         }
     }
 });
-AI_sz_dydxc_shu.addEventListener('blur', function(e) {
+AI_sz_dydxc_shu.addEventListener('blur', function (e) {
     if (this.value < 2 && localStorage.Sku_kfzms == 0) {
         this.value = 2;
         Sku_tctx('输入范围为 (2 ~ 10)');
@@ -1142,7 +1191,7 @@ AI_sz_dydxc_shu.addEventListener('blur', function(e) {
     }
 });
 // 多架构生态数
-AI_sz_dkj_kaiguan.addEventListener('click', function(e) {
+AI_sz_dkj_kaiguan.addEventListener('click', function (e) {
     if (localStorage.AI_mx_sl - 0 == 1) {
         AI_sz_dkj_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
         AI_sz_dkj_kaiguan_d.style.left = '29px';
@@ -1199,7 +1248,7 @@ AI_sz_dkj_kaiguan.addEventListener('click', function(e) {
         }
     }
 });
-AI_sz_dkj_shu.addEventListener('blur', function(e) {
+AI_sz_dkj_shu.addEventListener('blur', function (e) {
     if (this.value < 2 && localStorage.Sku_kfzms == 0) {
         this.value = 2;
         Sku_tctx('输入范围为 (2 ~ 10)');
@@ -1220,7 +1269,7 @@ AI_sz_dkj_shu.addEventListener('blur', function(e) {
     }
 });
 // 最大并发对话数
-AI_sz_zdbfs_kaiguan.addEventListener('click', function(e) {
+AI_sz_zdbfs_kaiguan.addEventListener('click', function (e) {
     if (window.getComputedStyle(AI_sz_zdbfs_kaiguan_d).left == '0px') {
         AI_sz_zdbfs_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
         AI_sz_zdbfs_kaiguan_d.style.left = '29px';
@@ -1265,7 +1314,7 @@ AI_sz_zdbfs_kaiguan.addEventListener('click', function(e) {
         AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
     }
 });
-AI_sz_zdbfs_shu.addEventListener('blur', function(e) {
+AI_sz_zdbfs_shu.addEventListener('blur', function (e) {
     if (this.value < 2 && localStorage.Sku_kfzms == 0) {
         this.value = 2;
         Sku_tctx('输入范围为 (2 ~ 10)');
@@ -1277,7 +1326,7 @@ AI_sz_zdbfs_shu.addEventListener('blur', function(e) {
     localStorage.AI_zhi_xing_zuiduo_s = this.value;
 });
 // 即时输出
-AI_sz_jssc_kaiguan.addEventListener('click', function(e) {
+AI_sz_jssc_kaiguan.addEventListener('click', function (e) {
     if (localStorage.AI_jssc - 0 == 0) {
         AI_sz_jssc_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
         AI_sz_jssc_kaiguan_d.style.left = '29px';
@@ -1302,7 +1351,7 @@ AI_sz_jssc_kaiguan.addEventListener('click', function(e) {
     }
 });
 // 连续对话
-AI_sz_lxdh_kaiguan.addEventListener('click', function(e) {
+AI_sz_lxdh_kaiguan.addEventListener('click', function (e) {
     if (localStorage.AI_lxdh - 0 == 0) {
         AI_sz_lxdh_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
         AI_sz_jssc_lxdh_d.style.left = '29px';
@@ -1373,7 +1422,7 @@ AI_sz_lxdh_kaiguan.addEventListener('click', function(e) {
         }
     }
 });
-AI_sz_lxdh_shu.addEventListener('blur', function(e) {
+AI_sz_lxdh_shu.addEventListener('blur', function (e) {
     if (this.value < 1 && localStorage.Sku_kfzms == 0) {
         this.value = 1;
         Sku_tctx('输入范围为 (1 ~ 50)');
@@ -1385,7 +1434,7 @@ AI_sz_lxdh_shu.addEventListener('blur', function(e) {
     localStorage.AI_lxdh = this.value;
 });
 // 联网搜索
-AI_sz_lwss_kaiguan.addEventListener('click', function(e) {
+AI_sz_lwss_kaiguan.addEventListener('click', function (e) {
     if (localStorage.AI_lwss == 'true') {
         localStorage.AI_lwss = false;
         AI_sz_lwss_kaiguan.className = 'AI_sz_kaiguan AI_sz_dydxc_kaiguan';
@@ -1419,7 +1468,7 @@ var AI_zj = document.querySelector('.AI_zj');
 // 为父元素添加点击事件监听器
 let clickPosition = { x: 0, y: 0 }; // 定义一个变量来存储鼠标点击时的位置
 var td_target;
-AI_zj.addEventListener('mousedown', function(e) {
+AI_zj.addEventListener('mousedown', function (e) {
     if (e.button === 0) {
         td_target = e.target;
         clickPosition = { x: e.clientX, y: e.clientY };
@@ -1453,7 +1502,7 @@ function onMouseUp(e) {
     }
 }
 // 为父元素添加点击事件监听器
-AI_zj.addEventListener('contextmenu', function(e) { //音频、事件委托
+AI_zj.addEventListener('contextmenu', function (e) { //音频、事件委托
     const target = e.target;
 
     if (target.classList.contains('AI_huida_nr') || target.classList.contains('yh_huida_nr')) {
@@ -1471,16 +1520,16 @@ AI_zj.addEventListener('contextmenu', function(e) { //音频、事件委托
 
 // 拖拽读取导入信息
 var AI_bottom_srk_hz = document.querySelector('.AI_bottom_srk_hz');
-AI_bottom_srk_hz.addEventListener('dragover', function(e) {
+AI_bottom_srk_hz.addEventListener('dragover', function (e) {
     e.preventDefault();
 });
-AI_bottom_srk_hz.addEventListener('drop', function(e) {
+AI_bottom_srk_hz.addEventListener('drop', function (e) {
     e.preventDefault();
     var dt = e.dataTransfer;
     var files = dt.files;
     var dx = new FileReader();
     dx.readAsText(files[0]);
-    dx.onload = function(e) {
+    dx.onload = function (e) {
         var wj = e.target.result;
         // 处理信息
         AI_bottom_srk.value += wj;
@@ -1491,7 +1540,7 @@ AI_bottom_srk_hz.addEventListener('drop', function(e) {
 
 
 // 按键
-AI_bottom_srk.addEventListener('keydown', function(e) {
+AI_bottom_srk.addEventListener('keydown', function (e) {
     var sf_shift4 = 0;
     if (e.shiftKey || e.ctrlKey) {
         sf_shift4 = 1;
@@ -1502,7 +1551,7 @@ AI_bottom_srk.addEventListener('keydown', function(e) {
         e.preventDefault();
     }
 });
-AI_kjzl_s_tjl.addEventListener('keydown', function(e) {
+AI_kjzl_s_tjl.addEventListener('keydown', function (e) {
     var sf_shift4 = 0;
     if (e.shiftKey || e.ctrlKey) {
         sf_shift4 = 1;
@@ -1514,7 +1563,7 @@ AI_kjzl_s_tjl.addEventListener('keydown', function(e) {
     }
 });
 var sf_shift2 = 0;
-AI_bottom_srk.addEventListener('keydown', function(e) {
+AI_bottom_srk.addEventListener('keydown', function (e) {
     if (e.shiftKey && e.key === 'Enter') {
         sf_shift2 = 1;
     }
@@ -1523,26 +1572,26 @@ AI_bottom_srk.addEventListener('keydown', function(e) {
         AI_ksfy();
     }
 })
-AI_bottom_srk.addEventListener('keyup', function(e) {
+AI_bottom_srk.addEventListener('keyup', function (e) {
     if (e.key == 'Enter' && sf_shift2 == 0) {
         AI_bottom_srk_fs.click();
     } else if (e.key == 'Enter' && sf_shift2 == 1) {
         sf_shift2 = 0;
     }
 });
-AI_kjzl_s_tjl.addEventListener('keydown', function(e) {
+AI_kjzl_s_tjl.addEventListener('keydown', function (e) {
     if ((e.shiftKey && e.key === 'Enter') || (e.ctrlKey && e.key === 'Enter')) {
         sf_shift2 = 1;
     }
 })
-AI_kjzl_s_tjl.addEventListener('keyup', function(e) {
+AI_kjzl_s_tjl.addEventListener('keyup', function (e) {
     if (e.key == 'Enter' && sf_shift2 == 0) {
         AI_kjzl_s_tjhs();
     } else if (e.key == 'Enter' && sf_shift2 == 1) {
         sf_shift2 = 0;
     }
 });
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     if (e.key == 'Enter' && AI_kjzl_max.style.display == 'none') {
         AI_bottom_srk.focus();
     } else if (e.key == 'Enter' && AI_kjzl_max.style.display == 'block') {
@@ -1570,7 +1619,7 @@ if (localStorage.AI_quanpin_true == 0) {
 } else {
     AI_max.className = 'AI_max AI_max2';
 }
-AI_quanpin_anniu.addEventListener('click', function(e) {
+AI_quanpin_anniu.addEventListener('click', function (e) {
 
     if (localStorage.AI_quanpin_true == 0) {
         localStorage.AI_quanpin_true = 1;
@@ -1591,12 +1640,12 @@ AI_quanpin_anniu.addEventListener('click', function(e) {
 
 // 置底
 var AI_zhidi = document.querySelector('.AI_zhidi');
-AI_zhidi.addEventListener('click', function(e) {
+AI_zhidi.addEventListener('click', function (e) {
     zdxszxf = 1;
     // var AI_zj_nr = document.querySelector('.AI_zj_nr');
     AI_zj.scroll(0, AI_zj.scrollHeight);
 });
-AI_zj.addEventListener('scroll', function(e) {
+AI_zj.addEventListener('scroll', function (e) {
     AI_zj_nrwz();
 });
 
@@ -1630,7 +1679,7 @@ if (AI_tuozhuai) {
     let startBottom2; // 初始底部位置
     var tuozhuai_zhbl2;
 
-    AI_tuozhuai.addEventListener('mousedown', function(e) { // 拖拽点击事件
+    AI_tuozhuai.addEventListener('mousedown', function (e) { // 拖拽点击事件
         e.preventDefault();
         isDragging2 = true;
         startY2 = e.clientY;
@@ -1640,7 +1689,7 @@ if (AI_tuozhuai) {
         AI_tuozhuai.style.opacity = 1;
     });
 
-    document.addEventListener('mousemove', function(e) { // 拖拽移动事件
+    document.addEventListener('mousemove', function (e) { // 拖拽移动事件
         e.preventDefault();
         if (isDragging2) {
             istuozhuai2 = true;
@@ -1659,7 +1708,7 @@ if (AI_tuozhuai) {
         }
     });
 
-    document.addEventListener('mouseup', function(e) { // 拖拽结束事件
+    document.addEventListener('mouseup', function (e) { // 拖拽结束事件
         if (isDragging2) {
             e.preventDefault();
             // 拖拽结束时触发事件

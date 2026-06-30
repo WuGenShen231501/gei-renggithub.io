@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3482135 */
-  src: url('iconfont.woff2?t=1773719047716') format('woff2'),
-       url('iconfont.woff?t=1773719047716') format('woff'),
-       url('iconfont.ttf?t=1773719047716') format('truetype');
+  src: url('iconfont.woff2?t=1782637738865') format('woff2'),
+       url('iconfont.woff?t=1782637738865') format('woff'),
+       url('iconfont.ttf?t=1782637738865') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,50 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-Ai:before {
+  content: "\e639";
+}
+
+.icon-runse:before {
+  content: "\e6f7";
+}
+
+.icon-runse1:before {
+  content: "\ea17";
+}
+
+.icon-guizhengrunse:before {
+  content: "\e6e3";
+}
+
+.icon-AIrunse:before {
+  content: "\e83d";
+}
+
+.icon-runse2:before {
+  content: "\e66e";
+}
+
+.icon-runse3:before {
+  content: "\e8a2";
+}
+
+.icon-runse4:before {
+  content: "\e6b9";
+}
+
+.icon-runse5:before {
+  content: "\eb7a";
+}
+
+.icon-runse6:before {
+  content: "\e666";
+}
+
+.icon-AIzhushou:before {
+  content: "\e63a";
 }
 
 .icon-ai49:before {

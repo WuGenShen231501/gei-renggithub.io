@@ -1,6 +1,6 @@
 // 保护localStorage值
 var shui_you_nc = ['Sku_zxms', 'yun_key', 'da_ka', 'Sku_node', 'Sku_benghuai', 'AI_kjzl', 'AI_jl', 'sy_ci_shu', 'Sku_kfzms', 'ztfg_name', 'ztfg', 'mrrd_name', 'mryy', 'mrrd_sxsj', 'mrrd', 'bi_zhi_ys', 'dr_mmdr_mmfw', 'dr_mmdr_drsj', 'dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'dhr_sz_bf', 'dhr_ym_dx_bf', 'bi_zhi_s_bf', 'liu_yan_dx_bf', 'sy_djs_bf', 'sy_zpzs_lj_bf', 'sy_zpzs_mz_bf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'dr_mm_cf', 'drym_cs', 'drym_srcs', 'sy_zpzs_lj', 'sy_zpzs_mz', 'sy_zpzs_kaiguan', 'music_cd', 'music_bfsx', 'music_cd_bf', 'lsjl', 'lsjl_bf', 'sy_lbxz', 'sku_xp_sp', 'htsp_s', 'htsp_s_bf', 'sku_zcb', 'sku_zcb_bf', 'dr_mmdr'];
-window.addEventListener('storage', function(event) {
+window.addEventListener('storage', function (event) {
     if (localStorage.Sku_kfzms == 0 && event.key == 'sy_ci_shu' && decodeURI(event.url).substring(decodeURI(event.url).length - 8, decodeURI(event.url).length) == decodeURI(location.href).substring(decodeURI(location.href).length - 8, decodeURI(location.href).length)) {
 
         window.close();
@@ -30,11 +30,11 @@ window.addEventListener('storage', function(event) {
 
             Sku_tctx('༼ 🖕 ◕_◕ ༽🖕 请不要这样做! ' + event.key + ' 已被保护!');
 
-            setTimeout(function() {
+            setTimeout(function () {
                 localStorage.Sku_benghuai = 1;
                 localStorage.dr_mmdr_drsj = 0;
                 window.close();
-                setTimeout(function() { location.replace('https://cn.bing.com/'); });
+                setTimeout(function () { location.replace('https://cn.bing.com/'); });
             }, 1500);
         } else if (shui_you_nc.indexOf(event.key) !== -1 && localStorage.Sku_kfzms == 1) {
             Sku_tctx('温馨提示: 窜改文件可能导致网页崩溃! ( ROOT 用户请谨慎 )');
@@ -44,40 +44,40 @@ window.addEventListener('storage', function(event) {
 });
 
 // 防止打开开发者工具
-document.onkeydown = function() {
+document.onkeydown = function () {
     var e = window.e || arguments[0];
     if (localStorage.Sku_kfzms == 0 && (e.keyCode == 123 || (e.ctrlKey) && (e.shiftKey) && (e.keyCode == 73) || (e.ctrlKey) && (e.keyCode == 85) || (e.ctrlKey) && (e.key == 'C'))) {
         e.preventDefault();
         localStorage.Sku_benghuai = 1;
         localStorage.dr_mmdr_drsj = 0;
         Sku_tctx('༼ 🖕 ◕_◕ ༽🖕 请不要这样做!');
-        setTimeout(function() {
+        setTimeout(function () {
             window.close();
-            setTimeout(function() { location.replace('https://cn.bing.com/'); });
+            setTimeout(function () { location.replace('https://cn.bing.com/'); });
         }, 1000);
         return false;
     }
 }
 
 // 禁止开发者工具运行
-var check = function() {
+var check = function () {
     function doCheck(a) {
         if (("" + a / a)["length"] !== 1 || a % 20 === 0) {
-            (function() {}
-                ["constructor"]("debugger")())
+            (function () { }
+            ["constructor"]("debugger")())
         } else {
-            (function() {}
-                ["constructor"]("debugger")())
+            (function () { }
+            ["constructor"]("debugger")())
         }
         doCheck(++a)
     }
     try {
         doCheck(0)
-    } catch (err) {}
+    } catch (err) { }
 };
 Sku_kfzgj_jsq = null;
 if (localStorage.Sku_kfzms == 0) {
-    Sku_kfzgj_jsq = setInterval(function() {
+    Sku_kfzgj_jsq = setInterval(function () {
         check();
     }, 1000);
 }
@@ -87,8 +87,46 @@ if (localStorage.Sku_kfzms == 0) {
 
 
 
+// 密码输入框实时拦截 - 只允许字母、数字、点号(.)和下划线(_)
+(function () {
+    var passwordInputs = document.querySelectorAll('.imput_drym_mm, .drmm_mm_mm, .drmm_mm_xmm, .drmm_mm_zcsr');
+    var passwordPattern = /^[a-zA-Z0-9._]*$/;
+
+    for (var i = 0; i < passwordInputs.length; i++) {
+        passwordInputs[i].addEventListener('input', function (e) {
+            var value = this.value;
+            if (!passwordPattern.test(value)) {
+                // 过滤掉不合法的字符
+                var filtered = value.replace(/[^a-zA-Z0-9._]/g, '');
+                this.value = filtered;
+            }
+        });
+
+        // 粘贴时也进行过滤
+        passwordInputs[i].addEventListener('paste', function (e) {
+            e.preventDefault();
+            var pasteText = (e.clipboardData || window.clipboardData).getData('text');
+            var filtered = pasteText.replace(/[^a-zA-Z0-9._]/g, '');
+            // 在光标位置插入过滤后的文本
+            var startPos = this.selectionStart;
+            var endPos = this.selectionEnd;
+            var before = this.value.substring(0, startPos);
+            var after = this.value.substring(endPos);
+            this.value = before + filtered + after;
+            // 移动光标到插入文本后
+            var newPos = startPos + filtered.length;
+            this.setSelectionRange(newPos, newPos);
+        });
+    }
+})();
+
+
+
+
+
+
 //全局文字禁止选择
-document.addEventListener('selectstart', function(e) {
+document.addEventListener('selectstart', function (e) {
     e.preventDefault();
 });
 
@@ -105,7 +143,7 @@ var drym_min = document.querySelector('.drym_min');
 drym_min.style.top = ((window.innerHeight - 56) / 2) - 150 + 56 + 'px';
 var mryy = document.querySelector('.mryy');
 mryy.style.top = ((window.innerHeight - 56) / 2) - 150 + 430 + 'px';
-window.addEventListener('resize', function(e) {
+window.addEventListener('resize', function (e) {
     var music_hzmax = document.querySelector('.music_hzmax');
     music_hzmax.style.maxHeight = window.innerHeight - (60 + 60) + 'px';
     var drym_min = document.querySelector('.drym_min');
@@ -118,24 +156,24 @@ window.addEventListener('resize', function(e) {
 
 //鼠标
 su_biao = document.querySelector('.su_biao');
-document.documentElement.addEventListener('mouseover', function() {
+document.documentElement.addEventListener('mouseover', function () {
     su_biao.style.display = 'block';
 });
-document.documentElement.addEventListener('mouseout', function() {
+document.documentElement.addEventListener('mouseout', function () {
     su_biao.style.display = 'none';
 });
-document.documentElement.addEventListener('mousemove', function(e) {
+document.documentElement.addEventListener('mousemove', function (e) {
     if (su_biao.style.transition !== 'all 0s ease 0s') {
         su_biao.style.transition = 'all 0s ease 0s'
     }
     su_biao.style.top = e.pageY - 5 + 'px';
     su_biao.style.left = e.pageX - 5 + 'px';
 });
-document.documentElement.addEventListener('mousedown', function() {
+document.documentElement.addEventListener('mousedown', function () {
     su_biao.style.transition = '0.1s'
     su_biao.style.transform = 'scale(0.5)';
 });
-document.documentElement.addEventListener('mouseup', function() {
+document.documentElement.addEventListener('mouseup', function () {
     su_biao.style.transition = '0.1s'
     su_biao.style.transform = 'scale(1)';
 });
@@ -144,14 +182,14 @@ document.documentElement.addEventListener('mouseup', function() {
 
 // logo跳转
 i_toplogo_tb = document.querySelector('.i_toplogo_tb');
-i_toplogo_tb.addEventListener('click', function(e) {
+i_toplogo_tb.addEventListener('click', function (e) {
     document.querySelector('.top_dhl').querySelectorAll('div')[3].click();
     shezhi_gywm.click();
 });
 
 
 //清楚右键默认
-document.oncontextmenu = function(e) {
+document.oncontextmenu = function (e) {
     e.preventDefault();
 };
 
@@ -173,7 +211,7 @@ for (var i = 0; i < top_dhl.length; i++) {
 }
 for (var i = 0; i < top_dhl.length; i++) {
     //点击效果
-    top_dhl[i].addEventListener('click', function() {
+    top_dhl[i].addEventListener('click', function () {
         topmax.style.top = '0px';
 
         // 变颜色
@@ -200,7 +238,7 @@ for (var i = 0; i < top_dhl.length; i++) {
             }
             nrmax_s[this.getAttribute('date-num')].style.display = 'block';
             this_nrmax_s = nrmax_s[this.getAttribute('date-num')];
-            setTimeout(function() {
+            setTimeout(function () {
                 this_nrmax_s.style.opacity = '1';
             });
         }
@@ -279,31 +317,81 @@ nrmaxs3 = document.querySelector('.nrmaxs3');
 //设置引擎
 so_yq.innerHTML = localStorage.sy_sosuo_yq;
 //显示切换引擎
-so_yq.addEventListener('click', function(e) {
+so_yq.addEventListener('click', function (e) {
     e.stopPropagation();
     ssbqym.style.display = 'none';
     so_yq_s.style.display = 'block';
 });
 //切换引擎
 for (var i = 0; i < so_yqs.length; i++) {
-    so_yqs[i].addEventListener('click', function() {
-        //更改内存
+    so_yqs[i].addEventListener('click', function () {
+        //更改内存引擎
         localStorage.sy_sosuo_yq = this.getAttribute('date_yq_num');
-        // 更改HTML
+        // 更改HTML显示
         so_yq.innerHTML = localStorage.sy_sosuo_yq;
     });
 }
+//顺序拖动切换
+(function () {
+    // 1. 恢复顺序 (使用 forEach 替代 for 循环)
+    var saved = localStorage.getItem('so_yq_order');
+    if (saved) JSON.parse(saved).forEach(function (id) {
+        var el = so_yq_s.querySelector('[date_yq_num="' + id + '"]');
+        if (el) so_yq_s.appendChild(el);
+    });
+
+    var drag_item = null;
+
+    so_yq_s.addEventListener('mousedown', function (e) {
+        if (e.target.classList.contains('so_yqs')) {
+            drag_item = e.target;
+            drag_item.style.opacity = '0.5';
+            e.preventDefault(); // 防止拖拽时选中文本
+        }
+    });
+
+    document.addEventListener('mousemove', function (e) {
+        if (!drag_item) return;
+        var items = so_yq_s.querySelectorAll('.so_yqs');
+        // 使用 indexOf 获取当前拖拽元素的索引
+        var dragIndex = Array.prototype.indexOf.call(items, drag_item);
+
+        for (var i = 0; i < items.length; i++) {
+            if (i === dragIndex) continue;
+            var rect = items[i].getBoundingClientRect();
+
+            if (e.clientY > rect.top && e.clientY < rect.bottom) {
+                // 2. 核心精简：利用三元运算符和 insertBefore 的 null 特性，1行搞定上下拖拽
+                so_yq_s.insertBefore(drag_item, i < dragIndex ? items[i] : items[i].nextElementSibling);
+                break;
+            }
+        }
+    });
+
+    document.addEventListener('mouseup', function () {
+        if (!drag_item) return;
+        drag_item.style.opacity = '1';
+
+        // 3. 保存顺序 (使用 map 替代 for 循环和 push)
+        var order = Array.prototype.map.call(so_yq_s.querySelectorAll('.so_yqs'), function (el) {
+            return el.getAttribute('date_yq_num');
+        });
+        localStorage.setItem('so_yq_order', JSON.stringify(order));
+        drag_item = null;
+    });
+})();
+
 //检测是否选中搜索框
 so_ssk_num = 0;
-so_ssk.addEventListener('focus', function() {
+so_ssk.addEventListener('focus', function () {
     so_ssk_num = 1;
 });
-so_ssk.addEventListener('blur', function() {
+so_ssk.addEventListener('blur', function () {
     so_ssk_num = 0;
 });
 //搜索按钮
 var max_node = document.querySelector('.max_node');
-so_anniu.addEventListener('click', function() {
+so_anniu.addEventListener('click', function () {
     if (so_ssk.value !== '') {
         // 检测是否是直接网址
         if (so_ssk.value.substring(0, 4) == 'http' || so_ssk.value.substring(0, 4) == 'file') {
@@ -327,9 +415,9 @@ so_anniu.addEventListener('click', function() {
             localStorage.mrrd = '[]';
             localStorage.mrrd_top = '[]';
             localStorage.mrrd_name = '[]';
-            $(document).ready(function() {
+            $(document).ready(function () {
                 // 使用 $.get() 发起 GET 请求
-                $.get("http://localhost/mrrd", function(data, status) {
+                $.get("http://localhost/mrrd", function (data, status) {
                     // data 是从服务器返回的数据
                     var datas;
                     if (data[0] == '[' || data[0] == '{') {
@@ -354,7 +442,7 @@ so_anniu.addEventListener('click', function() {
                     localStorage.setItem('mrrd_name', JSON.stringify(xsz2));
                     localStorage.setItem('mrrd', JSON.stringify(xsz3));
                     Sku_tctx('获取成功');
-                }).fail(function(jqXHR, textStatus, errorThrown) {
+                }).fail(function (jqXHR, textStatus, errorThrown) {
                     // 如果请求失败，打印错误信息
                     console.log("请求失败: ", textStatus, errorThrown);
                     Sku_tctx('获取失败');
@@ -381,7 +469,7 @@ so_anniu.addEventListener('click', function() {
             } else if (so_yq.innerHTML == '谷歌') {
                 window.open('https://www.google.com/search?q=' + so_ssk.value);
             } else if (so_yq.innerHTML == '抖音') {
-                window.open('https://www.douyin.com/search/' + so_ssk.value + '?ug_source=lenovo_stream');
+                window.open('https://www.douyin.com/search/' + so_ssk.value);
             } else if (so_yq.innerHTML == '知乎') {
                 window.open('https://www.zhihu.com/search?q=' + so_ssk.value + '&type=content');
             } else if (so_yq.innerHTML == 'B站') {
@@ -443,12 +531,12 @@ so_anniu.addEventListener('click', function() {
             div.className = 'ssjl_s';
             div.innerText = ssjl_s[i];
             // 添加左击搜索
-            div.addEventListener('click', function(e) {
+            div.addEventListener('click', function (e) {
                 so_ssk.value = this.innerText;
                 so_anniu.click();
             });
             // 添加右击删除
-            div.addEventListener('contextmenu', function(e) {
+            div.addEventListener('contextmenu', function (e) {
                 // 删除html
                 ssjl_min.removeChild(this);
                 // 删除内存
@@ -475,7 +563,7 @@ tou_xian_tp2 = document.querySelector('.tou_xian_tp2');
 input_tou_xian = document.querySelector('.input_tou_xian');
 tou_xian_qr = document.querySelector('.tou_xian_qr');
 top_tou_xian.style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
-top_tou_xian.addEventListener('click', function(e) {
+top_tou_xian.addEventListener('click', function (e) {
     e.stopPropagation();
     top_tou_xian_sc.style.display = 'block';
     tou_xian_tp.style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
@@ -483,7 +571,7 @@ top_tou_xian.addEventListener('click', function(e) {
     input_tou_xian.value = '';
     input_tou_xian.focus();
 });
-top_tou_xian_sc.addEventListener('click', function(e) {
+top_tou_xian_sc.addEventListener('click', function (e) {
     e.stopPropagation();
 });
 // 转义反斜杠
@@ -495,7 +583,7 @@ function escapeBackslash2(path) {
     var path6 = path5.replace(/\'/g, '');
     return path6.replace(/\\/g, '\\\\');
 }
-input_tou_xian.addEventListener('input', function(e) {
+input_tou_xian.addEventListener('input', function (e) {
     if (input_tou_xian.value !== '') {
         tou_xian_tp.style.backgroundImage = 'url(' + escapeBackslash2(input_tou_xian.value) + ')';
         tou_xian_tp2.style.backgroundImage = 'url(' + escapeBackslash2(input_tou_xian.value) + ')';
@@ -504,7 +592,7 @@ input_tou_xian.addEventListener('input', function(e) {
         tou_xian_tp2.style.backgroundImage = 'url(' + localStorage.tou_xiang + ')';
     }
 });
-tou_xian_qr.addEventListener('click', function() {
+tou_xian_qr.addEventListener('click', function () {
     if (input_tou_xian.value !== '') {
         localStorage.tou_xiang = escapeBackslash2(input_tou_xian.value);
         top_tou_xian.style.backgroundImage = 'url(' + escapeBackslash2(input_tou_xian.value) + ')';
@@ -530,17 +618,17 @@ tou_xian_qr.addEventListener('click', function() {
 
 
 //全局右击事件
-document.addEventListener('contextmenu', function() {
+document.addEventListener('contextmenu', function () {
     so_yq_s.style.display = 'none';
     top_tou_xian_sc.style.display = 'none';
 });
 //全局左击事件
-document.addEventListener('click', function() {
+document.addEventListener('click', function () {
     so_yq_s.style.display = 'none';
     top_tou_xian_sc.style.display = 'none';
 });
 //全局按键事件
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if (e.key == 'Enter' && so_ssk_num == 1) {
         so_anniu.click();
     }
@@ -591,7 +679,7 @@ function max_dtbj_hs() {
     max_dtbj.style.height = window.innerHeight + 'px';
 }
 max_dtbj_hs();
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     max_dtbj_hs();
 });
 
@@ -788,7 +876,7 @@ if (localStorage.dr_mm !== '' && mmdr_sf == 0) {
     imput_drym_mm = document.querySelector('.imput_drym_mm');
     imput_drym_mm.focus();
     //添加防盗网
-    drmm_dsq = setInterval(function() {
+    drmm_dsq = setInterval(function () {
         var drym_max = document.querySelector('.drym_max');
         var drym_min = document.querySelector('.drym_min');
         if (drym_min == null || drym_min.style.display == 'none' || nrmax.style.display !== 'none' || drym_max.style.display !== 'block' || drym_max == null || (localStorage.dr_mm_cf != 0 && imput_drym_mm.disabled == false)) {
@@ -804,7 +892,7 @@ max_bbxs.innerHTML = localStorage.ban_ben;
 
 
 //内存占用比
-setInterval(function() {
+setInterval(function () {
     Sku_nczyb();
 }, 5000);
 
@@ -867,15 +955,15 @@ function Sku_nczyb() {
     if (localStorage.Sku_node == 1 && sku_wlzt.innerHTML == 'Status:Online' && max_node_cs < 20) {
         var max_node = document.querySelector('.max_node');
         var lj_xg_tj_paiqu = document.querySelector('.lj_xg_tj_paiqu');
-        $(document).ready(function() {
+        $(document).ready(function () {
             // 使用 $.get() 发起 GET 请求
-            $.get("http://localhost", function(data, status) {
+            $.get("http://localhost", function (data, status) {
                 // data 是从服务器返回的数据
                 if (data == '欢迎使用!') {
                     max_node.innerText = 'node!';
                     lj_xg_tj_paiqu.style.display = 'block';
                 }
-            }).fail(function(jqXHR, textStatus, errorThrown) {
+            }).fail(function (jqXHR, textStatus, errorThrown) {
                 // 如果请求失败，打印错误信息
                 max_node.innerText = '';
                 max_node_cs++;
@@ -886,12 +974,12 @@ function Sku_nczyb() {
 }
 
 
-window.addEventListener('unhandledrejection', function(event) {
+window.addEventListener('unhandledrejection', function (event) {
     console.error('捕获到未处理的Promise拒绝:', event.reason);
 });
 
 var max_ncxs = document.querySelector('.max_ncxs');
-max_ncxs.addEventListener('click', function(e) {
+max_ncxs.addEventListener('click', function (e) {
     document.querySelector('.top_dhl').querySelectorAll('div')[3].click();
     document.querySelector('.shezhi_gywm').click();
 });
@@ -924,7 +1012,7 @@ function sku_gjsp() {
         imput_drym_mm = document.querySelector('.imput_drym_mm');
         imput_drym_mm.focus();
         //添加防盗网
-        drmm_dsq = setInterval(function() {
+        drmm_dsq = setInterval(function () {
             var drym_max = document.querySelector('.drym_max');
             var drym_min = document.querySelector('.drym_min');
             if (drym_min == null || drym_min.style.display == 'none' || nrmax.style.display !== 'none' || drym_max.style.display !== 'block' || drym_max == null || (localStorage.dr_mm_cf != 0 && imput_drym_mm.disabled == false)) {
@@ -979,7 +1067,7 @@ function sku_gjsp() {
 }
 
 var zdsp_sjc = 0;
-setInterval(function() {
+setInterval(function () {
     zdsp_sjc += 60;
     if (zdsp_sjc >= (localStorage.sku_xp_sp * 60)) {
         sku_gjsp();
@@ -999,12 +1087,12 @@ document.addEventListener('keypress', handleMouseMove); // 包括键盘按键事
 var shezhi_sp_xp_ym = document.querySelector('.shezhi_sp_xp_ym');
 var shezhi_sp_xp = document.querySelector('.shezhi_sp_xp');
 var shezhi_sp_xp_min2 = document.querySelector('.shezhi_sp_xp_min2');
-shezhi_sp_xp.addEventListener('click', function(e) {
+shezhi_sp_xp.addEventListener('click', function (e) {
     shezhi_min.style.display = 'none';
     shezhi_sp_xp_ym.style.display = 'block';
 });
 shezhi_sp_xp_min2.value = localStorage.sku_xp_sp;
-shezhi_sp_xp_min2.addEventListener('blur', function(e) {
+shezhi_sp_xp_min2.addEventListener('blur', function (e) {
     if (shezhi_sp_xp_min2.value >= 1 && shezhi_sp_xp_min2.value <= (60 * 24)) {
         Sku_tctx('更改成功 ! 无操作 ' + shezhi_sp_xp_min2.value + ' 分钟后自动(休眠/锁定)');
         localStorage.sku_xp_sp = shezhi_sp_xp_min2.value;
@@ -1026,7 +1114,7 @@ function xhgb_dx(class1, class2, class3) {
     var xhgb_dx = ['yuyanAI_ym', 'daka_tianjia_ym', 'liu_yan_sxuan_div', 'AI_szym_max', 'AI_kjzl_max', 'AI_mods_max', 'lj_zcb_ym', 'so_yq_s', 'ssbqym', 'music_ym', 'top_tou_xian_sc', 'lj_xg_tj', 'dhr_xg_tj'];
     var dj = document.querySelectorAll('.' + class1);
     for (var i = 0; i < dj.length; i++) {
-        dj[i].addEventListener('click', function(e) {
+        dj[i].addEventListener('click', function (e) {
             for (var i = 0; i < xhgb_dx.length; i++) {
                 if (xhgb_dx[i] !== class2 && xhgb_dx[i] !== class3) {
                     document.querySelector('.' + xhgb_dx[i]).style.display = 'none';
@@ -1096,7 +1184,7 @@ function insertCommasEveryFourDigits(numberStr) {
 
 
 // 全局报错
-window.onerror = function(message, source, lineno, colno, error) {
+window.onerror = function (message, source, lineno, colno, error) {
     console.log("错误信息:", message);
     console.log("文件路径:", source || '未知');
     console.log("行号:", lineno || '未知');
