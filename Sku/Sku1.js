@@ -263,17 +263,141 @@ function collectArrays(obj) {
 
 
 // 匹配函数/不区分大小写
-function containsAllChars(i, g, p) { //压缩版
-    var d = p || "none",
-        s = i.toLowerCase().replace(/\s/g, ""),
-        f = g.toLowerCase().replace(/\s/g, ""),
-        t = "",
-        a = "",
-        n = "",
-        c = "",
-        o, l, r, e;
-    if (/^[a-zA-Z]+$/.test(s) && localStorage.sscl_py == 1 && (t = s, a = pinyin(f, { toneType: "none" }).replace(/\s/g, ""), n = s, c = pinyin(f, { pattern: "first" }).replace(/\s/g, "")), localStorage.sscl == 0 || d == 0) { o = {}, l = {}, r = {}; for (e of s) o[e] = (o[e] || 0) + 1; for (e of f) o[e] && (o[e]--, o[e] === 0 && delete o[e]); for (e of t) l[e] = (l[e] || 0) + 1; for (e of a) l[e] && (l[e]--, l[e] === 0 && delete l[e]); for (e of n) r[e] = (r[e] || 0) + 1; for (e of c) r[e] && (r[e]--, r[e] === 0 && delete r[e]); return !Object.keys(o).length || (t == "" ? !1 : !Object.keys(l).length) || (n == "" ? !1 : !Object.keys(r).length) } else { if (localStorage.sscl == 1) return f.indexOf(s) != -1 || (t == "" ? !1 : a.indexOf(t) != -1) || (n == "" ? !1 : c.indexOf(n) != -1); if (localStorage.sscl == 2) return f === s || (t == "" ? !1 : a === t) || (n == "" ? !1 : c === n) }
+function containsAllChars(s1, s2, mode) {
+    s1 = s1.toLowerCase().replace(/\s/g, '');
+    s2 = s2.toLowerCase().replace(/\s/g, '');
+    mode = mode || localStorage.sscl;
+
+    // 1. 解析目标字符串
+    var tArr = [], i = 0, c, p;
+    for (; i < s2.length; i++) {
+        c = s2[i], p = c;
+        if (c.charCodeAt(0) > 0x4E00 && c.charCodeAt(0) < 0x9FA6) {
+            if (localStorage.sscl_py == 1) {
+                p = pinyin(c, { toneType: 'none' });
+                p = (Array.isArray(p) ? p[0] : p).replace(/\s/g, '') || c;
+            }
+        }
+        tArr.push({ c: c, p: p });
+    }
+
+    // 2. 解析输入字符串
+    var iArr = [], buf = '';
+    for (i = 0; i < s1.length; i++) {
+        c = s1[i];
+        var isCn = c.charCodeAt(0) > 0x4E00 && c.charCodeAt(0) < 0x9FA6;
+        if (isCn) {
+            if (buf) { iArr.push({ t: 1, v: buf }); buf = ''; }
+            iArr.push({ t: 0, v: c });
+        } else { buf += c; }
+    }
+    if (buf) iArr.push({ t: 1, v: buf });
+
+    // 辅助：有序混合匹配 (支持全拼、首字母混合)
+    var matchMixed = function (val, targetArr, startIdx) {
+        if (val.length === 0) return startIdx; // 输入字符串全部消耗完，匹配成功
+        if (startIdx >= targetArr.length) return -1; // 目标串已耗尽但输入还有，失败
+
+        var target = targetArr[startIdx];
+        var py = target.p;
+        var initial = py[0];
+
+        // 1. 优先尝试全拼匹配
+        if (py.length > 1 && val.startsWith(py)) {
+            var res = matchMixed(val.substring(py.length), targetArr, startIdx + 1);
+            if (res !== -1) return res;
+        }
+
+        // 2. 尝试首字母匹配
+        if (val.startsWith(initial)) {
+            var res2 = matchMixed(val.substring(1), targetArr, startIdx + 1);
+            if (res2 !== -1) return res2;
+        }
+
+        return -1; // 均不匹配
+    };
+
+    // 辅助：无序模糊匹配专用 (支持全拼、首字母混合)
+    var matchFuzzyMixed = function (val, pool) {
+        if (val.length === 0) return pool; // 成功，返回剩余的池子
+        if (pool.length === 0) return false;
+
+        for (var j = 0; j < pool.length; j++) {
+            var p = pool[j].p;
+            var initial = p[0];
+
+            // 1. 尝试全拼匹配
+            if (p.length > 1 && val.startsWith(p)) {
+                var newPool = pool.slice();
+                newPool.splice(j, 1);
+                var res = matchFuzzyMixed(val.substring(p.length), newPool);
+                if (res !== false) return res;
+            }
+
+            // 2. 尝试首字母匹配
+            if (val.startsWith(initial)) {
+                var newPool = pool.slice();
+                newPool.splice(j, 1);
+                var res2 = matchFuzzyMixed(val.substring(1), newPool);
+                if (res2 !== false) return res2;
+            }
+        }
+        return false;
+    };
+
+    // 3. 执行匹配
+    if (mode == 0) {
+        // 无序模糊匹配
+        var pool = tArr.slice(), j;
+        for (i = 0; i < iArr.length; i++) {
+            var it = iArr[i];
+            if (it.t == 0) { // 中文直接匹配
+                var idx = -1;
+                for (j = 0; j < pool.length; j++) if (pool[j].c == it.v) { idx = j; break; }
+                if (idx > -1) pool.splice(idx, 1); else return false;
+            } else { // 英文使用混合回溯匹配
+                var res = matchFuzzyMixed(it.v, pool);
+                if (res === false) return false;
+                pool = res;
+            }
+        }
+        return true;
+    } else {
+        // 精确/完全匹配
+        // 修复：如果是完全匹配(mode == 2)，必须从头开始，不能偏移，所以只循环1次
+        var maxStart = (mode == 2) ? 1 : tArr.length;
+        for (var start = 0; start < maxStart; start++) {
+            var tIdx = start, pass = true, i, j;
+            for (i = 0; i < iArr.length; i++) {
+                if (tIdx > tArr.length) { pass = false; break; }
+                var it = iArr[i];
+
+                if (it.t == 0) { // 中文
+                    if (tArr[tIdx] && tArr[tIdx].c == it.v) tIdx++;
+                    else { pass = false; break; }
+                } else { // 英文
+                    var res = matchMixed(it.v, tArr, tIdx);
+                    if (res !== -1) {
+                        tIdx = res; // 匹配成功，更新目标串被消耗到的位置
+                    } else {
+                        pass = false; break;
+                    }
+                }
+            }
+            if (pass) {
+                if (mode == 2) {
+                    // 完全匹配：必须从头到尾一字不差，消耗长度需完全一致
+                    if (tIdx == tArr.length) return true;
+                    return false; // 如果没有完全消耗，直接失败
+                }
+                return true; // mode == 1 包含匹配
+            }
+        }
+        return false;
+    }
 }
+
+
 // function containsAllChars(str11, str22, zdyy) {
 //     var containsAllChars_zdyy = 'none';
 //     if (zdyy) {
@@ -359,6 +483,11 @@ function containsAllChars(i, g, p) { //压缩版
 //         return str2 === str1 || (str1_py == '' ? false : str2_py === str1_py) || (str1_py_szm == '' ? false : str2_py_szm === str1_py_szm);
 //     }
 // }
+
+
+
+
+
 
 
 // 所有文本超出字体浮动效果

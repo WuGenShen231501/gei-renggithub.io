@@ -1,4 +1,4 @@
-var ban_ben_s = "202606300758";
+var ban_ben_s = "202607121829";
 
 function formatNumberString(input) {
     if (isAlreadyFormatted(input)) { return input; }
@@ -144,28 +144,6 @@ if (localStorage.bei_jing_kuan_tmd == undefined) {
 //毛玻璃
 if (localStorage.mao_bo_li == undefined) {
     localStorage.mao_bo_li = '0';
-}
-//备份
-if (localStorage.dhr_sz_bf == undefined) {
-    localStorage.dhr_sz_bf = '';
-}
-if (localStorage.dhr_ym_dx_bf == undefined) {
-    localStorage.dhr_ym_dx_bf = '';
-}
-if (localStorage.bi_zhi_s_bf == undefined) {
-    localStorage.bi_zhi_s_bf = '';
-}
-if (localStorage.liu_yan_dx_bf == undefined) {
-    localStorage.liu_yan_dx_bf = '';
-}
-if (localStorage.sy_djs_bf == undefined) {
-    localStorage.sy_djs_bf = '';
-}
-if (localStorage.sy_zpzs_lj_bf == undefined) {
-    localStorage.sy_zpzs_lj_bf = '';
-}
-if (localStorage.sy_zpzs_mz_bf == undefined) {
-    localStorage.sy_zpzs_mz_bf = '';
 }
 //使用次数
 if (localStorage.sy_ci_shu == undefined) {
@@ -380,7 +358,7 @@ if (localStorage.bi_zhi == 'sj') {
     document.documentElement.style.backgroundImage = 'url(' + localStorage.bi_zhi + ')';
 }
 //信息获取(放前面免卡顿)
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     Sku_nczyb();
 });
 

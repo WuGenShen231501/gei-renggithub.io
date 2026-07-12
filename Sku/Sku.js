@@ -978,12 +978,6 @@ window.addEventListener('unhandledrejection', function (event) {
     console.error('捕获到未处理的Promise拒绝:', event.reason);
 });
 
-var max_ncxs = document.querySelector('.max_ncxs');
-max_ncxs.addEventListener('click', function (e) {
-    document.querySelector('.top_dhl').querySelectorAll('div')[3].click();
-    document.querySelector('.shezhi_gywm').click();
-});
-
 
 
 

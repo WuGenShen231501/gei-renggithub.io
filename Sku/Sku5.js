@@ -1098,6 +1098,9 @@ if ((localStorage.AI_zhi_xing_zuiduo_s - 0) !== 1 && (((localStorage.AI_mx_sl - 
 }
 AI_sz_zdbfs_shu.value = localStorage.AI_zhi_xing_zuiduo_s;
 // 默认即时输出
+if (localStorage.AI_jssc == undefined) {
+    localStorage.AI_jssc = 0; //默认0
+}
 if (localStorage.AI_jssc - 0 == 1) {
     AI_sz_jssc_kaiguan.className = 'AI_sz_kaiguan2 AI_sz_dydxc_kaiguan';
     AI_sz_jssc_kaiguan_d.style.left = '29px';
@@ -1666,8 +1669,8 @@ function AI_zj_nrwz() {
 
 
 // 输入输出大小调整
-if (localStorage.AI_yemian_bianlian == undefined) {
-    localStorage.AI_yemian_bianlian = '0px';
+if (localStorage.AI_tuozhuai_bianlian == undefined) {
+    localStorage.AI_tuozhuai_bianlian = '0px';
 }
 var AI_tuozhuai = document.querySelector('.AI_tuozhuai');
 document.documentElement.style.setProperty('--AI_tuozhuai_bianlian', localStorage.AI_tuozhuai_bianlian);

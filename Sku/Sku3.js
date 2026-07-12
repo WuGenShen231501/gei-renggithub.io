@@ -508,16 +508,15 @@ liu_yan_shezhi_gn_cmm.addEventListener('click', function () {
     liu_yan_button.innerHTML = '确定(E)';
     liu_yan_srk.value = liu_yan_dx['liu_yan_sz' + liu_yan_zhi_xian][0];
     liu_yan_srk.focus();
-
-    document.addEventListener('keyup', function () {
-        if (cmm_jc == 1) {
-            //修改内存
-            liu_yan_dx['liu_yan_sz' + liu_yan_zhi_xian_jieting][0] = liu_yan_srk.value;
-            localStorage.liu_yan_dx = JSON.stringify(liu_yan_dx);
-            //修改HTML
-            liu_yan_z[liu_yan_zhi_xian2_jieting].innerHTML = liu_yan_srk.value;
-        }
-    });
+});
+liu_yan_srk.addEventListener('input', function () {
+    if (cmm_jc == 1) {
+        //修改内存
+        liu_yan_dx['liu_yan_sz' + liu_yan_zhi_xian_jieting][0] = liu_yan_srk.value;
+        localStorage.liu_yan_dx = JSON.stringify(liu_yan_dx);
+        //修改HTML
+        liu_yan_z[liu_yan_zhi_xian2_jieting].innerHTML = liu_yan_srk.value;
+    }
 });
 
 //删除所有
@@ -559,8 +558,11 @@ i_liu_yan_spbc_tp = document.querySelector('.i_liu_yan_spbc_tp');
 i_liu_yan_yybc_tp = document.querySelector('.i_liu_yan_yybc_tp');
 i_liu_yan_ljbc_tp = document.querySelector('.i_liu_yan_ljbc_tp');
 i_liu_yan_wzbc_tp = document.querySelector('.i_liu_yan_wzbc_tp');
+i_liu_yan_photoSH_tp = document.querySelector('.i_liu_yan_photoSH_tp');
+i_liu_yan_AIlunse_tp = document.querySelector('.i_liu_yan_AIlunse_tp');
+i_liu_yan_gaolian_tp = document.querySelector('.i_liu_yan_gaolian_tp');
 // 批量添加鼠标事件
-var liu_yan_btns = [i_liu_yan_tpbc_tp, i_liu_yan_spbc_tp, i_liu_yan_yybc_tp, i_liu_yan_ljbc_tp, i_liu_yan_wzbc_tp];
+var liu_yan_btns = [i_liu_yan_tpbc_tp, i_liu_yan_spbc_tp, i_liu_yan_yybc_tp, i_liu_yan_ljbc_tp, i_liu_yan_wzbc_tp, i_liu_yan_photoSH_tp, i_liu_yan_AIlunse_tp, i_liu_yan_gaolian_tp];
 liu_yan_btns.forEach(function (btn) {
     btn.addEventListener('mouseover', function () {
         i_liu_yan_ksbc = 1;
@@ -581,6 +583,7 @@ i_liu_yan_tpbc_tp.addEventListener('click', function () {
     liu_yan_srk.value = zfc_x;
     liu_yan_srk.focus();
     liu_yan_srk.setSelectionRange(cswz + 10, cswz + 10);
+    liu_yan_srk.dispatchEvent(new Event('input'));
 });
 //视频快速添加
 i_liu_yan_spbc_tp.addEventListener('click', function () {
@@ -590,6 +593,7 @@ i_liu_yan_spbc_tp.addEventListener('click', function () {
     liu_yan_srk.value = zfc_x;
     liu_yan_srk.focus();
     liu_yan_srk.setSelectionRange(cswz + 12, cswz + 12);
+    liu_yan_srk.dispatchEvent(new Event('input'));
 });
 //音乐快速添加
 i_liu_yan_yybc_tp.addEventListener('click', function () {
@@ -599,6 +603,7 @@ i_liu_yan_yybc_tp.addEventListener('click', function () {
     liu_yan_srk.value = zfc_x;
     liu_yan_srk.focus();
     liu_yan_srk.setSelectionRange(cswz + 12, cswz + 12);
+    liu_yan_srk.dispatchEvent(new Event('input'));
 });
 //链接快速添加
 i_liu_yan_ljbc_tp.addEventListener('click', function () {
@@ -608,6 +613,7 @@ i_liu_yan_ljbc_tp.addEventListener('click', function () {
     liu_yan_srk.value = zfc_x;
     liu_yan_srk.focus();
     liu_yan_srk.setSelectionRange(cswz + 9, cswz + 9);
+    liu_yan_srk.dispatchEvent(new Event('input'));
 });
 //网站快速添加
 i_liu_yan_wzbc_tp.addEventListener('click', function () {
@@ -617,8 +623,18 @@ i_liu_yan_wzbc_tp.addEventListener('click', function () {
     liu_yan_srk.value = zfc_x;
     liu_yan_srk.focus();
     liu_yan_srk.setSelectionRange(cswz + 30, cswz + 30);
+    liu_yan_srk.dispatchEvent(new Event('input'));
 });
-
+//高亮快速添加
+i_liu_yan_gaolian_tp.addEventListener('click', function () {
+    var zfc = liu_yan_srk.value;
+    var cswz = liu_yan_srk.selectionEnd;
+    var zfc_x = insertStr(zfc, cswz, '<code></code>');
+    liu_yan_srk.value = zfc_x;
+    liu_yan_srk.focus();
+    liu_yan_srk.setSelectionRange(cswz + 6, cswz + 6);
+    liu_yan_srk.dispatchEvent(new Event('input'));
+});
 
 
 
@@ -949,48 +965,76 @@ ImageUploader('liu_yan_srk', 'photo', {
 });
 
 //图片检查无应用时删除
-var i_liu_yan_photoSH_tp = document.querySelector('.i_liu_yan_photoSH_tp');
-i_liu_yan_photoSH_tp.addEventListener('click', async function () {
-    if (max_node.textContent.trim() == 'node!') { // 检查服务器状态
-        const i_liu_yan_photo_src = [];
-        var liu_yan_dx_s = JSON.parse(localStorage.liu_yan_dx);
-        for (var key in liu_yan_dx_s) {
-            const content = liu_yan_dx_s[key][0];
-            // 提取所有img的src
+window.deleteUnusedPhotos = async function () {
+    // 1. 检查服务器状态
+    const maxNode = document.querySelector('.max_node');
+    if (!maxNode || maxNode.textContent.trim() !== 'node!') {
+        Sku_tctx('服务器未开启，无法回收图片');
+        return;
+    }
+
+    const usedPhotos = [];
+
+    // 2. 收集【留言】中的图片路径
+    try {
+        const liu_yan_dx = JSON.parse(localStorage.liu_yan_dx || '{}');
+        for (var key in liu_yan_dx) {
+            const content = liu_yan_dx[key][0];
             const imgRegex = /<img[^>]*src="([^"]+)"[^>]*>/g;
             let match;
             while ((match = imgRegex.exec(content)) !== null) {
                 const src = match[1];
-                if (src.startsWith('photo/')) { // 只添加src前缀是photo/的
-                    i_liu_yan_photo_src.push(src);
+                if (src.startsWith('photo/')) {
+                    usedPhotos.push(src);
                 }
             }
         }
-        console.log('使用中的图片:', i_liu_yan_photo_src);
-
-        // 发送删除请求到服务器
-        try {
-            const response = await fetch('http://localhost/Sku-Photo-Delete', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ usedPhotos: i_liu_yan_photo_src })
-            });
-            const result = await response.json();
-            if (result.success) {
-                console.log('未使用的图片删除成功:', result.deletedFiles);
-                Sku_tctx('图片回收' + result.deletedFiles.length + '张');
-            } else {
-                console.error('删除失败:', result.error);
-            }
-        } catch (error) {
-            console.error('请求失败:', error);
-        }
-    } else {
-        Sku_tctx('服务器未开启，无法回收图片');
+    } catch (e) {
+        console.error('读取留言图片出错:', e);
     }
-});
+
+    // 3. 收集【壁纸】中的图片路径 (防止误删壁纸)
+    try {
+        const bi_zhi_s_list = JSON.parse(localStorage.bi_zhi_s || '[]');
+        bi_zhi_s_list.forEach(function (src) {
+            if (src.startsWith('photo/')) {
+                usedPhotos.push(src);
+            }
+        });
+
+        // 检查当前壁纸
+        if (localStorage.bi_zhi && localStorage.bi_zhi.startsWith('photo/')) {
+            usedPhotos.push(localStorage.bi_zhi);
+        }
+    } catch (e) {
+        console.error('读取壁纸图片出错:', e);
+    }
+
+    console.log('保护列表(留言+壁纸):', usedPhotos);
+
+    // 4. 发送删除请求
+    try {
+        const response = await fetch('http://localhost/Sku-Photo-Delete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ usedPhotos: usedPhotos })
+        });
+        const result = await response.json();
+        if (result.success) {
+            Sku_tctx('图片回收完成，共清理 ' + result.deletedFiles.length + ' 张');
+        } else {
+            Sku_tctx('清理失败: ' + result.error);
+        }
+    } catch (error) {
+        console.error('请求失败:', error);
+        Sku_tctx('请求失败，请检查网络');
+    }
+};
+
+var i_liu_yan_photoSH_tp = document.querySelector('.i_liu_yan_photoSH_tp');
+i_liu_yan_photoSH_tp.addEventListener('click', window.deleteUnusedPhotos);
+
+
 
 
 
@@ -1064,6 +1108,7 @@ i_liu_yan_AIlunse_tp.addEventListener('click', async function (e) {
     } else {
         liu_yan_srk.value = runse_jieguo;
         Sku_tctx('润色成功');
+        liu_yan_srk.dispatchEvent(new Event('input'));
     }
 });
 //AI润色调用(含错误自动切换模型功能)
@@ -1104,6 +1149,7 @@ async function callZhiPuAI_runse(userInput) {
         if (thinkStart > -1 && thinkEnd > thinkStart) { //思考模式删除思考过程,删除think标签和里面所有内容
             result = result.substring(0, thinkStart) + result.substring(thinkEnd + 9);
         }
+        Sku_tsy(2);
         return result;
     } catch (error) {
         //错误自动切换模型
