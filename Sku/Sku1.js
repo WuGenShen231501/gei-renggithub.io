@@ -272,7 +272,10 @@ function containsAllChars(s1, s2, mode) {
     var tArr = [], i = 0, c, p;
     for (; i < s2.length; i++) {
         c = s2[i], p = c;
-        if (c.charCodeAt(0) > 0x4E00 && c.charCodeAt(0) < 0x9FA6) {
+        var code = c.charCodeAt(0);
+        if ((code >= 0x4E00 && code <= 0x9FFF) ||  // 1. 常用汉字（基本区）
+            (code >= 0x3400 && code <= 0x4DBF) ||  // 2. 生僻汉字（扩展A区）
+            (code >= 0xE000 && code <= 0xF8FF)) {  // 3. 甲骨文等异体字（PUA私用区）
             if (localStorage.sscl_py == 1) {
                 p = pinyin(c, { toneType: 'none' });
                 p = (Array.isArray(p) ? p[0] : p).replace(/\s/g, '') || c;
@@ -285,7 +288,10 @@ function containsAllChars(s1, s2, mode) {
     var iArr = [], buf = '';
     for (i = 0; i < s1.length; i++) {
         c = s1[i];
-        var isCn = c.charCodeAt(0) > 0x4E00 && c.charCodeAt(0) < 0x9FA6;
+        var code = c.charCodeAt(0);
+        var isCn = (code >= 0x4E00 && code <= 0x9FFF) ||  // 1. 常用汉字
+            (code >= 0x3400 && code <= 0x4DBF) ||  // 2. 生僻汉字
+            (code >= 0xE000 && code <= 0xF8FF);    // 3. 甲骨文等异体字
         if (isCn) {
             if (buf) { iArr.push({ t: 1, v: buf }); buf = ''; }
             iArr.push({ t: 0, v: c });

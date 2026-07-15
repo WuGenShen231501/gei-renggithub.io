@@ -1512,8 +1512,8 @@ var shezhi_daoru_ym = document.querySelector('.shezhi_daoru_ym');
 var jisuan_bendidx = 0;
 
 // 集成应用与导入导出加密导入导出本地导入应用等
-var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd', 'zdjmdc', 'da_ka']; //记得添加比较
-// 0 导航栏,1 导航栏页面,2 万能搜索引擎,3 头像,4 留言,5 所有壁纸,6 当前壁纸,7 天气,8 字体颜色,9 重字体颜色,10 背景颜色,11 背景透明度,12 背景确认框,13 背景框颜色,14 背景框透明度,15 毛玻璃,16 自动备份,17 使用次数,18 倒计时,19 密码,20 作品展示链接,21 作品展示名字,22 音乐,23 音乐,24 音乐,25 搜索记录,26 HTSP,27 注册表,28 背景颜色,29 主题风格,30 主题风格名字,31 ai快捷指令,32 课表,33 周数,34 总时长,35 自动导入本地,36 自动加密导出,37 打卡,38,39,40,41,42,43,44
+var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd', 'zdjmdc', 'da_ka', 'so_yq_order']; //记得添加比较
+// 0 导航栏,1 导航栏页面,2 万能搜索引擎,3 头像,4 留言,5 所有壁纸,6 当前壁纸,7 天气,8 字体颜色,9 重字体颜色,10 背景颜色,11 背景透明度,12 背景确认框,13 背景框颜色,14 背景框透明度,15 毛玻璃,16 自动备份,17 使用次数,18 倒计时,19 密码,20 作品展示链接,21 作品展示名字,22 音乐,23 音乐,24 音乐,25 搜索记录,26 HTSP,27 注册表,28 背景颜色,29 主题风格,30 主题风格名字,31 ai快捷指令,32 课表,33 周数,34 总时长,35 自动导入本地,36 自动加密导出,37 打卡,38 搜索引擎顺序,39,40,41,42,43,44
 
 // 检查是否为时间
 function isValidDateTime(str) {
