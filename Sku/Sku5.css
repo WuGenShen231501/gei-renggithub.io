@@ -283,6 +283,7 @@
     /* 动画开始的画面 */
     height: 0;
   }
+
   100% {
     /* 动画结束的画面 */
     height: calc(100% - 30px - 140px - 10px - var(--AI_tuozhuai_bianlian));
@@ -395,6 +396,7 @@
     /* 动画开始的画面 */
     height: 0;
   }
+
   100% {
     /* 动画结束的画面 */
     height: calc(100% - 30px - 141px - var(--AI_tuozhuai_bianlian));
@@ -478,6 +480,7 @@
     /* 动画开始的画面 */
     height: 0;
   }
+
   100% {
     /* 动画结束的画面 */
     height: calc(100% - 30px - 141px - var(--AI_tuozhuai_bianlian));
@@ -683,6 +686,7 @@
   /* 保持空白符并按需换行 */
   word-wrap: break-word;
   /* 在单词过长时强制换行 */
+  margin-bottom: 1em;
 }
 
 .AI_huida_nr pre::before {
@@ -749,6 +753,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     /* 动画结束的画面 */
     opacity: 1;

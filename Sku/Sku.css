@@ -1,4 +1,19 @@
-/* --------所有----------- */
+/* 隐藏Chrome浏览器的密码显示图标 */
+input[type="password"]::-webkit-toggle-password {
+  -webkit-appearance: none !important;
+  display: none !important;
+}
+
+/* 隐藏Firefox浏览器的密码显示图标 */
+input[type="password"]::-moz-ui-password {
+  -moz-appearance: none !important;
+  display: none !important;
+}
+
+/* 隐藏Edge浏览器的密码显示图标 */
+input[type="password"]::-ms-reveal {
+  display: none !important;
+}
 
 * {
   margin: 0px;
@@ -289,6 +304,7 @@ html {
     /* 动画开始的画面 */
     opacity: 0;
   }
+
   100% {
     /* 动画结束的画面 */
     opacity: 1;
@@ -836,13 +852,16 @@ html {
     top: 100px;
     opacity: 0;
   }
+
   10% {
     opacity: 1;
   }
+
   85% {
     top: 100px;
     opacity: 1;
   }
+
   100% {
     /* 动画结束的画面; */
     top: 0px;
@@ -1007,6 +1026,7 @@ html {
 /* ---------兼容电脑端----------- */
 
 @media screen and (min-width: 2000px) {
+
   /* 链接大小 */
   .lian_jie_r3 .lj_max {
     width: calc((100% - (6 * 20px)) / 5) !important;
@@ -1014,6 +1034,7 @@ html {
 }
 
 @media screen and (min-width: 1400px) {
+
   /* 链接大小 */
   .lian_jie_r3 .lj_max {
     width: calc((100% - (5 * 20px)) / 4);
@@ -1021,6 +1042,7 @@ html {
 }
 
 @media screen and (max-width: 1250px) {
+
   /* AI和习惯全屏 */
   .AI_max {
     position: fixed !important;
@@ -1031,6 +1053,7 @@ html {
     border-radius: 0 !important;
     border: 0 !important;
   }
+
   .daka_max {
     position: fixed !important;
     top: 55px !important;
@@ -1040,9 +1063,11 @@ html {
     border-radius: 0 !important;
     border: 0 !important;
   }
+
   .AI_quanpin_anniu {
     display: none !important;
   }
+
   .daka_quanpin_anniu {
     display: none !important;
   }
@@ -1052,27 +1077,35 @@ html {
   .lian_jie_ssk {
     right: 62px !important;
   }
+
   .lian_jie_r_max {
     right: 58px;
   }
+
   .lian_jie_l_max {
     margin-left: 58px;
   }
+
   .lj_zcb_i {
     right: 36px !important;
   }
+
   .icon_lj_qpan {
     right: 36px !important;
   }
+
   .so_suo {
     right: 150px;
   }
+
   .so_yq_s {
     right: 420px;
   }
+
   .i_lian_jie_ss_tb {
     right: 80px !important;
   }
+
   .ssbqym {
     right: 185px !important;
   }
@@ -1082,15 +1115,19 @@ html {
   .so_yq_s {
     right: 420px;
   }
+
   .top_dhl {
     left: 50px;
   }
+
   .top_logo {
     display: none;
   }
+
   .sy_dwck {
     display: none;
   }
+
   /* 链接全屏 */
   .lian_jie_l_max {
     position: fixed !important;
@@ -1106,6 +1143,7 @@ html {
     margin-left: 0 !important;
     border-radius: 0 !important;
   }
+
   .lian_jie_r_max {
     position: fixed !important;
     width: calc(100% - 230px) !important;
@@ -1117,14 +1155,17 @@ html {
     animation: nrmaxs_dh 0.4s !important;
     border-radius: 0 !important;
   }
+
   .lian_jie_r {
     top: 30px !important;
     height: calc(100% - 30px) !important;
   }
+
   .lian_jie_r2 {
     top: 30px !important;
     height: calc(100% - 30px) !important;
   }
+
   .lian_jie_ssk {
     position: fixed !important;
     width: calc(100% - 230px) !important;
@@ -1132,47 +1173,57 @@ html {
     right: 0px !important;
     border-bottom: 1px solid var(--zi_ti_color_50) !important;
   }
+
   .lj_zcb_i {
     position: fixed !important;
     top: 62px !important;
     right: 40px !important;
   }
+
   .i_lian_jie_ss_tb {
     position: fixed !important;
     top: 61px !important;
     right: 70px !important;
   }
+
   .lian_jie_l2 {
     height: calc(100% + 2px) !important;
   }
+
   .icon_lj_qpan {
     display: none !important;
   }
+
   .lj_zcb_i_wz {
     position: fixed !important;
     left: -20px !important;
     top: 20px !important;
   }
+
   .lianjie_gundontiao_max {
     top: 30px !important;
     height: calc(100% - 30px) !important;
   }
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 1015px) {
+
   /* top搜索 */
   .so_suo {
     display: none;
   }
+
   .so_yq_s {
     display: none !important;
   }
+
   .ssbqym {
     display: none !important;
   }
 }
 
 @media screen and (min-width: 900px) {
+
   /* 链接大小 */
   .lj_max {
     width: calc((100% - (4 * 20px)) / 3);
@@ -1180,6 +1231,7 @@ html {
 }
 
 @media screen and (max-width: 900px) {
+
   /* 链接大小 */
   .lj_max {
     width: calc((100% - (3 * 20px)) / 2);
@@ -1187,6 +1239,7 @@ html {
 }
 
 @media screen and (max-width: 800px) {
+
   /* 任务页面全屏 */
   .liu_yan {
     position: fixed !important;
@@ -1197,6 +1250,7 @@ html {
     width: calc(100% + 2px) !important;
     height: calc(100% - 55px) !important;
   }
+
   .liu_yan_mao_bo_li {
     position: fixed !important;
     margin: 0 !important;
@@ -1207,16 +1261,20 @@ html {
     height: calc(100% - 55px) !important;
     backdrop-filter: var(--mao_bo_li) !important;
   }
+
   .liu_yan_srk {
     width: 100% !important;
     padding-right: 10px !important;
   }
+
   .liu_yan_top {
     height: calc(100% - 188px) !important;
   }
+
   .liuyan_gundontiao_max {
     height: calc(100% - 188px) !important;
   }
+
   .liu_yan_sxuan_div {
     position: fixed !important;
     top: 96px !important;
@@ -1224,12 +1282,15 @@ html {
     margin-top: 0px !important;
     animation: nrmaxs_dh 0.4s !important;
   }
+
   .ji_ru_ssk_max {
     width: calc(100% - 120px) !important;
   }
+
   .input_ji_ru_srk {
     width: 97% !important;
   }
+
   .liu_yan_quanpin {
     display: none !important;
   }

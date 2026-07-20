@@ -262,7 +262,7 @@ function collectArrays(obj) {
 
 
 
-// 匹配函数/不区分大小写
+// 匹配函数/不区分大小写  containsAllChars(输入字符串,字符串库,模式);
 function containsAllChars(s1, s2, mode) {
     s1 = s1.toLowerCase().replace(/\s/g, '');
     s2 = s2.toLowerCase().replace(/\s/g, '');
@@ -404,95 +404,6 @@ function containsAllChars(s1, s2, mode) {
 }
 
 
-// function containsAllChars(str11, str22, zdyy) {
-//     var containsAllChars_zdyy = 'none';
-//     if (zdyy) {
-//         containsAllChars_zdyy = zdyy;
-//     }
-//     var str1 = str11.toLowerCase().replace(/\s/g, ''); //全部转为小写并去掉空格
-//     var str2 = str22.toLowerCase().replace(/\s/g, ''); //全部转为小写并去掉空格
-//     var str1_py = '';
-//     var str2_py = '';
-//     var str1_py_szm = '';
-//     var str2_py_szm = '';
-
-//     // 检测 str1 是否包含中文字符（Unicode 范围:\u4E00-\u9FA5 为常用汉字）
-//     const hasChinese = /^[a-zA-Z]+$/.test(str1.replace(/\s/g, ''));
-//     if (hasChinese && localStorage.sscl_py == 1) {
-//         // 如果 str1 包含中文字符,则使用 pinyin 库进行拼音匹配
-//         str1_py = str1.replace(/\s/g, '');
-//         str2_py = pinyin(str2, { toneType: 'none' }).replace(/\s/g, '');
-//         str1_py_szm = str1.replace(/\s/g, '');
-//         str2_py_szm = pinyin(str2, { pattern: 'first' }).replace(/\s/g, '');
-//     }
-
-//     if (localStorage.sscl == 0 || containsAllChars_zdyy == 0) {
-//         // 创建一个对象来记录str1中每个字符的出现次数
-//         const charCounts = {};
-//         for (const char of str1) {
-//             // 增加字符在str1中的出现次数
-//             charCounts[char] = (charCounts[char] || 0) + 1;
-//         }
-//         // 遍历str2,减少每个字符的计数
-//         for (const char of str2) {
-//             if (charCounts.hasOwnProperty(char)) {
-//                 // 如果字符在str1中出现过,则减少其计数
-//                 charCounts[char]--;
-//                 // 如果计数变为0,则从对象中删除该字符
-//                 if (charCounts[char] === 0) {
-//                     delete charCounts[char];
-//                 }
-//             }
-//         }
-
-//         // 创建一个对象来记录str1中每个字符的出现次数
-//         const charCounts2 = {};
-//         for (const char of str1_py) {
-//             // 增加字符在str1中的出现次数
-//             charCounts2[char] = (charCounts2[char] || 0) + 1;
-//         }
-//         // 遍历str2,减少每个字符的计数
-//         for (const char of str2_py) {
-//             if (charCounts2.hasOwnProperty(char)) {
-//                 // 如果字符在str1中出现过,则减少其计数
-//                 charCounts2[char]--;
-//                 // 如果计数变为0,则从对象中删除该字符
-//                 if (charCounts2[char] === 0) {
-//                     delete charCounts2[char];
-//                 }
-//             }
-//         }
-
-//         // 创建一个对象来记录str1中每个字符的出现次数
-//         const charCounts3 = {};
-//         for (const char of str1_py_szm) {
-//             // 增加字符在str1中的出现次数
-//             charCounts3[char] = (charCounts3[char] || 0) + 1;
-//         }
-//         // 遍历str2,减少每个字符的计数
-//         for (const char of str2_py_szm) {
-//             if (charCounts3.hasOwnProperty(char)) {
-//                 // 如果字符在str1中出现过,则减少其计数
-//                 charCounts3[char]--;
-//                 // 如果计数变为0,则从对象中删除该字符
-//                 if (charCounts3[char] === 0) {
-//                     delete charCounts3[char];
-//                 }
-//             }
-//         }
-
-//         // 如果对象中没有剩余的字符,则说明str2中包含了str1中所有字符且满足出现次数要求
-//         return Object.keys(charCounts).length === 0 || (str1_py == '' ? false : Object.keys(charCounts2).length === 0) || (str1_py_szm == '' ? false : Object.keys(charCounts2).length === 0);
-//     } else if (localStorage.sscl == 1) {
-//         return str2.indexOf(str1) !== -1 || (str1_py == '' ? false : str2_py.indexOf(str1_py) !== -1) || (str1_py_szm == '' ? false : str2_py_szm.indexOf(str1_py_szm) !== -1);
-//     } else if (localStorage.sscl == 2) {
-//         return str2 === str1 || (str1_py == '' ? false : str2_py === str1_py) || (str1_py_szm == '' ? false : str2_py_szm === str1_py_szm);
-//     }
-// }
-
-
-
-
 
 
 
@@ -578,34 +489,28 @@ function WGS_wenbengundon(qwe, asd, hzxg) {
 
 
 // 弹窗提醒
-function Sku_tctx(zdysx1) {
-    // 防止重复调用
-    if (typeof Sku_tctx_ture === 'undefined') { Sku_tctx_ture = 1 };
-    if (Sku_tctx_ture === 1) {
-        Sku_tctx_ture = 0;
-        setTimeout(() => Sku_tctx_ture = 1, 500);
-
-        // 创建并配置 div 元素
-        const div = document.createElement('div');
-        div.className = "Sku_tcjg_Max";
-        div.innerHTML = zdysx1;
-
-        // 设置边框样式
-        if (localStorage.bei_jing_kuan_ture == 1) {
-            div.style.border = `1px solid ${RGB_zhq(localStorage.bei_jing_kuan_color, localStorage.bei_jing_kuan_tmd)}`;
-        }
-
-        // 添加到文档
-        document.body.appendChild(div);
-
-        // 居中显示
-        div.style.position = 'absolute';
-        div.style.left = `${(window.innerWidth - div.offsetWidth) / 2}px`;
-
-        // 设定 3000 毫秒后移除 div
-        setTimeout(() => document.body.removeChild(div), 3000);
+function Sku_tcx_core(zdysx1) {
+    // 创建并配置 div 元素
+    const div = document.createElement('div');
+    div.className = "Sku_tcjg_Max";
+    div.innerHTML = zdysx1;
+    // 设置边框样式
+    if (localStorage.bei_jing_kuan_ture == 1) {
+        div.style.border = `1px solid ${RGB_zhq(localStorage.bei_jing_kuan_color, localStorage.bei_jing_kuan_tmd)}`;
     }
+    // 添加到文档
+    document.body.appendChild(div);
+    // 居中显示
+    div.style.position = 'absolute';
+    div.style.left = `${(window.innerWidth - div.offsetWidth) / 2}px`;
+    // 设定 3000 毫秒后移除 div
+    setTimeout(() => {
+        if (div.parentNode) document.body.removeChild(div);
+    }, 3000);
 }
+//true 表示第一次调用立即执行，后续 500ms 内的调用被吞掉
+var Sku_tctx = Sku_jie_liu(Sku_tcx_core, 500, true);
+
 
 
 
@@ -2576,6 +2481,12 @@ function sy_djs_txl_jsq_hs() {
                 sy_djs_txl.style.display = 'none';
             }
 
+            if (sy_djs_txl.classList.contains('sy_doudon') == false && nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.startsWith('时间已到<br>超过三天自动删除')) {
+                sy_djs_txl.classList.add('sy_doudon');
+            } else if (sy_djs_txl.classList.contains('sy_doudon') == true && !(nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.startsWith('时间已到<br>超过三天自动删除'))) {
+                sy_djs_txl.classList.remove('sy_doudon');
+            }
+
             sy_djs_txl.innerText = nr;
         }
 
@@ -2604,6 +2515,12 @@ function sy_djs_txl_jsq_hs() {
                 sy_djs_txl2.style.display = 'none';
             }
 
+            if (sy_djs_txl2.classList.contains('sy_doudon') == false && nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.startsWith('时间已到<br>超过三天自动删除')) {
+                sy_djs_txl2.classList.add('sy_doudon');
+            } else if (sy_djs_txl2.classList.contains('sy_doudon') == true && !(nrmaxs0_nr.scrollTop < 20 && sy_djs_r_s_1.startsWith('时间已到<br>超过三天自动删除'))) {
+                sy_djs_txl2.classList.remove('sy_doudon');
+            }
+
             sy_djs_txl2.innerText = nr;
         }
     }, 200);
@@ -2614,8 +2531,8 @@ sy_djs_txl_jsq_hs();
 
 
 
-// 优化内存
-top_dhl_S = document.querySelector('.top_dhl').querySelectorAll('div');
+// 优化内存 (倒计时定时器)
+var top_dhl_S = document.querySelector('.top_dhl').querySelectorAll('div');
 for (var i = 0; i < top_dhl_S.length; i++) {
     if (i == 0) {
         top_dhl_S[i].addEventListener('click', function (e) {
@@ -4442,6 +4359,10 @@ yuyanAI_qkcwzl.addEventListener('click', function (e) {
     Sku_tctx('已清空错误指令');
 });
 
+
+
+
+
 //切换模型
 if (localStorage.Sku_zhilin_qhmx == undefined) {
     localStorage.Sku_zhilin_qhmx = 0;
@@ -4510,9 +4431,7 @@ document.addEventListener('keydown', function (e) {
             yuyanAI_qd.click();
         }
     } else if (e.key == 'Escape') {
-        if (nrmaxs0.style.display == 'block') {
-            sy_dw_top.click();
-        }
+
         if (sd_dtnr_max.style.display == 'block') {
             // 去除定时器
             clearInterval(sy_lbnr_dsq_sd);
@@ -4527,6 +4446,12 @@ document.addEventListener('keydown', function (e) {
                 var top_dhl_s = document.querySelector('.top_dhl').querySelectorAll('div');
                 top_dhl_s[0].click();
             }
+        } else if (djs_ssk.value !== '') {
+            djs_ssk.value = '';
+            djs_ssk.dispatchEvent(new Event('input'));
+
+        } else if (nrmaxs0.style.display == 'block') {
+            sy_dw_top.click();
         }
     } else if (e.altKey && e.key == 'l') {
         if (localStorage.dr_mm == '') {

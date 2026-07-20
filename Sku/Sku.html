@@ -66,7 +66,7 @@
             <div>任务</div>
             <div>设置</div>
             <div>AI</div>
-            <div style="display: none;">习惯</div>
+            <div>私密</div>
         </div>
 
         <!-- 搜索 -->
@@ -1139,84 +1139,49 @@
             </div>
         </div>
 
-        <!-- 打卡页面 -->
+        <!-- AES文本加密保险箱 -->
         <div class="nrmaxs nrmaxs5" style="display: none;">
             <div class="daka_max">
                 <div class="daka_l">
                     <div class="daka_l_top">
-                        <div class="daka_l_top_wz">习惯</div>
+                        <div class="daka_l_top_wz">AES文本加密保险箱</div>
                         <div class="daka_quanpin_anniu"><i class="iconfont icon-quanping daka_qp_tp"></i></div>
-                        <div class="daka_qiehuan_anniu"><i class="iconfont daka_qh_tp"></i></div>
-                        <div class="daka_tianjia_anniu"><i class="iconfont icon-tianjia1 daka_tj_tp"></i></div>
+                        <input type="text" class="shimi_shousuo" placeholder="筛选内容">
+                        <i class="iconfont icon-tianjia1 shimi_tianjia_tp"></i>
+                        <i class="iconfont icon-shanchu1 shimi_shanchu_tp"></i>
+                        <i class="iconfont icon-suoyou shimi_quanxuan_tp"></i>
+                        <i class="iconfont icon-fanhui shimi_quxiao_tp"></i>
                     </div>
-                    <div class="daka_l_bot">
-                        <!-- 输出列表 -->
+                    <div class="daka_l_bot" style="display: none;">
+                        <div class="daka_l_bot_max">
+                            <!-- 输出列表 -->
+                        </div>
+                    </div>
+                    <div class="daka_r_bot" style="display: none;">
+                        <div class="daka_r_bot_max">
+                            <input type="text" class="daka_r_bot_top">
+                            <textarea class="daka_r_bot_bottom"></textarea>
+                        </div>
                     </div>
                     <!-- 滚动条 -->
                     <div class="daka_gundontiao_max">
                         <div class="daka_gundontiao_min"></div>
                     </div>
-                </div>
-                <div class="daka_r"></div>
-            </div>
-
-            <div class="daka_tianjia_ym">
-                <div class="daka_tianjia_wenzi">添加习惯</div>
-                <div class="daka_tianjia_tx"></div>
-                <input type="text" class="daka_tianjia_tx_srk" placeholder="url / 文字">
-                <div class="daka_tianjia_mc">名称</div>
-                <input type="text" class="daka_tianjia_mc_srk" placeholder="输入名称">
-                <div class="daka_tianjia_pl">打卡频率</div>
-                <div class="daka_tianjia_pl_srk">点击选择</div>
-                <div class="daka_tianjia_pl_ym">
-                    <div class="daka_tianjia_pl_ym_top">
-                        <div class="daka_tianjia_pl_ym_top_antian daka_tianjia_pl_ans"
-                            style="background-color: var(--zi_ti_color_20);">按天</div>
-                        <div class="daka_tianjia_pl_ym_top_anzhou daka_tianjia_pl_ans">按周次</div>
-                        <div class="daka_tianjia_pl_ym_top_jiange daka_tianjia_pl_ans">按时间间隔</div>
+                    <!-- 拖拽条 -->
+                    <div class="shimi_tuozhuai"></div>
+                    <!-- 滚动条 -->
+                    <div class="shimi_gundontiao_max">
+                        <div class="shimi_gundontiao_min"></div>
                     </div>
-                    <div class="daka_tianjia_pl_ym_top_antian_ym daka_tianjia_pl_yms">
-                        <div class="daka_tianjia_pl_ym_top_antian_ym_zzxt">在这些天</div>
-                        <div class="daka_tianjia_pl_ym_top_antian_ss">一</div>
-                        <div class="daka_tianjia_pl_ym_top_antian_ss">二</div>
-                        <div class="daka_tianjia_pl_ym_top_antian_ss">三</div>
-                        <div class="daka_tianjia_pl_ym_top_antian_ss">四</div>
-                        <div class="daka_tianjia_pl_ym_top_antian_ss">五</div>
-                        <div class="daka_tianjia_pl_ym_top_antian_ss">六</div>
-                        <div class="daka_tianjia_pl_ym_top_antian_ss">日</div>
-                    </div>
-                    <div class="daka_tianjia_pl_ym_top_anzhou_ym daka_tianjia_pl_yms" style="display: none;">
-                        <div class="daka_tianjia_pl_ym_top_antian_ym_zzxt">每周 1 次</div>
-                        <div class="daka_tianjia_pl_ym_top_anz_ss">1</div>
-                        <div class="daka_tianjia_pl_ym_top_anz_ss">2</div>
-                        <div class="daka_tianjia_pl_ym_top_anz_ss">3</div>
-                        <div class="daka_tianjia_pl_ym_top_anz_ss">4</div>
-                        <div class="daka_tianjia_pl_ym_top_anz_ss">5</div>
-                        <div class="daka_tianjia_pl_ym_top_anz_ss">6</div>
-                        <div class="daka_tianjia_pl_ym_top_anz_ss">7</div>
-                    </div>
-                    <div class="daka_tianjia_pl_ym_top_jiange_ym daka_tianjia_pl_yms" style="display: none;">
-                        <div class="daka_tianjia_pl_ym_top_ansjjg_ym_m">每隔</div>
-                        <input type="number" min="1" class="daka_tianjia_pl_ym_top_ansjjg_ym_t">
-                        <div class="daka_tianjia_pl_ym_top_ansjjg_ym_m" style="left: 117px;">天</div>
-                    </div>
-                    <div class="daka_tianjia_pl_ym_qd">确定</div>
                 </div>
-                <div class="daka_tianjia_ksrq">开始日期</div>
-                <div class="daka_tianjia_ksrq_max">
-                    <input type="number" min="2003" class="daka_tianjia_ksrq_nian">
-                    <div>年</div>
-                    <input type="number" min="1" max="12" class="daka_tianjia_ksrq_yue" style="width: 20px;">
-                    <div>月</div>
-                    <input type="number" min="1" max="31" class="daka_tianjia_ksrq_ri" style="width: 20px;">
-                    <div>日</div>
+                <div class="shimi_mima_max" style="display: block;">
+                    <input type="password" class="shimi_mima_input" placeholder="输入密钥">
+                    <div class="shimi_mima_qr">➤</div>
+                    <div class="shimi_xiugai_mima">修改密钥</div>
+                    <div class="shimi_mima_wxts">
+                        您的密钥在本地经过哈希算法处理，系统仅存储哈希值。这意味着密钥是不可逆的，除了您自己，任何人（包括开发者）都无法反推出您的原始密码。<br>本系统不提供密码找回或重置功能。如果您忘记了密钥，您的所有加密数据将永久无法解密（直接废），且无法恢复。<br>请务必牢记您的密钥，建议在离线纸张上备份保存。
+                    </div>
                 </div>
-                <div class="daka_tianjia_jcts">坚持天数</div>
-                <div class="daka_tianjia_jcts_max">
-                    <input type="number" min="7" max="36500" class="daka_tianjia_jcts_srk">
-                    <div>天</div>
-                </div>
-                <div class="daka_tianjia_qd">确定</div>
             </div>
         </div>
 
@@ -1432,4 +1397,13 @@ Alt+Shift+Y      - 云备份
 2026/7/12 修复photo不存在时问题bug
 2026/7/15 优化匹配函数代码
 2026/7/15 添加保存搜索引擎顺序功能
+2026/7/16 优化搜索关联词功能
+2026/7/18 优化倒计时的内容显示抖动效果
+2026/7/18 添加私密页面
+2026/7/19 添加私密页面拖拽排序功能
+2026/7/19 优化存储性能
+2026/7/19 优化password输入框密码显示图标隐藏
+2026/7/20 优化AI页面pre标签样式
+2026/7/20 优化主页面快捷键功能
+2026/7/20 添加头像拖拽粘贴上传功能
 --

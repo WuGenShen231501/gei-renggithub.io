@@ -51,6 +51,7 @@
   font-size: 25px;
   transition: 0.15s;
 }
+
 /* ------壁纸------ */
 
 .bzsz_max {
@@ -177,6 +178,7 @@
   top: 8px;
   font-size: 20px;
 }
+
 .i_bizhi_photoSH_tp {
   position: absolute;
   width: 35px;
@@ -189,6 +191,7 @@
   top: 8px;
   font-size: 20px;
 }
+
 /* -----------天气----------- */
 
 .tianqi_max {
@@ -209,6 +212,7 @@
   text-align: center;
   line-height: 48px;
 }
+
 /* ------字体设置-------- */
 
 .ztsz_ztys_max {
@@ -266,6 +270,7 @@
   color: rgb(255, 213, 0);
   border-color: rgb(255, 213, 0);
 }
+
 /*------ 背景设置------- */
 
 .input_tmd {
@@ -274,6 +279,7 @@
   height: 8px;
   margin: 21px 0 21px 0;
 }
+
 /*横条样式*/
 
 .input_tmd {
@@ -285,6 +291,7 @@
   border-radius: 10px;
   /* border: 1px solid rgb(255, 0, 0); */
 }
+
 /*拖动块的样式*/
 
 .input_tmd::-webkit-slider-thumb {
@@ -361,6 +368,7 @@
   line-height: 18px;
   text-align: center;
 }
+
 /* --------主题风格-------- */
 
 .ztfg_s {
@@ -382,6 +390,7 @@
 .ztfg_s:hover {
   transform: scale(1.1);
 }
+
 /* ------存档初始化------ */
 
 .cdcsh_nr {
@@ -416,6 +425,7 @@
   top: 315px;
   right: calc(50% - 100px);
 }
+
 /* ------备份------ */
 
 .bfsz_sccd {
@@ -446,6 +456,7 @@
 .bfsz_xzcd:hover {
   transform: scale(1.1);
 }
+
 /* ---密码设置 ---- */
 
 .drmm_mm {
@@ -572,6 +583,7 @@
   background-color: rgb(0, 0, 0, 0);
   outline: none;
 }
+
 /* ------关于我们--------- */
 
 .gywm_max_s {
@@ -642,6 +654,7 @@
   margin-top: 16px;
   white-space: pre-wrap;
 }
+
 /* ---------导入/导出--------- */
 
 .daoru_ym_yun,
@@ -824,6 +837,7 @@
   right: 148px;
   top: 230px;
 }
+
 /* 历史搜索记录 */
 
 .zh_scanniu {
@@ -971,6 +985,7 @@
   line-height: 29px;
   text-align: center;
 }
+
 /* --------自定义内容---------- */
 
 .sy_nr_xz1 {
@@ -988,6 +1003,7 @@
 .sy_nr_xz4 {
   width: 200px;
 }
+
 /* ---------锁屏------------ */
 
 .shezhi_sp_xp_max {
@@ -1022,6 +1038,7 @@
   height: 50px;
   line-height: 50px;
 }
+
 /* htsp */
 
 .WGS_HTSP_TJ {
@@ -1052,6 +1069,7 @@
   width: 0%;
   height: 100%;
 }
+
 /* ------注册表--------- */
 
 .ssjl_max2 {
@@ -1167,6 +1185,7 @@
   line-height: 30px;
   transition: 0.15s;
 }
+
 /* -------------grb集--------- */
 
 .grb_j_max {
@@ -1677,7 +1696,7 @@
   text-indent: 1.5em;
 }
 
-.duibixx_s_bt:hover + .duibixx_s_sx {
+.duibixx_s_bt:hover+.duibixx_s_sx {
   transform: scale(1.2);
   opacity: 1;
 }
@@ -1805,7 +1824,7 @@
   opacity: 1;
 }
 
-.daoru_zd_kaiguan:hover ~ .daoru_zd_tishi {
+.daoru_zd_kaiguan:hover~.daoru_zd_tishi {
   opacity: 1;
 }
 
@@ -1813,7 +1832,7 @@
   opacity: 1;
 }
 
-.daoru_zd_tishi:hover ~ .daoru_zd_kaiguan {
+.daoru_zd_tishi:hover~.daoru_zd_kaiguan {
   opacity: 1;
 }
 
@@ -1842,11 +1861,11 @@
   opacity: 1;
 }
 
-.daoruyun_zd_kaiguan:hover ~ .daoruyun_zd_tishi {
+.daoruyun_zd_kaiguan:hover~.daoruyun_zd_tishi {
   opacity: 1;
 }
 
-.jm_daoru_zd_kaiguan:hover ~ .jm_daoru_zd_tishi {
+.jm_daoru_zd_kaiguan:hover~.jm_daoru_zd_tishi {
   opacity: 1;
 }
 

@@ -1001,7 +1001,6 @@ window.deleteUnusedPhotos = async function () {
                 usedPhotos.push(src);
             }
         });
-
         // 检查当前壁纸
         if (localStorage.bi_zhi && localStorage.bi_zhi.startsWith('photo/')) {
             usedPhotos.push(localStorage.bi_zhi);
@@ -1010,9 +1009,20 @@ window.deleteUnusedPhotos = async function () {
         console.error('读取壁纸图片出错:', e);
     }
 
-    console.log('保护列表(留言+壁纸):', usedPhotos);
+    // 4. 收集【头像】中的图片路径 (防止误删头像)
+    try {
+        let avatarPath = localStorage.tou_xiang.replace(/\\\\/g, '/');
+        console.log(avatarPath);
+        if (avatarPath.startsWith('photo/')) {
+            usedPhotos.push(avatarPath);
+        }
+    } catch (e) {
+        console.error('读取头像图片出错:', e);
+    }
 
-    // 4. 发送删除请求
+    console.log('保护列表(留言+壁纸+头像):', usedPhotos);
+
+    // 5. 发送删除请求
     try {
         const response = await fetch('http://localhost/Sku-Photo-Delete', {
             method: 'POST',

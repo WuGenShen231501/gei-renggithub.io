@@ -1,5 +1,5 @@
 // 保护localStorage值
-var shui_you_nc = ['Sku_zxms', 'yun_key', 'da_ka', 'Sku_node', 'Sku_benghuai', 'AI_kjzl', 'AI_jl', 'sy_ci_shu', 'Sku_kfzms', 'ztfg_name', 'ztfg', 'mrrd_name', 'mryy', 'mrrd_sxsj', 'mrrd', 'bi_zhi_ys', 'dr_mmdr_mmfw', 'dr_mmdr_drsj', 'dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'dhr_sz_bf', 'dhr_ym_dx_bf', 'bi_zhi_s_bf', 'liu_yan_dx_bf', 'sy_djs_bf', 'sy_zpzs_lj_bf', 'sy_zpzs_mz_bf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'dr_mm_cf', 'drym_cs', 'drym_srcs', 'sy_zpzs_lj', 'sy_zpzs_mz', 'sy_zpzs_kaiguan', 'music_cd', 'music_bfsx', 'music_cd_bf', 'lsjl', 'lsjl_bf', 'sy_lbxz', 'sku_xp_sp', 'htsp_s', 'htsp_s_bf', 'sku_zcb', 'sku_zcb_bf', 'dr_mmdr'];
+var shui_you_nc = ['Sku_zxms', 'yun_key', 'da_ka', 'Sku_node', 'Sku_benghuai', 'AI_kjzl', 'AI_jl', 'sy_ci_shu', 'Sku_kfzms', 'ztfg_name', 'ztfg', 'mrrd_name', 'mryy', 'mrrd_sxsj', 'mrrd', 'bi_zhi_ys', 'dr_mmdr_mmfw', 'dr_mmdr_drsj', 'dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'dhr_sz_bf', 'dhr_ym_dx_bf', 'bi_zhi_s_bf', 'liu_yan_dx_bf', 'sy_djs_bf', 'sy_zpzs_lj_bf', 'sy_zpzs_mz_bf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'dr_mm_cf', 'drym_cs', 'drym_srcs', 'sy_zpzs_lj', 'sy_zpzs_mz', 'sy_zpzs_kaiguan', 'music_cd', 'music_bfsx', 'music_cd_bf', 'lsjl', 'lsjl_bf', 'sy_lbxz', 'sku_xp_sp', 'htsp_s', 'htsp_s_bf', 'sku_zcb', 'sku_zcb_bf', 'dr_mmdr', 'music_sydx', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd', 'zdjmdc', 'so_yq_order', 'Sku_shimi_chunchu', 'Sku_shimi_miyao'];
 window.addEventListener('storage', function (event) {
     if (localStorage.Sku_kfzms == 0 && event.key == 'sy_ci_shu' && decodeURI(event.url).substring(decodeURI(event.url).length - 8, decodeURI(event.url).length) == decodeURI(location.href).substring(decodeURI(location.href).length - 8, decodeURI(location.href).length)) {
 
@@ -298,11 +298,11 @@ for (var i = 0; i < top_dhl.length; i++) {
             AI_zj.scroll(0, AI_zj_nr.offsetHeight);
         }
         if (this.getAttribute('date-num') == 5) {
-            if (so_ssk.placeholder == '搜索引擎') {
-                so_ssk.placeholder = '搜索引擎 / Ctrl + ?';
+            if (so_ssk.placeholder == '搜索引擎 / Ctrl + ?') {
+                so_ssk.placeholder = '搜索引擎';
             }
-            var daka_l_bot = document.querySelector('.daka_l_bot');
-            daka_l_bot.scroll(0, 0);
+            var shimi_mima_input = document.querySelector('.shimi_mima_input');
+            shimi_mima_input.focus();
         }
     });
 }
@@ -555,6 +555,10 @@ so_anniu.addEventListener('click', function () {
     ssbqym.style.display = 'none';
 });
 
+
+
+
+
 //头像上传
 top_tou_xian = document.querySelector('.top_tou_xian');
 top_tou_xian_sc = document.querySelector('.top_tou_xian_sc');
@@ -613,6 +617,52 @@ tou_xian_qr.addEventListener('click', function () {
         Sku_tctx('头像地址不能为空 !');
     }
 });
+async function uploadAvatarFile(file) {
+    var max_node = document.querySelector('.max_node');
+    if (!max_node || max_node.innerText !== 'node!') return Sku_tctx('服务器未开启，无法上传头像');
+    var allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) return Sku_tctx('不支持的图片格式');
+    var formData = new FormData();
+    formData.append('image', file);
+    try {
+        const response = await fetch('http://localhost/Sku-Photo?path=photo', { method: 'POST', body: formData });
+        const result = await response.json();
+        if (result.success) {
+            input_tou_xian.value = result.path;
+            input_tou_xian.dispatchEvent(new Event('input'));
+        } else {
+            Sku_tctx('上传失败: ' + (result.error || '未知错误'));
+        }
+    } catch (error) {
+        Sku_tctx('上传失败，请检查网络');
+    }
+}
+
+top_tou_xian_sc.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); });
+top_tou_xian_sc.addEventListener('drop', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var files = e.dataTransfer.files;
+    for (var i = 0; i < files.length; i++) {
+        if (files[i].type.startsWith('image/')) {
+            uploadAvatarFile(files[i]);
+            break;
+        }
+    }
+});
+input_tou_xian.addEventListener('paste', function (e) {
+    var items = e.clipboardData.items;
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+            e.preventDefault();
+            uploadAvatarFile(items[i].getAsFile());
+            break;
+        }
+    }
+});
+
+
+
 
 
 
@@ -664,11 +714,9 @@ document.addEventListener('keydown', function (e) {
         top_dhl_z = document.querySelector('.top_dhl');
         top_dhl_z.querySelectorAll('div')[5].click();
     }
-    if (e.ctrlKey && e.key == '/') {
-        if (nrmaxs1.style.display !== 'block' && nrmaxs2.style.display !== 'block' && nrmax.style.display == 'block') {
-            sy_dw_top.click();
-            so_ssk.focus();
-        }
+    if (e.ctrlKey && e.key == '/' && so_ssk.placeholder == '搜索引擎 / Ctrl + ?') {
+        sy_dw_top.click();
+        so_ssk.focus();
     }
 });
 
@@ -1104,8 +1152,8 @@ shezhi_sp_xp_min2.addEventListener('blur', function (e) {
 
 // 相互关闭
 // 点击的,不需要隐藏的...
-function xhgb_dx(class1, class2, class3) {
-    var xhgb_dx = ['yuyanAI_ym', 'daka_tianjia_ym', 'liu_yan_sxuan_div', 'AI_szym_max', 'AI_kjzl_max', 'AI_mods_max', 'lj_zcb_ym', 'so_yq_s', 'ssbqym', 'music_ym', 'top_tou_xian_sc', 'lj_xg_tj', 'dhr_xg_tj'];
+function xhgb_dx2(class1, class2, class3) {
+    var xhgb_dx = ['yuyanAI_ym', 'liu_yan_sxuan_div', 'AI_szym_max', 'AI_kjzl_max', 'AI_mods_max', 'lj_zcb_ym', 'so_yq_s', 'ssbqym', 'music_ym', 'top_tou_xian_sc', 'lj_xg_tj', 'dhr_xg_tj'];
     var dj = document.querySelectorAll('.' + class1);
     for (var i = 0; i < dj.length; i++) {
         dj[i].addEventListener('click', function (e) {
@@ -1117,19 +1165,18 @@ function xhgb_dx(class1, class2, class3) {
         });
     }
 }
-xhgb_dx('so_ssk', 'ssbqym');
-xhgb_dx('so_yq', 'so_yq_s');
-xhgb_dx('i_music_tb', 'music_ym');
-xhgb_dx('top_tou_xian', 'top_tou_xian_sc');
-xhgb_dx('dhr_shezhi_gn_tj', 'lj_xg_tj', 'dhr_xg_tj');
-xhgb_dx('dhr_shezhi_gn_cmm', 'lj_xg_tj', 'dhr_xg_tj');
-xhgb_dx('lj_zcb_i', 'lj_xg_tj', 'lj_zcb_ym');
-xhgb_dx('AI_mods', 'AI_mods_max');
-xhgb_dx('AI_kjzl', 'AI_kjzl_max');
-xhgb_dx('AI_dhsz', 'AI_szym_max');
-xhgb_dx('liu_yan_sxuan', 'liu_yan_sxuan_div');
-xhgb_dx('daka_tianjia_anniu', 'daka_tianjia_ym');
-xhgb_dx('i_yuyanAI_tb', 'yuyanAI_ym');
+xhgb_dx2('so_ssk', 'ssbqym');
+xhgb_dx2('so_yq', 'so_yq_s');
+xhgb_dx2('i_music_tb', 'music_ym');
+xhgb_dx2('top_tou_xian', 'top_tou_xian_sc');
+xhgb_dx2('dhr_shezhi_gn_tj', 'lj_xg_tj', 'dhr_xg_tj');
+xhgb_dx2('dhr_shezhi_gn_cmm', 'lj_xg_tj', 'dhr_xg_tj');
+xhgb_dx2('lj_zcb_i', 'lj_xg_tj', 'lj_zcb_ym');
+xhgb_dx2('AI_mods', 'AI_mods_max');
+xhgb_dx2('AI_kjzl', 'AI_kjzl_max');
+xhgb_dx2('AI_dhsz', 'AI_szym_max');
+xhgb_dx2('liu_yan_sxuan', 'liu_yan_sxuan_div');
+xhgb_dx2('i_yuyanAI_tb', 'yuyanAI_ym');
 
 
 
@@ -1176,19 +1223,6 @@ function insertCommasEveryFourDigits(numberStr) {
 
 
 
-
-// 全局报错
-window.onerror = function (message, source, lineno, colno, error) {
-    console.log("错误信息:", message);
-    console.log("文件路径:", source || '未知');
-    console.log("行号:", lineno || '未知');
-    console.log("列号:", colno || '未知');
-    console.log("错误对象:", error || '未知');
-    if (message == 'Script error.') {
-        Sku_tctx('脚本错误 ! 请检查内存是否充足 或 源代码问题');
-    }
-    // return true; // 阻止默认错误处理
-};
 
 
 

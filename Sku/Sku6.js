@@ -1,13 +1,7 @@
-// 开始
-var xg = document.querySelector('.top_dhl').querySelectorAll('div')[5];
-xg.addEventListener('click', function(e) {
-    daka_shuchu();
-});
-
 // 匹配浏览器高度
 nrmaxs5 = document.querySelector('.nrmaxs5');
 nrmaxs5.style.marginTop = (window.innerHeight + 56 - 523 - 80) / 2 + 'px';
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     nrmaxs5 = document.querySelector('.nrmaxs5');
     nrmaxs5.style.marginTop = (window.innerHeight + 56 - 523 - 80) / 2 + 'px';
 });
@@ -22,7 +16,7 @@ if (localStorage.daka_qp == 1) {
     daka_max.classList.add('daka_max2');
 }
 var daka_quanpin_anniu = document.querySelector(".daka_quanpin_anniu");
-daka_quanpin_anniu.addEventListener('click', function(e) {
+daka_quanpin_anniu.addEventListener('click', function (e) {
     if (localStorage.daka_qp == 0) {
         localStorage.daka_qp = 1;
         daka_max.classList.add('daka_max2');
@@ -35,490 +29,570 @@ daka_quanpin_anniu.addEventListener('click', function(e) {
 
 
 
-//全部和今日和成就切换
-var daka_qh_tp = document.querySelector('.daka_qh_tp');
-var daka_qiehuan_anniu = document.querySelector(".daka_qiehuan_anniu");
-if (localStorage.daka_qb_jr == undefined) {
-    localStorage.daka_qb_jr = '全部';
+// 滚动条
+Sku_gundontiao('.daka_l_bot_max', '.daka_gundontiao_max', '.daka_gundontiao_min');
+
+
+
+
+// 输入输出大小调整
+if (localStorage.shimi_tuozhuai_bianlian == undefined) {
+    localStorage.shimi_tuozhuai_bianlian = '0px';
 }
-if (localStorage.daka_qb_jr == '全部') {
-    daka_qh_tp.classList.add('icon-suoyou');
-} else if (localStorage.daka_qb_jr == '今日') {
-    daka_qh_tp.classList.add('icon-jintian');
-} else if (localStorage.daka_qb_jr == '成就') {
-    daka_qh_tp.classList.add('icon-jiangpin01-L');
-}
-daka_qiehuan_anniu.addEventListener('click', function(e) {
-    if (localStorage.daka_qb_jr == '成就') {
-        localStorage.daka_qb_jr = '今日';
-        daka_qh_tp.classList.remove('icon-jiangpin01-L');
-        daka_qh_tp.classList.add('icon-jintian');
-    } else if (localStorage.daka_qb_jr == '今日') {
-        localStorage.daka_qb_jr = '全部';
-        daka_qh_tp.classList.remove('icon-jintian');
-        daka_qh_tp.classList.add('icon-suoyou');
-    } else if (localStorage.daka_qb_jr == '全部') {
-        localStorage.daka_qb_jr = '成就';
-        daka_qh_tp.classList.remove('icon-suoyou');
-        daka_qh_tp.classList.add('icon-jiangpin01-L');
-    }
-    daka_shuchu();
-})
+var shimi_tuozhuai = document.querySelector('.shimi_tuozhuai');
+document.documentElement.style.setProperty('--shimi_tuozhuai_bianlian', localStorage.shimi_tuozhuai_bianlian);
+// 拖拽触发事件
+if (shimi_tuozhuai) {
+    let isDragging3 = false;
+    let istuozhuai3 = false;
+    let startX3 = 0;
+    let startLeft3;
+    var tuozhuai_zhbl3;
 
+    shimi_tuozhuai.addEventListener('mousedown', function (e) { // 拖拽点击事件
+        e.preventDefault();
+        isDragging3 = true;
+        startX3 = e.clientX;
+        // 获取当前的 left 值
+        startLeft3 = parseInt(window.getComputedStyle(shimi_tuozhuai).left);
+        console.log(startLeft3);
+        shimi_tuozhuai.style.opacity = 1;
+    });
 
+    document.addEventListener('mousemove', function (e) { // 拖拽移动事件
+        e.preventDefault();
+        if (isDragging3) {
+            istuozhuai3 = true;
+            // 计算拖拽距离 (使用 clientX)
+            const currentX = e.clientX;
+            const dragDistance = currentX - startX3;
 
-//打开打卡添加页面
-var daka_tianjia_ym = document.querySelector('.daka_tianjia_ym');
-var daka_tianjia_anniu = document.querySelector('.daka_tianjia_anniu');
-daka_tianjia_anniu.addEventListener('click', function(e) {
-    e.stopPropagation();
-    daka_tianjia_ym.style.display = 'block';
-    var daka_tianjia_tx_srk = document.querySelector('.daka_tianjia_tx_srk');
-    daka_tianjia_tx_srk.focus();
-    var daka_tianjia_ksrq_nian = document.querySelector('.daka_tianjia_ksrq_nian');
-    var daka_tianjia_ksrq_yue = document.querySelector('.daka_tianjia_ksrq_yue');
-    var daka_tianjia_ksrq_ri = document.querySelector('.daka_tianjia_ksrq_ri');
-    daka_tianjia_ksrq_nian.value = new Date().getFullYear();
-    daka_tianjia_ksrq_yue.value = new Date().getMonth() + 1;
-    daka_tianjia_ksrq_ri.value = new Date().getDate();
-    var daka_tianjia_jcts_srk = document.querySelector('.daka_tianjia_jcts_srk');
-    daka_tianjia_jcts_srk.value = 36500;
-});
-document.addEventListener('click', function(e) {
-    if (daka_tianjia_ym.style.display !== 'none') {
-        daka_tianjia_ym_huanyuan();
-    }
-});
-// 打卡添加页面还原
-function daka_tianjia_ym_huanyuan() {
-    daka_tianjia_ym.style.display = 'none';
-    var daka_tianjia_tx = document.querySelector('.daka_tianjia_tx');
-    var daka_tianjia_tx_srk = document.querySelector('.daka_tianjia_tx_srk');
-    daka_tianjia_tx.style.backgroundImage = 'url()';
-    daka_tianjia_tx_srk.value = '';
-    var daka_tianjia_pl_srk = document.querySelector('.daka_tianjia_pl_srk');
-    daka_tianjia_pl_srk.style.border = '1px solid var(--zi_ti_color_50)';
-    var daka_tianjia_pl_ym = document.querySelector('.daka_tianjia_pl_ym');
-    daka_tianjia_pl_ym.style.display = 'none';
-    daka_tianjia_pl_duixian = [1, [1, 1, 1, 1, 1, 1, 1], 1, 2];
-    var daka_tianjia_mc_srk = document.querySelector('.daka_tianjia_mc_srk');
-    daka_tianjia_mc_srk.value = '';
-    var daka_tianjia_pl_srk = document.querySelector('.daka_tianjia_pl_srk');
-    daka_tianjia_pl_srk.innerHTML = '点击选择';
-    daka_tianjia_pl_srk.style.color = 'var(--zi_ti_color_50)';
-    var daka_tianjia_ksrq_max = document.querySelector('.daka_tianjia_ksrq_max');
-    daka_tianjia_ksrq_max.style.border = '1px solid var(--zi_ti_color_50)';
-    var daka_tianjia_jcts_max = document.querySelector('.daka_tianjia_jcts_max');
-    daka_tianjia_jcts_max.style.border = '1px solid var(--zi_ti_color_50)';
-}
-daka_tianjia_ym.addEventListener('click', function(e) {
-    e.stopPropagation();
-    var daka_tianjia_pl_srk = document.querySelector('.daka_tianjia_pl_srk');
-    daka_tianjia_pl_srk.style.border = '1px solid var(--zi_ti_color_50)';
-    var daka_tianjia_pl_ym = document.querySelector('.daka_tianjia_pl_ym');
-    daka_tianjia_pl_ym.style.display = 'none';
-    var daka_tianjia_ksrq_max = document.querySelector('.daka_tianjia_ksrq_max');
-    daka_tianjia_ksrq_max.style.border = '1px solid var(--zi_ti_color_50)';
-    var daka_tianjia_jcts_max = document.querySelector('.daka_tianjia_jcts_max');
-    daka_tianjia_jcts_max.style.border = '1px solid var(--zi_ti_color_50)';
-});
+            // 计算新的位置
+            tuozhuai_zhbl3 = (startLeft3 + dragDistance - 200);
 
-
-
-//打卡添加样式
-var daka_tianjia_tx = document.querySelector('.daka_tianjia_tx');
-var daka_tianjia_tx_srk = document.querySelector('.daka_tianjia_tx_srk');
-daka_tianjia_tx_srk.addEventListener('input', function(e) {
-    daka_tianjia_tx.style.backgroundImage = 'url(' + daka_tianjia_tx_srk.value + ')';
-});
-var daka_tianjia_pl_ym = document.querySelector('.daka_tianjia_pl_ym');
-var daka_tianjia_pl_srk = document.querySelector('.daka_tianjia_pl_srk');
-daka_tianjia_pl_srk.addEventListener('click', function(e) {
-    e.stopPropagation();
-    daka_tianjia_pl_srk.style.border = '1px solid var(--zi_ti_color)';
-    daka_tianjia_pl_ym.style.display = 'block';
-    daka_tianjia_pl_ym_xlhs();
-    var daka_tianjia_ksrq_max = document.querySelector('.daka_tianjia_ksrq_max');
-    daka_tianjia_ksrq_max.style.border = '1px solid var(--zi_ti_color_50)';
-    var daka_tianjia_jcts_max = document.querySelector('.daka_tianjia_jcts_max');
-    daka_tianjia_jcts_max.style.border = '1px solid var(--zi_ti_color_50)';
-});
-
-function daka_tianjia_pl_ym_xlhs() {
-    var daka_tianjia_pl_ans = document.querySelectorAll('.daka_tianjia_pl_ans');
-    var daka_tianjia_pl_yms = document.querySelectorAll('.daka_tianjia_pl_yms');
-    for (let o = 0; o < daka_tianjia_pl_ans.length; o++) {
-        if ((o - 0 + 1) == daka_tianjia_pl_duixian[0]) {
-            daka_tianjia_pl_ans[o].style.backgroundColor = 'var(--zi_ti_color_20)';
-            daka_tianjia_pl_yms[o].style.display = 'block';
-            if ((o - 0 + 1) == 1) {
-                var daka_tianjia_pl_ym_top_antian_ss = document.querySelectorAll('.daka_tianjia_pl_ym_top_antian_ss');
-                for (var i = 0; i < daka_tianjia_pl_duixian[1].length; i++) {
-                    if (daka_tianjia_pl_duixian[1][i] !== 0) {
-                        daka_tianjia_pl_ym_top_antian_ss[i].style.backgroundColor = 'var(--zi_ti_color_20)';
-                    } else {
-                        daka_tianjia_pl_ym_top_antian_ss[i].style.backgroundColor = '';
-                    }
-                }
-            } else if ((o - 0 + 1) == 2) {
-                var daka_tianjia_pl_ym_top_antian_ym_zzxt = document.querySelectorAll('.daka_tianjia_pl_ym_top_antian_ym_zzxt');
-                var daka_tianjia_pl_ym_top_anz_ss = document.querySelectorAll('.daka_tianjia_pl_ym_top_anz_ss');
-                for (let i = 0; i < daka_tianjia_pl_ym_top_anz_ss.length; i++) {
-                    if (daka_tianjia_pl_duixian[2] == (i - 0 + 1)) {
-                        daka_tianjia_pl_ym_top_anz_ss[i].style.backgroundColor = 'var(--zi_ti_color_20)';
-                        daka_tianjia_pl_ym_top_antian_ym_zzxt[1].innerHTML = '每周 ' + (i - 0 + 1) + ' 次';
-                    } else {
-                        daka_tianjia_pl_ym_top_anz_ss[i].style.backgroundColor = '';
-                    }
-                }
-            } else if ((o - 0 + 1) == 3) {
-                var daka_tianjia_pl_ym_top_ansjjg_ym_t = document.querySelector('.daka_tianjia_pl_ym_top_ansjjg_ym_t');
-                daka_tianjia_pl_ym_top_ansjjg_ym_t.value = daka_tianjia_pl_duixian[3];
-            }
-        } else {
-            daka_tianjia_pl_ans[o].style.backgroundColor = '';
-            daka_tianjia_pl_yms[o].style.display = 'none';
-        }
-    }
-}
-daka_tianjia_pl_ym.addEventListener('click', function(e) {
-    e.stopPropagation();
-})
-var daka_tianjia_pl_duixian = [1, [1, 1, 1, 1, 1, 1, 1], 1, 2];
-var daka_tianjia_pl_ans = document.querySelectorAll('.daka_tianjia_pl_ans');
-var daka_tianjia_pl_yms = document.querySelectorAll('.daka_tianjia_pl_yms');
-for (let i = 0; i < daka_tianjia_pl_ans.length; i++) {
-    daka_tianjia_pl_ans[i].addEventListener('click', function(e) {
-        daka_tianjia_pl_duixian[0] = i + 1;
-        daka_tianjia_pl_ym_xlhs();
-    })
-}
-var daka_tianjia_pl_ym_top_antian_ss = document.querySelectorAll('.daka_tianjia_pl_ym_top_antian_ss');
-for (let i = 0; i < daka_tianjia_pl_ym_top_antian_ss.length; i++) {
-    daka_tianjia_pl_ym_top_antian_ss[i].addEventListener('click', function(e) {
-        if (daka_tianjia_pl_duixian[1][i] == 0) {
-            daka_tianjia_pl_duixian[1][i] = 1;
-            daka_tianjia_pl_ym_xlhs();
-        } else {
-            daka_tianjia_pl_duixian[1][i] = 0;
-            daka_tianjia_pl_ym_xlhs();
-        }
-    })
-}
-var daka_tianjia_pl_ym_top_anz_ss = document.querySelectorAll('.daka_tianjia_pl_ym_top_anz_ss');
-for (let i = 0; i < daka_tianjia_pl_ym_top_anz_ss.length; i++) {
-    daka_tianjia_pl_ym_top_anz_ss[i].addEventListener('click', function(e) {
-        daka_tianjia_pl_duixian[2] = i + 1;
-        daka_tianjia_pl_ym_xlhs();
-    })
-}
-var daka_tianjia_pl_ym_top_ansjjg_ym_t = document.querySelector('.daka_tianjia_pl_ym_top_ansjjg_ym_t');
-daka_tianjia_pl_ym_top_ansjjg_ym_t.addEventListener('input', function(e) {
-    daka_tianjia_pl_duixian[3] = daka_tianjia_pl_ym_top_ansjjg_ym_t.value;
-})
-daka_tianjia_pl_ym_top_ansjjg_ym_t.addEventListener('blur', function(e) {
-    if (daka_tianjia_pl_ym_top_ansjjg_ym_t.value == '' || daka_tianjia_pl_ym_top_ansjjg_ym_t.value < 1) {
-        daka_tianjia_pl_ym_top_ansjjg_ym_t.value = 1;
-        daka_tianjia_pl_duixian[3] = daka_tianjia_pl_ym_top_ansjjg_ym_t.value;
-    }
-});
-var daka_tianjia_pl_srk = document.querySelector('.daka_tianjia_pl_srk');
-var daka_tianjia_pl_ym_qd = document.querySelector('.daka_tianjia_pl_ym_qd');
-daka_tianjia_pl_ym_qd.addEventListener('click', function(e) {
-    if (daka_tianjia_pl_duixian[0] == 1) {
-        let daka_tianjia_pl_duixian_1 = 0;
-        for (let i = 0; i < daka_tianjia_pl_duixian[1].length; i++) {
-            if (daka_tianjia_pl_duixian[1][i] == 1) {
-                daka_tianjia_pl_duixian_1++;
-            }
-        }
-        if (daka_tianjia_pl_duixian_1 == 7) {
-            daka_tianjia_pl_srk.innerHTML = '每天';
-        } else {
-            let weekDays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
-            let selectedDays = [];
-            for (let i = 0; i < daka_tianjia_pl_duixian[1].length; i++) {
-                if (daka_tianjia_pl_duixian[1][i] == 1) {
-                    selectedDays.push(weekDays[i]);
-                }
-            }
-            daka_tianjia_pl_srk.innerHTML = selectedDays.join('、');
-        }
-    } else if (daka_tianjia_pl_duixian[0] == 2) {
-        daka_tianjia_pl_srk.innerHTML = '每周 ' + daka_tianjia_pl_duixian[2] + ' 次';
-    } else if (daka_tianjia_pl_duixian[0] == 3) {
-        if (daka_tianjia_pl_duixian[3] == 1) {
-            daka_tianjia_pl_srk.innerHTML = '每天';
-        } else {
-            daka_tianjia_pl_srk.innerHTML = '每隔 ' + daka_tianjia_pl_duixian[3] + ' 天';
-        }
-    }
-    daka_tianjia_pl_srk.style.color = 'var(--zi_ti_color)';
-    daka_tianjia_pl_ym.style.display = 'none';
-})
-var daka_tianjia_ksrq_max_input = document.querySelector('.daka_tianjia_ksrq_max').querySelectorAll('input');
-daka_tianjia_ksrq_max_input[0].addEventListener('blur', function(e) {
-    if (this.value < 2003) {
-        this.value = 2003;
-    }
-})
-daka_tianjia_ksrq_max_input[1].addEventListener('blur', function(e) {
-    if (this.value < 1) {
-        this.value = 1;
-    } else
-    if (this.value > 12) {
-        this.value = 12;
-    }
-})
-daka_tianjia_ksrq_max_input[2].addEventListener('blur', function(e) {
-    if (this.value < 1) {
-        this.value = 1;
-    } else if (this.value > 31) {
-        this.value = 31;
-    }
-})
-var daka_tianjia_ksrq_max = document.querySelector('.daka_tianjia_ksrq_max');
-daka_tianjia_ksrq_max.addEventListener('click', function(e) {
-    e.stopPropagation();
-    daka_tianjia_ksrq_max.style.border = '1px solid var(--zi_ti_color)';
-    var daka_tianjia_pl_srk = document.querySelector('.daka_tianjia_pl_srk');
-    daka_tianjia_pl_srk.style.border = '1px solid var(--zi_ti_color_50)';
-    var daka_tianjia_jcts_max = document.querySelector('.daka_tianjia_jcts_max');
-    daka_tianjia_jcts_max.style.border = '1px solid var(--zi_ti_color_50)';
-});
-var daka_tianjia_jcts_max = document.querySelector('.daka_tianjia_jcts_max');
-daka_tianjia_jcts_max.addEventListener('click', function(e) {
-    e.stopPropagation();
-    daka_tianjia_jcts_max.style.border = '1px solid var(--zi_ti_color)';
-    var daka_tianjia_pl_srk = document.querySelector('.daka_tianjia_pl_srk');
-    daka_tianjia_pl_srk.style.border = '1px solid var(--zi_ti_color_50)';
-    var daka_tianjia_ksrq_max = document.querySelector('.daka_tianjia_ksrq_max');
-    daka_tianjia_ksrq_max.style.border = '1px solid var(--zi_ti_color_50)';
-});
-var daka_tianjia_jcts_srk = document.querySelector('.daka_tianjia_jcts_srk');
-daka_tianjia_jcts_srk.addEventListener('blur', function(e) {
-    if (this.value < 7) {
-        this.value = 7;
-    } else if (this.value > 36500) {
-        this.value = 36500;
-    }
-});
-
-
-
-
-// 添加打卡按钮
-var daka_tianjia_qd = document.querySelector('.daka_tianjia_qd');
-daka_tianjia_qd.addEventListener('click', function(e) {
-    var daka_tianjia_tx_srk = document.querySelector('.daka_tianjia_tx_srk');
-    var daka_tianjia_mc_srk = document.querySelector('.daka_tianjia_mc_srk');
-    var daka_tianjia_pl_srk = document.querySelector('.daka_tianjia_pl_srk');
-    var daka_tianjia_ksrq_nian = document.querySelector('.daka_tianjia_ksrq_nian');
-    var daka_tianjia_ksrq_yue = document.querySelector('.daka_tianjia_ksrq_yue');
-    var daka_tianjia_ksrq_ri = document.querySelector('.daka_tianjia_ksrq_ri');
-    var daka_tianjia_jcts_srk = document.querySelector('.daka_tianjia_jcts_srk');
-
-    if (daka_tianjia_tx_srk.value !== '' && daka_tianjia_mc_srk.value !== '' && daka_tianjia_pl_srk.innerHTML !== '点击选择') {
-        var da_ka = JSON.parse(localStorage.da_ka);
-        let da_ka_tj = [];
-        da_ka_tj[0] = daka_tianjia_tx_srk.value;
-        da_ka_tj[1] = daka_tianjia_mc_srk.value;
-        da_ka_tj[2] = daka_tianjia_pl_srk.innerText;
-        // 创建日期对象并设置为当天凌晨0点
-        const date = new Date(
-            daka_tianjia_ksrq_nian.value,
-            daka_tianjia_ksrq_yue.value - 1,
-            daka_tianjia_ksrq_ri.value,
-            0, 0, 0, 0
-        );
-        da_ka_tj[3] = date.getTime();
-        da_ka_tj[4] = daka_tianjia_jcts_srk.value - 0;
-        da_ka_tj[5] = [];
-        da_ka_tj[6] = [];
-        da_ka.push(da_ka_tj);
-        localStorage.da_ka = JSON.stringify(da_ka);
-        Sku_tctx('习惯添加:' + daka_tianjia_mc_srk.value);
-        daka_shuchu();
-        daka_tianjia_ym_huanyuan();
-    } else {
-        Sku_tctx('请填写完整信息');
-    }
-})
-
-
-
-
-// 输出打卡列表
-function daka_shuchu(dh_true) {
-    // 是否需要动画
-    var dh_trues = (dh_true !== undefined) ? dh_true : true;
-
-    var daka_l_bot = document.querySelector('.daka_l_bot');
-    daka_l_bot.innerHTML = '';
-    var da_ka_max_gs = -1;
-
-    var da_ka_wdk = []; // 今日未打卡
-    var da_ka_xydk = []; // 今日已打卡
-    var da_ka_wxdk = []; // 今日无需打卡
-    var da_ka_ywc = []; // 已完成
-
-    // 判断存放在哪个数组中
-    var da_ka = JSON.parse(localStorage.da_ka);
-    for (let index = 0; index < da_ka.length; index++) {
-        daka_shuchu_pd(da_ka[index], index);
-    }
-
-    // 判断存放在哪个数组中的函数
-    function daka_shuchu_pd(da_ka_dx, index) {
-        var daka_ksrq = new Date(da_ka_dx[3]); // 开始日期时间戳
-        var daka_dkpl = da_ka_dx[2]; // 打卡周期
-        var daka_jcts = da_ka_dx[4]; // 持续时间
-        var daka_dksj = da_ka_dx[5]; // 已经打卡的时间戳
-
-        // 获取今天的日期(凌晨0点)
-        var today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        // 检查是否在有效期内
-        var endDate = new Date(daka_ksrq.getTime() + (daka_jcts * 24 * 60 * 60 * 1000));
-        if (today < daka_ksrq || today > endDate) {
-            da_ka_ywc.push(index); // 已完成
-            return;
-        }
-
-        // 检查今天是否已经打卡
-        for (let i = 0; i < daka_dksj.length; i++) {
-            var checkDate = new Date(daka_dksj[i]);
-            checkDate.setHours(0, 0, 0, 0);
-            if (checkDate.getTime() === today.getTime()) {
-                da_ka_xydk.push(index); // 今日已打卡
-                return;
-            }
-        }
-
-        // 检查今天是否需要打卡
-        var needCheckToday = false;
-        if (daka_dkpl === '每天') {
-            needCheckToday = true;
-        } else if (daka_dkpl.startsWith('每周')) {
-            var timesPerWeek = parseInt(daka_dkpl.match(/\d+/)[0]);
-
-            // 计算本周已打卡次数
-            var currentWeekCheckCount = 0;
-            var currentWeekStart = new Date(today);
-            // 将周一作为一周的第一天
-            currentWeekStart.setDate(today.getDate() - (today.getDay() === 0 ? 6 : today.getDay() - 1));
-            currentWeekStart.setHours(0, 0, 0, 0);
-
-            for (let i = 0; i < daka_dksj.length; i++) {
-                var checkDate = new Date(daka_dksj[i]);
-                checkDate.setHours(0, 0, 0, 0);
-                // 检查是否在本周内
-                if (checkDate >= currentWeekStart && checkDate <= today) {
-                    currentWeekCheckCount++;
-                }
+            // 边界限制
+            if (tuozhuai_zhbl3 < '0') {
+                tuozhuai_zhbl3 = '0';
+            } else if (tuozhuai_zhbl3 > '400') {
+                tuozhuai_zhbl3 = '400';
             }
 
-            // 如果本周打卡次数未达到要求，则需要打卡
-            needCheckToday = currentWeekCheckCount < timesPerWeek;
-        } else if (daka_dkpl.startsWith('每隔')) {
-            var daysInterval = parseInt(daka_dkpl.match(/\d+/)[0]);
-            var daysPassed = Math.floor((today - daka_ksrq) / (24 * 60 * 60 * 1000));
-            needCheckToday = (daysPassed % daysInterval === 0);
-        } else if (daka_dkpl.includes('周')) {
-            var weekDays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
-            var todayWeekDay = weekDays[today.getDay() === 0 ? 6 : today.getDay() - 1];
+            tuozhuai_zhbl3 = tuozhuai_zhbl3 + 'px';
 
-            needCheckToday = daka_dkpl.includes(todayWeekDay);
+            // 修改 left 样式
+            shimi_tuozhuai.style.left = 'calc(200px + ' + tuozhuai_zhbl3 + ')';
         }
+    });
 
-        if (needCheckToday) {
-            da_ka_wdk.push(index); // 今日未打卡
-        } else {
-            da_ka_wxdk.push(index); // 今日无需打卡
-        }
-    }
-
-    // 顺序输出打卡
-    if (localStorage.daka_qb_jr == '成就') {
-        for (let i = 0; i < da_ka_ywc.length; i++) { //第四输出
-            daka_shuchu2(da_ka_ywc[i], '已完成');
-        }
-    } else {
-        for (let i = 0; i < da_ka_wdk.length; i++) { //第一输出
-            daka_shuchu2(da_ka_wdk[i], '今日未打卡');
-        }
-        for (let i = 0; i < da_ka_xydk.length; i++) { //第二输出
-            daka_shuchu2(da_ka_xydk[i], '今日已打卡');
-        }
-        if (localStorage.daka_qb_jr == '全部') {
-            for (let i = 0; i < da_ka_wxdk.length; i++) { //第三输出
-                daka_shuchu2(da_ka_wxdk[i], '今日无需打卡');
+    document.addEventListener('mouseup', function (e) { // 拖拽结束事件
+        if (isDragging3) {
+            e.preventDefault();
+            console.log('拖拽结束触发事件');
+            shimi_tuozhuai.style.opacity = null;
+            isDragging3 = false;
+            // 保存拖拽结束时的位置
+            if (istuozhuai3) {
+                localStorage.shimi_tuozhuai_bianlian = tuozhuai_zhbl3;
+                document.documentElement.style.setProperty('--shimi_tuozhuai_bianlian', tuozhuai_zhbl3);
             }
+            istuozhuai3 = false;
         }
-    }
-
-    // 输出打卡函数
-    function daka_shuchu2(id, liebie) {
-        var da_ka = JSON.parse(localStorage.da_ka);
-        da_ka_max_gs++;
-        var da_ka_max = document.createElement('div');
-
-        da_ka_max.style.setProperty('--delay-index', da_ka_max_gs);
-        if (dh_trues) { // 是否需要动画
-            da_ka_max.classList.add('daka_s_max');
-        } else {
-            da_ka_max.classList.add('daka_s_max_no_dh');
-        }
-        da_ka_max.setAttribute('data_num', id);
-        var da_ka_jisuan_s = da_ka[id][5].length > 0 ? `🗲${da_ka[id][5].length}天` : '';
-        var da_ka_pl_s = da_ka[id][2] + ' | ' + new Date(da_ka[id][3]).getFullYear() + '年' + new Date(da_ka[id][3]).getMonth() + 1 + '月' + new Date(da_ka[id][3]).getDate() + '日 - ' + new Date(da_ka[id][3] + da_ka[id][4] * 24 * 60 * 60 * 1000).getFullYear() + '年' + new Date(da_ka[id][3] + da_ka[id][4] * 24 * 60 * 60 * 1000).getMonth() + 1 + '月' + new Date(da_ka[id][3] + da_ka[id][4] * 24 * 60 * 60 * 1000).getDate() + '日';
-        var da_ka_zt_s = '';
-        var da_ka_ztwz_s = '';
-        if (liebie == '今日已打卡') {
-            da_ka_zt_s = 'daka_s_qd_dkcg';
-            da_ka_ztwz_s = '✔';
-        } else if (liebie == '今日未打卡') {
-            da_ka_zt_s = 'daka_s_qd_dk';
-            da_ka_ztwz_s = '';
-        } else if (liebie == '今日无需打卡') {
-            da_ka_zt_s = 'daka_s_qd_wxdk';
-            da_ka_ztwz_s = '今日无需打卡';
-        } else if (liebie == '已完成') {
-            da_ka_zt_s = '';
-            da_ka_ztwz_s = '';
-        }
-        da_ka_max.innerHTML = '<div class="daka_s_min"><div class="daka_s_tx" style="background-image:url(' + ((da_ka[id][0].startsWith("http") || da_ka[id][0].startsWith("data")) ? da_ka[id][0] : '') + ');">' + ((da_ka[id][0].startsWith("http") || da_ka[id][0].startsWith("data")) ? '' : da_ka[id][0]) + '</div><div class="daka_s_wzts_max"><div class="daka_s_wz">' + da_ka[id][1] + ' ' + da_ka_jisuan_s + '</div><div class="daka_s_ts">' + da_ka_pl_s + '</div></div><div class="' + da_ka_zt_s + '">' + da_ka_ztwz_s + '</div></div>';
-
-        daka_l_bot.appendChild(da_ka_max);
-    }
-
+    });
 }
-daka_shuchu();
-
-
-
-
-// 打卡咯
-var daka_l_bot = document.querySelector('.daka_l_bot');
-daka_l_bot.addEventListener('click', function(e) {
-    if (e.target.classList.contains('daka_s_qd_dk')) {
-        var da_ka = JSON.parse(localStorage.da_ka);
-        var da_ka_zhixian = e.target.parentNode.parentNode.getAttribute('data_num')
-        console.log('指向: ' + da_ka_zhixian);
-        da_ka[da_ka_zhixian][5].push(new Date().getTime());
-        localStorage.da_ka = JSON.stringify(da_ka);
-        Sku_tctx('打卡完成: ' + da_ka[da_ka_zhixian][1]);
-        e.target.style.animation = 'daka_qr_dh 0.5s';
-        setTimeout(function() {
-            e.target.innerText = '✔';
-            e.target.className = 'daka_s_qd_dkcg';
-        }, 250);
-    }
-});
-
 
 
 
 // 滚动条
-Sku_gundontiao('.daka_l_bot', '.daka_gundontiao_max', '.daka_gundontiao_min');
+Sku_gundontiao('.daka_r_bot_bottom', '.shimi_gundontiao_max', '.shimi_gundontiao_min');
+
+
+
+//创建私密存储变量
+if (localStorage.Sku_shimi_chunchu == undefined) {
+    localStorage.Sku_shimi_chunchu = '[["","","1"]]';
+}
+//创建私密密钥存储变量
+if (localStorage.Sku_shimi_miyao == undefined) {
+    localStorage.Sku_shimi_miyao = '';
+}
+
+
+
+
+//登录密钥
+var shimi_mima_qr = document.querySelector('.shimi_mima_qr');
+var shimi_mima_input = document.querySelector('.shimi_mima_input');
+var shimi_mima_max = document.querySelector('.shimi_mima_max');
+var daka_l_bot = document.querySelector('.daka_l_bot');
+var daka_r_bot = document.querySelector('.daka_r_bot');
+var shimi_shousuo = document.querySelector('.shimi_shousuo');
+var shimi_tianjia_tp = document.querySelector('.shimi_tianjia_tp');
+var shimi_mima_gl_old = ''; // 用于修改密码时暂存旧密
+var shimi_mima_gl = '';
+if (localStorage.Sku_shimi_miyao == '') {
+    shimi_mima_input.placeholder = '输入新密钥';
+}
+daka_max.addEventListener('click', function (e) {
+    shimi_mima_input.focus();
+});
+
+shimi_mima_qr.addEventListener('click', function (e) {
+    if (shimi_mima_input.value == '') {
+        shimi_mima_input.focus();
+        return;
+    }
+    //初始化或修改密钥输入
+    if (shimi_mima_input.placeholder == '输入新密钥') {
+        shimi_mima_gl = shimi_mima_input.value;
+        shimi_mima_input.value = '';
+        shimi_mima_input.focus();
+        shimi_mima_input.placeholder = '再次输入密钥确认';
+    } else if (shimi_mima_input.value !== shimi_mima_gl && shimi_mima_input.placeholder == '再次输入密钥确认') {
+        Sku_tctx('两次输入的密钥不一致');
+        shimi_mima_input.value = '';
+        shimi_mima_input.focus();
+        shimi_mima_input.placeholder = '输入新密钥';
+    } else if (shimi_mima_input.value == shimi_mima_gl && shimi_mima_input.placeholder == '再次输入密钥确认') {
+        Sku_haxijiami(shimi_mima_gl).then(async hash => { // 加上 async
+            localStorage.Sku_shimi_miyao = hash;
+            shimi_xiugai_mima.innerHTML = '修改密钥';
+            shimi_mima_input.placeholder = '输入密钥';
+            shimi_mima_max.style.display = 'none';
+            if (shimi_mima_gl_old !== '') { // 如果是修改密码流程（旧密码不为空），则重新加密所有数据
+                var list = JSON.parse(localStorage.Sku_shimi_chunchu);
+                for (var i = 0; i < list.length; i++) {
+                    // 先用旧密钥解密，忽略空数据
+                    var t = list[i][0] ? await Sku_AES256GCM(list[i][0], shimi_mima_gl_old, "decrypt") : '';
+                    var c = list[i][1] ? await Sku_AES256GCM(list[i][1], shimi_mima_gl_old, "decrypt") : '';
+                    // 再用新密钥加密  
+                    list[i][0] = await Sku_AES256GCM(t, shimi_mima_gl, "encrypt");
+                    list[i][1] = await Sku_AES256GCM(c, shimi_mima_gl, "encrypt");
+                }
+                localStorage.Sku_shimi_chunchu = JSON.stringify(list);
+                shimi_mima_gl_old = ''; // 清空临时变量
+            }
+            shimi_xianshi();
+        });
+    }
+    //登录密钥
+    if (localStorage.Sku_shimi_miyao !== '' && shimi_mima_input.placeholder == '输入密钥') {
+        Sku_haxijiami(shimi_mima_input.value).then(hash => {
+            if (localStorage.Sku_shimi_miyao == hash) {
+                shimi_mima_gl = shimi_mima_input.value;
+                shimi_xianshi();
+            } else {
+                Sku_tctx('密钥错误');
+                shimi_mima_input.value = '';
+                shimi_mima_input.focus();
+            }
+        });
+    }
+    //修改密钥
+    if (shimi_mima_input.placeholder == '输入旧密钥') {
+        Sku_haxijiami(shimi_mima_input.value).then(hash => {
+            if (localStorage.Sku_shimi_miyao == hash) {
+                shimi_mima_gl_old = shimi_mima_input.value; // 暂存旧密码
+                shimi_mima_input.placeholder = '输入新密钥';
+                shimi_mima_input.value = '';
+                shimi_mima_input.focus();
+            } else {
+                Sku_tctx('密钥错误');
+                shimi_mima_input.value = '';
+                shimi_mima_input.focus();
+            }
+        });
+    }
+});
+
+
+
+
+//显示页面
+function shimi_xianshi() {
+    shimi_mima_input.value = '';
+    shimi_mima_max.style.display = 'none';
+    daka_l_bot.style.display = 'block';
+    daka_r_bot.style.display = 'block';
+    shimi_shousuo.style.display = 'block';
+    shimi_tianjia_tp.style.display = 'block';
+    jiami_wenben_shuchu();
+}
+
+
+
+
+//修改密钥
+var shimi_xiugai_mima = document.querySelector('.shimi_xiugai_mima');
+shimi_xiugai_mima.addEventListener('click', function (e) {
+    if (localStorage.Sku_shimi_miyao == '') {
+        Sku_tctx('无密钥，无法修改');
+        return;
+    }
+    if (this.innerHTML == '修改密钥' && localStorage.Sku_shimi_miyao !== '') {
+        this.innerHTML = '返回';
+        shimi_mima_input.value = '';
+        shimi_mima_input.focus();
+        shimi_mima_input.placeholder = '输入旧密钥';
+    } else if (this.innerHTML == '返回') {
+        this.innerHTML = '修改密钥';
+        shimi_mima_input.value = '';
+        shimi_mima_input.focus();
+        shimi_mima_input.placeholder = '输入密钥';
+    }
+});
+
+
+//输出加密文本
+var daka_l_bot_max = document.querySelector('.daka_l_bot_max');
+var daka_r_bot_top = document.querySelector('.daka_r_bot_top');
+var daka_r_bot_bottom = document.querySelector('.daka_r_bot_bottom');
+
+// 新增：HTML 转义函数，防止特殊符号被解析为标签或导致显示异常
+function escapeHtml(text) {
+    if (text === null || text === undefined) return '';
+    // 先将内容转为字符串，然后替换特殊字符
+    return String(text)
+        .replace(/&/g, '&amp;')  // 必须先替换 &，否则会把后面生成的实体前面的 & 再次替换
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+async function jiami_wenben_shuchu() {
+    // 1. 清空母盒子原有的内容
+    daka_l_bot_max.innerHTML = '';
+    daka_r_bot_top.value = '';
+    daka_r_bot_bottom.value = '';
+    shimi_shanchu_tp.style.display = '';
+    shimi_quanxuan_tp.style.display = '';
+    shimi_quxiao_tp.style.display = '';
+    shimi_shanchu_fuxuankuan = [];
+    // 2. 从 localStorage 获取数据
+    var dataList = JSON.parse(localStorage.getItem('Sku_shimi_chunchu'));
+    // 解密所有数据用于显示和搜索
+    var decryptedList = [];
+    for (var i = 0; i < dataList.length; i++) {
+        try {
+            // 解密标题和内容，如果解密失败则显示提示
+            var title = dataList[i][0] ? await Sku_AES256GCM(dataList[i][0], shimi_mima_gl, "decrypt") : '';
+            var content = dataList[i][1] ? await Sku_AES256GCM(dataList[i][1], shimi_mima_gl, "decrypt") : '';
+            decryptedList.push([title, content, dataList[i][2]]); // [标题, 内容, ID]
+        } catch (e) {
+            // 解密失败处理
+            decryptedList.push(["解密失败", "密钥错误", dataList[i][2]]);
+        }
+    }
+    // 搜索逻辑为对 decryptedList 操作
+    if (shimi_shousuo.value !== '') {
+        var dataList2 = [];
+        for (var i = 0; i < decryptedList.length; i++) {
+            if (containsAllChars(shimi_shousuo.value, (decryptedList[i][0] + decryptedList[i][1]))) {
+                dataList2.push(decryptedList[i]);
+            }
+        }
+        decryptedList = dataList2;
+    }
+    if (!dataList || dataList.length == 0) {
+        console.log("加密文本中没有数据");
+        daka_r_bot_top.readOnly = true;
+        daka_r_bot_bottom.readOnly = true;
+        return;
+    }
+    daka_r_bot_top.readOnly = false;
+    daka_r_bot_bottom.readOnly = false;
+    // 4. 遍历数据，拼接 HTML 字符串
+    var htmlStr = '';
+    for (var i = 0; i < decryptedList.length; i++) {
+        var item = decryptedList[i];
+        var title = escapeHtml(String(item[0] || '').substring(0, 200));
+        var content = escapeHtml(String(item[1] || '').substring(0, 200));
+        // 使用模板字符串拼接
+        htmlStr += `
+            <div class="shimi_wenben_s_max" data-index="${item[2]}">
+                <div class="shimi_wenben_s_top">${title}</div>
+                <div class="shimi_wenben_s_bottom">${content}</div>
+                <div class="shimi_wenben_s_fuxuankuan"></div>
+            </div>
+        `;
+    }
+    // 5. 将拼接好的 HTML 一次性放入母盒子中
+    daka_l_bot_max.innerHTML = htmlStr;
+    const shimi_wenben_s_max = document.querySelectorAll('.shimi_wenben_s_max');
+    shimi_wenben_s_max[0].click();
+}
+
+
+
+
+//点击预览完整内容
+var shimi_index = '';
+daka_l_bot_max.addEventListener('click', async function (e) {
+    if (e.target.classList.contains('shimi_wenben_s_max')) {
+        daka_l_bot_max.querySelectorAll('.shimi_wenben_s_max').forEach(item => {
+            item.style.backgroundColor = '';
+        });
+        e.target.style.backgroundColor = 'var(--zi_ti_color_20)';
+        shimi_index = e.target.getAttribute('data-index');
+        console.log('当前指向ID:', shimi_index);
+        var dataList = JSON.parse(localStorage.getItem('Sku_shimi_chunchu'));
+        var itemData = dataList.find(item => String(item[2]) === shimi_index);
+        // 解密后赋值
+        daka_r_bot_top.value = itemData[0] ? await Sku_AES256GCM(itemData[0], shimi_mima_gl, "decrypt") : '';
+        daka_r_bot_bottom.value = itemData[1] ? await Sku_AES256GCM(itemData[1], shimi_mima_gl, "decrypt") : '';
+    }
+});
+
+
+
+
+//修改加密文本
+async function jiami_wenben_xiugai2(indexs, tops, bottoms) {
+    const currentKey = shimi_mima_gl;
+    if (!currentKey) return;
+    var Sku_shimi_chunchus = JSON.parse(localStorage.getItem('Sku_shimi_chunchu'));
+    var realIndex = Sku_shimi_chunchus.findIndex(item => String(item[2]) === indexs);
+
+    if (tops !== null) {
+        Sku_shimi_chunchus[realIndex][0] = await Sku_AES256GCM(tops, currentKey, "encrypt");
+        var targetDiv = document.querySelector('.shimi_wenben_s_max[data-index="' + indexs + '"]');
+        if (targetDiv) targetDiv.querySelector('.shimi_wenben_s_top').innerHTML = escapeHtml(String(tops).substring(0, 200));
+    }
+
+    if (bottoms !== null) {
+        Sku_shimi_chunchus[realIndex][1] = await Sku_AES256GCM(bottoms, currentKey, "encrypt");
+        var targetDiv = document.querySelector('.shimi_wenben_s_max[data-index="' + indexs + '"]');
+        if (targetDiv) targetDiv.querySelector('.shimi_wenben_s_bottom').innerHTML = escapeHtml(String(bottoms).substring(0, 200));
+    }
+
+    localStorage.setItem('Sku_shimi_chunchu', JSON.stringify(Sku_shimi_chunchus));
+}
+
+
+const debounceCache = {};
+function getDebouncedFn(indexs) {
+    if (!debounceCache[indexs]) {
+        debounceCache[indexs] = Sku_fan_dou_don(jiami_wenben_xiugai2, 500);
+    }
+    return debounceCache[indexs];
+}
+daka_r_bot_top.addEventListener('input', function () {
+    if (!shimi_index) return;
+    getDebouncedFn(shimi_index + '_top')(shimi_index, this.value, null);
+});
+daka_r_bot_bottom.addEventListener('input', function () {
+    if (!shimi_index) return;
+    getDebouncedFn(shimi_index + '_bottom')(shimi_index, null, this.value);
+});
+
+
+
+
+
+//新增加密文本
+shimi_tianjia_tp.addEventListener('click', async function () {
+    var Sku_shimi_chunchus = JSON.parse(localStorage.getItem('Sku_shimi_chunchu'));
+    // 加密空字符串
+    var encEmpty = await Sku_AES256GCM('', shimi_mima_gl, "encrypt");
+    Sku_shimi_chunchus.unshift([encEmpty, encEmpty, Date.now()]);
+    localStorage.setItem('Sku_shimi_chunchu', JSON.stringify(Sku_shimi_chunchus));
+    jiami_wenben_shuchu();
+    daka_r_bot_top.focus();
+});
+
+
+
+
+//删除加密文本
+var shimi_shanchu_tp = document.querySelector('.shimi_shanchu_tp');
+var shimi_quanxuan_tp = document.querySelector('.shimi_quanxuan_tp');
+var shimi_quxiao_tp = document.querySelector('.shimi_quxiao_tp');
+var shimi_shanchu_fuxuankuan = [];
+daka_l_bot_max.addEventListener('click', function (e) {
+    if (e.target.classList.contains('shimi_wenben_s_fuxuankuan')) {
+        if (!shimi_shanchu_fuxuankuan.includes(e.target.parentElement.getAttribute('data-index'))) {
+            shimi_shanchu_fuxuankuan.push(e.target.parentElement.getAttribute('data-index'));
+        } else {
+            shimi_shanchu_fuxuankuan.splice(shimi_shanchu_fuxuankuan.indexOf(e.target.parentElement.getAttribute('data-index')), 1);
+        }
+        console.log(shimi_shanchu_fuxuankuan);
+
+        shimi_shanchu_fuxuankuan_yanshi();
+    }
+});
+function shimi_shanchu_fuxuankuan_yanshi() {
+    document.querySelectorAll('.shimi_wenben_s_max').forEach(item => {
+        if (shimi_shanchu_fuxuankuan.includes(item.getAttribute('data-index'))) {
+            item.querySelector('.shimi_wenben_s_fuxuankuan').style.backgroundColor = 'var(--zi_ti_color)';
+            item.querySelector('.shimi_wenben_s_fuxuankuan').style.opacity = '1';
+        } else {
+            item.querySelector('.shimi_wenben_s_fuxuankuan').style.backgroundColor = '';
+            item.querySelector('.shimi_wenben_s_fuxuankuan').style.opacity = '';
+        }
+    });
+    if (shimi_shanchu_fuxuankuan.length == 0) {
+        shimi_shanchu_tp.style.display = '';
+        shimi_quanxuan_tp.style.display = '';
+        shimi_quxiao_tp.style.display = '';
+    } else {
+        shimi_shanchu_tp.style.display = 'block';
+        shimi_quanxuan_tp.style.display = 'block';
+        shimi_quxiao_tp.style.display = 'block';
+    }
+}
+shimi_shanchu_tp.addEventListener('click', function () {
+    var Sku_shimi_chunchus = JSON.parse(localStorage.getItem('Sku_shimi_chunchu'));
+    Sku_shimi_chunchus = Sku_shimi_chunchus.filter(item => !shimi_shanchu_fuxuankuan.includes(String(item[2])));
+    localStorage.setItem('Sku_shimi_chunchu', JSON.stringify(Sku_shimi_chunchus));
+    jiami_wenben_shuchu();
+});
+shimi_quanxuan_tp.addEventListener('click', function () {
+    shimi_shanchu_fuxuankuan = [];
+    document.querySelectorAll('.shimi_wenben_s_max').forEach(item => {
+        shimi_shanchu_fuxuankuan.push(item.getAttribute('data-index'));
+    });
+    console.log(shimi_shanchu_fuxuankuan);
+    shimi_shanchu_fuxuankuan_yanshi();
+});
+shimi_quxiao_tp.addEventListener('click', function () {
+    shimi_shanchu_fuxuankuan = [];
+    console.log(shimi_shanchu_fuxuankuan);
+    shimi_shanchu_fuxuankuan_yanshi();
+});
+
+
+
+
+//清理缓存
+function shimi_qinglihuancun() {
+    daka_l_bot_max.innerHTML = '';
+    daka_r_bot_top.value = '';
+    daka_r_bot_bottom.value = '';
+    shimi_mima_input.value = '';
+    shimi_shousuo.value = '';
+    shimi_shanchu_tp.style.display = '';
+    shimi_quanxuan_tp.style.display = '';
+    shimi_quxiao_tp.style.display = '';
+    shimi_tianjia_tp.style.display = '';
+    shimi_mima_max.style.display = 'block';
+    daka_l_bot.style.display = 'none';
+    daka_r_bot.style.display = 'none';
+    shimi_shousuo.style.display = '';
+    shimi_tianjia_tp.style.display = '';
+    shimi_mima_gl = '';
+    shimi_mima_gl_old = '';
+    shimi_shanchu_fuxuankuan = [];
+    for (var key in debounceCache) { delete debounceCache[key]; }//清理防抖缓存，释放闭包中可能存在的密钥引用
+}
+var top_dhl_S = document.querySelector('.top_dhl').querySelectorAll('div');
+for (var i = 0; i < top_dhl_S.length; i++) {
+    if (i !== 5) {
+        top_dhl_S[i].addEventListener('click', function (e) {
+            shimi_qinglihuancun();
+        });
+    }
+}
+
+
+
+
+//筛选加密文本
+shimi_shousuo.addEventListener('input', function () {
+    if (shimi_shousuo.value == '') {
+        jiami_wenben_shuchu();
+        shimi_tianjia_tp.style.display = '';
+    } else {
+        shimi_shousuo_hs();
+    }
+});
+var shimi_shousuo_hs = Sku_fan_dou_don(function () {
+    jiami_wenben_shuchu();
+    shimi_tianjia_tp.style.display = '';
+}, 100)
+
+
+
+
+//快捷键
+var nrmaxs5 = document.querySelector('.nrmaxs5');
+document.addEventListener('keydown', function (e) {
+    if (nrmaxs5.style.display == 'block') {
+        if (e.ctrlKey && e.key == '/') {
+            shimi_shousuo.focus();
+        }
+        if (shimi_mima_max.style.display == 'block' && e.key == 'Enter') {
+            shimi_mima_qr.click();
+        }
+        if (shimi_shanchu_tp.style.display == 'block' && e.key == 'Delete') {
+            shimi_shanchu_tp.click();
+        }
+        if (shimi_quxiao_tp.style.display == 'block' && e.key == 'Escape') {
+            shimi_quxiao_tp.click();
+        } else if (shimi_shousuo.value != '' && e.key == 'Escape') {
+            shimi_shousuo.value = '';
+            shimi_shousuo.dispatchEvent(new Event('input'));
+        }
+    }
+});
+document.addEventListener('keyup', function (e) {
+    if (nrmaxs5.style.display == 'block') {
+        if (shimi_tianjia_tp.style.display == 'block' && e.key == '+') {
+            shimi_tianjia_tp.click();
+        }
+    }
+});
+
+
+
+
+
+// 拖拽排序功能
+(function () {
+    var drag_item = null;
+
+    daka_l_bot_max.addEventListener('mousedown', function (e) {
+        var target = e.target.closest('.shimi_wenben_s_max');
+        // 非删除模式下、点击的不是复选框才允许拖拽
+        if (target
+            && !e.target.classList.contains('shimi_wenben_s_fuxuankuan')
+            && shimi_shanchu_fuxuankuan.length === 0) {
+            drag_item = target;
+            drag_item.style.opacity = '0.5';
+            e.preventDefault();
+        }
+    });
+
+    document.addEventListener('mousemove', function (e) {
+        if (!drag_item) return;
+        var items = daka_l_bot_max.querySelectorAll('.shimi_wenben_s_max');
+        var dragIndex = Array.prototype.indexOf.call(items, drag_item);
+        for (var i = 0; i < items.length; i++) {
+            if (i === dragIndex) continue;
+            var rect = items[i].getBoundingClientRect();
+            if (e.clientY > rect.top && e.clientY < rect.bottom) {
+                daka_l_bot_max.insertBefore(drag_item, i < dragIndex ? items[i] : items[i].nextElementSibling);
+                break;
+            }
+        }
+    });
+
+    document.addEventListener('mouseup', function () {
+        if (!drag_item) return;
+        drag_item.style.opacity = '1';
+        drag_item = null;
+
+        // 按 DOM 顺序直接重排 localStorage 中的数据
+        var items = daka_l_bot_max.querySelectorAll('.shimi_wenben_s_max');
+        var orderMap = {};
+        items.forEach(function (el, i) {
+            orderMap[el.getAttribute('data-index')] = i;
+        });
+
+        var data = JSON.parse(localStorage.getItem('Sku_shimi_chunchu'));
+        data.sort(function (a, b) {
+            return orderMap[String(a[2])] - orderMap[String(b[2])];
+        });
+        localStorage.setItem('Sku_shimi_chunchu', JSON.stringify(data));
+    });
+})();
+

@@ -1,4 +1,4 @@
-var ban_ben_s = "202607152333";
+var ban_ben_s = "202607201121";
 
 function formatNumberString(input) {
     if (isAlreadyFormatted(input)) { return input; }
@@ -333,10 +333,6 @@ if (localStorage.da_ka == undefined) {
 //云服务器key
 if (localStorage.yun_key == undefined) {
     localStorage.yun_key = '[]';
-}
-//在线模式
-if (localStorage.Sku_zxms == undefined) {
-    localStorage.Sku_zxms = 'false';
 }
 //错误指令集
 if (localStorage.Sku_cwzlj == undefined) {

@@ -1512,8 +1512,8 @@ var shezhi_daoru_ym = document.querySelector('.shezhi_daoru_ym');
 var jisuan_bendidx = 0;
 
 // 集成应用与导入导出加密导入导出本地导入应用等
-var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd', 'zdjmdc', 'da_ka', 'so_yq_order']; //记得添加比较
-// 0 导航栏,1 导航栏页面,2 万能搜索引擎,3 头像,4 留言,5 所有壁纸,6 当前壁纸,7 天气,8 字体颜色,9 重字体颜色,10 背景颜色,11 背景透明度,12 背景确认框,13 背景框颜色,14 背景框透明度,15 毛玻璃,16 自动备份,17 使用次数,18 倒计时,19 密码,20 作品展示链接,21 作品展示名字,22 音乐,23 音乐,24 音乐,25 搜索记录,26 HTSP,27 注册表,28 背景颜色,29 主题风格,30 主题风格名字,31 ai快捷指令,32 课表,33 周数,34 总时长,35 自动导入本地,36 自动加密导出,37 打卡,38 搜索引擎顺序,39,40,41,42,43,44
+var daochu_daoru_max = ['dhr_sz', 'dhr_ym_dx', 'sy_sosuo_yq', 'tou_xiang', 'liu_yan_dx', 'bi_zhi_s', 'bi_zhi', 'tian_qi', 'zi_ti_color', 'zi_ti_click_color', 'bei_jing_color', 'bei_jing_tmd', 'bei_jing_kuan_ture', 'bei_jing_kuan_color', 'bei_jing_kuan_tmd', 'mao_bo_li', 'zdbf', 'sy_ci_shu', 'sy_djs', 'dr_mm', 'sy_zpzs_lj', 'sy_zpzs_mz', 'music_cd', 'music_bfsx', 'music_sydx', 'lsjl', 'htsp_s', 'sku_zcb', 'bi_zhi_ys', 'ztfg', 'ztfg_name', 'AI_kjzl', 'ke_biao', 'ke_biao_zhou', 'syzsc', 'zddrbd', 'zdjmdc', 'so_yq_order', 'Sku_shimi_chunchu', 'Sku_shimi_miyao']; //记得添加比较和保护localStorage值
+// 0 导航栏,1 导航栏页面,2 万能搜索引擎,3 头像,4 留言,5 所有壁纸,6 当前壁纸,7 天气,8 字体颜色,9 重字体颜色,10 背景颜色,11 背景透明度,12 背景确认框,13 背景框颜色,14 背景框透明度,15 毛玻璃,16 自动备份,17 使用次数,18 倒计时,19 密码,20 作品展示链接,21 作品展示名字,22 音乐,23 音乐,24 音乐,25 搜索记录,26 HTSP,27 注册表,28 背景颜色,29 主题风格,30 主题风格名字,31 ai快捷指令,32 课表,33 周数,34 总时长,35 自动导入本地,36 自动加密导出,37 搜索引擎顺序,38 私密存储,39 私密哈希密钥,40,41,42,43,44
 
 // 检查是否为时间
 function isValidDateTime(str) {
@@ -2579,38 +2579,65 @@ bijiao_kais.addEventListener('click', function (e) {
                 }
             }
 
-            // 打卡比较
-            var bijiao_jl1 = collectArrays(JSON.parse(bijiaonr1['da_ka']));
-            var bijiao_jl2 = collectArrays(JSON.parse(bijiaonr2['da_ka']));
-            let bijiao_jl1_sc56 = JSON.parse(JSON.stringify(bijiao_jl1));
-            let bijiao_jl2_sc56 = JSON.parse(JSON.stringify(bijiao_jl2));
-            bijiao_jl1_sc56 = bijiao_jl1_sc56.map(item => {
-                if (Array.isArray(item)) {
-                    item.splice(5, 2); // 从索引5开始删除2个元素
+            // 私密密钥比较
+            if (bijiaonr1['Sku_shimi_miyao'] !== bijiaonr2['Sku_shimi_miyao']) {
+                bijiao_cj('私密', '修改私密密钥', bijiaonr1['Sku_shimi_miyao'] + '\n\n改为\n\n' + bijiaonr2['Sku_shimi_miyao'] + '\n\n' + '哈希文本不可逆向解密!');
+            }
+
+            //私密内容比较
+            var bijiao_sm1 = JSON.parse(bijiaonr1['Sku_shimi_chunchu']);
+            var bijiao_sm2 = JSON.parse(bijiaonr2['Sku_shimi_chunchu']);
+            if (JSON.stringify(bijiao_sm1) !== JSON.stringify(bijiao_sm2)) {
+
+                // 1. 先输出 修改
+                for (var i = 0; i < bijiao_sm1.length; i++) {
+                    // 整体不匹配才进行检查
+                    if (JSON.stringify(bijiao_sm2).indexOf(JSON.stringify(bijiao_sm1[i])) == -1) {
+                        for (var j = 0; j < bijiao_sm2.length; j++) {
+                            // 时间戳相同，说明是修改
+                            if (bijiao_sm1[i][2] === bijiao_sm2[j][2]) {
+                                bijiao_cj('私密', '修改私密 时戳"' + bijiao_sm1[i][2] + '"', '标题:\n' + bijiao_sm1[i][0] + '\n内容:\n' + bijiao_sm1[i][1] + '\n\n改为:\n\n标题:\n' + bijiao_sm2[j][0] + '\n内容:\n' + bijiao_sm2[j][1]);
+                                break;
+                            }
+                        }
+                    }
                 }
-                return item;
-            });
-            bijiao_jl2_sc56 = bijiao_jl2_sc56.map(item => {
-                if (Array.isArray(item)) {
-                    item.splice(5, 2); // 从索引5开始删除2个元素
+
+                // 2. 再输出 删除
+                for (var i = 0; i < bijiao_sm1.length; i++) {
+                    if (JSON.stringify(bijiao_sm2).indexOf(JSON.stringify(bijiao_sm1[i])) == -1) {
+                        var is_xiugai = false;
+                        for (var j = 0; j < bijiao_sm2.length; j++) {
+                            if (bijiao_sm1[i][2] === bijiao_sm2[j][2]) {
+                                is_xiugai = true;
+                                break;
+                            }
+                        }
+                        // 不是修改，才是删除
+                        if (!is_xiugai) {
+                            bijiao_cj('私密', '删除私密 时戳"' + bijiao_sm1[i][2] + '"', '标题:\n' + bijiao_sm1[i][0] + '\n内容:\n' + bijiao_sm1[i][1]);
+                        }
+                    }
                 }
-                return item;
-            });
-            for (var i = 0; i < bijiao_jl2_sc56.length; i++) {
-                if (JSON.stringify(bijiao_jl1_sc56).indexOf(JSON.stringify(bijiao_jl2_sc56[i])) == -1) {
-                    bijiao_cj('习惯', '新增习惯 "' + bijiao_jl2_sc56[i][1] + '"', ((bijiao_jl2_sc56[i][0].startsWith("http") || bijiao_jl2_sc56[i][0].startsWith("data")) ? '<img src="' + bijiao_jl2_sc56[i][0] + '" style="height: 100px;">' : bijiao_jl2_sc56[i][0]) + '\n名称: ' + bijiao_jl2_sc56[i][1] + '\n打卡频率: ' + bijiao_jl2_sc56[i][2] + '\n开始日期: ' + (new Date(bijiao_jl2_sc56[i][3]).getFullYear()) + '年' + (new Date(bijiao_jl2_sc56[i][3]).getMonth() + 1) + '月' + (new Date(bijiao_jl2_sc56[i][3]).getDate()) + '日' + '\n坚持天数: ' + bijiao_jl2_sc56[i][4] + '天');
+
+                // 3. 最后输出 新增
+                for (var i = 0; i < bijiao_sm2.length; i++) {
+                    if (JSON.stringify(bijiao_sm1).indexOf(JSON.stringify(bijiao_sm2[i])) == -1) {
+                        var is_xiugai = false;
+                        for (var j = 0; j < bijiao_sm1.length; j++) {
+                            if (bijiao_sm2[i][2] === bijiao_sm1[j][2]) {
+                                is_xiugai = true;
+                                break;
+                            }
+                        }
+                        // 不是修改，才是新增
+                        if (!is_xiugai) {
+                            bijiao_cj('私密', '新增私密 时戳"' + bijiao_sm2[i][2] + '"', '标题:\n' + bijiao_sm2[i][0] + '\n内容:\n' + bijiao_sm2[i][1]);
+                        }
+                    }
                 }
             }
-            for (var i = 0; i < bijiao_jl1_sc56.length; i++) {
-                if (JSON.stringify(bijiao_jl2_sc56).indexOf(JSON.stringify(bijiao_jl1_sc56[i])) == -1) {
-                    bijiao_cj('习惯', '删除习惯 "' + bijiao_jl1_sc56[i][1] + '"', ((bijiao_jl1_sc56[i][0].startsWith("http") || bijiao_jl1_sc56[i][0].startsWith("data")) ? '<img src="' + bijiao_jl1_sc56[i][0] + '" style="height: 100px;">' : bijiao_jl1_sc56[i][0]) + '\n名称: ' + bijiao_jl1_sc56[i][1] + '\n打卡频率: ' + bijiao_jl1_sc56[i][2] + '\n开始日期: ' + (new Date(bijiao_jl1_sc56[i][3]).getFullYear()) + '年' + (new Date(bijiao_jl1_sc56[i][3]).getMonth() + 1) + '月' + (new Date(bijiao_jl1_sc56[i][3]).getDate()) + '日' + '\n坚持天数: ' + bijiao_jl1_sc56[i][4] + '天');
-                }
-            }
-            for (var i = 0; i < bijiao_jl2_sc56.length; i++) {
-                if (JSON.stringify(bijiao_jl1_sc56).indexOf(JSON.stringify(bijiao_jl2_sc56[i])) !== -1 && (bijiao_jl1[i][5].length !== bijiao_jl2[i][5].length || bijiao_jl1[i][6].length !== bijiao_jl2[i][6].length)) {
-                    bijiao_cj('习惯', '更改习惯 "' + bijiao_jl1[i][1] + '"', '前打卡总数: ' + bijiao_jl1[i][5].length + ' 次' + '\n后打卡总数:' + bijiao_jl2[i][5].length + ' 次' + '\n\n前日志总数:' + bijiao_jl1[i][6].length + ' 次' + '\n后日志总数:' + bijiao_jl2[i][6].length + ' 次');
-                }
-            }
+
 
             // 个性化比较
             if (bijiaonr1['tou_xiang'] !== bijiaonr2['tou_xiang']) { //头像
@@ -2649,6 +2676,9 @@ bijiao_kais.addEventListener('click', function (e) {
             if (bijiaonr1['mao_bo_li'] !== bijiaonr2['mao_bo_li']) { //毛玻璃深度
                 bijiao_cj('个性化', '修改毛玻璃深度', bijiaonr1['mao_bo_li'] + 'px 改为 ' + bijiaonr2['mao_bo_li'] + 'px');
             }
+            if (bijiaonr1['so_yq_order'] !== bijiaonr2['so_yq_order']) { //搜索引擎排序
+                bijiao_cj('个性化', '修改搜索引擎排序', bijiaonr1['so_yq_order'] + '<br><br> 改为 <br><br>' + bijiaonr2['so_yq_order']);
+            }
 
             // htsp比较
             var bijiao_htsp1 = JSON.parse(bijiaonr1['htsp_s']);
@@ -2666,7 +2696,7 @@ bijiao_kais.addEventListener('click', function (e) {
 
             // 其他比较
             if (bijiaonr1['dr_mm'] !== bijiaonr2['dr_mm']) { //密码
-                bijiao_cj('其他', '修改密码', (bijiaonr1['dr_mm'] == '' ? '空' : bijiaonr1['dr_mm']) + '\n改为\n' + (bijiaonr2['dr_mm'] == '' ? '空' : bijiaonr2['dr_mm']) + '\n\n解密后\n\n' + (bijiaonr1['dr_mm'] == '' ? '空' : S_ku_jiemi(bijiaonr1['dr_mm'])) + '\n改为\n' + (bijiaonr2['dr_mm'] == '' ? '空' : S_ku_jiemi(bijiaonr2['dr_mm'])));
+                bijiao_cj('其他', '修改密码', (bijiaonr1['dr_mm'] == '' ? '空' : bijiaonr1['dr_mm']) + '\n\n改为\n\n' + (bijiaonr2['dr_mm'] == '' ? '空' : bijiaonr2['dr_mm']) + '\n\n解密后\n\n' + (bijiaonr1['dr_mm'] == '' ? '空' : S_ku_jiemi(bijiaonr1['dr_mm'])) + '\n\n改为\n\n' + (bijiaonr2['dr_mm'] == '' ? '空' : S_ku_jiemi(bijiaonr2['dr_mm'])));
             }
             if (bijiaonr1['sy_sosuo_yq'] !== bijiaonr2['sy_sosuo_yq']) { //搜索引擎
                 bijiao_cj('其他', '修改搜索引擎', bijiaonr1['sy_sosuo_yq'] + ' 改为 ' + bijiaonr2['sy_sosuo_yq']);
@@ -2842,7 +2872,7 @@ so_ssk.addEventListener('focus', function (e) {
 so_ssk.addEventListener('blur', function (e) {
     so_ssk_focus = 0;
 });
-// 匹配补全函数
+// 匹配补全函数(防抖封装)
 var ss_tsc_pp_debounce = Sku_fan_dou_don(function () {
     ss_gjcss(so_ssk.value);
 }, 300);
@@ -4195,8 +4225,8 @@ if (localStorage.dr_mm == '' || (localStorage.dr_mm !== '' && mmdr_sf == 1)) {
     sy_lbnr_hs();
 }
 
-// 优化内存
-top_dhl_S = document.querySelector('.top_dhl').querySelectorAll('div');
+// 优化内存 (首页定时器)
+var top_dhl_S = document.querySelector('.top_dhl').querySelectorAll('div');
 for (var i = 0; i < top_dhl_S.length; i++) {
     if (i == 0) {
         top_dhl_S[i].addEventListener('click', function (e) {
@@ -4208,7 +4238,7 @@ for (var i = 0; i < top_dhl_S.length; i++) {
             if (nrmaxs0.style.display == 'block') {
                 sy_lbnr_hs();
             } else {
-                setTimeout(function () {
+                setTimeout(function () {// 等待导航栏页面加载完成
                     sy_lbnr_hs();
                 });
             }
@@ -5304,77 +5334,58 @@ function mryy_s() {
 
 
 // 搜索关键词
-var ss_gjcss_ysq = undefined;
-
 function ss_gjcss(so_ssk_value2) {
     var zhypxuxian = 'true';
-    ss_gjcss_ysq ? clearTimeout(ss_gjcss_ysq) : undefined;
-    ss_gjcss_ysq = setTimeout(function () {
-        if (so_ssk.value !== '' && so_ssk_value2 == so_ssk.value) {
-            var tjc_sz_max = [];
+    if (so_ssk.value !== '' && so_ssk_value2 == so_ssk.value) {
+        var tjc_sz_max = [];
 
-            function API_dz_syff(so_ssk_value, gjc, hdhs, ff, ff2, ff3, ff4, ff5, ff6, ff7, ff8) {
-                //定义回调函数
-                window[hdhs] = {
-                    sug: function (json) {
-                        var tjc_sz = undefined;
-                        try {
-                            // 可能产生错误的代码
-                            if (ff8) {
-                                tjc_sz = json[`${ff}`][`${ff2}`][`${ff3}`][`${ff4}`][`${ff5}`][`${ff6}`][`${ff7}`][`${ff8}`];
-                            } else if (ff7) {
-                                tjc_sz = json[`${ff}`][`${ff2}`][`${ff3}`][`${ff4}`][`${ff5}`][`${ff6}`][`${ff7}`];
-                            } else if (ff6) {
-                                tjc_sz = json[`${ff}`][`${ff2}`][`${ff3}`][`${ff4}`][`${ff5}`][`${ff6}`];
-                            } else if (ff5) {
-                                tjc_sz = json[`${ff}`][`${ff2}`][`${ff3}`][`${ff4}`][`${ff5}`];
-                            } else if (ff4) {
-                                tjc_sz = json[`${ff}`][`${ff2}`][`${ff3}`][`${ff4}`];
-                            } else if (ff3) {
-                                tjc_sz = json[`${ff}`][`${ff2}`][`${ff3}`];
-                            } else if (ff2) {
-                                tjc_sz = json[`${ff}`][`${ff2}`];
-                            } else if (ff) {
-                                tjc_sz = json[`${ff}`];
-                            }
+        // 辅助函数：根据路径数组安全地从嵌套对象中获取值
+        function getNestedValue(obj, pathArr) {
+            return pathArr.reduce(function (acc, key) {
+                return (acc && acc[key] !== undefined) ? acc[key] : undefined;
+            }, obj);
+        }
 
-                            // 另类数据加工
-                            if (hdhs === 'bing') {
-                                var tjc_sz2 = JSON.parse(JSON.stringify(tjc_sz));
-                                tjc_sz = [];
-                                tjc_sz2.forEach(function (asd) {
-                                    // 将Txt值添加到txtArray数组中
-                                    tjc_sz.push(asd.Txt);
-                                });
-                            } else if (hdhs === 'sanliulin') {
-                                var tjc_sz2 = JSON.parse(JSON.stringify(tjc_sz));
-                                tjc_sz = [];
-                                tjc_sz2.forEach(function (asd) {
-                                    // 将Txt值添加到txtArray数组中
-                                    tjc_sz.push(asd.word);
-                                });
-                            } else if (hdhs === 'taobao' || hdhs === 'yitao') {
-                                var tjc_sz2 = JSON.parse(JSON.stringify(tjc_sz));
-                                tjc_sz = [];
-                                tjc_sz2.forEach(function (asd) {
-                                    // 将Txt值添加到txtArray数组中
-                                    tjc_sz.push(asd[0]);
-                                });
-                            }
+        /**
+         * 通用API调用与处理函数
+         * @param {string} so_ssk_value 当前搜索词
+         * @param {string} gjc API请求URL
+         * @param {string} hdhs 回调函数的挂载名 (如 'baidu', 'bing')
+         * @param {Array} pathArr 提取建议列表的键路径 (如 ['s'] 或 ['AS', 'Results', 0, 'Suggests'])
+         * @param {Function} transformFunc 对原始数据进行加工提取的函数 (可选)
+         */
+        function API_dz_syff(so_ssk_value, gjc, hdhs, pathArr, transformFunc) {
+            // 定义回调函数
+            window[hdhs] = {
+                sug: function (json) {
+                    var tjc_sz = undefined;
+                    try {
+                        // 统一使用路径数组提取核心数据
+                        tjc_sz = getNestedValue(json, pathArr);
 
-                            // 判断是否还需要输出
-                            if (so_ssk_value == so_ssk.value) {
-                                // 最先一排虚线
-                                if (tjc_sz.length !== 0 && zhypxuxian == 'true') {
-                                    var syjl = document.querySelectorAll('.ssbq_s');
-                                    if (syjl.length !== 0) {
-                                        syjl[syjl.length - 1].style.borderBottom = '2px dashed';
-                                    }
-                                    zhypxuxian = 'false';
+                        // 统一的数据加工逻辑：如果有转换函数，则遍历提取所需字段
+                        if (tjc_sz && transformFunc) {
+                            var tjc_sz2 = JSON.parse(JSON.stringify(tjc_sz));
+                            tjc_sz = [];
+                            tjc_sz2.forEach(function (asd) {
+                                tjc_sz.push(transformFunc(asd));
+                            });
+                        }
+
+                        // 判断是否还需要输出
+                        if (so_ssk_value == so_ssk.value) {
+                            // 最先一排虚线
+                            if (tjc_sz && tjc_sz.length !== 0 && zhypxuxian == 'true') {
+                                var syjl = document.querySelectorAll('.ssbq_s');
+                                if (syjl.length !== 0) {
+                                    syjl[syjl.length - 1].style.borderBottom = '2px dashed';
                                 }
+                                zhypxuxian = 'false';
+                            }
 
-                                // 输出补全
-                                var qrgs = 0;
+                            // 输出补全
+                            var qrgs = 0;
+                            if (tjc_sz) {
                                 for (var i = 0; i < tjc_sz.length; i++) {
                                     if (tjc_sz_max.indexOf(tjc_sz[i]) == -1 && tjc_sz[i] !== so_ssk.value) {
                                         qrgs++;
@@ -5400,43 +5411,52 @@ function ss_gjcss(so_ssk_value2) {
 
                                     if (qrgs == 1000) { break; } // 最多输出1000个补全
                                 }
-
-                                // 显示页面
-                                if (qrgs !== 0 && so_ssk_num == 1) {
-                                    so_yq_s.style.display = 'none';
-                                    ssbqym.style.display = 'block';
-
-                                    WGS_wenbengundon11('.ssbq_s2', 9);
-                                }
-
-                                // 所有补全
-                                tjc_sz_max = tjc_sz_max.concat(tjc_sz);
-                                console.log(hdhs, tjc_sz);
                             }
-                        } catch (error) {
-                            // 这个块会在 try 中有错误抛出时执行
-                            console.log('%c' + hdhs + ' 搜索补全API数据整理出错 \n' + gjc, "color: red");
+
+                            // 显示页面
+                            if (qrgs !== 0 && so_ssk_num == 1) {
+                                so_yq_s.style.display = 'none';
+                                ssbqym.style.display = 'block';
+
+                                WGS_wenbengundon11('.ssbq_s2', 9);
+                            }
+
+                            // 所有补全
+                            tjc_sz_max = tjc_sz_max.concat(tjc_sz || []);
+                            console.log(hdhs, tjc_sz);
                         }
+                    } catch (error) {
+                        // 这个块会在 try 中有错误抛出时执行
+                        console.log('%c' + hdhs + ' 搜索补全API数据整理出错 \n' + gjc, "color: red");
                     }
                 }
-                //动态添加JS脚本
-                var script = document.createElement("script");
-                script.src = gjc;
-                document.getElementsByTagName("head")[0].appendChild(script);
             }
-
-            try { //可能产生错误的代码
-                API_dz_syff(so_ssk.value, 'https://suggestion.baidu.com/su?wd=' + so_ssk.value, 'baidu', 's');
-                API_dz_syff(so_ssk.value, 'https://api.bing.com/qsonhs.aspx?type=cb&cb=window.bing.sug&q=' + so_ssk.value, 'bing', 'AS', 'Results', '0', 'Suggests');
-                API_dz_syff(so_ssk.value, 'https://sug.so.360.cn/suggest?encodein=utf-8&encodeout=utf-8&callback=window.sanliulin.sug&format=json&word=' + so_ssk.value, 'sanliulin', 'result');
-                API_dz_syff(so_ssk.value, 'https://suggest.taobao.com/sug?code=utf-8&callback=window.taobao.sug&q=' + so_ssk.value, 'taobao', 'result');
-                API_dz_syff(so_ssk.value, 'https://suggest.taobao.com/sug?area=etao&code=utf-8&callback=window.yitao.sug&q=' + so_ssk.value, 'yitao', 'result');
-            } catch (error) {
-                console.log(error);
-            }
+            // 动态添加JS脚本
+            var script = document.createElement("script");
+            script.src = gjc;
+            document.getElementsByTagName("head")[0].appendChild(script);
         }
-    }, 100);
+
+        try {
+            //对搜索词进行 URL 编码，防止中文导致请求报错
+            var encodedQuery = encodeURIComponent(so_ssk.value);
+            // 1. 百度：增加 cb=window.baidu.sug 确保回调稳定
+            API_dz_syff(so_ssk.value, 'https://suggestion.baidu.com/su?wd=' + encodedQuery + '&cb=window.baidu.sug', 'baidu', ['s']);
+            // 2. Bing
+            API_dz_syff(so_ssk.value, 'https://api.bing.com/qsonhs.aspx?type=cb&cb=window.bing.sug&q=' + encodedQuery, 'bing', ['AS', 'Results', 0, 'Suggests'], function (item) { return item.Txt; });
+            // 3. 360
+            API_dz_syff(so_ssk.value, 'https://sug.so.360.cn/suggest?encodein=utf-8&encodeout=utf-8&callback=window.sanliulin.sug&format=json&word=' + encodedQuery, 'sanliulin', ['result'], function (item) { return item.word; });
+            // 4. 淘宝
+            API_dz_syff(so_ssk.value, 'https://suggest.taobao.com/sug?code=utf-8&callback=window.taobao.sug&q=' + encodedQuery, 'taobao', ['result'], function (item) { return item[0]; });
+            // 5. 一淘
+            API_dz_syff(so_ssk.value, 'https://suggest.taobao.com/sug?area=etao&code=utf-8&callback=window.yitao.sug&q=' + encodedQuery, 'yitao', ['result'], function (item) { return item[0]; });
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
 }
+
 
 
 

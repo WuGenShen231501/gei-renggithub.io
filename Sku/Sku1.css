@@ -116,6 +116,7 @@
         /* 动画开始的画面; */
         top: -30px;
     }
+
     100% {
         /* 动画结束的画面; */
         top: 523px;
@@ -887,6 +888,7 @@ iframe {
         /* 动画开始的画面; */
         opacity: 0;
     }
+
     100% {
         /* 动画结束的画面; */
         opacity: 1;
@@ -898,6 +900,7 @@ iframe {
         /* 动画开始的画面; */
         opacity: 0;
     }
+
     100% {
         /* 动画结束的画面; */
         opacity: 1;
@@ -1112,4 +1115,32 @@ iframe {
 }
 
 
-/* 仪表盘 */
+.sy_doudon {
+    animation: alarm-pulse 0.15s linear infinite;
+}
+
+/* 定义关键帧动画 */
+@keyframes alarm-pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.05);
+    }
+
+    /* 稍微放大一点 */
+    50% {
+        transform: scale(1);
+    }
+
+    /* 缩回 */
+    75% {
+        transform: scale(0.95);
+    }
+
+    /* 稍微缩小一点 */
+    100% {
+        transform: scale(1);
+    }
+}

@@ -12,7 +12,7 @@ const cors = require('cors');
 app.use(cors()); // 允许跨域
 
 // 定义根路径GET请求处理
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     // 打印请求URL到控制台
     console.log(`检测到${req.url}请求`);
     // 返回欢迎信息
@@ -20,7 +20,7 @@ app.get('/', function(req, res) {
 });
 
 // 定义带参数的GET请求处理，参数为wgs
-app.get('/:wgs', function(req, res) {
+app.get('/:wgs', function (req, res) {
     // 打印请求URL到控制台
     console.log(`检测到${req.url}请求`);
 
@@ -83,7 +83,7 @@ app.get('/:wgs', function(req, res) {
 app.use('/Sku', express.static('../Sku'));
 
 // 监听80端口，启动服务器
-app.listen('80', function() {
+app.listen('80', function () {
     // 服务器启动成功后，打印信息到控制台
     console.log('服务器启动成功!');
 });
